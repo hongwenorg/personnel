@@ -304,15 +304,9 @@ find_btt.onclick = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
             document.getElementById("sousuo_img_out").style.display = "none";
             var msg = JSON.parse(xhr.responseText);
-            console.log(msg);
             for (key in msg) {
-                if (key != "status" && key != "month" && key != "week_day" && key != "count_day" && key != "over_count_day" && msg["status"] != 2) {
+                if (key != "status" && key != "month" && key != "week_day" && key != "count_day" && key != "over_count_day" && msg["status"] != 2 && key != 'check_content') {
                     arr_staff.push(msg[key]);
-                }
-                else if (msg["status"] != 2) {
-                    $("#check_month").text(msg['month'] + "月份考勤数据");
-                    $("#check_count_day").text("共有" + msg['count_day'] + "天" + msg['week_day'] + "个周日");
-                    $("#check_day_day").text("应出勤" + msg['over_count_day'] + "天");
                 }
             }
             if (msg["status"] != 2) {
@@ -321,6 +315,7 @@ find_btt.onclick = function () {
                 document.getElementById("sousuo_img_out").style.display = "none";
                 alert("根据查询，无数据~！");
             }
+            check_time = msg['check_content'];
         }
     }
 };
@@ -354,9 +349,31 @@ function excel_blank() {
 //个人考勤
 document.getElementById("tb").addEventListener("click", function (e) {
 
+    var user_id = $(e.target).attr("name");
+    html_str = '';
+    $.ajax({
+        url: "/index.php/Home/Checking/check_detail",
+        data: {'user_card': user_id,'check_time':check_time},
+        type: "post",
+        async: false,
+        cache: "false",
+        success: function (xhr) {
+            var str = '';
+            var msg = JSON.parse(xhr);
+            if(msg["status"] == 1){
+                for (key in msg) {
+                    if (key != "status") {
+                        str += "<tr><td>" + msg[key].check_date + "</td>" + "<td>" + msg[key].check_mintime + "</td>" + "<td>" + msg[key].check_maxtime + "</td>" + "<td>" + msg[key].check + "</td>" + "<td>" + msg[key].check_content + "</td></tr>";
+                    }
+                }
+                html_str = str;
+            } else {
+                alert("程序错误，请联系管理员！");
+            }
 
+        }
 
-
+    });
 
     var target = e.target;
     var parent_node=target.parentNode.parentNode.firstChild.nextSibling.firstChild.innerHTML;
@@ -370,7 +387,7 @@ document.getElementById("tb").addEventListener("click", function (e) {
             append_rule.style.boxShadow = "0 16px 100px gray";
             var append_rules_table = document.createElement("table");
             var append_rules_tr = document.createElement("tr");
-            var append_rules_tr2 = "<td>" + arr_staff[i].name + "</td>" + "<td>" + "a" + "</td>" + "<td>" + "a" + "</td>" + "<td>" + "a" + "</td>" + "<td>" + "a" + "</td>";
+            var append_rules_tr2 = html_str;
             //弹出框的头部
             var append_rules_head = document.createElement("div");
             var append_rules_close = document.createElement("button");
@@ -409,11 +426,11 @@ document.getElementById("tb").addEventListener("click", function (e) {
             //将弹出框 添加到 body下
             document.getElementById("append_rules").appendChild(append_rule);
             append_rule.style.background = "white";
-            append_rule.style.width = "600px";
+            append_rule.style.width = "900px";
             append_rule.style.height = "400px";
             append_rule.style.position = "fixed";
             append_rule.style.left = "50%";
-            append_rule.style.marginLeft = "-300px";
+            append_rule.style.marginLeft = "-450px";
             append_rule.appendChild(append_rules_head);
             append_rule.appendChild(append_rules_table);
             append_rules_table.style.textAlign = "center";

@@ -653,6 +653,7 @@ class CheckingController extends CommonController {
 			//echo $month_arr[Intval($now_time)-1];die;
 			//echo "<pre>";
 			$data_arr['status'] = 1;
+			$data_arr['check_content'] = $check_content;
 			//print_r($data_arr);die;
 			$_SESSION['select_content'] = $data_arr;
 			echo json_encode($data_arr);
@@ -661,6 +662,30 @@ class CheckingController extends CommonController {
 			unset($_SESSION['select_content']);
 			echo json_encode($data_arr);
 		}
+	}
+
+
+	//个人考勤详情
+	function check_detail(){
+		if(!empty($_POST['user_card'])){
+			$user_card = $_POST['user_card'];
+		}else{
+			$check_arr['status'] = 2;
+			echo json_encode($check_arr);exit;
+		}
+		if(!empty($_POST['check_time'])){
+			$check_time = $_POST['check_time'];
+		}else{
+			$check_arr['status'] = 2;
+			echo json_encode($check_arr);exit;
+		}
+		$check_record = M('check_record');
+		$check_arr = array();
+		$where = "atten_uid='$user_card' and check_date like '%$check_time%'";
+		$check_arr = $check_record->where($where)->select();
+		$check_arr['status'] = 1;
+		echo json_encode($check_arr);
+
 	}
 
 
