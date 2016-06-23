@@ -231,7 +231,7 @@ class StaffController extends CommonController {
 
 
 
-
+ 
 
 	//离职页面复职操作
 	function leave_fu_pro(){
