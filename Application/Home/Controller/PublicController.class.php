@@ -408,6 +408,8 @@ class PublicController extends Controller {
 			$agile_data = $leaveing->query("SELECT atten_uid,time_date,info from leaveing where class='灵活作息' and state = '审核通过'".$leave_where);
 
 			$check_record = M('check_record');
+
+			$time_num = 7.5;
 		
 			foreach($data_arr as &$val){
 
@@ -425,7 +427,14 @@ class PublicController extends Controller {
 
 				foreach($agile_data as $agile_val){
 					if($val['atten_uid'] == $agile_val['atten_uid']){
-						$check_record->where("atten_uid='".$agile_val['atten_uid']."' and check_date='".$agile_val['time_date']."'")->save(array("check"=>"合格","check_content"=>"由于灵活作息申请，".$agile_val['info']));
+						$check_arr_arr = $check_record->where("atten_uid='".$agile_val['atten_uid']."' and check_date='".$agile_val['time_date']."'")->find();
+						$check_maxtime = strtotime($check_arr_arr['check_maxtime']);
+						$check_mintime = strtotime($check_arr_arr['check_mintime']);
+						if(($check_maxtime-$check_mintime) < (floatval($time_num)*3600)){
+							$check_record->where("atten_uid='".$agile_val['atten_uid']."' and check_date='".$agile_val['time_date']."'")->save(array("check"=>"不合格","check_content"=>"灵活打卡异常，虽然灵活作息申请，但是打卡时间不满".$time_num."个小时"));
+						}else{
+							$check_record->where("atten_uid='".$agile_val['atten_uid']."' and check_date='".$agile_val['time_date']."'")->save(array("check"=>"合格","check_content"=>"由于灵活作息申请，".$agile_val['info']));
+						}
 					}
 				}
 			}
