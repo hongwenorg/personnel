@@ -344,11 +344,8 @@ function excel_blank() {
     }
 }
 //excel操作  end
-
-
 //个人考勤
 document.getElementById("tb").addEventListener("click", function (e) {
-
     var user_id = $(e.target).attr("name");
     html_str = '';
     $.ajax({
@@ -363,12 +360,10 @@ document.getElementById("tb").addEventListener("click", function (e) {
             if(msg["status"] == 1){
                 for (key in msg) {
                     if (key != "status") {
-                        str += "<tr><td>" + msg[key].check_date + "</td>" + "<td>" + msg[key].check_mintime + "</td>" + "<td>" + msg[key].check_maxtime + "</td>" + "<td>" + msg[key].check + "</td>" + "<td>" + msg[key].check_content + "</td></tr>";
+                        str += "<tr><td class='date_width'>" + msg[key].check_date + "</td>" + "<td>" + msg[key].check_mintime + "</td>" + "<td>" + msg[key].check_maxtime + "</td>" + "<td class='check_width'>" + msg[key].check + "</td>" + "<td>" + msg[key].check_content + "</td></tr>";
                     }
                 }
                 html_str = str;
-            } else {
-                alert("程序错误，请联系管理员！");
             }
 
         }
@@ -386,8 +381,16 @@ document.getElementById("tb").addEventListener("click", function (e) {
             append_rule.style.zIndex = "9999999";
             append_rule.style.boxShadow = "0 16px 100px gray";
             var append_rules_table = document.createElement("table");
+            var append_rules_div=document.createElement("div");
             var append_rules_tr = document.createElement("tr");
             var append_rules_tr2 = html_str;
+            //弹出框主体
+             append_rules_div.style.width="100%";
+             append_rules_div.style.height="300px";
+             append_rules_div.style.marginTop="15px";
+             append_rules_div.style.marginBottom="15px";
+             append_rules_div.style.overflowY="auto";
+
             //弹出框的头部
             var append_rules_head = document.createElement("div");
             var append_rules_close = document.createElement("button");
@@ -426,18 +429,18 @@ document.getElementById("tb").addEventListener("click", function (e) {
             //将弹出框 添加到 body下
             document.getElementById("append_rules").appendChild(append_rule);
             append_rule.style.background = "white";
-            append_rule.style.width = "900px";
+            append_rule.style.width = "1000px";
             append_rule.style.height = "400px";
             append_rule.style.position = "fixed";
             append_rule.style.left = "50%";
-            append_rule.style.marginLeft = "-450px";
+            append_rule.style.marginLeft = "-500px";
             append_rule.appendChild(append_rules_head);
-            append_rule.appendChild(append_rules_table);
+            append_rule.appendChild(append_rules_div);
+            append_rules_div.appendChild(append_rules_table)
             append_rules_table.style.textAlign = "center";
             append_rules_table.style.width = "90%";
             append_rules_table.style.marginLeft = "5%";
             append_rules_table.style.border = "1px solid gray";
-            append_rules_table.style.overflowY = "auto";
             append_rules_table.border = "1";
             append_rules_table.cellPadding = "2";
             append_rules_table.ceelspacing = 0;

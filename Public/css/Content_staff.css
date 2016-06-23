@@ -44,7 +44,7 @@ button {
 .zpgwl > div > div{
     font-size: 22px;
     text-align: center;
-    width: 33.1%;
+    width: 14.2%;
     float: left;
     border-bottom: hidden;
     line-height: 40px;
@@ -957,6 +957,9 @@ padding:5px;
 
 .hide {
     display: none;
+}
+.check_width,.date_width{
+    width:100px;
 }
 
 
