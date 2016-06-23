@@ -16,8 +16,8 @@ button {
 .imgReviewBox{
     border:1px solid black;
     position:absolute;
-    right:60px;
-    top:87px;
+    right:70px;
+    top:60px;
     width: 140px;
     height: 200px;
     background: #f9f9f9  url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAoCAYAAACIC2hQAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAYdJREFUeNrsmNFtgzAQhk0XMJ2gbFDeeM0GzQh0gmSEjJANmhHoBOWVp8IGZINkAvq7OiSrihpz1x5Y4qQTD2D584/vfOdkGAYjsaZpUjy25C8/XnfwY1EUJyO0hAtKgAd4Cbd3Pn93wPAW0BfOfA8CyBq+C4A0pPQHLcyogcL28GfGuB0WmWuCloLtttEEfRKApiqg+HUbM4NxFL1EAYr00saiqLOrYM5aE1Ty+3OtYMqEUb/VUjRbo35hUZ9qBlMXS9SXTNiOW0FJ6lGXZj4nDnvk1qOJpMIH7JTBHSBzzajnWj/HEeq3GKF2nBP0MGFBIkWlzV0f2DONhUym2tx5atoJ31tJc8dSFGq6PPrGnPOV0+cHg1Le3FP1Y4V7222Dii4n2j8BJfW47XHoaXX3NuUmKNWcI6A1OnalFHYCdP8rKKl36w5J21w6q3yVv0Fp/1XCyv0/7OyEc/t4TE9LhBwvOio/jy4R0odVLUpm6etX0BVUDZROoSgUjQMUWb+OAfRLgAEA+bqJU5koRwYAAAAASUVORK5CYII=") no-repeat center;
@@ -960,6 +960,11 @@ padding:5px;
 }
 .check_width,.date_width{
     width:100px;
+    min-width: 100px;
+}
+.maxtime_width,.mintime_width{
+    width:150px;
+    min-width:150px;
 }
 
 
