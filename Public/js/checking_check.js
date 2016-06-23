@@ -416,7 +416,7 @@ document.getElementById("tb").addEventListener("click", function (e) {
             append_rules_table.style.border = "1px solid gray";
             append_rules_table.style.overflowY = "auto";
             append_rules_table.border = "1";
-            append_rules_table.cellPadding = "2";  
+            append_rules_table.cellPadding = "2";
             append_rules_table.ceelspacing = 0;
             append_rules_table.appendChild(append_rules_tr);
             append_rules_tr.innerHTML = "<td>" + "日期" + "</td>" + "<td>" + "上班时间" + "</td>" + "<td>" + "下班时间" + "</td>" + "<td>" + "是否合格" + "</td>" + "<td>" + "详情" + "</td>";
