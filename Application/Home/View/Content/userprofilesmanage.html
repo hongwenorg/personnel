@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="/public/js/jquery.js"></script>
+    <script type="text/javascript" src="/public/js/public.js"></script>
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "微软雅黑";
+        }
+
+        .body_index {
+            width: 900px;
+            margin: 0 auto;
+        }
+
+        .body_index_msg {
+            width: 900px;
+            border-top: 3px solid #ff6400;
+            margin-top: -4px;
+            background-color: #efefef;
+        }
+
+        .miao {
+            border: 5px solid #ff6400;
+            border-radius: 50%;
+            margin: 0 auto;
+            width: 150px;
+            height: 150px;
+            position: relative;
+            top: -83px;
+            overflow: hidden;
+        }
+
+        .msg_name {
+            font-size: 20px;
+            width: 150px;
+            text-align: center;
+            height: 20px;
+            margin: 0 auto;
+            font-weight: bold;
+            color: #555a5a;
+            margin-bottom:15px;
+
+        }
+        .body_msg_all{
+            text-align: center;
+            position:relative;
+            top:-70px;
+            width:90%;
+            margin:0 auto;
+            border-bottom:1px solid black;
+        }
+        .body_msg_all>span{
+            font-style:italic;
+            color:#555a5a;
+        }
+        .msg_button{
+            text-align: center;
+            position:relative;
+            top:-35px;
+        }
+        .msg_button>input{
+            width:140px;
+            height:140px;
+            background-color: #bcbcbc;
+            border:none;
+            border-radius: 10px;
+            margin:10px;
+            color:white;
+            font-size: 22px;
+            font-weight: bold;
+            outline: none;
+            cursor: pointer;
+        }
+        input, button {
+            outline: none;
+        }
+
+        .return, .return_02 {
+            z-index: 9;
+            background-color: #555a5a;
+        }
+
+        .return_p {
+            width: 100px;
+            position: relative;
+            right: 47px;
+            top: 12px;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            line-height: 30px;
+            display: none;
+            opacity: 0.7;
+            font-size: 11px;
+            float: right;
+        }
+
+        #return_sp {
+            background-color: rgb(0, 200, 200);
+            border-radius: 20px;
+            float: right;
+            width: 100px;
+        }
+
+        #return_p1 {
+            width: 100px;
+            position: relative;
+            right: -67px;
+            top: 12px;
+            color: white;
+            font-weight: bold;
+            background-color: rgb(0, 200, 200);
+            text-align: center;
+            line-height: 30px;
+            border-radius: 20px;
+            display: none;
+            opacity: 0.7;
+            font-size: 11px;
+            float: right;
+        }
+
+        .header_01 {
+            width: 100%;
+            height: 100px;
+            background-color: #555a5a;
+            min-width: 1366px;
+        }
+
+        .return {
+            width: 50px;
+            height: 45px;
+            float: right;
+            position: relative;
+            top: -47px;
+            right: 115px;
+            cursor: pointer;
+            background-image: url(/public/img/return.png);
+            background-repeat: no-repeat;
+            border: none;
+            margin-right: 10px;
+        }
+
+        .return_02 {
+            background-image: url(/public/img/return01.png);
+            background-repeat: no-repeat;
+            border: none;
+            width: 50px;
+            height: 45px;
+            float: right;
+            position: relative;
+            top: -47px;
+            right: 0;
+            cursor: pointer;
+        }
+
+        .amg {
+            position: relative;
+            top: -21px;
+            left: 0;
+        }
+
+        .header_01 > ul {
+            padding-top: 25px;
+            margin-left: 40px;
+            height: 50px;
+        }
+
+        .header_01 > ul > li {
+            float: left;
+            height: 50px;
+            color: lightgray;
+        }
+
+        .header_01 > ul > li > a {
+            color: white;
+        }
+
+        #name {
+            font-size: 22px;
+            position: relative;
+        }
+
+        #post, #user, #line_italic {
+            font-style: italic;
+            font-size: 14px;
+            color: lightgray;
+            font-weight: bold;
+        }
+
+        #remove_cook {
+            width: 50px;
+            height: 45px;
+        }
+
+        .xin_feng {
+            margin-left: 10px;
+            width: 21px;
+            height: 18px;
+            position: absolute;
+            top: 23px;
+            background-color: #555a5a;
+            border: none;
+        }
+        header{
+            min-width: 1366px;
+        }
+
+    </style>
+</head>
+<body style="background-color:#555a5a">
+<header>
+    <div class="head_01">
+        <script src="/public/js/head.js" type="text/javascript" charset="utf-8"></script>
+    </div>
+</header>
+<div class="body_index">
+    <img src="/public/img/bluesky.jpg" alt="">
+    <div class="body_index_msg">
+        <div class="miao">
+            <img  alt="" style="width:150px;height:150px;background-color: white" class="Head_portrait">
+        </div>
+        <div class="body_msg_all">
+            <p class="msg_name" id="xingming"></p>
+            <span>单位:</span>
+            <span id="danwei"></span>&nbsp;&nbsp;&nbsp;
+            <span>职务:</span>
+            <span id="zhiwu"></span>&nbsp;&nbsp;&nbsp;
+            <span>级别:</span>
+            <span id="jibie"></span>&nbsp;&nbsp;&nbsp;
+            <span>经验值:</span>
+            <span>700</span>
+        </div>
+        <div class="msg_button">
+            <input type="button" value="基本信息" id="btt_01">
+            <input type="button" value="考勤记录">
+            <input type="button" value="事假查询">
+            <input type="button" value="考勤核对">
+            <input type="button" value="集团公告">
+        </div>
+    </div>
+</div>
+<div class="append_preson"></div>
+</body>
+<!--<script type="text/javascript" src="tanchu.js"></script>-->
+<script>
+    function setCookie(name, value, days) {
+        var data = new Date();
+        data.setDate(data.getDate() + days);
+        document.cookie = name + '=' + value + ';expires=' + data + ";path=/";
+        return true;
+    }
+    function getCookie(name) {
+        var arr = document.cookie.split("; ");
+        for (var i = 0; i < arr.length; i++) {
+            var arr2 = arr[i].split("=");
+            if (arr2[0] == name) {
+                return arr2[1];
+            }
+        }
+        return "";
+    }
+    //页面加载信息
+    $.ajax({
+        url: "/index.php/Home/Staff/head_con",
+        data: {"user":getCookie("username")},
+        type: "post",
+        async: "false",
+        traditional: "true",
+        cache: "false",
+        success: function (msg) {
+            var txt = JSON.parse(msg);
+            if (txt.status == 2) {
+                alert("程序出错，请联系管理员！");
+                return false;
+            } else {
+                basic_arr = txt.basic;
+                $("#danwei").text(basic_arr.campus);
+                $("#xingming").text(basic_arr.name);
+                $("#zhiwu").text(basic_arr.post);
+                if(basic_arr.photo_max_url!="" || basic_arr.photo_max_url!=null){
+                    $(".Head_portrait").attr("src",basic_arr.photo_max_url);
+                }
+            }
+        }
+    });
+
+    $("#btt_01").click(function () {
+        $.get('personal_details.html', function (data) {
+            $('.append_preson').prepend(data);
+            var append_name=document.getElementById("xingming").innerHTML;
+            document.getElementById("profiles_head").innerHTML=append_name+" "+"个人信息";
+            var close_xinxi=document.createElement("button");
+            document.getElementById("profiles_head").appendChild(close_xinxi);
+            close_xinxi.style.width="40px";
+            close_xinxi.style.height="40px";
+            close_xinxi.style.position="absolute";
+            close_xinxi.style.right=0;
+            close_xinxi.innerText="×";
+            close_xinxi.style.border="none";
+            close_xinxi.style.backgroundColor="#555a5a";
+            close_xinxi.style.fontSize="30px";
+            close_xinxi.style.fontWeight="bold";
+            close_xinxi.style.lineHeight="35px";
+            close_xinxi.style.color="#00c8c8";
+            close_xinxi.onclick=function(){
+                document.getElementById("user_profiles_personal").style.display="none";
+            };
+        })
+    });
+
+    //
+//    var all_employees= [];
+//    var reques = new XMLHttpRequest();
+//    reques.open("get", "/index.php/Home/Staff/staff_pro");
+//    reques.send();
+//    reques.onreadystatechange = function () {
+//        if (reques.readyState == 4 && reques.status == 200) {
+//            var json_text = JSON.parse(reques.responseText);
+//            for (var key in json_text) {
+//                all_employees.push(json_text[key]);
+//                console.log(all_employees)
+//            }
+//        }
+//    };
+
+
+
+
+
+
+
+</script>
+<script type="text/javascript" src="/public/js/tanchu.js"></script>
+</html>

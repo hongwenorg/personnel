@@ -1,0 +1,247 @@
+.check_out{
+    width:96%;
+    margin-left:2%;
+    border:1px solid lightgray;
+    cursor: pointer;
+}
+.check_out>div{
+    padding-left:20px;
+    height:45px;
+    line-height:45px;
+    background-color:#bbbbbb ;
+    font-family: "微软雅黑";
+    font-size:18px;
+    font-weight: bold;
+}
+.check_tree{
+    margin-top: 20px;
+}
+#tb>tr>td{
+    width:200px;
+    height:30px;
+}
+#tb>tr>td>input{
+    width:70px;
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    border-bottom:1px solid black;
+    border-radius: 5px;
+}
+.rules_button{
+    background:url("/public/img/rules_button.png") no-repeat center;
+    background-color: #00c8c8;
+}
+.staff_rules{
+    width:620px;
+    height:300px;
+    position:fixed;
+    background-color: white;
+    top:340px;
+    left:50%;
+    margin-left:-310px;
+    box-shadow:0 2px 10px 3px gray;
+    display:none;
+    z-index: 999;
+}
+.staff_rules_head{
+    height:50px;
+    background-color:#555a5a ;
+}
+.staff_rules_table{
+    color:white;
+    width:590px;
+    height:150px;
+    margin-left:15px;
+    margin-top:20px;
+    text-align: center;
+}
+.rule_all_table{
+    text-align: center;
+    width:600px;
+}
+.time_rules_tianjia{
+    float:right;margin-right:45px;
+}
+.staff_rules_tr>td{
+    border:1px solid lightgrey;
+    text-align:center;
+    width:190px;
+    padding:2px;
+}
+.staff_rules_time{
+    width:70px;
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    border-bottom:1px solid black;
+    border-radius: 5px;
+}
+.rules_reset{
+    width:100%;
+    border:none;
+    background-color:#00c8c8 ;
+}
+.rules_disable{
+    width:100%;
+    border:none;
+    background-color: #ff6400;
+}
+.staff_rules_btt1{
+    width:475px;
+    background-color:#00c8c8 ;
+    border:none;
+    margin:15px 0 0 15px;
+    border-radius: 5px;
+    height:35px;
+    color:white;
+}
+.staff_rules_btt2{
+    width:100px;
+    background-color:#555a5a ;
+    border:none;
+    margin-left:15px;
+    border-radius: 5px;
+    height:35px;
+    color:white;
+}
+.group_none{
+    width:100px;
+ opacity: 0;
+}
+#staff_rules_name{
+    text-align: center;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    background-color: #555a5a;
+    color: #00c8c8;
+    font-size: 18px;
+    font-weight: bold;
+}
+.staff_rules_close{
+    width:50px;
+    height:40px;
+    font-size: 30px;
+    background-color: #555a5a;
+    border: none;
+    color:#00c8c8;
+    position:absolute;
+    top:0;
+    right:0;
+}
+.staff_rules_out{
+    width:100%;
+    height:3000px;
+    background-color: #555a5a;
+    opacity: 0.7;
+    z-index: 99;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+}
+.td_sty{
+    width:12.1% !important;
+    height:30px !important;
+}
+.append_time_rules{
+    font-weight: bold;
+    height:40px;
+    width:200px;
+    border:1px solid black;
+    border-radius: 20px;
+    margin-left:2%;
+    line-height: 40px;
+    text-align: center;
+    margin-top:20px;
+    cursor: pointer;
+    background-color:white;
+}
+.append_staff_rules{
+    background-color:white;
+    z-index:999;
+}
+.append_rules_close{
+    width:50px;
+    height:40px;
+    font-size: 30px;
+    background-color: #555a5a;
+    border: none;
+    color:#00c8c8;
+    float:right;
+}
+.append_time_forrules>ul>li{
+    height:30px;
+    line-height:30px;
+    text-align: center;
+    width:231px;
+    border:1px solid red;
+    float:left;
+}
+.append_time_forrules>ul{
+    border:1px solid blue;
+    width:700px;
+    margin-left:50px;
+    height:30px;
+}
+.append_time_forrules>ul>li>input{
+    float:left;
+    border:none;
+    width:100px;
+}
+.append_staff_rules{
+    position:fixed;
+    margin-left:50%;
+    display:none;
+    width:620px;
+    box-shadow:0 2px 10px 3px gray;
+}
+.rule_all_table{
+    margin-left:10px;
+    margin-top:10px;
+}
+.select_time_rules{
+    width:150px;
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    border-bottom:1px solid black;
+    border-radius: 5px;
+    outline: none;
+}
+.xiugai_time{
+    background-color:#00c8c8;
+    margin-right:20px;
+}
+.remove_time{
+    background-color:red;
+}
+.xiugai_time,.remove_time{
+    width:50px;
+    border:none;
+    color:white;
+}
+.rule_mintime,.rule_maxtime{
+    width:80px;
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    border-bottom:1px solid black;
+    border-radius: 5px;
+    outline: none;
+}
+.input_time_{
+    width:70px;
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    border-bottom:1px solid black;
+    border-radius: 5px;
+    outline: none;
+}
+.td_width{
+    min-width:160px;
+}
+
+

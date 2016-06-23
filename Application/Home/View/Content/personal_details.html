@@ -1,0 +1,102 @@
+<!DOCTYPE>
+<html>
+<meta charset="UTF-8">
+<head>
+    <title></title>
+    <style type="text/css">
+        *{
+            margin:0;
+            padding:0;
+        }
+        .user_profiles{
+            width:600px;
+            background-color: white;
+            position:fixed;
+            margin-left:50%;
+            margin-top:50%;
+            left:-300px;
+            border:1px solid lightgray;
+        }
+        #user_profiles_02{
+            width:100%;
+            background-color: white;
+            margin-bottom:10px;
+            margin-top: 10px;
+        }
+        .user_profiles>div>div>p{
+            width:120px;
+            text-align:center;
+            font-size: 18px;
+            float:left;
+        }
+        .user_profiles>div>div>input{
+            width:300px;
+            height:30px;
+            float:right;
+        }
+        .user_profiles>div>div{
+            float:left;
+            width:80%;
+            margin-left:10%;
+        }
+        .quedingxiugai{
+            width:90%;
+            height:30px;
+            margin-left:5%;
+            background-color: #00c8c8;
+            border:none;
+            color:white;
+            font-weight: bold;
+        }
+
+        #profiles_head{
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color:#00c8c8;
+            line-height: 40px;
+        }
+    </style>
+</head>
+<body>
+<div class="user_profiles" id="user_profiles_personal">
+    <div style="height:40px;width:100%;background-color:#555a5a;margin:0;" id="profiles_head">
+    </div>
+    <div id="user_profiles_02">
+        <div><p>考勤号</p>      <input type="text"></div>
+        <div><p>姓名</p>        <input type="text"></div>
+        <div><p>民族</p>        <input type="text"></div>
+        <div><p>性别</p>        <input type="text"></div>
+        <div><p>身份证号</p>    <input type="text"></div>
+        <div><p>出生日期</p>    <input type="text"></div>
+        <div><p>籍贯</p>        <input type="text"></div>
+        <div><p>婚姻状况</p>    <input type="text"></div>
+        <div><p>政治面貌</p>    <input type="text"></div>
+        <div><p>家庭住址</p>    <input type="text"></div>
+        <div><p>手机</p>        <input type="text"></div>
+        <div><p>QQ号码</p>      <input type="text"></div>
+        <div><p>E-mail</p>      <input type="text"></div>
+        <div><p>微信号码</p>     <input type="text"></div>
+        <div><p>应急联系人</p>   <input type="text"></div>
+        <div><p>应急联系电话</p> <input type="text"></div>
+        <div><p>毕业院校</p>    <input type="text"></div>
+        <div><p>专业</p>        <input type="text"></div>
+        <div><p>学历</p>        <input type="text"></div>
+        <div><p>学位</p>        <input type="text"></div>
+        <div><p>资格证书</p>     <input type="text"></div>
+        <div><p>工作经历</p>     <input type="text"></div>
+    </div>
+    <input type="button" class="quedingxiugai" value="保存">
+</div>
+</body>
+<script>
+    var user_profiles_personal=document.getElementById("user_profiles_personal");
+    user_profiles_personal.style.height=document.documentElement.clientHeight/100*80+"px";
+    user_profiles_personal.style.top=-900+"px";
+    var user_profiles_02=document.getElementById("user_profiles_02");
+    user_profiles_02.style.overflowY="auto";
+    var user_02height=document.documentElement.clientHeight/100*80-100+"px";
+    user_profiles_02.style.height=user_02height;
+</script>
+
+</html>

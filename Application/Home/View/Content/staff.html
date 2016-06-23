@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="/public/js/jquery.js"></script>
+    <!--<script type="text/javascript" src="/public/js/public.js"></script>-->
+    <script src="/public/js/laydate/laydate.js"></script>
+    <title>员工信息</title>
+    <link rel="stylesheet" href="/public/css/Content_staff.css" type="text/css">
+</head>
+<body style="background-color: #efefef" id="staff_body">
+<div style="width:100%;height:5000px;z-index:99999;position:fixed;top:0;display:none;background-color: white;opacity: 0.5" id="sousuo_img_out">
+    <img src="/public/img/sousuo.gif" alt="" id="sousuo_img">
+    <p style="color:#00c8c8;font-size: 20px;font-weight:bold; position:fixed;left:44%;top:460px; z-index: 99999" id="sousuo_img_txt">数据正在拼命加载中。。。。</p>
+</div>
+<!--*********************         头部引用        ******************-->
+<div class="head_01">
+    <p id="bigfont">员工档案管理</p>
+    <script src="/public/js/head.js" type="text/javascript" charset="utf-8"></script>
+</div>
+<div id="num_panduan1" style="display:none;">0</div>
+<div class="zpgw" id="bq">
+    <div class="zpgwl" id="tab">
+        <div id="tab_click" style="background-color: rgb(239, 239, 239) !important;">
+            <div id="tab1">
+                <div id="tabb1" onclick="blk(1)" style="background-color: white;color:black">员工信息</div>
+            </div>
+            <div id="tab2">
+                <div id="tabb2" onclick="blk(2)">员工调动</div>
+            </div>
+            <div id="tab3">
+                <div id="tabb3" onclick="blk(3)">级别变化</div>
+            </div>
+            <div id="tab4">
+                <div id="tabb4" onclick="blk(4)">奖罚记录</div>
+            </div>
+            <div id="tab5">
+                <div id="tabb5" onclick="blk(5)">培训记录</div>
+            </div>
+            <div id="tab6">
+                <div id="tabb6" onclick="blk(6)">五险一金</div>
+            </div>
+            <div id="tab7">
+                <div id="tabb7" onclick="blk(7)" style="border-right: 1px solid lightgray">离职查询</div>
+            </div>
+        </div>
+    </div>
+    <div id="container">
+        <div id="content1">
+            <ul id="show_ul"></ul>
+            <button id="btt">
+                <img src="/public/img/tianjia.png" class="tian_jia" alt="">添加新员工
+            </button>
+            <div class="sousuokuang" id="sousuokuang">
+                <!--<div class="prov_boder">-->
+                <select name="" id="prov" onchange="prov_change()">
+                    <option value="0">按条件搜索</option>
+                    <option value="campus">按单位查询</option>
+                    <option value="post">按职务查询</option>
+                    <option value="time">按入职时间查询</option>
+                    <option value="user">按员工号查询</option>
+                    <option value="name" id="click_findname">按姓名查询</option>
+                </select>
+                <!--</div>-->
+                <select name="" id="city"></select>
+                <span id='prov_append'></span>
+                <button type="button" id="find_btt" style="float:right"><img src="/public/img/sousuo.png" class="sou_suo" alt=""></button>
+                <!--时间控件-->
+            </div>
+            <!--*********************************************存放后台员工信息*****************************************************-->
+            <div style="width:100%;">
+                <table class="tb" cellpadding="2" cellspacing="0" id="tb">
+                    <tr class="trr" id="trr">
+                        <th id="staff_num">
+                            <div>序号</div>
+                        </th>
+                        <th id="staff_user" onclick="namesort('user')">
+                            <div>员工号</div>
+                        </th>
+                        <th id="staff_name" onclick="namesort('name')">
+                            <div>姓名</div>
+                        </th>
+                        <th id="staff_date" onclick="namesort('entry_date')">
+                            <div>入职时间</div>
+                        </th>
+                        <th id="staff_campus" onclick="namesort('campus')">
+                            <div>单位部门</div>
+                        </th>
+                        <th id="staff_post" onclick="namesort('post')">
+                            <div> 职务</div>
+                        </th>
+                        <th id="staff_telephone" onclick="namesort('telephone')">
+                            <div>联系电话</div>
+                        </th>
+                        <th id="staff_qq" onclick="namesort('qq')">
+                            <div>QQ</div>
+                        </th>
+                    </tr>
+                </table>
+            </div>
+            <input type="hidden" name="" id="user_card">
+            <!--点击显示员工信息-->
+            <div id="staff_out"></div>
+            <div id="append_out" class="append_out"></div>
+            <div id="staff_all" style="background-color:white;width:620px;height:170px; z-index: 9999">
+                <div class="staff_diaodong_head">
+                    <a class="jiangcheng_inner" id="staff_xiugai_inner"></a>
+                    <input type="button" value="×" class="close_diaodong" id="close_staff_xiugai">
+                </div>
+                <ul class="staff_abt">
+                    <li id="staff_xinxi">基本信息</li>
+                    <li id="staff_rz">入职离职</li>
+                    <li id="staff_gangwei">岗位调动</li>
+                    <li>级别变动</li>
+                    <li id="staff_jc">奖励惩罚</li>
+                    <li>培训信息</li>
+                </ul>
+            </div>
+
+
+            <!--------------------------------------员工调动指定员工岗位------------------------------------------------>
+            <div class="staff_diaodong" id="staff_diaodong" style="background-color:white;width:620px;height:360px">
+                <div class="staff_diaodong_head">
+                    <a class="diaodong_inner" id="diaodong_inner"></a>
+                    <input type="button" value="×" class="close_diaodong" id="close_diaodong">
+                </div>
+                <form id="export_fold" action="">
+                    <div class="staff_diaodong_slt" style="padding-top:10px">
+                        <h4 class="ruzhi_date">调出单位部门</h4>
+                        <select name="export_campus" id="export_campus" class="dangqian_date" style="margin-right:30px;width:160px;font-size: 18px" disabled="disabled">
+                            <option value="">请选择</option>
+                        </select>
+                        <h4 class="ruzhi_date">调出前职务</h4>
+                        <select name="export_post" id="export_post" class="dangqian_date" style="width:160px;font-size: 18px" disabled="disabled">
+                            <option value="">请选择</option>
+                        </select>
+                        <h4 class="ruzhi_date" style="position:absolute;top:119px">调入单位部门</h4>
+                        <select name="fold_campus" id="fold_campus" onchange="fold_campus_save()" class="dangqian_date" style="position:absolute;top:119px;left:138px;width:160px;font-size: 18px">
+                            <option value="">请选择</option>
+                        </select>
+                        <h4 class="ruzhi_date" style="position:absolute;top:119px;left:328px;">调入后职务</h4>
+                        <select name="fold_post" id="fold_post" class="dangqian_date" style="position:absolute;float:left;top:119px;left:419px;width:160px;font-size: 18px">
+                            <option value="">请选择</option>
+                        </select>
+                        <h4 class="ruzhi_date" name="" style="float:left;position:absolute;top:158px">岗位调动时间</h4>
+                        <input type="date" class="dangqian_date" id="staff_time" name="time" style="float:left;font-size: 16px;position:absolute;top:156px;left:139px;width:150px" placeholder="年/月/日">
+                        <textarea name="state" id="staff_state" class="why_chengfa" placeholder="调动说明，最多输入100字" maxlength="100" style="margin-top:100px"></textarea>
+                    </div>
+                    <input type="button" value="指定员工岗位" id="but_post" class="staf_bt3" style="margin-top:-10px;">
+                </form>
+            </div>
+
+
+            <!-----------------------------------------------奖惩记录------------------------------------------------>
+
+            <div class="staff_diaodong" id="staff_jiangcheng" style="background-color:white;width:620px;height:300px">
+                <div class="staff_diaodong_head">
+                    <a class="jiangcheng_inner" id="jiangcheng_inner"></a>
+                    <input type="button" value="×" class="close_diaodong" id="close_jiangcheng">
+                </div>
+                <form action="/index.php/Home/Staff/staff_record" method="post" id="record_form" name="record_form" class="record_form">
+                    <div class="staff_diaodong_slt">
+                        奖惩形式
+                        <select name="shape" id="shape" class="staff_jiangcheng">
+                            <option value="奖励/处罚">奖励/处罚</option>
+                            <option value="奖励">奖励</option>
+                            <option value="处罚">处罚</option>
+                        </select>
+                        奖惩时间
+                        <input type="date" name="time" id="time" class="staff_diaodong_teacher" placeholder="年/月/日">
+                        <textarea name="reason" class="why_chengfa" id="why_chengfa" placeholder="奖惩原因，最多输入一百字" maxlength="100"></textarea>
+                        奖惩结果
+                        <input type="text" class="chengfa_jieguo" id="result" name="result" style="width:450px">
+                    </div>
+                    <input type="button" value="确定" class="staf_bt3" id="but_record" style="margin-top: 0;">
+                </form>
+            </div>
+
+
+            <!-----------------------------------------------入职离职------------------------------------------------>
+            <div class="staff_diaodong" id="staff_ruzhi"
+                 style="background-color:white;width:660px;height:340px;display: none;z-index: 999999;margin-left: -330px">
+                <div class="staff_diaodong_head">
+                    <a class="jiangcheng_inner" id="ruzhi_inner"></a>
+                    <input type="button" value="×" class="close_diaodong" id="close_ruzhi">
+                </div>
+                <form action="/index.php/Home/Staff/leave_pro" method="post" id="ruzhi_form" name="record_form"
+                      class="record_form">
+                    <div class="staff_ruzhi_slt" id="staff_ruzhi_slt">
+                        <h4 class="ruzhi_date">合同签订日期</h4>
+                        <input type="date" class="dangqian_date" name="contract_date" id="contract_date"
+                               style="font-size: 16px;margin-right: 50px" placeholder="年/月/日">
+                        <h4 class="ruzhi_date">正式到岗日期</h4>
+                        <input type="date" class="dangqian_date" name="entry_date" id="entry_date"
+                               style="font-size: 16px;margin-bottom: 10px" placeholder="年/月/日">
+                        <h4 class="ruzhi_date">入职单位部门</h4>
+                        <select name="campus_post" id="campus_post" class="staff_diaodong_school">
+                        </select>
+                        <h4 class="ruzhi_date">入职职务指定</h4>
+                        <select name="post_post" id="post_post" class="staff_diaodong_teacher">
+                        </select>
+                        <h4 class="ruzhi_date" style="right:500px;margin-top: 10px">预计转正日期</h4>
+                        <input type="date" class="dangqian_date" name="predict_date" id="predict_date" style="font-size: 16px;margin-right: 50px;margin-top: 10px" placeholder="年/月/日">
+                        <h4 class="ruzhi_date" style="right:500px;margin-top: 10px">实际转正日期</h4>
+                        <input type="date" class="dangqian_date" name="reality_date" id="reality_date"
+                               style="font-size: 16px;margin-top: 10px" placeholder="年/月/日">
+                        <h4 class="ruzhi_date" style="right:500px;margin-top: 10px">离职类型</h4>
+                        <select name="leave_type" id="leave_type" class="staff_jiangcheng" style="width:160px;margin-top: 10px;padding-left:10px">
+                            <option value="请选择">请选择</option>
+                            <option value="自己辞职">自己辞职</option>
+                            <option value="劝退离职">劝退离职</option>
+                            <option value="辞退离职">辞退离职</option>
+                        </select>
+                        <textarea name="leave_reason" class="why_lizhi" id="leave_reason" placeholder="离职原因，最多输入一百字"
+                                  maxlength="100"></textarea>
+                        <h4 class="ruzhi_date" style="margin-top: 10px">离职日期</h4>
+                        <input type="date" class="dangqian_date" name="leave_date" id="leave_date"
+                               style="font-size: 16px;margin-top: 10px" placeholder="年/月/日">
+                        <h4 class="ruzhi_date" style="margin-top:10px">跟踪价值</h4>
+                        <select name="tail_after_value" id="tail_after_value" class="staff_jiangcheng"
+                                style="width:160px;margin-top:10px;padding-left:10px">
+                            <option value="无">无</option>
+                            <option value="一般">一般</option>
+                            <option value="高">高</option>
+                        </select>
+                    </div>
+                    <input type="button" value="确定" class="staf_bt3" id="entry_leave"
+                           style="margin-top: 15px;width:595px;">
+                </form>
+            </div>
+            <!--点击添加员工信息-->
+
+            <div class="my_div" id="my_div" style="top:500px;left:-550px;"  onmousedown="mouseDown(this,event)"
+                 onmousemove="mouseMove(event)"
+                 onmouseup="mouseUp(event)">
+                <input type="button" value="×" class="close_append" id="close_append">
+
+                <div class="my_form_div"></div>
+            </div>
+            <!--endprint-->
+            <!--**********************************************分页签，上一页/下一页***********************************************-->
+            <input type='button' value='首页' class='page_top' id="page_min" onclick='page_page(1)'>
+
+            <div id='page_all'></div>
+            <input type='button' value='尾页' class='page_top' id="page_max" onclick='page_page(CountPage )'>
+
+            <div id="pageall"></div>
+            <!--**********************************************生成excel表格及打印表格*********************************************-->
+            <input class="copy_excel" type="button" id="copy_excel" onclick="excel_blank()" value="生成excel"/>
+            <input type="button" class="copy_dayin" id="copy_dayin" onclick="dayin_blank()" value="生成打印内容"/>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="/public/js/staff_all.js"></script>
+</html>

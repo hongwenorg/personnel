@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="/public/js/public.js"></script>
+    <title>鸿文人事系统登录</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "微软雅黑";
+        }
+
+        .max {
+            width: 100%;
+            background-color: #555a5a;
+            height: 5000px;
+        }
+
+        .tete {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            width: 400px;
+            margin-left: -200px;
+            margin-top: -170px;
+        }
+
+        .tete > .logo {
+            margin-left: 100px;
+        }
+
+        .denglu > li {
+            width: 375px;
+            float: left;
+            list-style: none;
+            margin-left: 20px;
+        }
+
+        .denglu {
+            margin-top: 30px;
+            border-radius: 5px;
+        }
+
+        .denglu > .user {
+            margin-top: 20px;
+        }
+
+        .denglu > #check {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            color: dimgray;
+            font-size: 14px;
+        }
+
+        .denglu > .user > input {
+            outline: none;
+            border: 1px solid darkgray;
+            font-size: 20px;
+            width:90%;
+            height: 41px;
+            padding-left: 15px;
+        }
+
+        #user {
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        #pwd {
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+            border-top: 0 !important;
+        }
+
+        .denglu > li > button {
+            border-radius: 5px;
+            border: 0;
+            width: 95%;
+            height: 35px;
+            color: white;
+            font-size: 20px;
+            background-color: #00c8c8;
+            outline-color: #00c8c8;
+        }
+
+        .denglu {
+            width: 400px;
+            height: 200px;
+            background-color: #efefef;
+        }
+
+        #logo {
+            margin-left: 100px;
+        }
+    </style>
+</head>
+<body>
+<div class="max" id="max">
+    <div class="tete">
+        <img id="logo" src="/public/img/logo_200_60.png" alt="">
+        <ul class="denglu">
+            <li class="user">
+                <input type="text" class="user_style" id="user" value="" placeholder="输入姓名/员工号"
+                       onKeypress="javascript:if(event.keyCode == 32)event.returnValue = false;">
+                <input type="password" class="user_style" id="pwd" value="" placeholder="输入登录密码">
+            </li>
+            <li id="check"><input type="checkbox" id="cck">&nbsp;&nbsp;一周内记住我</li>
+            <li id="btt_">
+                <button id="btt">进入服务后台</button>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="/public/js/jquery.js"></script>
+<script type="text/javascript">
+    var u = document.getElementById("user");
+    var p = document.getElementById("pwd");
+    var btt = document.getElementById("btt");
+    var box = document.getElementById("cck");
+    function setCookie(name, value, days) {
+        var data = new Date();
+        data.setDate(data.getDate() + days);
+        document.cookie = name + '=' + value + ';expires=' + data + ";path=/";
+    }
+    function getCookie(name) {
+        var arr = document.cookie.split("; ");
+        for (var i = 0; i < arr.length; i++) {
+            var arr2 = arr[i].split("=");
+            if (arr2[0] == name) {
+                return arr2[1];
+            }
+        }
+        return "";
+    }
+    function removeCookie(name) {
+        setCookie("name", "1", -1);
+    }
+
+    window.onload = function () {
+        if (u.value != "") {
+            $("#cck").attr("checked", "checked");
+        } else {
+            $("#cck").removeAttr("checked");
+        }
+        var iOS;
+        var isAndroid;
+        var userType = {};
+        // android
+        if (navigator.userAgent.toLowerCase().match(/(android)/)||navigator.userAgent.toLowerCase().match(/(iphone|ipod|ipad)/)) {
+            isAndroid = true;
+            userType.isAndroid = true;
+            iOS = true;
+            userType.iOS = true;
+            var tete= document.querySelector(".tete");
+                tete.style.width="90%";
+                tete.style.marginLeft=-(tete.clientWidth/2)+"px";
+                tete.style.left="50%";
+                tete.style.marginTop="-300px";
+            var denglu= document.querySelector(".denglu");
+                denglu.style.width="100%";
+                denglu.style.height="400px";
+                denglu.style.borderRadius="20px";
+            document.querySelector(".user").style.width="100%";
+            document.getElementById("user").style.height="90px";
+            document.getElementById("user").style.width="94%";
+            document.getElementById("user").style.fontSize="50px";
+            document.getElementById("pwd").style.height="90px";
+            document.getElementById("pwd").style.width="94%";
+            document.getElementById("pwd").style.fontSize="50px";
+            document.getElementById("cck").style.fontSize="50px";
+            document.getElementById("check").style.fontSize="50px";
+            document.getElementById("check").style.width="100%";
+            document.getElementById("btt").style.width="95%";
+            document.getElementById("btt").style.height="70px";
+            document.getElementById("btt").style.fontSize="50px";
+            document.getElementById("btt_").style.width="100%";
+            document.getElementById("logo").style.width="50%";
+            document.getElementById("logo").style.marginLeft="25%";
+
+//        document.querySelectorAll(".user_style").style.height="100px";
+        } else {
+            iOS = false;
+            isAndroid = false;
+        }
+    };
+    btt.onclick = function () {
+        var user  =  document.getElementById("user").value;
+        var pwd   =  document.getElementById("pwd").value;
+        var url = "/index.php/Home/Index/login_rtt?user=" + user + "&pwd=" + pwd;
+        if (user == "" || pwd == "") {
+            alert("用户名或密码不能为空！");
+            return;
+        }
+        $.ajax({
+            url: "/index.php/Home/Index/login_rtt",
+            data: {"user": user, "pwd": pwd},
+            type: "get",
+            async:"true",
+            success: function (data) {
+                var txt = JSON.parse(data);
+                if (txt.status == 0) {
+                    alert("用户名或密码错误！");
+                    return false;
+                } else if (txt.status == 1 && txt.level == 1) {
+                    var iOS;
+                    var isAndroid;
+                    var userType = {};
+                    // android
+                    if (navigator.userAgent.toLowerCase().match(/(android)/)) {
+                        isAndroid = true;
+                        userType.isAndroid = true;
+                        location.href = "/index.php/Home/Content/userprofilesmanage_adr";
+                    } else if (navigator.userAgent.toLowerCase().match(/(iphone|ipod|ipad)/)) {
+                        iOS = true;
+                        userType.iOS = true;
+                        location.href = "/index.php/Home/Content/userprofilesmanage_adr";
+                    } else {
+                        iOS = false;
+                        isAndroid = false;
+                        location.href = "/index.php/Home/Content/userprofilesmanage";
+                    }
+
+
+                } else if (txt.status == 1 && txt.level == 2) {
+                    location.href = "/index.php/Home/Content/userprofiles";
+                }
+                if (box.checked) {
+                    setCookie("check", 1, 7);
+                    setCookie("username", txt.user, 7);
+                    setCookie("post", txt.post, 7);
+                    setCookie("name", txt.name, 7);
+                    setCookie("photo_max_url", txt.photo_max_url, 7);
+                    setCookie("photo_small_url", txt.photo_small_url, 7);
+                } else {
+                    setCookie("check", 2, -1);
+                    setCookie("username", txt.user);
+                    setCookie("post", txt.post);
+                    setCookie("name", txt.name);
+                    setCookie("photo_max_url", txt.photo_max_url);
+                    setCookie("photo_small_url", txt.photo_small_url);
+                }
+
+            }
+
+        })
+    };
+
+    document.getElementById("pwd").onkeydown = function () {
+        if (event.keyCode == 13) {
+            btt.click();
+        }
+    };
+    document.getElementById("check").onkeydown=function(){
+        if (event.keyCode == 13) {
+            btt.click();
+        }
+    };
+    u.value = getCookie("username");
+    document.getElementById("max").onmousewheel = function () {
+        return false;
+    };
+</script>
+</html>

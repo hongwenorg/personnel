@@ -1,0 +1,419 @@
+<form action="/index.php/Home/Staff/staff_pro" method="post" id="myform" name="myform" class="myform">
+    <input type="hidden" id="user_id" name="user_id" value="">
+
+    <div id="append_staff" class="append_staff">
+        <div id="append_head" class="append_head">
+        </div>
+        <div id="append_body" class="append_body">
+            <!--<div id="append_usm" class="append_usm">-->
+                <!--&lt;!&ndash;<div id="remove_but"><input type="button" class="staf_bt1" value="生成新员工号码"></div>&ndash;&gt;-->
+                <!--&lt;!&ndash;<div class="user_div"></div>&ndash;&gt;-->
+                <!--&lt;!&ndash;<input type="hidden" class="user" name="user" id="user">&ndash;&gt;-->
+            <!--</div>-->
+            <div class="imgReviewBox" style=""><img src="" id="photo_img" alt=""></div>
+            姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名<input type="text" class="name_width" style="width:110px" id="append_name" name="name" maxlength="5" placeholder="填写姓名">
+            民&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;族<input type="text" class="min_width" style="width:80px" id="nation" name="nation" maxlength="5" placeholder="填写民族">
+            性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别
+            <select name="sex" id="sex" class="min_width" style="width:83px">
+                <option value="男">男</option>
+                <option value="女">女</option>
+            </select>
+            婚姻状况
+            <select name="marriage" id="marriage" class="min_width" style="width:100px">
+                <option value="未婚">未婚</option>
+                <option value="已婚">已婚</option>
+            </select>
+            <div style="height:10px"></div>
+
+            身份证号<input type="text" class="num_width" id="card" name="card" maxlength="18" placeholder="填写17/18位合法身份证号码">
+            出生日期<input type="date" class="chus_width" id="birthday" style="width:170px;" name="birthday"  placeholder="年/月/日">
+            政治面貌<input type="text" class="min_width" id="polity" style="width:80px" name="polity" maxlength="8" placeholder="政治面貌">
+            <div style="height:10px"></div>
+
+            籍&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;贯<input type="text" class="name_width" maxlength="5" id="residence_booklet" name="residence_booklet" placeholder="籍贯">
+            家庭住址<input type="text" style="width:450px" id="live" name="live" placeholder="填写正确家庭住址">
+            <div style="height:10px"></div>
+
+            手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;机<input type="text" class="name_width" id="append_tel" name="telephone" maxlength="11" placeholder="填写手机号码">
+            应急联系人<input type="text" class="name_width" id="contacts" name="contacts" placeholder="填写姓名">
+            应急联系电话<input type="text" style="width:145px" id="urgency_telephone" name="urgency_telephone" placeholder="填写手机号码">
+            <div style="height:10px"></div>
+
+            毕业院校<input type="text" style="width:402px" id="school" name="school" placeholder="填写毕业院校名称">
+            专&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;业<input type="text" style="width:180px" id="major" name="major" placeholder="填写专业名称">
+            <div style="height:10px"></div>
+
+            学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历
+            <select name="education" id="education" class="name_width" style="width:150px;">
+                <option value="请选择">请选择</option>
+                <option value="初中">初中</option>
+                <option value="高中">高中</option>
+                <option value="中专">中专</option>
+                <option value="大专">大专</option>
+                <option value="本科">本科</option>
+            </select>
+
+            学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位
+            <select name="degree" id="degree" class="name_width" style="width:167px">
+                <option value="请选择">请选择</option>
+                <option value="学士">学士</option>
+                <option value="硕士">硕士</option>
+                <option value="博士">博士</option>
+                <option value="研究生">研究生</option>
+            </select>
+            资格证书<input type="text" style="width:370px" id="seniority" name="seniority" placeholder="填写与岗位相关资格证书">
+            <fieldset class="fdst">
+                <legend>工作经历</legend>
+                <input type="checkbox" class="check1" name="work_data[0][check]" value="true" id="check1"
+                       onclick="check_click('1')">
+                <input type="hidden" name="work_data[0][id]" id="work_id0">
+                入职时间 <input type="date" name="work_data[0][entry_time]" class="ruzhi_da check01" disabled="false"
+                            id="entry_time0" placeholder="年/月/日">
+                离职时间 <input type="date" name="work_data[0][leave_time]" class="ruzhi_da check02" disabled="false"
+                            id="leave_time0" placeholder="年/月/日">
+                职务 <input type="text" name="work_data[0][duties]" class="check03" style="width:80px" disabled="false"
+                          id="duties0">
+                公司名称 <input type="text" name="work_data[0][company_name]" class="max_width check04" disabled="false"
+                            id="company_name0">
+                <div style="height:10px"></div>
+                <input type="checkbox" class="check2" name="work_data[1][check]" value="true" id="check2"
+                       name="work_data[0][check]" onclick="check_click('2')">
+                <input type="hidden" name="work_data[1][id]" id="work_id1">
+                入职时间 <input type="date" name="work_data[1][entry_time]" class="ruzhi_da" disabled="false"
+                            id="entry_time1" placeholder="年/月/日">
+                离职时间 <input type="date" name="work_data[1][leave_time]" class="ruzhi_da" disabled="false"
+                            id="leave_time1" placeholder="年/月/日">
+                职务 <input type="text" name="work_data[1][duties]" style="width:80px" disabled="false" id="duties1">
+                公司名称 <input type="text" name="work_data[1][company_name]" class="max_width" disabled="false"
+                            id="company_name1">
+                <div style="height:10px"></div>
+                <input type="checkbox" class="check3" name="work_data[2][check]" value="true" id="check3"
+                       onclick="check_click('3')">
+                <input type="hidden" name="work_data[2][id]" id="work_id2">
+                入职时间 <input type="date" name="work_data[2][entry_time]" class="ruzhi_da" disabled="false"
+                            id="entry_time2" placeholder="年/月/日">
+                离职时间 <input type="date" name="work_data[2][leave_time]" class="ruzhi_da" disabled="false"
+                            id="leave_time2" placeholder="年/月/日">
+                职务 <input type="text" name="work_data[2][duties]" style="width:80px" disabled="false" id="duties2">
+                公司名称 <input type="text" name="work_data[2][company_name]" class="max_width" disabled="false"
+                            id="company_name2">
+                <div style="height:10px"></div>
+                <input type="checkbox" class="check4" name="work_data[3][check]" value="true" id="check4"
+                       onclick="check_click('4')">
+                <input type="hidden" name="work_data[3][id]" id="work_id3">
+                入职时间 <input type="date" name="work_data[3][entry_time]" class="ruzhi_da" disabled="false"
+                            id="entry_time3" placeholder="年/月/日">
+                离职时间 <input type="date" name="work_data[3][leave_time]" class="ruzhi_da" disabled="false"
+                            id="leave_time3" placeholder="年/月/日">
+                职务 <input type="text" name="work_data[3][duties]" style="width:80px" disabled="false" id="duties3">
+                公司名称 <input type="text" name="work_data[3][company_name]" class="max_width" disabled="false"
+                            id="company_name3">
+                <div style="height:10px"></div>
+            </fieldset>
+            <div style="height:10px"></div>
+            QQ号码 <input name="qq" id="qq" type="text" class="name_width" placeholder="填写QQ号码">
+            E-mail <input name="email" id="email" type="email" class="chus_width" style="width:182px" placeholder="填写正确邮箱地址">
+            微信号 <input name="wechat" id="wechat" type="text" class="name_width" placeholder="填写微信号">
+            考勤号 <input name="check" id="check" type="text" class="name_width" placeholder="填写考勤号">
+            <div style="height:10px"></div>
+            保险缴纳
+            <select name="insure_data[is_no]" id="is_no" class="name_width">
+                <option value="否">否</option>
+                <option value="是">是</option>
+            </select>
+            正常缴纳/补贴
+            <select name="insure_data[condition]" id="condition" style="width:105px">
+                <option value="无">无</option>
+                <option value="正常缴纳">正常缴纳</option>
+                <option value="正常补贴">正常补贴</option>
+            </select>
+            缴纳时间 <input type="date" id="begin_time" name="insure_data[begin_time]"  placeholder="年/月/日">
+            缴纳地点 <select name="insure_data[place]" id="place" class="name_width">
+            <option id="area" value="请选择">请选择</option>
+        </select>
+            <div id="append_footer">
+                <input type="button" value="保存员工信息" class="staf_bt2" id="tj_form">
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    var append_selstr = "";
+    $.ajax({
+        url: "/index.php/Home/Staff/area_school",
+        data: {},
+        type: "post",
+        async: "false",
+        traditional: "true",
+        cache: "false",
+        success: function (msg) {
+            var msgs = JSON.parse(msg);
+            for (var i in msgs) {
+                append_selstr += "<option value='" + msgs[i].name + "'>" + msgs[i].name + "</option>";
+            }
+            $("#area").after(append_selstr);
+        }
+
+    });
+    var append_staff = document.getElementById("append_staff");
+    var my_form = document.getElementById("myform");
+    var close_append = document.getElementById("close_append");
+    var append_head = document.getElementById("append_head");
+    var append_name = document.getElementById("append_name");
+    append_head.innerHTML = "添加新员工";
+
+
+
+    //修改或者添加新员工按钮操作  start
+    $("#tj_form").click(function(){
+
+        //名字验证
+        var name = $("#append_name").val();
+        if(name.length!=0 && name.length<5){
+            var reg=/^((\d+)|(\w+))$/;
+            if(reg.test(name)){
+                alert("对不起，您输入的姓名格式不正确!");
+                return false;
+            }
+        }else{
+            alert("对不起，您输入的姓名格式不正确!");
+            return false;
+        }
+
+
+
+        //民族验证
+        var nation = $("#nation").val();
+        if(nation.length!=0 && nation.length<=5){
+            var reg=/^((\d+)|(\w+))$/;
+            if(reg.test(nation)){
+                alert("对不起，您输入的民族格式不正确!");
+                return false;
+            }
+        }else{
+            alert("对不起，您输入的民族格式不正确!");
+            return false;
+        }
+
+
+
+        //身份证信息验证
+        var card = $("#card").val();
+        if(card.length!=0){
+            var reg=/^((\d{17,18})|(\d{17}x))$/;
+            if(!reg.test(card)){
+                alert("对不起，请输入17/18位合法身份证号码!");
+                return false;
+            }
+        }else{
+            alert("对不起，请输入身份证号！");
+            return false;
+        }
+
+
+
+        //手机号信息验证
+        var append_tel= $("#append_tel").val();
+        if(append_tel.length!=0){
+            var reg=/^\d{11}$/;
+            if(!reg.test(append_tel)){
+                alert("对不起，请输入正确的手机号码!");
+                return false;
+            }
+        }else{
+            alert("对不起，请输入手机号码！");
+            return false;
+        }
+
+
+
+        //考勤号（员工号）验证
+        var check= $("#check").val();
+        if(check.length!=0){
+            var reg=/^\d+$/;
+            if(!reg.test(check)){
+                alert("对不起，请输入正确的考勤号码!");
+                return false;
+            }
+        }else{
+            alert("对不起，请输入考勤号码！");
+            return false;
+        }
+
+
+
+        //所有信息无误走提交
+        if (confirm("是否保存员工信息")) {
+            //工作经历存为json字符串
+            var duties_str = "[";
+            for (var i = 0; i < 4; i++) {
+                if (i != 3) {
+                    if ($("#check" + (i + 1)).attr("checked") == "checked") {
+                        duties_str += '{"check":"true","id":"' + $("#work_id" + i).val() + '","entry_time":"' + $("#entry_time" + i).val() + '","leave_time":"' + $("#leave_time" + i).val() + '","duties":"' + $("#duties" + i).val() + '","company_name":"' + $("#company_name" + i).val() + '"},';
+                    } else {
+                        duties_str += '{"check":"false","id":"' + $("#work_id" + i).val() + '","entry_time":"' + $("#entry_time" + i).val() + '","leave_time":"' + $("#leave_time" + i).val() + '","duties":"' + $("#duties" + i).val() + '","company_name":"' + $("#company_name" + i).val() + '"},';
+                    }
+
+                } else {
+                    if ($("#check" + (i + 1)).attr("checked") == "checked") {
+                        duties_str += '{"check":"true","id":"' + $("#work_id" + i).val() + '","entry_time":"' + $("#entry_time" + i).val() + '","leave_time":"' + $("#leave_time" + i).val() + '","duties":"' + $("#duties" + i).val() + '","company_name":"' + $("#company_name" + i).val() + '"}';
+                    } else {
+                        duties_str += '{"check":"false","id":"' + $("#work_id" + i).val() + '","entry_time":"' + $("#entry_time" + i).val() + '","leave_time":"' + $("#leave_time" + i).val() + '","duties":"' + $("#duties" + i).val() + '","company_name":"' + $("#company_name" + i).val() + '"}';
+                    }
+                }
+            }
+            duties_str += "]";
+            insure_str = '{"is_no":"' + $("#is_no").val() + '","condition":"' + $("#condition").val() + '","begin_time":"' + $("#begin_time").val() + '","place":"' + $("#place").val() + '"}';
+            var data = $('#myform').serialize();//将表单数据以字符串形式获取
+            $.ajax({
+                url: "/index.php/Home/Staff/staff_pro",
+                data: {'data': data, 'work_data': duties_str, "insure_arr": insure_str},
+                type: "post",
+                async: "false",
+                traditional: "true",
+                cache: "false",
+                success: function (msg) {
+                    if (msg == 1) {
+                        alert("保存成功！");
+                        var close_append = document.getElementById("close_append");
+                        var append_out = document.getElementById("append_out");
+                        $('.my_form_div').html("");
+                        $(".my_div").css("display", "none");
+                        append_out.style.display = "none";
+                        close_append.style.display = "none";
+                        document.getElementById("staff_all").style.display = "none";
+                        document.getElementById("staff_out").style.display = "none";
+                        find_btt.click();
+                    } else if(msg == 2){
+                        alert("修改成功！");
+                        var close_append = document.getElementById("close_append");
+                        var append_out = document.getElementById("append_out");
+                        $('.my_form_div').html("");
+                        $(".my_div").css("display", "none");
+                        append_out.style.display = "none";
+                        close_append.style.display = "none";
+                        document.getElementById("staff_all").style.display = "none";
+                        document.getElementById("staff_out").style.display = "none";
+                    } else if(msg == 3){
+                        alert("保存失败,请填写完整数据！");
+                    } else if(msg == 4){
+                        alert("保存失败,考勤号已存在！");
+                    }
+
+                }
+
+            });
+        }
+    });
+    //修改或者添加新员工按钮操作  end
+
+
+    /*//生成员工号
+    $(".staf_bt1").click(function () {
+        if ($(".user_div").text() == "") {
+            $.ajax({
+                url: "/index.php/Home/Staff/create_user",
+                type: "post",
+                async: "true",
+                success: function (data) {
+                    if (!data) {
+                        alert("程序出错，请联系管理员！");
+                        return false;
+                    } else {
+                        $(".user_div").text(data);
+                        $(".user").val(data);
+                    }
+                }
+            });
+        } else {
+            alert("不可多次生成员工号！");
+        }
+    });*/
+
+
+    //*************点击check判断 input是否禁用*************
+    function check_click(num) {
+        if ($("#entry_time" + (parseInt(num) - 1)).attr("disabled") == "disabled") {
+            $("#entry_time" + (parseInt(num) - 1)).removeAttr("disabled");
+            $("#leave_time" + (parseInt(num) - 1)).removeAttr("disabled");
+            $("#duties" + (parseInt(num) - 1)).removeAttr("disabled");
+            $("#company_name" + (parseInt(num) - 1)).removeAttr("disabled");
+        } else {
+            $("#entry_time" + (parseInt(num) - 1)).attr("disabled", "false");
+            $("#leave_time" + (parseInt(num) - 1)).attr("disabled", "false");
+            $("#duties" + (parseInt(num) - 1)).attr("disabled", "false");
+            $("#company_name" + (parseInt(num) - 1)).attr("disabled", "false");
+        }
+    }
+
+
+var e_mail=document.getElementById("email");
+    function checkvalue() {
+
+        if (e_mail.value == "") {
+            alert("电子邮箱不能为空！");
+            e_mail.focus();
+            return false;
+        }
+        var Reg = /^\d+@(qq\.)com$/;
+        //正则验证邮箱格式
+        if (!Reg.test(e_mail.value)) {
+            alert("请正确填写邮箱地址!");
+            e_mail.focus();
+            return false;
+        }
+    }
+
+    //alert弹出之窗样式
+    window.alert = function (str) {
+
+        var shield = document.createElement("DIV");
+        shield.id = "shield";
+        shield.style.position = "absolute";
+        shield.style.left = "0px";
+        shield.style.top = "0px";
+        shield.style.width = "100%";
+        shield.style.height = document.body.scrollHeight + "px";
+//弹出对话框时的背景颜色
+        shield.style.background = "#555a5a";
+        shield.style.textAlign = "center";
+        shield.style.zIndex = "25";
+        shield.style.opacity = 0.5;
+//背景透明 IE有效
+//shield.style.filter = "alpha(opacity=0)";
+        var alertFram = document.createElement("DIV");
+        alertFram.id = "alertFram";
+        alertFram.style.position = "absolute";
+        alertFram.style.left = "50%";
+        alertFram.style.top = "50%";
+        alertFram.style.marginLeft = "-225px";
+        alertFram.style.marginTop = "-75px";
+        alertFram.style.width = "450px";
+        alertFram.style.height = "150px";
+        alertFram.style.background = "#555a5a";
+        alertFram.style.textAlign = "center";
+        alertFram.style.lineHeight = "150px";
+        alertFram.style.zIndex = "99999999999999999";
+        document.getElementById("append_out").style.zIndex=9999999;
+        strHtml = "<ul style=\"list-style:none;margin:0px;padding:0px;width:100%\">\n";
+        strHtml += " <li style=\"background:#555A5A;text-align:left;padding-left:20px;font-size:14px;font-weight:bold;height:25px;line-height:25px;border:1px solid #00C8C8;\">[消息提示]</li>\n";
+        strHtml += " <li style=\"background:#fff;text-align:center;font-size:12px;height:120px;line-height:120px;border-left:1px solid #00C8C8;border-right:1px solid #00C8C8;\">" + str + "</li>\n";
+        strHtml += " <li style=\"background:#00C8C8;text-align:center;font-weight:bold;height:25px;line-height:25px; border:1px solid #00C8C8;\"><input type=\"button\" value=\"确 定\" onclick=\"doOk()\" /></li>\n";
+        strHtml += "</ul>\n";
+        alertFram.innerHTML = strHtml;
+        document.body.appendChild(alertFram);
+        document.body.appendChild(shield);
+        this.doOk = function () {
+//            document.getElementById("append_out").style.zIndex=99999;
+            document.getElementById("append_out").style.zIndex=99999;
+            alertFram.style.display = "none";
+            shield.style.display = "none";
+        };
+        alertFram.focus();
+        document.body.onselectstart = function () {
+            return false;
+        };
+    }
+
+
+</script>

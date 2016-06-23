@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="/public/js/jquery.js"></script>
+    <script type="text/javascript" src="/public/js/public.js"></script>
+    <title>人事系统首页</title>
+    <style>
+        *{
+            padding:0;
+            margin:0;
+        }
+        .text_01 {
+            width: 100%;
+            min-width: 1366px;
+        }
+
+        .butt_all {
+            /*margin-top: 250px;*/
+            position: relative;
+            left: 50%;
+            margin-left: -580px;
+            margin-top: 200px;
+            width: 1130px;
+            height: 300px;
+        }
+
+        .butt_all>a{
+            background-color: white;
+            margin: 12px;
+            border-radius: 10px;
+            width: 200px;
+            height: 200px;
+            float: left;
+        }
+
+        .butt_all>a> button{
+            border-radius: 10px;
+            border: 1px solid lightgray;
+            background-color: white;
+            width: 100%;
+            height: 100%;
+            float: left;
+            cursor: pointer;
+        }
+
+        .tongzhi {
+            margin-top: 100px;
+            border: 1px solid lightgray;
+            border-radius: 10px;
+            background-color: white;
+            width: 1161px;
+            height: 100px;
+            position: relative;
+            left: 50%;
+            margin-left: -600px;
+        }
+        body{
+            width:100%;
+            min-width: 1366px;
+        }
+    </style>
+
+</head>
+<body style="background-color: #efefef">
+<div class="head_01">
+    <script src="/public/js/head.js" type="text/javascript" charset="utf-8"></script>
+</div>
+<div class="text_01">
+    <div class="butt_all">
+        <a><button type="button" id="bt1"><img src="/public/img/index1.png" alt=""></button></a>
+        <a><button type="button" id="bt2"><img src="/public/img/index2.png" alt=""></button></a>
+        <a><button type="button" id="bt3"><img src="/public/img/index3.png" alt=""></button></a>
+        <a><button type="button" id="bt4"><img src="/public/img/index4.png" alt=""></button></a>
+        <a><button type="button" id="bt5"><img src="/public/img/index5.png" alt=""></button></a>
+    </div>
+    <div class="tongzhi"></div>
+</div>
+
+
+</body>
+<script>
+    var bt1=document.getElementById("bt1");
+    bt1.onclick=function(){
+        location.href="/index.php/Home/Content/staff";
+    };
+    var bt2=document.getElementById("bt2");
+    bt2.onclick=function(){
+        location.href="/index.php/Home/Checking/index";
+    };
+    var bt3=document.getElementById("bt3");
+    bt3.onclick=function(){
+        location.href="";
+    };
+    var bt4=document.getElementById("bt4");
+    bt4.onclick=function(){
+        location.href="";
+    };
+    var bt5=document.getElementById("bt5");
+    bt5.onclick=function(){
+        location.href="";
+    };
+
+
+</script>
+</html>
