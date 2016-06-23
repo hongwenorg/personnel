@@ -366,17 +366,9 @@ tab.addEventListener("click", function (e) {
     tabb1.style.background = "#bbbbbb";
     tabb2.style.background = "#bbbbbb";
     tabb3.style.background = "#bbbbbb";
-    tabb4.style.background = "#bbbbbb";
-    tabb5.style.background = "#bbbbbb";
-    tabb6.style.background = "#bbbbbb";
-    tabb7.style.background = "#bbbbbb";
     tabb1.style.color = "white";
     tabb2.style.color = "white";
     tabb3.style.color = "white";
-    tabb4.style.color = "white";
-    tabb5.style.color = "white";
-    tabb6.style.color = "white";
-    tabb7.style.color = "white";
     target.style.background = "white";
     target.style.color = "black";
 }, false);

@@ -353,9 +353,15 @@ function excel_blank() {
 
 //个人考勤
 document.getElementById("tb").addEventListener("click", function (e) {
+
+
+
+
+
     var target = e.target;
+    var parent_node=target.parentNode.parentNode.firstChild.nextSibling.firstChild.innerHTML;
     for (var i = 0; i < arr_staff.length; i++) {
-        if (arr_staff[i].name == target.innerHTML) {
+        if (arr_staff[i].name == parent_node) {
             document.getElementById("kaoqin_out").style.display="block";
             var append_rules_yes;
             var append_rule;
@@ -375,7 +381,7 @@ document.getElementById("tb").addEventListener("click", function (e) {
             append_rules_head.style.fontWeight = "bold";
             append_rules_head.style.lineHeight = "40px";
             append_rules_head.style.textAlign = "center";
-            append_rules_head.innerText = "员工" + target.innerHTML + "打卡时间";
+            append_rules_head.innerText = "员工 " + parent_node + " 打卡时间";
             append_rules_head.appendChild(append_rules_close);
             append_rules_close.style.position = "absolute";
             append_rules_close.style.right = 0;
