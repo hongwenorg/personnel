@@ -459,6 +459,11 @@ class CheckingController extends CommonController {
 				$val['noclock'] = $noclock;
 
 
+				//计算灵活打卡异常天数
+				$error_arr = $check_record->query("SELECT COUNT(*) AS tp_count FROM `check_record` WHERE ( `user_id` = ".$val['user_id']." ) AND ( `check` = '不合格' ) AND (`check_content` like '灵活打卡异常%') ".$check_where);
+				$errors = $error_arr[0]['tp_count'];
+
+				$val['errors'] = $errors;
 
 
 				
