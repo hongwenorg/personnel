@@ -209,7 +209,7 @@ class PublicController extends Controller {
 
 	//定时小程序，每到月一号计算上个月考勤记录表数据处理添加,顺序执行  3
 	function check_record_fun(){
-		die;
+		//die;
 		//下面是获取上一月的数据
 		$data = $this->year_month_day();
 		$now_time = $data['now_time'];
@@ -403,7 +403,7 @@ class PublicController extends Controller {
 			$max_noclock_data = $leaveing->query("SELECT atten_uid,time_date,info from leaveing where class='意外事项' and state = '审核通过' and  info like '下班未打卡%'".$leave_where);
 			
 			//上班未打卡的申请
-			$min_noclock_data = $leaveing->query("SELECT atten_uid,time_date,info from leaveing where class='意外事项' and state = '审核通过' and id NOT IN(select id from leaveing where class='意外事项' and info like '上班未打卡，下班未打卡%') and info like '上班未打卡%'".$leave_where);
+			$min_noclock_data = $leaveing->query("SELECT atten_uid,time_date,info from leaveing where class='意外事项' and state = '审核通过' and id NOT IN(select id from leaveing where class='意外事项' and info like '上班未打卡，下班未打卡%') and info like '%下班未打卡%'".$leave_where);
 
 			$agile_data = $leaveing->query("SELECT atten_uid,time_date,info from leaveing where class='灵活作息' and state = '审核通过'".$leave_where);
 
@@ -430,10 +430,10 @@ class PublicController extends Controller {
 						$check_arr_arr = $check_record->where("atten_uid='".$agile_val['atten_uid']."' and check_date='".$agile_val['time_date']."'")->find();
 						$check_maxtime = strtotime($check_arr_arr['check_maxtime']);
 						$check_mintime = strtotime($check_arr_arr['check_mintime']);
-						if(($check_maxtime-$check_mintime) < (floatval($time_num)*3600)){
-							$check_record->where("atten_uid='".$agile_val['atten_uid']."' and check_date='".$agile_val['time_date']."'")->save(array("check"=>"不合格","check_content"=>"灵活打卡异常，虽然灵活作息申请，但是打卡时间不满".$time_num."个小时"));
-						}else{
+						if(($check_maxtime-$check_mintime) >= (floatval($time_num)*3600)){
 							$check_record->where("atten_uid='".$agile_val['atten_uid']."' and check_date='".$agile_val['time_date']."'")->save(array("check"=>"合格","check_content"=>"由于灵活作息申请，".$agile_val['info']));
+						}else{
+							$check_record->where("atten_uid='".$agile_val['atten_uid']."' and check_date='".$agile_val['time_date']."'")->save(array("check"=>"不合格","check_content"=>"灵活打卡异常，虽然灵活作息申请，但是打卡时间不满".$time_num."个小时"));
 						}
 					}
 				}
