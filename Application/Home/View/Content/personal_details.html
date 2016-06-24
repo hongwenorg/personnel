@@ -9,12 +9,13 @@
             padding:0;
         }
         .user_profiles{
-            width:600px;
+            width:700px;
             background-color: white;
             position:fixed;
             margin-left:50%;
             margin-top:50%;
-            left:-300px;
+            left:-350px;
+            font-family: "微软雅黑";
             border:1px solid lightgray;
         }
         #user_profiles_02{
@@ -23,15 +24,19 @@
             margin-bottom:10px;
             margin-top: 10px;
         }
+        #user_profiles_02>div{
+            margin-top:10px;
+            font-size: 22px;
+        }
         .user_profiles>div>div>p{
             width:120px;
             text-align:center;
-            font-size: 18px;
             float:left;
         }
         .user_profiles>div>div>input{
             width:300px;
             height:30px;
+            font-size: 20px;
             float:right;
         }
         .user_profiles>div>div{
@@ -63,26 +68,26 @@
     <div style="height:40px;width:100%;background-color:#555a5a;margin:0;" id="profiles_head">
     </div>
     <div id="user_profiles_02">
-        <div><p>考勤号</p>      <input type="text"></div>
-        <div><p>姓名</p>        <input type="text"></div>
-        <div><p>民族</p>        <input type="text"></div>
-        <div><p>性别</p>        <input type="text"></div>
-        <div><p>身份证号</p>    <input type="text"></div>
-        <div><p>出生日期</p>    <input type="text"></div>
-        <div><p>籍贯</p>        <input type="text"></div>
-        <div><p>婚姻状况</p>    <input type="text"></div>
-        <div><p>政治面貌</p>    <input type="text"></div>
-        <div><p>家庭住址</p>    <input type="text"></div>
-        <div><p>手机</p>        <input type="text"></div>
-        <div><p>QQ号码</p>      <input type="text"></div>
-        <div><p>E-mail</p>      <input type="text"></div>
-        <div><p>微信号码</p>     <input type="text"></div>
-        <div><p>应急联系人</p>   <input type="text"></div>
-        <div><p>应急联系电话</p> <input type="text"></div>
-        <div><p>毕业院校</p>    <input type="text"></div>
-        <div><p>专业</p>        <input type="text"></div>
-        <div><p>学历</p>        <input type="text"></div>
-        <div><p>学位</p>        <input type="text"></div>
+        <div><p>考勤号</p>       <input type="text"></div>
+        <div><p>姓名</p>         <input type="text"></div>
+        <div><p>民族</p>         <input type="text"></div>
+        <div><p>性别</p>         <input type="text"></div>
+        <div><p>身份证号</p>     <input type="text"></div>
+        <div><p>出生日期</p>     <input type="text"></div>
+        <div><p>籍贯</p>         <input type="text"></div>
+        <div><p>婚姻状况</p>     <input type="text"></div>
+        <div><p>政治面貌</p>     <input type="text"></div>
+        <div><p>家庭住址</p>     <input type="text"></div>
+        <div><p>手机</p>         <input type="text"></div>
+        <div><p>QQ号码</p>       <input type="text"></div>
+        <div><p>E-mail</p>       <input type="text"></div>
+        <div><p>微信号码</p>      <input type="text"></div>
+        <div><p>应急联系人</p>    <input type="text"></div>
+        <div><p>应急联系电话</p>  <input type="text"></div>
+        <div><p>毕业院校</p>      <input type="text"></div>
+        <div><p>专业</p>         <input type="text"></div>
+        <div><p>学历</p>         <input type="text"></div>
+        <div><p>学位</p>         <input type="text"></div>
         <div><p>资格证书</p>     <input type="text"></div>
         <div><p>工作经历</p>     <input type="text"></div>
     </div>
@@ -92,7 +97,8 @@
 <script>
     var user_profiles_personal=document.getElementById("user_profiles_personal");
     user_profiles_personal.style.height=document.documentElement.clientHeight/100*80+"px";
-    user_profiles_personal.style.top=-900+"px";
+    user_profiles_personal.style.top="50%";
+    user_profiles_personal.style.marginTop=-document.documentElement.clientHeight/100*80/2+"px";
     var user_profiles_02=document.getElementById("user_profiles_02");
     user_profiles_02.style.overflowY="auto";
     var user_02height=document.documentElement.clientHeight/100*80-100+"px";
