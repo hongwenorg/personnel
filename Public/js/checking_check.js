@@ -344,7 +344,10 @@ function excel_blank() {
     }
 }
 //excel操作  end
-//个人考勤
+
+
+//个人考勤信息查询
+//ajax获取数据
 document.getElementById("tb").addEventListener("click", function (e) {
     var user_id = $(e.target).attr("name");
     html_str = '';
@@ -360,7 +363,7 @@ document.getElementById("tb").addEventListener("click", function (e) {
             if(msg["status"] == 1){
                 for (key in msg) {
                     if (key != "status") {
-                        str += "<tr><td class='date_width'>" + msg[key].check_date + "</td>" + "<td>" + msg[key].check_mintime + "</td>" + "<td>" + msg[key].check_maxtime + "</td>" + "<td class='check_width'>" + msg[key].check + "</td>" + "<td>" + msg[key].check_content + "</td></tr>";
+                        str += "<tr><td class='date_width'>" + msg[key].check_date + "</td>" + "<td class='mintime_width'>" + msg[key].check_mintime + "</td>" + "<td class='maxtime_width'>" + msg[key].check_maxtime + "</td>" + "<td class='check_width'>" + msg[key].check + "</td>" + "<td>" + msg[key].check_content + "</td></tr>";
                     }
                 }
                 html_str = str;
@@ -384,6 +387,7 @@ document.getElementById("tb").addEventListener("click", function (e) {
             var append_rules_div=document.createElement("div");
             var append_rules_tr = document.createElement("tr");
             var append_rules_tr2 = html_str;
+            //弹出个人考勤信息 样式
             //弹出框主体
              append_rules_div.style.width="100%";
              append_rules_div.style.height="300px";
