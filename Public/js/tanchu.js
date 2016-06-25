@@ -17,17 +17,7 @@ function msgBox(obj, flag, title, width, fn) {
     var borwerHeight = document.documentElement.clientHeight;
 //将弹出框 添加到 body下
     document.querySelector("body").appendChild(append_alert);
-////创建遮罩层
-//    mask_out=document.createElement("div");
-//    document.querySelector("body").appendChild(mask_out);
-//    mask_out.style.width="100%";
-//    mask_out.style.height="5000px";
-//    mask_out.style.backgroundColor="#555a5a";
-//    mask_out.style.zIndex="99";
-//    mask_out.style.position="fixed";
-//    mask_out.style.top=0;
-//    mask_out.style.left=0;
-//    mask_out.style.opacity="0.5";
+
 
 
 //弹出框样式
@@ -113,6 +103,7 @@ function msgBox(obj, flag, title, width, fn) {
                 userType_.isAndroid = true;
                 append_alert_text.style.fontSize    =   "40px";
                 append_alert.style.width            =   "80%";
+                append_alert_text.style.width       =  "80%";
                 append_alert.style.marginLeft       =   "-40%";
             }else {
                 iOS_ = false;

@@ -172,7 +172,12 @@ function ArrSort(page, num, content) {
         if (arr_staff[j].absenteeism !== 0) {
             arr_staff[j].absenteeism = "<div class='absen_red'>" + arr_staff[j].absenteeism + "</div>";
         }
-        ;
+        if(arr_staff[j].is_no==="是"){
+            arr_staff[j].is_no="<div class='div_gree'>" + arr_staff[j].is_no + "</div>";
+        }
+        if(arr_staff[j].is_no==="否"){
+            arr_staff[j].is_no="<div class='div_red'>" + arr_staff[j].is_no + "</div>";
+        }
         var tr = document.createElement("tr");
         tb.appendChild(tr).innerHTML =
             "<td class='td_sty td_a1' num='1'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_num[j] + "</div>" + "</td>" +
@@ -202,6 +207,9 @@ function ArrSort(page, num, content) {
         copy_excel.style.display = "block";
         copy_dayin.style.display = "block";
     }
+
+
+
 
     $(".td_sty").mouseover(function () {
         var num = $(this).attr('num');
@@ -273,8 +281,6 @@ function ArrSort(page, num, content) {
     document.getElementById("pageall").innerHTML = "共" + CountPage + "页";
 }
 //分页处理搜索数据等  end
-
-
 //员工信息页面搜索按钮  start
 find_btt.onclick = function () {
     document.getElementById("sousuo_img_out").style.display = "block";
@@ -320,8 +326,6 @@ find_btt.onclick = function () {
     }
 };
 //页面搜索按钮  end
-
-
 //打印页面   start
 function dayin_blank() {
 
@@ -344,8 +348,6 @@ function excel_blank() {
     }
 }
 //excel操作  end
-
-
 //个人考勤信息查询
 //ajax获取数据
 document.getElementById("tb").addEventListener("click", function (e) {
@@ -465,7 +467,6 @@ document.getElementById("tb").addEventListener("click", function (e) {
         }
     }
 })
-
 
 //jQuery的makeArray
 function makeArray(array) {

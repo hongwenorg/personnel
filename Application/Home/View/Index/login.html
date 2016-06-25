@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!--<meta id="viewport" name="viewport" content="width=device-width,initial-scale=1.0;">-->
     <script type="text/javascript" src="/public/js/public.js"></script>
     <title>鸿文人事系统登录</title>
     <style>
@@ -57,7 +58,7 @@
             outline: none;
             border: 1px solid darkgray;
             font-size: 20px;
-            width:90%;
+            width: 90%;
             height: 41px;
             padding-left: 15px;
         }
@@ -148,36 +149,36 @@
         var isAndroid;
         var userType = {};
         // android
-        if (navigator.userAgent.toLowerCase().match(/(android)/)||navigator.userAgent.toLowerCase().match(/(iphone|ipod|ipad)/)) {
+        if (navigator.userAgent.toLowerCase().match(/(android)/) || navigator.userAgent.toLowerCase().match(/(iphone|ipod|ipad)/)) {
             isAndroid = true;
             userType.isAndroid = true;
             iOS = true;
             userType.iOS = true;
-            var tete= document.querySelector(".tete");
-                tete.style.width="90%";
-                tete.style.marginLeft=-(tete.clientWidth/2)+"px";
-                tete.style.left="50%";
-                tete.style.marginTop="-300px";
-            var denglu= document.querySelector(".denglu");
-                denglu.style.width="100%";
-                denglu.style.height="400px";
-                denglu.style.borderRadius="20px";
-            document.querySelector(".user").style.width="100%";
-            document.getElementById("user").style.height="90px";
-            document.getElementById("user").style.width="94%";
-            document.getElementById("user").style.fontSize="50px";
-            document.getElementById("pwd").style.height="90px";
-            document.getElementById("pwd").style.width="94%";
-            document.getElementById("pwd").style.fontSize="50px";
-            document.getElementById("cck").style.fontSize="50px";
-            document.getElementById("check").style.fontSize="50px";
-            document.getElementById("check").style.width="100%";
-            document.getElementById("btt").style.width="95%";
-            document.getElementById("btt").style.height="70px";
-            document.getElementById("btt").style.fontSize="50px";
-            document.getElementById("btt_").style.width="100%";
-            document.getElementById("logo").style.width="50%";
-            document.getElementById("logo").style.marginLeft="25%";
+            var tete = document.querySelector(".tete");
+            tete.style.width = "90%";
+            tete.style.marginLeft = -(tete.clientWidth / 2) + "px";
+            tete.style.left = "50%";
+            tete.style.marginTop = "-300px";
+            var denglu = document.querySelector(".denglu");
+            denglu.style.width = "100%";
+            denglu.style.height = "400px";
+            denglu.style.borderRadius = "20px";
+            document.querySelector(".user").style.width = "100%";
+            document.getElementById("user").style.height = "90px";
+            document.getElementById("user").style.width = "94%";
+            document.getElementById("user").style.fontSize = "50px";
+            document.getElementById("pwd").style.height = "90px";
+            document.getElementById("pwd").style.width = "94%";
+            document.getElementById("pwd").style.fontSize = "50px";
+            document.getElementById("cck").style.fontSize = "50px";
+            document.getElementById("check").style.fontSize = "50px";
+            document.getElementById("check").style.width = "100%";
+            document.getElementById("btt").style.width = "95%";
+            document.getElementById("btt").style.height = "70px";
+            document.getElementById("btt").style.fontSize = "50px";
+            document.getElementById("btt_").style.width = "100%";
+            document.getElementById("logo").style.width = "50%";
+            document.getElementById("logo").style.marginLeft = "25%";
 
 //        document.querySelectorAll(".user_style").style.height="100px";
         } else {
@@ -186,8 +187,8 @@
         }
     };
     btt.onclick = function () {
-        var user  =  document.getElementById("user").value;
-        var pwd   =  document.getElementById("pwd").value;
+        var user = document.getElementById("user").value;
+        var pwd = document.getElementById("pwd").value;
         var url = "/index.php/Home/Index/login_rtt?user=" + user + "&pwd=" + pwd;
         if (user == "" || pwd == "") {
             alert("用户名或密码不能为空！");
@@ -197,7 +198,7 @@
             url: "/index.php/Home/Index/login_rtt",
             data: {"user": user, "pwd": pwd},
             type: "get",
-            async:"true",
+            async: "true",
             success: function (data) {
                 var txt = JSON.parse(data);
                 if (txt.status == 0) {
@@ -252,7 +253,7 @@
             btt.click();
         }
     };
-    document.getElementById("check").onkeydown=function(){
+    document.getElementById("check").onkeydown = function () {
         if (event.keyCode == 13) {
             btt.click();
         }
@@ -261,5 +262,6 @@
     document.getElementById("max").onmousewheel = function () {
         return false;
     };
+
 </script>
 </html>
