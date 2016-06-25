@@ -209,7 +209,7 @@ class PublicController extends Controller {
 
 	//定时小程序，每到月一号计算上个月考勤记录表数据处理添加,顺序执行  3
 	function check_record_fun(){
-		//die;
+		die;
 		//下面是获取上一月的数据
 		$data = $this->year_month_day();
 		$now_time = $data['now_time'];
@@ -393,8 +393,6 @@ class PublicController extends Controller {
 
 			$leaveing = M('leaveing'); 
 
-			$data_arr=$users->join('user_basic ON users.id = user_basic.user_id')->field('users.id,user_basic.user_id,user_basic.atten_uid,user,name,sex,campus,post,user_basic.entry_date')->select();
-
 			$leave_where = " and time_date like '%$check_content%'";
 
 			$all_noclock_data = $leaveing->query("SELECT COUNT(*) as count,atten_uid from leaveing where class='意外事项' and state = '审核通过' and info like '上班未打卡，下班未打卡%'".$leave_where." GROUP BY name");
@@ -403,39 +401,30 @@ class PublicController extends Controller {
 			$max_noclock_data = $leaveing->query("SELECT atten_uid,time_date,info from leaveing where class='意外事项' and state = '审核通过' and  info like '下班未打卡%'".$leave_where);
 			
 			//上班未打卡的申请
-			$min_noclock_data = $leaveing->query("SELECT atten_uid,time_date,info from leaveing where class='意外事项' and state = '审核通过' and id NOT IN(select id from leaveing where class='意外事项' and info like '上班未打卡，下班未打卡%') and info like '%下班未打卡%'".$leave_where);
+			$min_noclock_data = $leaveing->query("SELECT atten_uid,time_date,info from leaveing where class='意外事项' and state = '审核通过' and id NOT IN(select id from leaveing where class='意外事项' and info like '上班未打卡，下班未打卡%') and info like '%上班未打卡%'".$leave_where);
 
 			$agile_data = $leaveing->query("SELECT atten_uid,time_date,info from leaveing where class='灵活作息' and state = '审核通过'".$leave_where);
 
 			$check_record = M('check_record');
 
 			$time_num = 7.5;
-		
-			foreach($data_arr as &$val){
 
-				foreach($min_noclock_data as $min_noclock_val){
-					if($val['atten_uid'] == $min_noclock_val['atten_uid']){
-						$check_record->where("atten_uid='".$min_noclock_val['atten_uid']."' and check_date='".$min_noclock_val['time_date']."' and check_mintime='0'")->save(array("check"=>"合格","check_content"=>"由于意外事项申请，".$min_noclock_val['info']));
-					}
-				}
-				foreach($max_noclock_data as $max_noclock_val){
-					if($val['atten_uid'] == $max_noclock_val['atten_uid']){
-						$check_record->where("atten_uid='".$max_noclock_val['atten_uid']."' and check_date='".$max_noclock_val['time_date']."' and check_maxtime='0'")->save(array("check"=>"合格","check_content"=>"由于意外事项申请，".$max_noclock_val['info']));
-					}
-				}
+			foreach($min_noclock_data as $min_noclock_val){
+				$check_record->where("atten_uid='".$min_noclock_val['atten_uid']."' and check_date='".$min_noclock_val['time_date']."'")->save(array("check"=>"合格","check_content"=>"由于意外事项申请，".$min_noclock_val['info']));
+			}
+			foreach($max_noclock_data as $max_noclock_val){
+				$check_record->where("atten_uid='".$max_noclock_val['atten_uid']."' and check_date='".$max_noclock_val['time_date']."'")->save(array("check"=>"合格","check_content"=>"由于意外事项申请，".$max_noclock_val['info']));
+			}
 
 
-				foreach($agile_data as $agile_val){
-					if($val['atten_uid'] == $agile_val['atten_uid']){
-						$check_arr_arr = $check_record->where("atten_uid='".$agile_val['atten_uid']."' and check_date='".$agile_val['time_date']."'")->find();
-						$check_maxtime = strtotime($check_arr_arr['check_maxtime']);
-						$check_mintime = strtotime($check_arr_arr['check_mintime']);
-						if(($check_maxtime-$check_mintime) >= (floatval($time_num)*3600)){
-							$check_record->where("atten_uid='".$agile_val['atten_uid']."' and check_date='".$agile_val['time_date']."'")->save(array("check"=>"合格","check_content"=>"由于灵活作息申请，".$agile_val['info']));
-						}else{
-							$check_record->where("atten_uid='".$agile_val['atten_uid']."' and check_date='".$agile_val['time_date']."'")->save(array("check"=>"不合格","check_content"=>"灵活打卡异常，虽然灵活作息申请，但是打卡时间不满".$time_num."个小时"));
-						}
-					}
+			foreach($agile_data as $agile_val){
+				$check_arr_arr = $check_record->where("atten_uid='".$agile_val['atten_uid']."' and check_date='".$agile_val['time_date']."'")->find();
+				$check_maxtime = strtotime($check_arr_arr['check_maxtime']);
+				$check_mintime = strtotime($check_arr_arr['check_mintime']);
+				if(($check_maxtime-$check_mintime) >= (floatval($time_num)*3600)){
+					$check_record->where("atten_uid='".$agile_val['atten_uid']."' and check_date='".$agile_val['time_date']."'")->save(array("check"=>"合格","check_content"=>"由于灵活作息申请，".$agile_val['info']));
+				}else{
+					$check_record->where("atten_uid='".$agile_val['atten_uid']."' and check_date='".$agile_val['time_date']."'")->save(array("check"=>"不合格","check_content"=>"灵活打卡异常，虽然灵活作息申请，但是打卡时间不满".$time_num."个小时"));
 				}
 			}
 

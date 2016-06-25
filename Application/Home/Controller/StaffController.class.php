@@ -355,6 +355,7 @@ class StaffController extends CommonController {
 			$user_id = $arr["user_id"];
 			//员工基本信息修改
 			$user_basic = M("user_basic");
+			$data["atten_uid"] = $user_arr['user'];
 			$data["user_id"] = $user_id;
 			$basic_arr = $user_basic->where(array("user_id"=>$user_id))->save($data);
 			//员工保险信息修改
@@ -399,6 +400,7 @@ class StaffController extends CommonController {
 			
 			//员工基本信息添加
 			$user_basic = M("user_basic");
+			$data["atten_uid"] = $user_arr['user'];
 			$data["user_id"] = $user_id;
 			$basic_arr = $user_basic->add($data);
 			if(!$basic_arr){
