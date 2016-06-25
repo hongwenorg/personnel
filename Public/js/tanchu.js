@@ -1,8 +1,11 @@
+
 //弹出框
 var append_alert;
+var mask_out;
 //弹出框里的文本以及图片内容
 var append_alert_text;
 function msgBox(obj, flag, title, width, fn) {
+    document.getElementById("preson_out").style.display="block";
     append_alert  =  document.createElement("div");
     append_alert_text  =  document.createElement("div");
     append_alert_text.setAttribute("id", "hahaha");
@@ -14,6 +17,19 @@ function msgBox(obj, flag, title, width, fn) {
     var borwerHeight = document.documentElement.clientHeight;
 //将弹出框 添加到 body下
     document.querySelector("body").appendChild(append_alert);
+////创建遮罩层
+//    mask_out=document.createElement("div");
+//    document.querySelector("body").appendChild(mask_out);
+//    mask_out.style.width="100%";
+//    mask_out.style.height="5000px";
+//    mask_out.style.backgroundColor="#555a5a";
+//    mask_out.style.zIndex="99";
+//    mask_out.style.position="fixed";
+//    mask_out.style.top=0;
+//    mask_out.style.left=0;
+//    mask_out.style.opacity="0.5";
+
+
 //弹出框样式
             append_alert.style.backgroundColor  =  "white";
             append_alert.style.width            =  width+"px";
@@ -158,6 +174,7 @@ function msgBox(obj, flag, title, width, fn) {
     //关闭弹出框
         close_append_alert = function () {
              append_alert.style.display = "none";
+            document.getElementById("preson_out").style.display="none";
         }
     //公告弹出 动态效果
     var opcity_min = 0;

@@ -210,6 +210,20 @@
         header{
             min-width: 1366px;
         }
+        .preson_out{
+            width:100%;
+           height:5000px;
+           background-color:#555a5a;
+           position:fixed;
+           top:0;
+           left:0;
+           z-index:99;
+           opacity:0.5;
+            display:none;
+        }
+        .append_preson{
+            z-index: 999999;
+        }
 
     </style>
 </head>
@@ -245,7 +259,9 @@
         </div>
     </div>
 </div>
+<div class="preson_out" id="preson_out"></div>
 <div class="append_preson"></div>
+
 </body>
 <!--<script type="text/javascript" src="tanchu.js"></script>-->
 <script>
@@ -291,6 +307,7 @@
     });
 
     $("#btt_01").click(function () {
+        document.getElementById("preson_out").style.display="block";
         $.get('personal_details.html', function (data) {
             $('.append_preson').prepend(data);
             var append_name=document.getElementById("xingming").innerHTML;
@@ -310,28 +327,14 @@
                      close_xinxi.style.color="#00c8c8";
                      close_xinxi.onclick=function(){
                 document.getElementById("user_profiles_personal").style.display="none";
+                         document.getElementById("preson_out").style.display="none";
             };
         })
     });
     $("#btt_05").click(function(){
+        document.getElementById("preson_out").style.display="block";
         append_alert.style.display = "block";
     });
-
-
-//
-//    var all_employees= [];
-//    var reques = new XMLHttpRequest();
-//    reques.open("get", "/index.php/Home/Staff/staff_pro");
-//    reques.send();
-//    reques.onreadystatechange = function () {
-//        if (reques.readyState == 4 && reques.status == 200) {
-//            var json_text = JSON.parse(reques.responseText);
-//            for (var key in json_text) {
-//                all_employees.push(json_text[key]);
-//                console.log(all_employees)
-//            }
-//        }
-//    };
 
 
 
