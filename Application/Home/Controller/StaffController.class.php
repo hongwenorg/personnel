@@ -510,8 +510,32 @@ class StaffController extends CommonController {
 		}
 	}
 
+	//个人信息个人修改操作
+	function personel_pro(){
+		if(!empty($_POST['user'])){
+			$user = $_POST['user'];
+		}else{
+			echo 2;exit;
+		}
+		$perfs = explode("&", $_POST['data']);
+		foreach($perfs as $perf) {
+		    $perf_key_values = explode("=", $perf);
+		    $arr[urldecode($perf_key_values[0])] = urldecode($perf_key_values[1]);
+		}
+		$data = array();
+		$data = $arr;
+		//员工基本信息修改
 
-	
+		$users = M("users");
+		$user_arr = $users->where(array("user"=>$_POST['user']))->find();
+		$user_basic = M("user_basic");
+		$sulet = $user_basic->where(array("user_id"=>$user_arr['id']))->save($data);
+		if($sulet){
+			echo 1;
+		}else{
+			echo 2;
+		}
+	}
 
 
 
