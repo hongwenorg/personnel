@@ -344,8 +344,39 @@
     });
 
 
+function hengshuping(){
+//判断手机横竖屏状态：
+    var user_profiles_personal=document.getElementById("user_profiles_personal");
+    var user_profiles_02=document.getElementById("user_profiles_02");
+    if(window.orientation==180||window.orientation==0){
+        append_alert_text.style.width="80%";
+        append_img.style.width="80%";
+        append_alert.style.top = "50%";
+        append_alert.style.marginTop ="-350px";
+        append_alert.style.height="700px";
+        append_alert_text.style.height="900px";
+        append_img.style.height="900px";
 
+        user_profiles_personal.style.height     =   "1000px";
+        user_profiles_personal.style.zIndex     =   "9999";
+        user_profiles_personal.style.top        =   "50%";
+        user_profiles_personal.style.marginTop  =   "-500px";
+        user_profiles_02.style.height   =   "900px";
+    }else if(window.orientation==90||window.orientation==-90){
+        append_alert.style.top=0;
+        append_alert.style.marginTop=0;
+        append_alert.style.height=document.documentElement.clientHeight-920+"px";
+        append_alert_text.style.height=document.documentElement.clientHeight-1060+"px";
 
+        user_profiles_personal.style.height     =   document.documentElement.clientHeight-1100+"px";
+        user_profiles_personal.style.top        =   "50%";
+        user_profiles_personal.style.zIndex     =   "9999";
+        user_profiles_personal.style.marginTop  =   -(user_profiles_personal.clientHeight/2)+"px";
+       var  user_03height=document.documentElement.clientHeight-1200+"px";
+        user_profiles_02.style.height   =   user_03height;
+    }
+}
+window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", hengshuping, false);
 
 
 
