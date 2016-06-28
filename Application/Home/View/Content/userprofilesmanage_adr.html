@@ -319,7 +319,8 @@
             $('.append_preson').prepend(data);
             var append_name=document.getElementById("xingming").innerHTML;
             document.getElementById("profiles_head").innerHTML=append_name+" "+"个人信息";
-            var close_xinxi=document.createElement("button");
+            var close_xinxi=document.createElement("input");
+            close_xinxi.type="button";
             document.getElementById("profiles_head").appendChild(close_xinxi);
             close_xinxi.style.width="40px";
             close_xinxi.style.height="40px";
@@ -333,9 +334,9 @@
             close_xinxi.style.lineHeight="35px";
             close_xinxi.style.color="#00c8c8";
             close_xinxi.onclick=function(){
-                document.getElementById("user_profiles_personal").style.display="none";
+//                document.getElementById("user_profiles_personal").style.display="none";
                 document.getElementById("preson_out").style.display="none";
-            };
+            }
         })
     });
     $("#btt_05").click(function(){
