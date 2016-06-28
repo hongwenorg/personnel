@@ -511,6 +511,9 @@ class StaffController extends CommonController {
 	}
 
 
+	
+
+
 
 	//个人头像上传
 	function photo_upload(){
