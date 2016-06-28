@@ -15,6 +15,8 @@
         .body_index {
             width: 900px;
             margin: 0 auto;
+            position:relative;
+            top:50px;
         }
 
         .body_index_msg {
@@ -217,9 +219,9 @@
         }
     </style>
 </head>
-<body style="background-color:#555a5a">
+<body style="background-color:darkgray">
 <header>
-    <div class="header_01">
+    <div class="header_01" >
         <ul>
         </ul>
         <a href="/index.php/Home/Index/goout" id="remove_cook">
@@ -250,14 +252,16 @@
             <span>700</span>
         </div>
         <div class="msg_button">
-            <input type="button" value="基本信息">
+            <input type="button" value="基本信息" id="btt_01">
             <input type="button" value="考勤记录">
             <input type="button" value="事假查询">
             <input type="button" value="考勤核对">
-            <input type="button" value="集团公告">
+            <input type="button" value="集团公告" id="btt_05">
         </div>
     </div>
 </div>
+<div class="preson_out" id="preson_out"></div>
+<div class="append_preson"></div>
 
 </body>
 <!--<script type="text/javascript" src="tanchu.js"></script>-->
@@ -303,6 +307,36 @@
                 }
             }
         }
+    });
+
+    $("#btt_01").click(function () {
+        document.getElementById("preson_out").style.display="block";
+        $.get('personal_details.html', function (data) {
+            $('.append_preson').prepend(data);
+            var append_name=document.getElementById("xingming").innerHTML;
+            document.getElementById("profiles_head").innerHTML=append_name+" "+"个人信息";
+            var close_xinxi=document.createElement("button");
+            document.getElementById("profiles_head").appendChild(close_xinxi);
+            close_xinxi.style.width="40px";
+            close_xinxi.style.height="40px";
+            close_xinxi.style.position="absolute";
+            close_xinxi.style.right=0;
+            close_xinxi.innerText="×";
+            close_xinxi.style.border="none";
+            close_xinxi.style.backgroundColor="#555a5a";
+            close_xinxi.style.fontSize="30px";
+            close_xinxi.style.fontWeight="bold";
+            close_xinxi.style.lineHeight="35px";
+            close_xinxi.style.color="#00c8c8";
+            close_xinxi.onclick=function(){
+                document.getElementById("user_profiles_personal").style.display="none";
+                document.getElementById("preson_out").style.display="none";
+            };
+        })
+    });
+    $("#btt_05").click(function(){
+        document.getElementById("preson_out").style.display="block";
+        append_alert.style.display = "block";
     });
 
 

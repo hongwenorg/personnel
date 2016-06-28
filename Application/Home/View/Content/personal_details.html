@@ -117,11 +117,10 @@
     user_profiles_02.style.height = user_02height;
 
     //以下是数据加载
-    var user_card = $('#user').text();
     //alert(user_card);
     $.ajax({
         url: "/index.php/Home/Staff/staff_user",
-        data: {"user": user_card},
+        data: {"user": getCookie("username")},
         type: "post",
         async: "false",
         success: function (data) {
