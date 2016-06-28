@@ -1,0 +1,174 @@
+<!DOCTYPE>
+<html>
+<meta charset="UTF-8">
+<head>
+    <title></title>
+    <style type="text/css">
+        *{
+            margin:0;
+            padding:0;
+        }
+        .user_profiles{
+            width:700px;
+            background-color: white;
+            position:fixed;
+            margin-left:50%;
+            margin-top:50%;
+            left:-350px;
+            font-family: "微软雅黑";
+            border:1px solid lightgray;
+        }
+        #user_profiles_02{
+            width:100%;
+            background-color: white;
+            margin-bottom:10px;
+            margin-top: 10px;
+        }
+        #user_profiles_02>div{
+            margin-top:10px;
+            font-size: 22px;
+        }
+        .user_profiles>div>div>p{
+            width:160px;
+            text-align:center;
+            float:left;
+        }
+        .user_profiles>div>div>input{
+            width:300px;
+            height:30px;
+            font-size: 20px;
+            float:right;
+        }
+        .user_profiles>div>div{
+            float:left;
+            width:80%;
+            margin-left:10%;
+        }
+        .quedingxiugai{
+            width:90%;
+            height:30px;
+            margin-left:5%;
+            background-color: #00c8c8;
+            border:none;
+            color:white;
+            font-weight: bold;
+        }
+
+        #profiles_head{
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color:#00c8c8;
+            line-height: 40px;
+        }
+    </style>
+</head>
+<body>
+<div class="user_profiles" id="user_profiles_personal">
+    <div style="height:40px;width:100%;background-color:#555a5a;margin:0;" id="profiles_head">
+    </div>
+    <div id="user_profiles_02">
+        <div><p>考勤号</p>       <input type="text" name="atten_uid" id="atten_uid"></div>
+        <div><p>姓名</p>         <input type="text" name="name" id="personal_name"></div>
+        <div><p>民族</p>         <input type="text" name="nation" id="nation"></div>
+        <div><p>性别</p>         <input type="text" name="sex" id="sex"></div>
+        <div><p>身份证号</p>      <input type="text" name="card" id="card"></div>
+        <div><p>出生日期</p>      <input type="text" name="birthday" id="birthday"></div>
+        <div><p>籍贯</p>         <input type="text" name="residence_booklet" id="residence_booklet"></div>
+        <div><p>婚姻状况</p>      <input type="text" name="marriage" id="marriage"></div>
+        <div><p>政治面貌</p>      <input type="text" name="polity" id="polity"></div>
+        <div><p>家庭住址</p>      <input type="text" name="live" id="live"></div>
+        <div><p>手机</p>          <input type="text" name="phone" id="phone"></div>
+        <div><p>QQ号码</p>        <input type="text" name="qq" id="qq"></div>
+        <div><p>E-mail</p>       <input type="text" name="email" id="email"></div>
+        <div><p>微信号码</p>      <input type="text" name="wechat" id="wechat"></div>
+        <div><p>应急联系人</p>     <input type="text" name="contacts" id="contacts"></div>
+        <div><p>应急联系电话</p>   <input type="text" name="urgency_telephone" id="urgency_telephone"></div>
+        <div><p>毕业院校</p>       <input type="text" name="school" id="school"></div>
+        <div><p>专业</p>          <input type="text" name="major" id="major"></div>
+        <div><p>学历</p>          <input type="text" name="education" id="education"></div>
+        <div><p>学位</p>          <input type="text" name="degree" id="degree"></div>
+        <div><p>资格证书</p>      <input type="text" name="seniority" id="seniority"></div>
+        <div><p>工作经历</p>      <input type="text" name="work_data" id="work_data"></div>
+    </div>
+    <input type="button" class="quedingxiugai" value="保存">
+</div>
+</body>
+<script>
+    var user_profiles_personal=document.getElementById("user_profiles_personal");
+    user_profiles_personal.style.height     =   document.documentElement.clientHeight/100*80+"px";
+    user_profiles_personal.style.top        =   "50%";
+    user_profiles_personal.style.zIndex     =   "9999";
+    user_profiles_personal.style.marginTop  =   -document.documentElement.clientHeight/100*80/2+"px";
+    var user_profiles_02=document.getElementById("user_profiles_02");
+    user_profiles_02.style.overflowY    =   "auto";
+    var user_02height=document.documentElement.clientHeight/100*80-100+"px";
+    user_profiles_02.style.height   =   user_02height;
+
+    //以下是数据加载
+    var user_card = $('#user').text();
+    //alert(user_card);
+    $.ajax({
+        url: "/index.php/Home/Staff/staff_user",
+        data: {"user": user_card},
+        type: "post",
+        async: "false",
+        success: function (data) {
+            var txt = JSON.parse(data);
+            if (txt.status == 2) {
+                alert("程序出错，请联系管理员！");
+                return false;
+            } else {
+                basic_arr = txt.basic;
+                //console.log(basic_arr);
+                //insure_arr = txt.insure;
+                //work_undergo_arr = txt.work_undergo;
+                $("#atten_uid").val(basic_arr.atten_uid);
+                $("#personal_name").val(basic_arr.name);
+                $("#nation").val(basic_arr.nation);
+                $("#sex").val(basic_arr.sex);
+                $("#marriage").val(basic_arr.marriage);
+                $("#card").val(basic_arr.card);
+                $("#birthday").val(basic_arr.birthday);
+                $("#polity").val(basic_arr.polity);
+                $("#residence_booklet").val(basic_arr.residence_booklet);
+                $("#live").val(basic_arr.live);
+                $("#phone").val(basic_arr.phone);
+                $("#contacts").val(basic_arr.contacts);
+                $("#urgency_telephone").val(basic_arr.urgency_telephone);
+                $("#school").val(basic_arr.school);
+                $("#major").val(basic_arr.major);
+                $("#education").val(basic_arr.education);
+                $("#degree").val(basic_arr.degree);
+                $("#seniority").val(basic_arr.seniority);
+                $("#qq").val(basic_arr.qq);
+                $("#email").val(basic_arr.email);
+                $("#wechat").val(basic_arr.wechat);
+                /*if (basic_arr.photo_max_url != "" || basic_arr.photo_max_url != null) {
+                    $("#photo_img").attr("src", basic_arr.photo_max_url);
+                }
+
+                for (var insure_i in insure_arr) {
+                    $("#is_no").val(insure_arr[insure_i].is_no);
+                    $("#condition").val(insure_arr[insure_i].condition);
+                    $("#begin_time").val(insure_arr[insure_i].begin_time);
+                    $("#place").val(insure_arr[insure_i].place);
+                }
+                for (var work_i in work_undergo_arr) {
+                    $("#check" + (parseInt(work_i) + 1)).attr("checked", "true");
+                    $("#work_id" + work_i).val(work_undergo_arr[work_i].id);
+                    $("#entry_time" + work_i).removeAttr("disabled");
+                    $("#entry_time" + work_i).val(work_undergo_arr[work_i].entry_time);
+                    $("#leave_time" + work_i).removeAttr("disabled");
+                    $("#leave_time" + work_i).val(work_undergo_arr[work_i].leave_time);
+                    $("#duties" + work_i).removeAttr("disabled");
+                    $("#duties" + work_i).val(work_undergo_arr[work_i].duties);
+                    $("#company_name" + work_i).removeAttr("disabled");
+                    $("#company_name" + work_i).val(work_undergo_arr[work_i].company_name);
+                }*/
+            }
+        }
+    });
+</script>
+
+</html>
