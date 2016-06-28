@@ -4,6 +4,7 @@ var append_alert;
 var mask_out;
 //弹出框里的文本以及图片内容
 var append_alert_text;
+var append_img=new Image();
 function msgBox(obj, flag, title, width, fn) {
     document.getElementById("preson_out").style.display="block";
     append_alert  =  document.createElement("div");
@@ -90,6 +91,7 @@ function msgBox(obj, flag, title, width, fn) {
             for (var i = 0; i < str.length; i++) {
                 var  p = document.createElement("p");
                 p.style.fontWeight  =  "bold";
+                p.style.width  =  "100%";
                 p.style.fontFamily  =  "微软雅黑";
                 p.style.wordBreak   =  "break-all";
                 //p.style.textIndent="32px";
@@ -133,7 +135,6 @@ function msgBox(obj, flag, title, width, fn) {
         //如果为图片 就创建一个img标签  里面放图片
         case "image":
             append_alert.appendChild(append_alert_text)
-            var append_img = new Image();
             append_img.src = obj;
             append_img.onload = function () {
                 append_img.style.maxWidth    = "80%";
