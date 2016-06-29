@@ -239,7 +239,7 @@
     <img src="/public/img/bluesky.jpg" alt="">
     <div class="body_index_msg">
         <div class="miao">
-            <img  alt="" style="width:150px;height:150px;background-color: white" class="Head_portrait">
+            <img  alt="" style="width:150px;height:150px;background-color: white; cursor: pointer" class="Head_portrait" id="Head_portrait">
         </div>
         <div class="body_msg_all">
             <p class="msg_name" id="xingming"></p>
@@ -337,6 +337,9 @@
         document.getElementById("preson_out").style.display="block";
         append_alert.style.display = "block";
     });
+    document.getElementById("Head_portrait").onclick=function(){
+        location.href = "/index.php/Home/Staff/imgs_prune";
+    }
 
 
 

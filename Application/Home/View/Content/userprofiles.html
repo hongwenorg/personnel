@@ -217,6 +217,15 @@
         header {
             min-width: 1366px;
         }
+        .user_profiles_head{
+            text-align: center;
+            position:relative;
+            top:-70px;
+            font-size: 28px;
+            font-weight: bold;
+            color:#00c8c8;
+            text-shadow: 0 6px 15px black;
+        }
     </style>
 </head>
 <body style="background-color:darkgray">
@@ -226,19 +235,19 @@
         </ul>
         <a href="/index.php/Home/Index/goout" id="remove_cook">
             <div id="tuichudenglu"><input class="return_02" type="button" id="return_02">
-
                 <div class="return_p1" id="return_p1">
                     退出<img src="/public/img/icon_tip.png" alt="" class="amg">登录
                 </div>
             </div>
         </a>
     </div>
+    <p class="user_profiles_head" id="user_profiles_head"></p>
 </header>
 <div class="body_index">
     <img src="/public/img/bluesky.jpg" alt="">
     <div class="body_index_msg">
         <div class="miao">
-            <img alt="" style="width:150px;height:150px;background-color: white" class="Head_portrait">
+            <img alt="" style="width:150px;height:150px;background-color: white;cursor: pointer" class="Head_portrait" id="Head_portrait">
         </div>
         <div class="body_msg_all">
             <p class="msg_name" id="xingming"></p>
@@ -298,6 +307,7 @@
             } else {
                 basic_arr = txt.basic;
                 console.log(txt);
+                $("#user_profiles_head").text("员工 "+basic_arr.name+" 个人信息主页");
                 $("#jibie").text(basic_arr.name);
                 $("#danwei").text(basic_arr.campus);
                 $("#xingming").text(basic_arr.name);
@@ -338,6 +348,10 @@
         document.getElementById("preson_out").style.display="block";
         append_alert.style.display = "block";
     });
+
+    document.getElementById("Head_portrait").onclick=function(){
+        location.href = "/index.php/Home/Staff/imgs_prune_02";
+    }
 
 
 </script>
