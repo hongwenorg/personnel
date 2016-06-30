@@ -386,11 +386,11 @@ function blk(tabb) {
     } else if (tabb == 2) {
         location.href = "/index.php/Home/Content/staff_move";
     } else if (tabb == 3) {
-        location.href="/index.php/Home/Content/staff_03";
+        location.href="/index.php/Home/Content/staff_level";
     } else if (tabb == 4) {
         location.href="/index.php/Home/Content/staff_jiangfa"
     } else if (tabb == 5) {
-        location.href="/index.php/Home/Content/staff_04";
+        location.href="/index.php/Home/Content/staff_train";
     } else if (tabb == 6) {
         location.href="/index.php/Home/Content/staff_insurance"
     } else if (tabb == 7) {
