@@ -186,7 +186,7 @@ class PublicController extends Controller {
 		$day_count = $data['day_count'];//每个月一共多少天
 
 		$url = "http://i.ihongwen.com/oa/weixin.php/weixin/getWeixinAskInfo?time1=".$check_content."01"."&time2=".$check_content."$day_count";
-		//".$check_content."01&time2=".$check_content.$day_count;
+		//".$check_content."01&time2=".$check_content.$day_count;2016-06-01&time2=2016-06-28";//
 		//echo $url;die;
 		$ch = curl_init ();
 		curl_setopt ( $ch, CURLOPT_URL, $url );
