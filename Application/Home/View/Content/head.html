@@ -118,7 +118,7 @@
             color: white;
         }
 
-        #name {
+        #group_name {
             font-size: 22px;
             position: relative;
         }
@@ -156,7 +156,7 @@
         <ul>
             <li><a id="return_a" target="_blank" href="/index.php/Home/Content/userprofilesmanage"><img src="/public/img/head.png" id="photo" alt="" style="margin:0 10px 0 10px; width:46px;height:46px;border-radius: 25px;"></a>
             </li>
-            <li><a href="/index.php/Home/Content/userprofilesmanage" id="name"><a class="xin_feng"><img src="/public/img/index6.png" alt=""></a></a><br/><a href="" id="post"></a> <a id="line_italic">｜</a> <a href="" id="user"></a></li>
+            <li><a href="/index.php/Home/Content/userprofilesmanage" id="group_name"><a class="xin_feng"><img src="/public/img/index6.png" alt=""></a></a><br/><a href="" id="post"></a> <a id="line_italic">｜</a> <a href="" id="user"></a></li>
         </ul>
         <a href="/index.php/Home/Content/index"><input class="return" type="button" id="return"></a>
         <h1 class="return_p" style="height:0px !important;" id="return_p">
@@ -230,9 +230,9 @@
             } else {
                 basic_arr = txt.basic;
                 console.log(txt);
-                $("#name").text(basic_arr.name);
+                $("#group_name").text(basic_arr.group_name);
                 $("#post").text(basic_arr.post);
-                $("#user").text(basic_arr.user);
+                $("#user").text(basic_arr.name);
                 if(basic_arr.photo_small_url!="" || basic_arr.photo_small_url!=null){
                     $("#photo").attr("src",basic_arr.photo_max_url + '?'  + new Date().getTime());
                 }
