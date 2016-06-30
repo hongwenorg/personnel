@@ -638,7 +638,7 @@ $("#staff_xinxi").click(function () {
                     $("#check").val(basic_arr.check);
                     $("#user_id").val(basic_arr.user_id);
                     if (basic_arr.photo_max_url != "" || basic_arr.photo_max_url != null) {
-                        $("#photo_img").attr("src", basic_arr.photo_max_url);
+                        $("#photo_img").attr("src", basic_arr.photo_max_url +'?'+new Date().getTime());
                     }
 
                     for (var insure_i in insure_arr) {
@@ -867,11 +867,11 @@ function blk(tabb) {
     } else if (tabb == 2) {
         location.href = "/index.php/Home/Content/staff_move";
     } else if (tabb == 3) {
-        location.href="/index.php/Home/Content/staff_03";
+        location.href="/index.php/Home/Content/staff_level";
     } else if (tabb == 4) {
         location.href = "/index.php/Home/Content/staff_jiangfa";
     } else if (tabb == 5) {
-        location.href="/index.php/Home/Content/staff_04";
+        location.href="/index.php/Home/Content/staff_train";
     } else if (tabb == 6) {
         location.href = "/index.php/Home/Content/staff_insurance";
     } else if (tabb == 7) {
