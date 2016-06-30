@@ -56,12 +56,13 @@ class IndexController extends Controller {
 		$user_basic = D("user_basic");//用户基本信息表
 		$modules = D("modules");//模块表
 		$authority = D("authority");//权限表
+		$allocation = D('allocation_user');
 		session_start();
+		$allocation_arr = array();
 		if($user_arr = $users->where(array("user"=>$user,"pwd"=>$pwd))->find()){
 			$data['status'] = 1;
 			$data['userid'] = $user_arr['id'];
 			$data['user'] = $user_arr['user'];
-			$data['level'] = $user_arr['level'];
 			$authority_arr = $authority->where(array("user_id"=>$user_arr['id']))->select();
 			foreach($authority_arr as $key=>$val){
 				$modules_arr = $modules->where(array("id"=>$val['module_id']))->find();
@@ -74,18 +75,21 @@ class IndexController extends Controller {
 				$data_arr[$key]['module_name'] = $modules_arr['module_name'];
 			}
 			$user_basic_arr = $user_basic->where(array("user_id"=>$user_arr['id']))->find();
+			$allocation_arr = $allocation->join("power on allocation_user.power_id = power.id")->where(array("user_id"=>$user_arr['id']))->find();
 			$data["authority"] = $data_arr;
 			$data["post"] = $user_basic_arr['post'];
 			$data["name"] = $user_basic_arr['name'];
+			$data["group_name"] = $allocation_arr['power_name'];
 			$data["photo_max_url"] = $user_basic_arr['photo_max_url'];
 			$data["photo_small_url"] = $user_basic_arr['photo_small_url'];
 			$_SESSION['userid'] = $user_arr['id'];
 			$_SESSION['status'] = 1;
 			session('user' , $user_arr['user']);
+			session('power_id' , $$authority_arr['power_id']);
 			//return $data;exit;
 			//handle_log($user_arr['id'],$user,'aaa','select');
 			//echo $_SESSION['user'];die;
-			echo json_encode($data);exit;
+			echo json_encode($allocation_arr);exit;
 		}
 		//$data['last_sql'] = $model->getLastSql();
 		$data['status'] = 0;
