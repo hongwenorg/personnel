@@ -386,13 +386,11 @@ function blk(tabb) {
     } else if (tabb == 2) {
         location.href = "/index.php/Home/Content/staff_move";
     } else if (tabb == 3) {
-        alert("暂无此页面");
-        location.href="/index.php/Home/Content/staff_jiangfa";
+        location.href="/index.php/Home/Content/staff_03";
     } else if (tabb == 4) {
         location.href="/index.php/Home/Content/staff_jiangfa"
     } else if (tabb == 5) {
-        alert("暂无此页面");
-        location.href="/index.php/Home/Content/staff_jiangfa";
+        location.href="/index.php/Home/Content/staff_04";
     } else if (tabb == 6) {
         location.href="/index.php/Home/Content/staff_insurance"
     } else if (tabb == 7) {

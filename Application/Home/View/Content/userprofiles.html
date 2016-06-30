@@ -262,7 +262,7 @@
         </div>
         <div class="msg_button">
             <input type="button" value="基本信息" id="btt_01">
-            <input type="button" value="考勤记录">
+            <input type="button" value="考勤记录" id="btt_02">
             <input type="button" value="事假查询">
             <input type="button" value="考勤核对">
             <input type="button" value="集团公告" id="btt_05">
@@ -271,6 +271,7 @@
 </div>
 <div class="preson_out" id="preson_out"></div>
 <div class="append_preson"></div>
+<div id="append_rules" style="display:none"></div>
 
 </body>
 <!--<script type="text/javascript" src="tanchu.js"></script>-->
@@ -308,7 +309,6 @@
                 basic_arr = txt.basic;
                 console.log(txt);
                 $("#user_profiles_head").text("员工 "+basic_arr.name+" 个人信息主页");
-                $("#jibie").text(basic_arr.name);
                 $("#danwei").text(basic_arr.campus);
                 $("#xingming").text(basic_arr.name);
                 $("#zhiwu").text(basic_arr.post);
@@ -344,6 +344,132 @@
             };
         })
     });
+
+
+    document.getElementById("btt_02").onclick = function (e) {
+        var html_str = '';
+        var xhr = new XMLHttpRequest();
+        xhr.open("get", "/index.php/Home/Checking/check_detail");
+        xhr.send();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var msg = JSON.parse(xhr.responseText);
+                var str = '';
+                if(msg["status"] == 2) {
+                    for (var key in msg) {
+                        if (msg[key] != "status") {
+                            str += "<tr><td class='date_width'>" + "aaaa" + "</td>" + "<td class='mintime_width'>" + msg[key].check_mintime + "</td>" + "<td class='maxtime_width'>" + msg[key].check_maxtime + "</td>" + "<td class='check_width'>" + msg[key].check + "</td>" + "<td>" + msg[key].check_content + "</td></tr>";
+                        }
+                    }
+                }
+                html_str = str;
+
+
+                document.getElementById("append_rules").style.display = "block";
+                var append_rules_yes;
+                var append_rule;
+                append_rule = document.createElement("div");
+                append_rule.style.zIndex = "9999999";
+                append_rule.style.top = "50%";
+                append_rule.style.marginTop = "-200px";
+                append_rule.style.boxShadow = "0 16px 100px gray";
+                var append_rules_table = document.createElement("table");
+                var append_rules_div = document.createElement("div");
+                var append_rules_tr = document.createElement("tr");
+                var append_rules_tr2 = html_str;
+                //弹出个人考勤信息 样式
+                //弹出框主体
+                append_rules_div.style.width = "100%";
+                append_rules_div.style.height = "300px";
+                append_rules_div.style.marginTop = "15px";
+                append_rules_div.style.marginBottom = "15px";
+                append_rules_div.style.overflowY = "auto";
+
+                //弹出框的头部
+                var append_rules_head = document.createElement("div");
+                var append_rules_close = document.createElement("button");
+                append_rules_head.style.width = "100%";
+                append_rules_head.style.height = "40px";
+                append_rules_head.style.background = "#555a5a";
+                append_rules_head.style.color = "#00c8c8";
+                append_rules_head.style.fontWeight = "bold";
+                append_rules_head.style.lineHeight = "40px";
+                append_rules_head.style.textAlign = "center";
+                //                append_rules_head.innerText = "员工 " + parent_node + " 打卡时间";
+                append_rules_head.appendChild(append_rules_close);
+                append_rules_close.style.position = "absolute";
+                append_rules_close.style.right = 0;
+                append_rules_close.style.width = "40px";
+                append_rules_close.style.height = "40px";
+                append_rules_close.style.fontSize = "30px";
+                append_rules_close.style.lineHeight = 0;
+                append_rules_close.style.border = "none";
+                append_rules_close.style.backgroundColor = "#555a5a";
+                append_rules_close.style.color = "#00c8c8";
+                append_rules_close.innerText = "×";
+                append_rules_close.style.right = 0;
+
+                //弹出框的确认按扭
+                append_rules_yes = document.createElement("input");
+                append_rules_yes.style.width = "90%";
+                append_rules_yes.style.height = "30px";
+                append_rules_yes.style.marginLeft = "5%";
+                append_rules_yes.style.position = "absolute";
+                append_rules_yes.style.bottom = "10px";
+                append_rules_yes.style.border = "none";
+                append_rules_yes.style.backgroundColor = "#00c8c8";
+                append_rules_yes.style.color = "white";
+
+                //将弹出框 添加到 body下
+                document.getElementById("append_rules").appendChild(append_rule);
+                append_rule.style.background = "white";
+                append_rule.style.width = "1000px";
+                append_rule.style.height = "400px";
+                append_rule.style.position = "fixed";
+                append_rule.style.left = "50%";
+                append_rule.style.marginLeft = "-500px";
+                append_rule.appendChild(append_rules_head);
+                append_rule.appendChild(append_rules_div);
+                append_rules_div.appendChild(append_rules_table);
+                append_rules_table.style.textAlign = "center";
+                append_rules_table.style.width = "90%";
+                append_rules_table.style.marginLeft = "5%";
+                append_rules_table.style.border = "1px solid gray";
+                append_rules_table.border = "1";
+                append_rules_table.cellPadding = "2";
+                append_rules_table.ceelspacing = 0;
+                append_rules_table.appendChild(append_rules_tr);
+                append_rules_tr.innerHTML = "<td>" + "日期" + "</td>" + "<td>" + "上班时间" + "</td>" + "<td>" + "下班时间" + "</td>" + "<td>" + "是否合格" + "</td>" + "<td>" + "详情" + "</td>";
+                append_rules_tr.insertAdjacentHTML("afterEnd", append_rules_tr2)
+                append_rule.appendChild(append_rules_yes);
+                append_rules_yes.type = "button";
+                append_rules_yes.value = "确定";
+                append_rules_yes.onclick = function () {
+                    append_rule.style.display = "none";
+//        document.getElementById("kaoqin_out").style.display = "none";
+                };
+                append_rules_close.onclick = function () {
+                    append_rule.style.display = "none";
+//        document.getElementById("kaoqin_out").style.display = "none";
+                };
+
+            }
+        };
+
+        //        var target = e.target;
+        //        var parent_node=target.parentNode.parentNode.firstChild.nextSibling.firstChild.innerHTML;
+        //        for (var i = 0; i < arr_staff.length; i++) {
+        //            if (arr_staff[i].name == parent_node) {
+
+        //            }
+        //        }
+        //    })
+    }
+
+
+
+
+
     $("#btt_05").click(function(){
         document.getElementById("preson_out").style.display="block";
         append_alert.style.display = "block";

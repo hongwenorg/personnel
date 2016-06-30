@@ -16,8 +16,8 @@
         .body_index {
             width: 900px;
             margin: 0 auto;
-            position:relative;
-            top:50px;
+            position: relative;
+            top: 50px;
         }
 
         .body_index_msg {
@@ -46,39 +46,44 @@
             margin: 0 auto;
             font-weight: bold;
             color: #555a5a;
-            margin-bottom:15px;
+            margin-bottom: 15px;
 
         }
-        .body_msg_all{
+
+        .body_msg_all {
             text-align: center;
-            position:relative;
-            top:-70px;
-            width:90%;
-            margin:0 auto;
-            border-bottom:1px solid black;
+            position: relative;
+            top: -70px;
+            width: 90%;
+            margin: 0 auto;
+            border-bottom: 1px solid black;
         }
-        .body_msg_all>span{
-            font-style:italic;
-            color:#555a5a;
+
+        .body_msg_all > span {
+            font-style: italic;
+            color: #555a5a;
         }
-        .msg_button{
+
+        .msg_button {
             text-align: center;
-            position:relative;
-            top:-35px;
+            position: relative;
+            top: -35px;
         }
-        .msg_button>input{
-            width:140px;
-            height:140px;
+
+        .msg_button > input {
+            width: 140px;
+            height: 140px;
             background-color: #bcbcbc;
-            border:none;
+            border: none;
             border-radius: 10px;
-            margin:10px;
-            color:white;
+            margin: 10px;
+            color: white;
             font-size: 22px;
             font-weight: bold;
             outline: none;
             cursor: pointer;
         }
+
         input, button {
             outline: none;
         }
@@ -209,21 +214,24 @@
             background-color: #555a5a;
             border: none;
         }
-        header{
+
+        header {
             min-width: 1366px;
         }
-        .preson_out{
-            width:100%;
-           height:5000px;
-           background-color:#555a5a;
-           position:fixed;
-           top:0;
-           left:0;
-           z-index:99;
-           opacity:0.5;
-            display:none;
+
+        .preson_out {
+            width: 100%;
+            height: 5000px;
+            background-color: #555a5a;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 99;
+            opacity: 0.5;
+            display: none;
         }
-        .append_preson{
+
+        .append_preson {
             z-index: 999999;
         }
 
@@ -237,9 +245,11 @@
 </header>
 <div class="body_index">
     <img src="/public/img/bluesky.jpg" alt="">
+
     <div class="body_index_msg">
         <div class="miao">
-            <img  alt="" style="width:150px;height:150px;background-color: white; cursor: pointer" class="Head_portrait" id="Head_portrait">
+            <img alt="" style="width:150px;height:150px;background-color: white; cursor: pointer" class="Head_portrait"
+                 id="Head_portrait">
         </div>
         <div class="body_msg_all">
             <p class="msg_name" id="xingming"></p>
@@ -254,7 +264,7 @@
         </div>
         <div class="msg_button">
             <input type="button" value="基本信息" id="btt_01">
-            <input type="button" value="考勤记录">
+            <input type="button" value="考勤记录" id="btt_02">
             <input type="button" value="事假查询">
             <input type="button" value="考勤核对">
             <input type="button" value="集团公告" id="btt_05">
@@ -263,6 +273,8 @@
 </div>
 <div class="preson_out" id="preson_out"></div>
 <div class="append_preson"></div>
+<div id="append_rules" style="display:none">
+</div>
 
 </body>
 <!--<script type="text/javascript" src="tanchu.js"></script>-->
@@ -286,7 +298,7 @@
     //页面加载信息
     $.ajax({
         url: "/index.php/Home/Staff/head_con",
-        data: {"user":getCookie("username")},
+        data: {"user": getCookie("username")},
         type: "post",
         async: "false",
         traditional: "true",
@@ -301,51 +313,45 @@
                 $("#danwei").text(basic_arr.campus);
                 $("#xingming").text(basic_arr.name);
                 $("#zhiwu").text(basic_arr.post);
-                if(basic_arr.photo_max_url!="" || basic_arr.photo_max_url!=null){
-                    $(".Head_portrait").attr("src",basic_arr.photo_max_url);
+                if (basic_arr.photo_max_url != "" || basic_arr.photo_max_url != null) {
+                    $(".Head_portrait").attr("src", basic_arr.photo_max_url);
                 }
             }
         }
     });
 
     $("#btt_01").click(function () {
-        document.getElementById("preson_out").style.display="block";
+        document.getElementById("preson_out").style.display = "block";
         $.get('personal_details.html', function (data) {
             $('.append_preson').prepend(data);
-            var append_name=document.getElementById("xingming").innerHTML;
-            document.getElementById("profiles_head").innerHTML=append_name+" "+"个人信息";
-            var close_xinxi=document.createElement("button");
+            var append_name = document.getElementById("xingming").innerHTML;
+            document.getElementById("profiles_head").innerHTML = append_name + " " + "个人信息";
+            var close_xinxi = document.createElement("button");
             document.getElementById("profiles_head").appendChild(close_xinxi);
-                    close_xinxi.style.width="40px";
-                    close_xinxi.style.height="40px";
-                    close_xinxi.style.position="absolute";
-                     close_xinxi.style.right=0;
-                     close_xinxi.innerText="×";
-                     close_xinxi.style.border="none";
-                     close_xinxi.style.backgroundColor="#555a5a";
-                     close_xinxi.style.fontSize="30px";
-                     close_xinxi.style.fontWeight="bold";
-                     close_xinxi.style.lineHeight="35px";
-                     close_xinxi.style.color="#00c8c8";
-                     close_xinxi.onclick=function(){
-                document.getElementById("user_profiles_personal").style.display="none";
-                         document.getElementById("preson_out").style.display="none";
+            close_xinxi.style.width = "40px";
+            close_xinxi.style.height = "40px";
+            close_xinxi.style.position = "absolute";
+            close_xinxi.style.right = 0;
+            close_xinxi.innerText = "×";
+            close_xinxi.style.border = "none";
+            close_xinxi.style.backgroundColor = "#555a5a";
+            close_xinxi.style.fontSize = "30px";
+            close_xinxi.style.fontWeight = "bold";
+            close_xinxi.style.lineHeight = "35px";
+            close_xinxi.style.color = "#00c8c8";
+            close_xinxi.onclick = function () {
+                document.getElementById("user_profiles_personal").style.display = "none";
+                document.getElementById("preson_out").style.display = "none";
             };
         })
     });
-    $("#btt_05").click(function(){
-        document.getElementById("preson_out").style.display="block";
+    $("#btt_05").click(function () {
+        document.getElementById("preson_out").style.display = "block";
         append_alert.style.display = "block";
     });
-    document.getElementById("Head_portrait").onclick=function(){
+    document.getElementById("Head_portrait").onclick = function () {
         location.href = "/index.php/Home/Staff/imgs_prune";
-    }
-
-
-
-
-
-
+    };
 
 </script>
 <script type="text/javascript" src="/public/js/tanchu.js"></script>
