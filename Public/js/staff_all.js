@@ -907,7 +907,7 @@ document.onscroll = function () {
         $("#trr").removeClass("setcss1");
         $("#trr th").removeClass("setcss");
     }
-}
+};
 
 
 //鼠标拖拽员工添加，修改页面

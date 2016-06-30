@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="/public/js/jquery.js"></script>
+    <!--<script type="text/javascript" src="/public/js/public.js"></script>-->
+    <script src="/public/js/laydate/laydate.js"></script>
+    <title>员工信息</title>
+    <link rel="stylesheet" href="/public/css/Content_staff.css" type="text/css">
+</head>
+<body style="background-color: #efefef" id="staff_body">
+<div style="width:100%;height:5000px;z-index:99999;position:fixed;top:0;display:none;background-color: white;opacity: 0.5" id="sousuo_img_out">
+    <img src="/public/img/sousuo.gif" alt="" id="sousuo_img">
+    <p style="color:#00c8c8;font-size: 20px;font-weight:bold; position:fixed;left:44%;top:460px; z-index: 99999" id="sousuo_img_txt">数据正在拼命加载中。。。。</p>
+</div>
+<!--*********************         头部引用        ******************-->
+<div class="head_01">
+    <p id="bigfont">员工档案管理</p>
+    <script src="/public/js/head.js" type="text/javascript" charset="utf-8"></script>
+</div>
+<div class="zpgw" id="bq">
+    <div class="zpgwl" id="tab">
+        <div id="tab_click" style="background-color: rgb(239, 239, 239) !important;">
+            <div id="tab1">
+                <div id="tabb1" onclick="blk(1)">员工信息</div>
+            </div>
+            <div id="tab2">
+                <div id="tabb2" onclick="blk(2)">员工调动</div>
+            </div>
+            <div id="tab3">
+                <div id="tabb3" onclick="blk(3)"  style="background-color: white;color:black">级别变化</div>
+            </div>
+            <div id="tab4">
+                <div id="tabb4" onclick="blk(4)">奖罚记录</div>
+            </div>
+            <div id="tab5">
+                <div id="tabb5" onclick="blk(5)">培训记录</div>
+            </div>
+            <div id="tab6">
+                <div id="tabb6" onclick="blk(6)">五险一金</div>
+            </div>
+            <div id="tab7">
+                <div id="tabb7" onclick="blk(7)" style="border-right: 1px solid lightgray">离职查询</div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="/public/js/staff_all.js"></script>
+<script>
+    alert("暂无此页面")
+</script>
+</html>
