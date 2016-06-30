@@ -313,7 +313,7 @@
                 $("#danwei").text(basic_arr.campus);
                 $("#xingming").text(basic_arr.name);
                 $("#zhiwu").text(basic_arr.post);
-                if (basic_arr.photo_max_url != "" || basic_arr.photo_max_url != null) {
+                if (basic_arr.photo_max_url) {
                     $(".Head_portrait").attr("src", basic_arr.photo_max_url + '?'  + new Date().getTime());
                 }
             }

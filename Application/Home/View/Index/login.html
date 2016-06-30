@@ -204,7 +204,7 @@
                 if (txt.status == 0) {
                     alert("用户名或密码错误！");
                     return false;
-                } else if (txt.status == 1) {
+                } else if (txt.status == 1 && txt.level == 1) {
                     var iOS;
                     var isAndroid;
                     var userType = {};
@@ -224,7 +224,7 @@
                     }
 
 
-                } else if (txt.status == 1) {
+                } else if (txt.status == 1 && txt.level == 2) {
                     location.href = "/index.php/Home/Content/userprofiles";
                 }
                 if (box.checked) {

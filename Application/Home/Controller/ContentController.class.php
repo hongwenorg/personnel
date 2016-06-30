@@ -30,6 +30,21 @@ class ContentController extends CommonController {
 		$this->display();
 	}
 
+	//权限首页显示
+	function authority_index(){
+		if(empty($_SESSION['power_id'])){
+			$modules_arr['status'] = 2;
+			echo json_encode($modules_arr);
+		}
+		$power_id = $_SESSION['power_id'];
+		$power = D('power');
+		$modules = D('modules');
+		$power_arr = $power->where(array("id" => $power_id))->find();
+		$modules_arr = $modules->where("id in (".$power_arr['modules_first_id'].")")->select();
+		$modules_arr['status'] = 1;
+		echo json_encode($modules_arr);
+	}
+
 	//单位部门职务等信息
 	function post(){
 		$post = D("campus_class_post");

@@ -76,6 +76,11 @@ class IndexController extends Controller {
 			}
 			$user_basic_arr = $user_basic->where(array("user_id"=>$user_arr['id']))->find();
 			$allocation_arr = $allocation->join("power on allocation_user.power_id = power.id")->where(array("user_id"=>$user_arr['id']))->find();
+			if($allocation_arr['modules_first_id'] == 0 && $allocation_arr['modules_tail_id'] == 0){
+				$data['level'] = 2;
+			}else{
+				$data['level'] = 1;
+			}
 			$data["authority"] = $data_arr;
 			$data["post"] = $user_basic_arr['post'];
 			$data["name"] = $user_basic_arr['name'];
@@ -85,11 +90,11 @@ class IndexController extends Controller {
 			$_SESSION['userid'] = $user_arr['id'];
 			$_SESSION['status'] = 1;
 			session('user' , $user_arr['user']);
-			session('power_id' , $$authority_arr['power_id']);
+			session('power_id' , $allocation_arr['power_id']);
 			//return $data;exit;
 			//handle_log($user_arr['id'],$user,'aaa','select');
 			//echo $_SESSION['user'];die;
-			echo json_encode($allocation_arr);exit;
+			echo json_encode($data);exit;
 		}
 		//$data['last_sql'] = $model->getLastSql();
 		$data['status'] = 0;

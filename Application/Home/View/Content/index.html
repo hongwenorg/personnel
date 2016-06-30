@@ -68,11 +68,11 @@
 </div>
 <div class="text_01">
     <div class="butt_all">
-        <a><button type="button" id="bt1"><img src="/public/img/index1.png" alt=""></button></a>
+        <!-- <a><button type="button" id="bt1"><img src="/public/img/index1.png" alt=""></button></a>
         <a><button type="button" id="bt2"><img src="/public/img/index2.png" alt=""></button></a>
         <a><button type="button" id="bt3"><img src="/public/img/index3.png" alt=""></button></a>
         <a><button type="button" id="bt4"><img src="/public/img/index4.png" alt=""></button></a>
-        <a><button type="button" id="bt5"><img src="/public/img/index5.png" alt=""></button></a>
+        <a><button type="button" id="bt5"><img src="/public/img/index5.png" alt=""></button></a> -->
     </div>
     <div class="tongzhi"></div>
 </div>
@@ -80,26 +80,51 @@
 
 </body>
 <script>
-    var bt1=document.getElementById("bt1");
-    bt1.onclick=function(){
-        location.href="/index.php/Home/Content/staff";
-    };
-    var bt2=document.getElementById("bt2");
-    bt2.onclick=function(){
-        location.href="/index.php/Home/Checking/index";
-    };
-    var bt3=document.getElementById("bt3");
-    bt3.onclick=function(){
-        location.href="";
-    };
-    var bt4=document.getElementById("bt4");
-    bt4.onclick=function(){
-        location.href="";
-    };
-    var bt5=document.getElementById("bt5");
-    bt5.onclick=function(){
-        location.href="";
-    };
+    var bt_arr = [];
+    window.onload = function(){
+
+        $.ajax({
+            url: "/index.php/Home/Content/authority_index",
+            data: {},
+            type: "post",
+            async: "false",
+            cache: "false",
+            success: function (msg) {
+                var txt = JSON.parse(msg);
+                var str = '';
+                if (txt.status == 2) {
+                    alert("程序出错，请联系管理员！");
+                    return false;
+                } else {
+                    for (key in txt) {
+                        if (key != "status" && txt["status"] != 2) {
+                            str += '<a><button type="button" id="bt'+txt[key].id+'"><img src="/public/img/index'+txt[key].id+'.png" alt=""></button></a>';
+                            bt_arr.push(txt[key].modules_file);
+                        }
+                    }
+                    $(".butt_all").html(str);
+                    $("#bt1").click(function(){
+                        location.href="/index.php/Home"+bt_arr[0];
+                    });
+                    $("#bt2").click(function(){
+                        location.href="/index.php/Home"+bt_arr[1];
+                    });
+                    $("#bt3").click(function(){
+                        location.href="/index.php/Home"+bt_arr[2];
+                    });
+                    $("#bt4").click(function(){
+                        location.href="/index.php/Home"+bt_arr[3];
+                    });
+                    $("#bt5").click(function(){
+                        location.href="/index.php/Home"+bt_arr[4];
+                    });
+                }
+            }
+
+        });
+    }
+
+    
 
 
 </script>

@@ -498,10 +498,13 @@ class StaffController extends CommonController {
 		if(!empty($_POST['user'])){
 			$users = M("users");
 			$user_basic = M("user_basic");
+			$power = M("power");
 			$user_arr = $users->where(array("user"=>$_POST['user']))->find();
 			$basic_arr = $user_basic->where(array("user_id" => $user_arr['id']))->find();
+			$power_arr = $power->where(array("id"=>$_SESSION['power_id']))->find();
 			$data["basic"] = $basic_arr;
 			$data["basic"]['user'] = $user_arr['user'];
+			$data["basic"]['group_name'] = $power_arr['power_name'];
 			$data["status"] = 1;
 			echo json_encode($data);
 		}else{
