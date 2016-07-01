@@ -346,17 +346,9 @@ function blk(tabb) {
     if (tabb == 1) {
         location.href = "/index.php/Home/Checking/index";
     } else if (tabb == 2) {
-        location.href = "/index.php/Home/Checking/check";
+        location.href = "/index.php/Home/Checking/check_check";
     } else if (tabb == 3) {
-        location.href = "/index.php/Home/Checking/checkrules";
-    } else if (tabb == 4) {
-        location.href=""
-    } else if (tabb == 5) {
-
-    } else if (tabb == 6) {
-        location.href=""
-    } else if (tabb == 7) {
-
+        location.href = "/index.php/Home/Checking/check_checkrules";
     }
 }
 

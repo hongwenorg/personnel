@@ -100,6 +100,7 @@
                         if (key != "status" && txt["status"] != 2) {
                             str += '<a><button type="button" id="bt'+txt[key].id+'"><img src="/public/img/index'+txt[key].id+'.png" alt=""></button></a>';
                             bt_arr.push(txt[key].modules_file);
+                            console.log(bt_arr[0]);
                         }
                     }
                     $(".butt_all").html(str);
