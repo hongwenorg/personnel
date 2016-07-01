@@ -7,6 +7,7 @@
     <script type="text/javascript" src="/public/js/public.js"></script>
     <title>打卡记录</title>
     <link rel="stylesheet" href="/public/css/Content_staff.css" type="text/css">
+    <link rel="import" href="check.html" id="staff_index_append">
     <style>
         .trr>li{
             width:11.111%;
@@ -45,101 +46,27 @@
 </div>
 <div id="num_panduan1" style="display:none">1</div>
 <div class="zpgw" id="bq">
-    <div class="zpgwl" id="tab">
-        <div id="tab_click" style="background-color: rgb(239, 239, 239) !important;">
-            <div id="tab1"  style="width:33.1%">
-                <div id="tabb1" onclick="blk(1)" style="background-color: white;color:black">打卡记录</div>
-            </div>
-            <div id="tab2"  style="width:33.1%">
-                <div id="tabb2" onclick="blk(2)">考勤记录</div>
-            </div>
-            <div id="tab3" style="border-top-right-radius:10px;width:33.1%">
-                <div id="tabb3" onclick="blk(3)" style="border:none; border-left:1px solid lightgray">考勤规则</div>
-            </div>
-        </div>
-    </div>
-    <div id="container">
-        <div id="content1">
-            <ul id="show_ul"></ul>
-            <div class="sousuokuang" id="sou_sou" style="margin-top:30px; left:5%;">
-                <select name="" id="prov" onchange="prov_change()">
-                    <option value="0">查询条件</option>
-                    <option value="campus">按单位查询</option>
-                    <option value="time">按时间查询</option>
-                    <option value="user">按员工号查询</option>
-                    <option value="name" id="click_findname">按姓名查询</option>
-                </select>
-                <select name="" id="city"></select>
-                <span id='prov_append'></span>
-                <button type="button" id="find_btt"><img src="/public/img/sousuo.png" class="sou_suo" alt=""></button>
-                <!--时间控件-->
-            </div>
-            <!--*********************************************存放后台员工信息*****************************************************-->
-            <div style="width:100%">
-                <table class="tb" cellpadding="2" cellspacing="0" id="tb">
-                    <tr class="trr1" id="trr">
-                        <th id="staff_num1" class="staff_num1" style="width:50px;">
-                            <div>序号</div>
-                        </th>
-                        <th id="staff_user1" onclick="namesort('user')">
-                            <div>员工号</div>
-                        </th>
-                        <th id="staff_name1" onclick="namesort('name')">
-                            <div>姓名</div>
-                        </th>
-                        <th id="staff_export_campus1" onclick="namesort('campus')">
-                            <div>单位部门</div>
-                        </th>
-                        <th id="staff_export_post1" onclick="namesort('post')">
-                            <div>职务</div>
-                        </th>
-                        <th id="staff_fold_post1" onclick="namesort('atten_time')">
-                            <div>打卡时间</div>
-                        </th>
-                    </tr>
-                </table>
-            </div>
-            <input type="hidden" name="" id="user_card">
-
-
-            <!--点击添加员工信息-->
-
-            <div class="my_div" id="my_div">
-                <input type="button" value="×" class="close_append" id="close_append">
-                <div class="my_form_div"></div>
-            </div>
-            <!--endprint-->
-            <!--**********************************************分页签，上一页/下一页***********************************************-->
-            <input type='button' value='首页' class='page_top' id="page_min" onclick='page_page(1)'>
-            <div id='page_all'></div>
-            <input type='button' value='尾页' class='page_top' id="page_max" onclick='page_page(CountPage )'>
-
-            <div id="pageall"></div>
-            <!--**********************************************生成excel表格及打印表格*********************************************-->
-            <input class="copy_excel" type="button" id="copy_excel" onclick="excel_blank()" value="生成excel"/>
-            <input type="button" class="copy_dayin" id="copy_dayin" onclick="dayin_blank()" value="生成打印内容"/>
-        </div>
-
-    </div>
 </div>
 </body>
-<script type="text/javascript" src="/public/js/checking_index.js"></script>
 <script>
+var staff_index_append = document.getElementById("staff_index_append").innerHTML;
+document.getElementById("bq").innerHTML = document.getElementById("staff_index_append").import.body.innerHTML;
 
-    var close_append = document.getElementById("close_append");
-    var append_out = document.getElementById("append_out");
+var close_append = document.getElementById("close_append");
 
-    $("#btt").click(function () {
-        $.get('append_staff.html', function (data) {
-            $('.my_form_div').prepend(data);
-            $(".my_div").css("display", "block");
-            close_append.style.display = "block";
-        })
-    });
-    $("#close_append").click(function () {
-        $('.my_form_div').html("");
-        $(".my_div").css("display", "none");
-        close_append.style.display = "none";
-    });
+var append_out = document.getElementById("append_out");
+$("#btt").click(function () {
+$.get('append_staff.html', function (data) {
+$('.my_form_div').prepend(data);
+$(".my_div").css("display", "block");
+close_append.style.display = "block";
+})
+});
+$("#close_append").click(function () {
+$('.my_form_div').html("");
+$(".my_div").css("display", "none");
+close_append.style.display = "none";
+});
 </script>
+<script type="text/javascript" src="/public/js/checking_index.js"></script>
 </html>
