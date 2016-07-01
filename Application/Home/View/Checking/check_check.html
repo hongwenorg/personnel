@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="/public/js/jquery.js"></script>
+    <script src="/public/js/laydate/laydate.js"></script>
+    <script type="text/javascript" src="/public/js/public.js"></script>
+    <title>考勤记录</title>
+    <link rel="stylesheet" href="/public/css/Content_staff.css" type="text/css">
+    <style>
+        .trr > li {
+            width: 11.111%;
+        }
+
+        .trr1 > th {
+            width: 85px !important;
+            height: 30px;
+            text-align: center;
+            background-color: #bbbbbb;
+            cursor: pointer;
+            line-height: 30px;
+            list-style: none;
+            border: none;
+            font-size: 14px;
+        }
+
+        #tb > tr {
+            width: 1666px;
+        }
+
+        #trr {
+            width: 85%;
+            border: none !important;
+            min-width: 1159px;
+        }
+
+        #trr > th {
+            min-width: 45px !important;
+            width: 85px;
+        }
+
+        #tb > tr > td {
+            width: 85px;
+        }
+
+        #show_ul {
+            left: 290px;
+        }
+
+    </style>
+</head>
+<body style="background-color: #efefef">
+<div style="width:100%;height:5000px;z-index:99999;position:fixed;top:0;display:none;background-color: white;opacity: 0.5"
+     id="sousuo_img_out">
+    <img src="/public/img/sousuo.gif" alt="" id="sousuo_img">
+
+    <p style="color:#00c8c8;font-size: 20px;font-weight:bold; position:fixed;left:44%;top:460px; z-index: 99999"
+       id="sousuo_img_txt">数据正在拼命加载中。。。。</p>
+</div>
+<div style="width:100%;height:5000px;z-index:99999;position:fixed;top:0;display:none;background-color: #555a5a;opacity: 0.5"
+     id="kaoqin_out"></div>
+<!--*********************         头部引用        ******************-->
+<div class="head_01">
+    <p id="bigfont">考勤核对管理</p>
+    <script src="/public/js/head.js" type="text/javascript" charset="utf-8"></script>
+</div>
+<div id="num_panduan1" style="display:none">1</div>
+<div class="zpgw" id="bq">
+    <div class="zpgwl" id="tab">
+        <div id="tab_click" style="background-color: rgb(239, 239, 239) !important;">
+            <div id="tab1" style="width:33.1%">
+                <div id="tabb1" onclick="blk(1)">打卡记录</div>
+            </div>
+            <div id="tab2" style="width:33.1%">
+                <div id="tabb2" onclick="blk(2)" style="background-color: white;color:black">考勤记录</div>
+            </div>
+            <div id="tab3" style="border-top-right-radius:10px;width:33.1%">
+                <div id="tabb3" onclick="blk(3)" style="border-top: none">考勤规则</div>
+            </div>
+
+        </div>
+    </div>
+    <div id="container">
+        <div id="content1">
+            <ul id="show_ul"></ul>
+            <div class="sousuokuang" id="sou_sou" style="margin-top:30px; left:5%;">
+                <select name="" id="prov" onchange="prov_change()">
+                    <option value="0">查询条件</option>
+                    <option value="campus">按单位查询</option>
+                    <option value="time">按时间查询</option>
+                    <option value="name" id="click_findname">按姓名查询</option>
+                </select>
+                <select name="" id="city"></select>
+                <span id='prov_append'></span>
+                <button type="button" id="find_btt"><img src="/public/img/sousuo.png" class="sou_suo" alt=""></button>
+                <!--时间控件-->
+            </div>
+            <!--*********************************************存放后台员工信息*****************************************************-->
+            <div style="width:100%">
+                <table class="tb" cellpadding="2" cellspacing="0" id="tb">
+                    <tr class="trr1" id="trr">
+                        <th id="staff_num1" class="staff_num1" style="min-width: 30px">
+                            <div>序号</div>
+                        </th>
+                        <th id="staff_name1" onclick="namesort('name')" style="min-width: 70px">
+                            <div>姓名</div>
+                        </th>
+                        <th id="staff_campus1" onclick="namesort('campus')">
+                            <div>单位部门</div>
+                        </th>
+                        <th id="staff_post1" onclick="namesort('post')">
+                            <div>职务</div>
+                        </th>
+                        <th id="staff_level1" style="min-width: 60px">
+                            <div>讲师级别</div>
+                        </th>
+                        <th id="staff_factor1" style="min-width: 60px">
+                            <div>绩效系数</div>
+                        </th>
+                        <th id="staff_allowance1" style="min-width: 60px">
+                            <div>元老补助</div>
+                        </th>
+                        <th id="staff_late1" style="min-width: 30px">
+                            <div>迟到</div>
+                        </th>
+                        <th id="staff_early1" style="min-width: 30px">
+                            <div>早退</div>
+                        </th>
+                        <th id="staff_personal_leave1" style="min-width: 30px">
+                            <div>事假</div>
+                        </th>
+                        <th id="staff_personal_leave_count1">
+                            <div>事假核算天数</div>
+                        </th>
+                        <th id="staff_sick_leave1" style="min-width: 30px">
+                            <div>病假</div>
+                        </th>
+                        <th id="staff_sick_leave_count1">
+                            <div>病假核算天数</div>
+                        </th>
+                        <th id="staff_overtime1">
+                            <div>加班</div>
+                        </th>
+                        <th id="staff_absenteeism1">
+                            <div>旷工</div>
+                        </th>
+                        <th id="staff_noclock1">
+                            <div>未打卡</div>
+                        </th>
+                        <th>
+                            <div>灵活打卡异常</div>
+                        </th>
+                        <th id="staff_over_count_day1">
+                            <div>应出勤天数</div>
+                        </th>
+                        <th id="staff_count_yes1">
+                            <div>核算出勤天数</div>
+                        </th>
+                        <th id="staff_is_no1" onclick="namesort('is_no')">
+                            <div>是否满勤</div>
+                        </th>
+                    </tr>
+                </table>
+            </div>
+            <input type="hidden" name="" id="user_card">
+
+
+            <!--点击添加员工信息-->
+
+            <div class="my_div" id="my_div">
+                <input type="button" value="×" class="close_append" id="close_append">
+
+                <div class="my_form_div"></div>
+            </div>
+            <!--endprint-->
+            <!--**********************************************分页签，上一页/下一页***********************************************-->
+            <input type='button' value='首页' class='page_top' id="page_min" onclick='page_page(1)'>
+
+            <div id='page_all'></div>
+            <input type='button' value='尾页' class='page_top' id="page_max" onclick='page_page(CountPage )'>
+
+            <div id="pageall"></div>
+            <!--**********************************************生成excel表格及打印表格*********************************************-->
+            <input class="copy_excel" type="button" id="copy_excel" onclick="excel_blank()" value="生成excel"/>
+            <input type="button" class="copy_dayin" id="copy_dayin" onclick="dayin_blank()" value="生成打印内容"/>
+        </div>
+
+    </div>
+</div>
+<div id="append_rules">
+</div>
+</body>
+<script type="text/javascript" src="/public/js/checking_check.js"></script>
+<script>
+
+    var close_append = document.getElementById("close_append");
+    var append_out = document.getElementById("append_out");
+
+    $("#btt").click(function () {
+        $.get('append_staff.html', function (data) {
+            $('.my_form_div').prepend(data);
+            $(".my_div").css("display", "block");
+            close_append.style.display = "block";
+        })
+    });
+    $("#close_append").click(function () {
+        $('.my_form_div').html("");
+        $(".my_div").css("display", "none");
+        close_append.style.display = "none";
+    });
+</script>
+</html>
