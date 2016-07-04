@@ -209,7 +209,7 @@ class PublicController extends Controller {
 
 	//定时小程序，每到月一号计算上个月考勤记录表数据处理添加,顺序执行  3
 	function check_record_fun(){
-		//die;
+		die;
 		//下面是获取上一月的数据
 		$data = $this->year_month_day();
 		$now_time = $data['now_time'];
