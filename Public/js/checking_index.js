@@ -346,7 +346,7 @@ function blk(tabb) {
     if (tabb == 1) {
         location.href = "/index.php/Home/Checking/check_index";
     } else if (tabb == 2) {
-        $("#staff_index_append").attr("href","/index.php/Home/Checking/check_check");
+        location.href = "/index.php/Home/Checking/check_check";
     } else if (tabb == 3) {
         location.href = "/index.php/Home/Checking/check_checkrules";
     }

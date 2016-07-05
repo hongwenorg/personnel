@@ -530,7 +530,7 @@ function namesort(content) {
 //*************************     布局分页     *************************
 function blk(tabb) {
     if (tabb == 1) {
-        location.href = "/index.php/Home/Checking/index";
+        location.href = "/index.php/Home/Checking/check_index";
     } else if (tabb == 2) {
         location.href = "/index.php/Home/Checking/check_check";
     } else if (tabb == 3) {
