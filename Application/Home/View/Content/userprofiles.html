@@ -349,16 +349,17 @@
     document.getElementById("btt_02").onclick = function (e) {
         var html_str = '';
         var xhr = new XMLHttpRequest();
-        xhr.open("get", "/index.php/Home/Checking/check_detail");
+        xhr.open("get", "/index.php/Home/Checking/personel_check");
         xhr.send();
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 var msg = JSON.parse(xhr.responseText);
                 var str = '';
-                if(msg["status"] == 2) {
+                //console.log(msg);return;
+                if(msg["status"] == 1) {
                     for (var key in msg) {
-                        if (msg[key] != "status") {
-                            str += "<tr><td class='date_width'>" + "aaaa" + "</td>" + "<td class='mintime_width'>" + msg[key].check_mintime + "</td>" + "<td class='maxtime_width'>" + msg[key].check_maxtime + "</td>" + "<td class='check_width'>" + msg[key].check + "</td>" + "<td>" + msg[key].check_content + "</td></tr>";
+                        if (key != "status") {
+                            str += "<tr><td class='mintime_width'>" + msg[key].atten_date + "</td>" + "<td class='maxtime_width'>" + msg[key].atten_time + "</td></tr>";
                         }
                     }
                 }
@@ -439,7 +440,7 @@
                 append_rules_table.cellPadding = "2";
                 append_rules_table.ceelspacing = 0;
                 append_rules_table.appendChild(append_rules_tr);
-                append_rules_tr.innerHTML = "<td>" + "日期" + "</td>" + "<td>" + "上班时间" + "</td>" + "<td>" + "下班时间" + "</td>" + "<td>" + "是否合格" + "</td>" + "<td>" + "详情" + "</td>";
+                append_rules_tr.innerHTML = "<td>" + "日期" + "</td>" + "<td>" + "打卡时间" + "</td>";
                 append_rules_tr.insertAdjacentHTML("afterEnd", append_rules_tr2)
                 append_rule.appendChild(append_rules_yes);
                 append_rules_yes.type = "button";

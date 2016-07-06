@@ -24,6 +24,31 @@ class CheckingController extends CommonController {
 	}
 
 
+	//个人考勤记录
+	function personel_check(){
+		if(!empty($_SESSION['user'])){
+			$user_card = $_SESSION['user'];
+		}else{
+			$check_arr['status'] = 2;
+			echo json_encode($check_arr);exit;
+		}
+		//下面是获取上一月的数据
+		$data = $this->year_month_day();
+		$now_time = $data['now_time'];
+		$year_day = $data['year_day'];//哪一年
+		$month_day = $data['month_day'];//哪个月份
+		$check_content = $data['check_content'];//查询条件
+		$day_count = $data['day_count'];//每个月一共多少天
+
+		$checking = M('checking');
+		$check_arr = array();
+		$where = "atten_uid='$user_card' and atten_date like '%$check_content%'";
+		$check_arr = $checking->where($where)->order("atten_date")->select();
+		$check_arr['status'] = 1;
+		echo json_encode($check_arr);
+	}
+
+
 	//考勤规则页面
 	function rule_select(){
 		if(!empty($_POST['content'])){
@@ -600,18 +625,10 @@ class CheckingController extends CommonController {
 
 				
 				//查询旷工次数
-				$absenteeism_data = $check_record->query("SELECT COUNT(*) AS count FROM `check_record` WHERE ( `user_id` = ".$val['user_id']." ) ".$check_where);
 				$absenteeism_count = $check_record->query("SELECT COUNT(*) AS count FROM `check_record` WHERE ( `user_id` = ".$val['user_id']." ) and (`check_content` like '%旷工%') ".$check_where);
 				
 				//定义旷工次数
-				$absenteeism = $over_count_day-$absenteeism_data[0]['count']-$personal_leave-$sick_leave;
-				$absenteeism = $absenteeism+$absenteeism_count[0]['count'];
-				foreach($all_noclock_data as $all_noclock_val){
-					if($val['atten_uid'] == $all_noclock_val['atten_uid']){
-						//如果上下班未打卡有申请则减去申请天数
-						$absenteeism = $absenteeism-$all_noclock_val['count'];
-					}
-				}
+				$absenteeism = $absenteeism_count[0]['count'];
 				if($absenteeism<0){
 					$absenteeism = 0;
 				}
