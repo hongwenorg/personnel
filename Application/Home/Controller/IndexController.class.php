@@ -39,6 +39,32 @@ class IndexController extends Controller {
 	public function exceptions(){
 		$this->display( 'Public:exception' );
 	}
+
+
+	//权限之动态加载模块
+	function modules(){
+		if($_SESSION['level'] == 2){
+			$data['status'] = 2;
+			echo json_encode($data);exit;
+		}
+		if(empty($_POST['the_level'])){
+			$data['status'] = 2;
+			echo json_encode($data);exit;
+		}else{
+			$the_level = $_POST['the_level']
+		}
+		$where = " and status='1'";
+		$power_arr = array();
+		$modules_arr = array();
+		$power_id = $_SESSION['power_id'];
+		$power = D('power');
+		$modules = D('modules');
+		$power_arr = $power->where(array("id"=>$power_id))->find();
+		$modules_arr = $modules->where("the_level = '$the_level' and id in (".$power_arr['modules_tail_id'].")".$where)->select();
+		$data = $modules_arr;
+		$data['status'] = 1;
+		echo json_encode($data);
+	}
 	
 
 	//登陆处理
@@ -77,9 +103,9 @@ class IndexController extends Controller {
 			$user_basic_arr = $user_basic->where(array("user_id"=>$user_arr['id']))->find();
 			$allocation_arr = $allocation->join("power on allocation_user.power_id = power.id")->where(array("user_id"=>$user_arr['id']))->find();
 			if($allocation_arr['modules_first_id'] == 0 && $allocation_arr['modules_tail_id'] == 0){
-				$data['level'] = 2;
+				$level = 2;
 			}else{
-				$data['level'] = 1;
+				$level = 1;
 			}
 			$data["authority"] = $data_arr;
 			$data["post"] = $user_basic_arr['post'];
@@ -87,10 +113,12 @@ class IndexController extends Controller {
 			$data["group_name"] = $allocation_arr['power_name'];
 			$data["photo_max_url"] = $user_basic_arr['photo_max_url'];
 			$data["photo_small_url"] = $user_basic_arr['photo_small_url'];
+			$data['level'] = $level;
 			$_SESSION['userid'] = $user_arr['id'];
 			$_SESSION['status'] = 1;
 			session('user' , $user_arr['user']);
 			session('power_id' , $allocation_arr['power_id']);
+			session('level' , $level);
 			//return $data;exit;
 			//handle_log($user_arr['id'],$user,'aaa','select');
 			//echo $_SESSION['user'];die;

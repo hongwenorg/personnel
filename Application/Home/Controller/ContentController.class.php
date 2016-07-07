@@ -32,15 +32,20 @@ class ContentController extends CommonController {
 
 	//权限首页显示
 	function authority_index(){
+		if($_SESSION['level'] == 2){
+			$modules_arr['status'] = 2;
+			echo json_encode($modules_arr);exit;
+		}
 		if(empty($_SESSION['power_id'])){
 			$modules_arr['status'] = 2;
-			echo json_encode($modules_arr);
+			echo json_encode($modules_arr);exit;
 		}
+		$where = " and status='1'";
 		$power_id = $_SESSION['power_id'];
 		$power = D('power');
 		$modules = D('modules');
 		$power_arr = $power->where(array("id" => $power_id))->find();
-		$modules_arr = $modules->where("id in (".$power_arr['modules_first_id'].")")->select();
+		$modules_arr = $modules->where("id in (".$power_arr['modules_first_id'].")".$where)->select();
 		$modules_arr['status'] = 1;
 		echo json_encode($modules_arr);
 	}
