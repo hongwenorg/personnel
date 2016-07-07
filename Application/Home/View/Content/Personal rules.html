@@ -1,0 +1,106 @@
+<!DOCTYPE>
+<html>
+<meta charset="UTF-8">
+<head>
+    <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+    <title></title>
+    <style type="text/css">
+        *{
+            margin:0;
+            padding:0;
+        }
+        .user_profiles{
+            width:600px;
+            background-color: white;
+            position:fixed;
+            margin-left:50%;
+            margin-top:50%;
+            left:-300px;
+            border:1px solid red;
+        }
+        #user_profiles_02{
+            width:100%;
+            background-color: white;
+            margin-bottom:10px;
+            margin-top: 10px;
+        }
+        .user_profiles>div>div>p{
+            width:120px;
+            text-align:center;
+            font-size: 18px;
+            float:left;
+        }
+        .user_profiles>div>div>input{
+            width:300px;
+            height:30px;
+            float:right;
+        }
+        .user_profiles>div>div{
+            float:left;
+            width:80%;
+            margin-left:10%;
+        }
+        .quedingxiugai{
+            width:90%;
+            height:30px;
+            margin-left:5%;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="user_profiles" id="user_profiles_personal">
+    <div style="height:40px;width:100%;background-color:red;margin:0;">
+
+        <p></p><button></button>
+    </div>
+    <table style="width:100%;text-align:center" id="tabb">
+        <tr>
+             <td>日期</td>
+             <td>上班时间</td>
+             <td>下班时间</td>
+         </tr>
+    </table>
+    <input type="button" class="quedingxiugai">
+</div>
+</body>
+<script>
+
+    var user_profiles_personal=document.getElementById("user_profiles_personal");
+    user_profiles_personal.style.height=document.documentElement.clientHeight/100*80+"px";
+    user_profiles_personal.style.top=-900+"px";
+    var user_02height=document.documentElement.clientHeight/100*80-100+"px";
+
+    var group_all = [];
+    function content_click(num,content) {
+            var html_str = "";
+            $.ajax({
+                url: "/index.php/Home/Checking/rule_select",
+                data: {"content":content},
+                type: "post",
+                async: 'false',
+                success: function (msg) {
+                    var json_text = JSON.parse(msg);
+                    for (key in json_text) {
+                        if (key != "status" && json_text["status"] != 2) {
+                            group_all.push(json_text[key]);
+                        }
+                    }
+                    for (var j = 0; j < group_all.length; j++) {
+                        html_str += "<tr><td class='td_sty'>" + arr_num[j] + "</td>" + "<td class='td_sty'>" + group_all[j].name + "</td>" + "<td class='td_sty'>" +group_all[j].post + "</td>" +
+                                "<td class='td_sty td_width'>" + "<input type='time' readonly='readonly' class='input_time_' value='" + group_all[j].rule_min0 + "'>" + "~" + "<input type='time' class='input_time_' readonly='readonly' value='" + group_all[j].rule_max0 + "'>" + "</td>" +
+                                "<td class='td_sty td_width'>" + "<input type='time' readonly='readonly' class='input_time_' value='" + group_all[j].rule_min1 + "'>" + "~" + "<input type='time' class='input_time_' readonly='readonly' value='" + group_all[j].rule_max1 + "'>" + "</td>" +
+                                "<td class='td_sty td_width'>" + "<input type='time' readonly='readonly' class='input_time_' value='" + group_all[j].rule_min2 + "'>" + "~" + "<input type='time' class='input_time_' readonly='readonly' value='" + group_all[j].rule_max2 + "'>" + "</td>" +
+                                "<td class='td_sty td_width'>" + "<input type='time' readonly='readonly' class='input_time_' value='" + group_all[j].rule_min3 + "'>" + "~" + "<input type='time' class='input_time_' readonly='readonly' value='" + group_all[j].rule_max3 + "'>" + "</td>" +
+                                "<td class='td_sty td_width'>" + "<input type='time' readonly='readonly' class='input_time_' value='" + group_all[j].rule_min4 + "'>" + "~" + "<input type='time' class='input_time_' readonly='readonly' value='" + group_all[j].rule_max4 + "'>" + "</td>" +
+                                "<td class='td_sty rules_button'>"+"<div class='group_none' onclick='rule_up_click(this)'>"+group_all[j].name +"1"+"</div>"+"</td></tr>";
+
+                    }
+                    $("#tabb").html(html_str);
+                }
+            })
+
+    }
+
+</script>
+</html>
