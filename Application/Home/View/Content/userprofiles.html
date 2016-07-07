@@ -363,8 +363,6 @@
                     }
                 }
                 html_str = str;
-
-
                 document.getElementById("append_rules").style.display = "block";
                 var append_rules_yes;
                 var append_rule;
@@ -440,7 +438,7 @@
                 append_rules_table.ceelspacing = 0;
                 append_rules_table.appendChild(append_rules_tr);
                 append_rules_tr.innerHTML = "<td>" + "日期" + "</td>" + "<td>" + "上班时间" + "</td>" + "<td>" + "下班时间" + "</td>" + "<td>" + "是否合格" + "</td>" + "<td>" + "详情" + "</td>";
-                append_rules_tr.insertAdjacentHTML("afterEnd", append_rules_tr2)
+                append_rules_tr.insertAdjacentHTML("afterEnd", append_rules_tr2);
                 append_rule.appendChild(append_rules_yes);
                 append_rules_yes.type = "button";
                 append_rules_yes.value = "确定";
@@ -456,15 +454,7 @@
             }
         };
 
-        //        var target = e.target;
-        //        var parent_node=target.parentNode.parentNode.firstChild.nextSibling.firstChild.innerHTML;
-        //        for (var i = 0; i < arr_staff.length; i++) {
-        //            if (arr_staff[i].name == parent_node) {
-
-        //            }
-        //        }
-        //    })
-    }
+    };
 
 
 
