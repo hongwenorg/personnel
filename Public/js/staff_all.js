@@ -32,15 +32,19 @@ var tb_content = tb.innerHTML;
 var tab_click = document.getElementById("tab_click");
 var container_width = document.getElementById("container").style.width;
 var div_length = tab_click.children.length ;
-document.getElementById("tab1").lastChild.style.background= "red";
-//.style.background="red";
-
-
-
 document.getElementById("tab_click").style.width=container_width;
 var tab_chile_width=document.querySelectorAll('.tab_width');
 for(var t=0;t<tab_chile_width.length;t++) {
  tab_chile_width[t].style.width=100/div_length+"%";
+    if(t==tab_chile_width.length-1){
+        tab_chile_width[t].style.borderTopRightRadius="10px";
+        tab_chile_width[t].style.overflow="hidden";
+    }else if(t==0){
+        tab_chile_width[t].style.borderTopLeftRadius="10px";
+        tab_chile_width[t].style.overflow="hidden";
+        tab_chile_width[t].style.background="white";
+        tab_chile_width[t].style.color="black";
+    }
 }
 
 
