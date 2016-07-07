@@ -44,7 +44,7 @@ button {
 .zpg_head > div{
     font-size: 22px;
     text-align: center;
-    width: 14.28571428571429%;
+    min-width: 14.28571428571429%;
     float: left;
     border-bottom: hidden;
     line-height: 40px;
@@ -81,6 +81,7 @@ button {
     margin: -5px auto;
     width: 95%;
     height: 40px;
+    min-width: 1299px;
 }
 
 .zpgwr > .zp > div {
@@ -115,6 +116,10 @@ button {
     border: 1px solid lightgray;
     border-right: none;
     cursor: pointer;
+}
+.tab_width{
+    /*border:1px solid lightgray;*/
+    width:100%;
 }
 
 #btt {
