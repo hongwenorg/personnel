@@ -51,7 +51,7 @@ class IndexController extends Controller {
 			$data['status'] = 2;
 			echo json_encode($data);exit;
 		}else{
-			$the_level = $_POST['the_level']
+			$the_level = $_POST['the_level'];
 		}
 		$where = " and status='1'";
 		$power_arr = array();
