@@ -204,7 +204,7 @@
                 if (txt.status == 0) {
                     alert("用户名或密码错误！");
                     return false;
-                } else if (txt.status == 1 && txt.level == 1) {
+                } else if (txt.status == 1 && txt.level == 2) {
                     var iOS;
                     var isAndroid;
                     var userType = {};
@@ -212,20 +212,20 @@
                     if (navigator.userAgent.toLowerCase().match(/(android)/)) {
                         isAndroid = true;
                         userType.isAndroid = true;
-                        location.href = "/index.php/Home/Content/userprofilesmanage_adr";
+                        location.href = "/index.php/Home/Content/userprofiles";
                     } else if (navigator.userAgent.toLowerCase().match(/(iphone|ipod|ipad)/)) {
                         iOS = true;
                         userType.iOS = true;
-                        location.href = "/index.php/Home/Content/userprofilesmanage_adr";
+                        location.href = "/index.php/Home/Content/userprofiles";
                     } else {
                         iOS = false;
                         isAndroid = false;
-                        location.href = "/index.php/Home/Content/userprofilesmanage";
+                        location.href = "/index.php/Home/Content/userprofiles";
                     }
 
 
-                } else if (txt.status == 1 && txt.level == 2) {
-                    location.href = "/index.php/Home/Content/userprofiles";
+                } else if (txt.status == 1 && txt.level == 1) {
+                    location.href = "/index.php/Home/Content/index";
                 }
                 if (box.checked) {
                     setCookie("check", 1, 7);
@@ -242,7 +242,6 @@
                     setCookie("photo_max_url", txt.photo_max_url);
                     setCookie("photo_small_url", txt.photo_small_url);
                 }
-
             }
 
         })

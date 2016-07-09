@@ -556,17 +556,17 @@ function blk(tabb) {
 }
 
 var tab = document.getElementById("tab_click");
-tab.addEventListener("click", function (e) {
-    var target = e.target;
-    tabb1.style.background = "#bbbbbb";
-    tabb2.style.background = "#bbbbbb";
-    tabb3.style.background = "#bbbbbb";
-    tabb1.style.color = "white";
-    tabb2.style.color = "white";
-    tabb3.style.color = "white";
-    target.style.background = "white";
-    target.style.color = "black";
-}, false);
+//tab.addEventListener("click", function (e) {
+//    var target = e.target;
+//    tabb1.style.background = "#bbbbbb";
+//    tabb2.style.background = "#bbbbbb";
+//    tabb3.style.background = "#bbbbbb";
+//    tabb1.style.color = "white";
+//    tabb2.style.color = "white";
+//    tabb3.style.color = "white";
+//    target.style.background = "white";
+//    target.style.color = "black";
+//}, false);
 document.onscroll = function () {
     if (scrollY > 200) {
         $("#trr").addClass("setcss_check1");

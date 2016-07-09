@@ -23,11 +23,11 @@ var tabb4 = document.getElementById("tabb4");
 var tabb5 = document.getElementById("tabb5");
 var tabb6 = document.getElementById("tabb6");
 var tabb7 = document.getElementById("tabb7");
-var tb_content = tb.innerHTML;
+//var tb_content = tb.innerHTML;
 //******************************     全局变量  end    ***************************
 
 var tab_click = document.getElementById("tab_click");
-var container_width = document.getElementById("container").style.width;
+//var container_width = document.getElementById("container").style.width;
 var div_length = tab_click.children.length ;
 //document.getElementById("tab_click").style.width=container_width;
 var tab_chile_width=document.querySelectorAll('.tab_width');
@@ -44,12 +44,12 @@ for(var t=0;t<tab_chile_width.length;t++) {
     }
 }
 <!--表格id-->
-//    按回车键触发搜索按钮
-document.getElementById("sou_sou").onkeydown = function () {
-    if (event.keyCode == 13) {
-        find_btt.click();
-    }
-};
+    //按回车键触发搜索按钮
+//document.getElementById("sou_sou").onkeydown = function () {
+//    if (event.keyCode == 13) {
+//        find_btt.click();
+//    }
+//};
 
 //*****************************     select列表，input，日期 切换 start     ***********************
 function prov_change() {
@@ -369,17 +369,17 @@ function blk(tabb) {
 }
 
 var tab = document.getElementById("tab_click");
-tab.addEventListener("click", function (e) {
-    var target = e.target;
-    tabb1.style.background = "#bbbbbb";
-    tabb2.style.background = "#bbbbbb";
-    tabb3.style.background = "#bbbbbb";
-    tabb1.style.color = "white";
-    tabb2.style.color = "white";
-    tabb3.style.color = "white";
-    target.style.background = "white";
-    target.style.color = "black";
-}, false);
+//tab.addEventListener("click", function (e) {
+//    var target = e.target;
+//    tabb1.style.background = "#bbbbbb";
+//    tabb2.style.background = "#bbbbbb";
+//    tabb3.style.background = "#bbbbbb";
+//    tabb1.style.color = "white";
+//    tabb2.style.color = "white";
+//    tabb3.style.color = "white";
+//    target.style.background = "white";
+//    target.style.color = "black";
+//}, false);
 document.onscroll = function () {
     if (scrollY > 200) {
         $("#trr").addClass("setcss_check_index");
