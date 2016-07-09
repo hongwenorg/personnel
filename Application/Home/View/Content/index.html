@@ -98,30 +98,21 @@
                 } else {
                     for (key in txt) {
                         if (key != "status" && txt["status"] != 2) {
-                            str += '<a><button type="button" id="bt'+txt[key].id+'"><img src="/public/img/index'+txt[key].id+'.png" alt=""></button></a>';
+                            str += '<a><button type="button" onclick="index_button('+key+')"><img src="/public/img/index'+txt[key].id+'.png" alt=""></button></a>';
                             bt_arr.push(txt[key].modules_file);
                         }
                     }
                     $(".butt_all").html(str);
-                    $("#bt1").click(function(){
-                        location.href="/index.php/Home"+bt_arr[0];
-                    });
-                    $("#bt2").click(function(){
-                        location.href="/index.php/Home"+bt_arr[1];
-                    });
-                    $("#bt3").click(function(){
-                        location.href="/index.php/Home"+bt_arr[2];
-                    });
-                    $("#bt4").click(function(){
-                        location.href="/index.php/Home"+bt_arr[3];
-                    });
-                    $("#bt5").click(function(){
-                        location.href="/index.php/Home"+bt_arr[4];
-                    });
                 }
             }
 
         });
+    }
+
+
+    
+    function index_button(num){
+        location.href="/index.php/Home"+bt_arr[num];
     }
 
     
