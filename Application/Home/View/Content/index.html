@@ -98,6 +98,7 @@
                 } else {
                     for (key in txt) {
                         if (key != "status" && txt["status"] != 2) {
+                            console.log(txt[key].modules_file);
                             str += '<a><button type="button" onclick="index_button('+key+')"><img src="/public/img/index'+txt[key].id+'.png" alt=""></button></a>';
                             bt_arr.push(txt[key].modules_file);
                         }
@@ -107,7 +108,7 @@
             }
 
         });
-    }
+    };
 
 
     
