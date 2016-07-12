@@ -561,13 +561,13 @@ class CheckingController extends CommonController {
 						$sick_leave+=floatval($leave_val['count_day1']);
 					}elseif($leave_val['property']=='事假' && $leave_val['atten_uid']==$val['atten_uid']){
 						$personal_leave+=floatval($leave_val['count_day1']);
-					}elseif($leave_val['property']=='产假' && $leave_val['atten_uid']==$val['atten_uid']){
+					}/*elseif($leave_val['property']=='产假' && $leave_val['atten_uid']==$val['atten_uid']){
 						$count_yes+=floatval($leave_val['count_day1']);
 					}elseif($leave_val['property']=='婚假' && $leave_val['atten_uid']==$val['atten_uid']){
 						$count_yes+=floatval($leave_val['count_day1']);
 					}elseif($leave_val['property']=='丧假' && $leave_val['atten_uid']==$val['atten_uid']){
 						$count_yes+=floatval($leave_val['count_day1']);
-					}
+					}*/
 				}
 
 				$overtime_count = 0;
