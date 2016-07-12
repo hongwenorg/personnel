@@ -1,0 +1,33 @@
+
+    <div class="zpgwl" id="tab">
+        <div id="tab_click" class="zpg_head" style="background-color: rgb(239, 239, 239) !important;">
+            <div id="tab1" class="tab_width"   style="width:33.1%">
+                <div id="tabb1" onclick="blk(1)">打卡记录</div>
+            </div>
+            <div id="tab2" class="tab_width"  style="width:33.1%">
+                <div id="tabb2" onclick="blk(2)" style="background-color: white;color:black">考勤记录</div>
+            </div>
+            <div id="tab3" class="tab_width"  style="border-top-right-radius:10px;width:33.1%">
+                <div id="tabb3" onclick="blk(3)" style="border-top: none">考勤规则</div>
+            </div>
+        </div>
+    </div>
+<script type="text/javascript" src="/public/js/checking_check.js"></script>
+<script>
+
+    var close_append = document.getElementById("close_append");
+    var append_out = document.getElementById("append_out");
+
+    $("#btt").click(function () {
+        $.get('append_staff.html', function (data) {
+            $('.my_form_div').prepend(data);
+            $(".my_div").css("display", "block");
+            close_append.style.display = "block";
+        })
+    });
+    $("#close_append").click(function () {
+        $('.my_form_div').html("");
+        $(".my_div").css("display", "none");
+        close_append.style.display = "none";
+    });
+</script>

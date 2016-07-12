@@ -142,6 +142,52 @@ window.onload = function () {
             }
         }
     }
+    var check_append = [];
+    $.ajax({
+        url: "/index.php/Home/Index/modules",
+        data: {"the_level": 1},
+        type: "post",
+        async: "false",
+        success: function (data) {
+            var check_append_modules = [];
+            msg = JSON.parse(data);
+            var arr_num = [];
+            for (key in msg) {
+                if (key != "status" && msg["status"] != 2) {
+                    check_append_modules.push(msg[key]);
+                }
+            }
+            for (var i = 0; i < check_append_modules.length; i++) {
+                var append_div = document.createElement("div");
+                document.getElementById("tab_click").appendChild(append_div).innerHTML = "<div class='click_modules'>"+  check_append_modules[i].modules_name+"</div>";
+            }
+            var click_div=document.getElementById("tab_click");
+            var tab_child=document.querySelectorAll('.click_modules');
+            click_div.style.width="95%";
+            var tab_child=document.querySelectorAll('.click_modules');
+            for(var aa=0;aa<tab_child.length;aa++){
+                tab_child[aa].parentNode.style.width=100/tab_child.length+"%";
+                if(tab_child[aa].innerText==="五险一金"){
+                    tab_child[aa].style.background="white";
+                    tab_child[aa].style.color="black";
+
+                };
+                if(aa==0){
+                    tab_child[aa].style.borderTopLeftRadius = "10px";
+                }else if(aa==tab_child.length-1){
+                    tab_child[aa].style.borderTopRightRadius = "10px";
+                }
+            }
+            click_div.addEventListener("click", function (e) {
+                var target = e.target;
+                for (var j = 0; j < check_append_modules.length; j++) {
+                    if (target.innerText == check_append_modules[j].modules_name) {
+                        location.href = "/index.php/Home/" + check_append_modules[j].modules_file;
+                    }
+                }
+            });
+        }
+    });
 };
 //页面加载事件  end
 
@@ -260,7 +306,9 @@ function ArrSort(page, num, content) {
 
 //员工信息页面搜索按钮  start
 find_btt.onclick = function () {
+
     document.getElementById("sousuo_img_out").style.display="block";
+    document.querySelector(".hongwen_logo").style.display="none";
     var sel = document.getElementById("prov");
     if (sel.value == "place") {
         var status = "place";
@@ -404,42 +452,3 @@ function namesort(content) {
 }();
 
 
-//*************************     布局分页     *************************
-function blk(tabb) {
-    if (tabb == 1) {
-        location.href = "/index.php/Home/Content/staff";
-    } else if (tabb == 2) {
-        location.href = "/index.php/Home/Content/staff_move";
-    } else if (tabb == 3) {
-        location.href="/index.php/Home/Content/staff_level";
-    } else if (tabb == 4) {
-        location.href="/index.php/Home/Content/staff_jiangfa"
-    } else if (tabb == 5) {
-        location.href="/index.php/Home/Content/staff_train";
-    } else if (tabb == 6) {
-        location.href="/index.php/Home/Content/staff_insurance"
-    } else if (tabb == 7) {
-        location.href = "/index.php/Home/Content/staff_leave"
-    }
-}
-
-var tab = document.getElementById("tab_click");
-tab.addEventListener("click", function (e) {
-    var target = e.target;
-    tabb1.style.background = "#bbbbbb";
-    tabb2.style.background = "#bbbbbb";
-    tabb3.style.background = "#bbbbbb";
-    tabb4.style.background = "#bbbbbb";
-    tabb5.style.background = "#bbbbbb";
-    tabb6.style.background = "#bbbbbb";
-    tabb7.style.background = "#bbbbbb";
-    tabb1.style.color = "white";
-    tabb2.style.color = "white";
-    tabb3.style.color = "white";
-    tabb4.style.color = "white";
-    tabb5.style.color = "white";
-    tabb6.style.color = "white";
-    tabb7.style.color = "white";
-    target.style.background = "white";
-    target.style.color = "black";
-}, false);

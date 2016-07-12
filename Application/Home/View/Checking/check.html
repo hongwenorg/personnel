@@ -46,6 +46,12 @@
         #show_ul {
             left: 290px;
         }
+        .hongwen_logo{
+            position:absolute;
+            top:250px;
+            left:50%;
+            margin-left: -300px;
+        }
 
     </style>
 </head>
@@ -64,8 +70,11 @@
     <script src="/public/js/head.js" type="text/javascript" charset="utf-8"></script>
 </div>
 <div class="zpgwl" id="tab">
-    <div id="tab_click" class="zpg_head" style="background-color: rgb(239, 239, 239) !important;">
+    <div id="tab_click" class="zpg_head"  style="border-top-right-radius:10px;border-top-left-radius:10px;overflow: hidden; background-color: rgb(239, 239, 239) !important;">
     </div>
+</div>
+<div id="container" style="width:94.87%">
+    <img src="/public/img/logo-1.jpg" alt="" style="width:600px" class="hongwen_logo">
 </div>
 </body>
 <script>
@@ -133,7 +142,6 @@
                 var click_div=document.getElementById("tab_click");
                 var tab_child=document.querySelectorAll('.click_modules');
                 click_div.style.width="95%";
-                var tab_child=document.querySelectorAll('.click_modules');
                 for(var aa=0;aa<tab_child.length;aa++){
                     tab_child[aa].parentNode.style.width=100/tab_child.length+"%";
 //                    if(tab_child[aa].innerText=="考勤规则"){
@@ -173,5 +181,4 @@
         close_append.style.display = "none";
     });
 </script>
-<script type="text/javascript" src="/public/js/checking_index.js"></script>
 </html>

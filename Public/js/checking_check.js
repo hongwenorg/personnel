@@ -122,6 +122,46 @@ window.onload = function () {
             }
         }
     }
+    var check_append = [];
+    $.ajax({
+        url: "/index.php/Home/Index/modules",
+        data: {"the_level": 2},
+        type: "post",
+        async: "false",
+        success: function (data) {
+            var check_append_modules = [];
+            msg = JSON.parse(data);
+            var arr_num = [];
+            for (key in msg) {
+                if (key != "status" && msg["status"] != 2) {
+                    check_append_modules.push(msg[key]);
+                }
+            }
+            for (var i = 0; i < check_append_modules.length; i++) {
+                var append_div = document.createElement("div");
+                document.getElementById("tab_click").appendChild(append_div).innerHTML = "<div class='click_modules'>"+  check_append_modules[i].modules_name+"</div>";
+            }
+            var click_div=document.getElementById("tab_click");
+            click_div.style.width="95%";
+            var tab_child=document.querySelectorAll('.click_modules');
+            for(var aa=0;aa<tab_child.length;aa++){
+                tab_child[aa].parentNode.style.width=100/tab_child.length+"%";
+                if(tab_child[aa].innerText=="考勤记录"){
+                    tab_child[aa].style.background="white";
+                    tab_child[aa].style.color="black";
+
+                }
+            }
+            click_div.addEventListener("click", function (e) {
+                var target = e.target;
+                for (var j = 0; j < check_append_modules.length; j++) {
+                    if (target.innerText == check_append_modules[j].modules_name) {
+                        location.href = "/index.php/Home/" + check_append_modules[j].modules_file;
+                    }
+                }
+            });
+        }
+    });
 };
 //页面加载事件  end
 
@@ -186,8 +226,10 @@ function ArrSort(page, num, content) {
         if (arr_staff[j].noclock == null) {
             arr_staff[j].noclock = "无";
         }
-        if (arr_staff[j].absenteeism !== 0) {
-            arr_staff[j].absenteeism = "<div class='absen_red'>" + arr_staff[j].absenteeism + "</div>";
+        if (arr_staff[j].absenteeism== 0) {
+            arr_staff[j].absenteeism = "<div>" + arr_staff[j].absenteeism + "</div>";
+        }else{
+            arr_staff[j].absenteeism = "<div  class='absen_red'>" + arr_staff[j].absenteeism + "</div>";
         }
         if(arr_staff[j].is_no==="是"){
             arr_staff[j].is_no="<div class='div_gree'>" + arr_staff[j].is_no + "</div>";
@@ -300,6 +342,7 @@ function ArrSort(page, num, content) {
 //分页处理搜索数据等  end
 //员工信息页面搜索按钮  start
 find_btt.onclick = function () {
+    document.querySelector(".hongwen_logo").style.display="none";
     document.getElementById("sousuo_img_out").style.display = "block";
     var sel = document.getElementById("prov");
     if (sel.value == "campus") {

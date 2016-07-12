@@ -29,23 +29,23 @@ var tabb7 = document.getElementById("tabb7");
 var tb_content = tb.innerHTML;
 //******************************     全局变量  end    ***************************
 //自适应宽度
-var tab_click = document.getElementById("tab_click");
-var container_width = document.getElementById("container").style.width;
-var div_length = tab_click.children.length ;
-document.getElementById("tab_click").style.width=container_width;
-var tab_chile_width=document.querySelectorAll('.tab_width');
-for(var t=0;t<tab_chile_width.length;t++) {
- tab_chile_width[t].style.width=100/div_length+"%";
-    if(t==tab_chile_width.length-1){
-        tab_chile_width[t].style.borderTopRightRadius="10px";
-        tab_chile_width[t].style.overflow="hidden";
-    }else if(t==0){
-        tab_chile_width[t].style.borderTopLeftRadius="10px";
-        tab_chile_width[t].style.overflow="hidden";
-        tab_chile_width[t].style.background="white";
-        tab_chile_width[t].style.color="black";
-    }
-}
+//var tab_click = document.getElementById("tab_click");
+//var container_width = document.getElementById("container").style.width;
+//var div_length = tab_click.children.length ;
+//document.getElementById("tab_click").style.width=container_width;
+//var tab_chile_width=document.querySelectorAll('.tab_width');
+//for(var t=0;t<tab_chile_width.length;t++) {
+// tab_chile_width[t].style.width=100/div_length+"%";
+//    if(t==tab_chile_width.length-1){
+//        tab_chile_width[t].style.borderTopRightRadius="10px";
+//        tab_chile_width[t].style.overflow="hidden";
+//    }else if(t==0){
+//        tab_chile_width[t].style.borderTopLeftRadius="10px";
+//        tab_chile_width[t].style.overflow="hidden";
+//        tab_chile_width[t].style.background="white";
+//        tab_chile_width[t].style.color="black";
+//    }
+//}
 
 
 //<!--表格id-->
@@ -67,45 +67,45 @@ function prov_change() {
         }
     } else if (sel.value == "post") {
         for (var i = 0; i < arr_class[2].length; i++) {
-            opt = opt + '<option value="' + arr_class[2][i]+ '">' + arr_class[2][i] + '</option>';
+            opt = opt + '<option value="' + arr_class[2][i] + '">' + arr_class[2][i] + '</option>';
         }
         for (var i = 0; i < arr_class[3].length; i++) {
-            opt = opt + '<option value="' + arr_class[3][i]+ '">' + arr_class[3][i] + '</option>';
+            opt = opt + '<option value="' + arr_class[3][i] + '">' + arr_class[3][i] + '</option>';
         }
     }
     document.getElementById("city").innerHTML = opt;
 
 }
-document.getElementById("click_findname").onclick=function(){
-    document.getElementById("show_li").style.display="block";
-}
+document.getElementById("click_findname").onclick = function () {
+    document.getElementById("show_li").style.display = "block";
+};
 document.getElementById("prov").addEventListener("change", function () {
     var porv_val = document.getElementById("prov").value;
     if (porv_val == "name") {
         document.getElementById("prov_append").innerHTML = "<input type='text' id='find'>";
-        var find_name=document.getElementById("find");
+        var find_name = document.getElementById("find");
 
-        $(function(){
-            for(var i=0;i<arr_staff.length;i++){
-                var show_li=document.createElement("li");
-                document.getElementById("show_ul").appendChild(show_li).innerHTML="<div class='none_li'>"+arr_staff[i].name+"</div>";
+        $(function () {
+            for (var i = 0; i < arr_staff.length; i++) {
+                var show_li = document.createElement("li");
+                document.getElementById("show_ul").appendChild(show_li).innerHTML = "<div class='none_li'>" + arr_staff[i].name + "</div>";
             }
-            $("#find").keyup(function(){
+            $("#find").keyup(function () {
 
                 $("#show_ul li").hide();
-                $("#show_ul li:contains('"+$("#find").val()+"')").show();
+                $("#show_ul li:contains('" + $("#find").val() + "')").show();
             });
         });
-        document.getElementById("show_ul").addEventListener("click",function(l){
-            var target= l.target;
-            find_name.value=target.innerHTML;
+        document.getElementById("show_ul").addEventListener("click", function (l) {
+            var target = l.target;
+            find_name.value = target.innerHTML;
             $("#show_ul li").hide();
         });
-        window.onclick=function(){
+        window.onclick = function () {
             $("#show_ul li").hide();
-        }
+        };
         city.style.display = "none";
-    }else if( porv_val == "user"){
+    } else if (porv_val == "user") {
         document.getElementById("prov_append").innerHTML = "<input type='text' id='find'>";
         city.style.display = "none";
     } else if (porv_val == "time") {
@@ -114,7 +114,7 @@ document.getElementById("prov").addEventListener("change", function () {
     } else if (porv_val == "0") {
         document.getElementById("prov_append").innerHTML = "";
         city.style.display = "none";
-    }else {
+    } else {
         document.getElementById("prov_append").innerHTML = "";
         city.style.display = "block";
     }
@@ -137,7 +137,51 @@ window.onload = function () {
             }
             console.log(arr_class);
         }
-    }
+    };
+    var check_append = [];
+    $.ajax({
+        url: "/index.php/Home/Index/modules",
+        data: {"the_level": 1},
+        type: "post",
+        async: "false",
+        success: function (data) {
+            var check_append_modules = [];
+            msg = JSON.parse(data);
+            var arr_num = [];
+            for (key in msg) {
+                if (key != "status" && msg["status"] != 2) {
+                    check_append_modules.push(msg[key]);
+                }
+            }
+            for (var i = 0; i < check_append_modules.length; i++) {
+                var append_div = document.createElement("div");
+                document.getElementById("tab_click").appendChild(append_div).innerHTML = "<div class='click_modules'>" + check_append_modules[i].modules_name + "</div>";
+            }
+            var click_div = document.getElementById("tab_click");
+            var tab_child = document.querySelectorAll('.click_modules');
+            click_div.style.width = "95%";
+            for (var aa = 0; aa < tab_child.length; aa++) {
+                tab_child[aa].parentNode.style.width = 100 / tab_child.length + "%";
+                if (tab_child[aa].innerText === "员工信息") {
+                    tab_child[aa].parentNode.style.background = "white";
+                    tab_child[aa].parentNode.style.color = "black";
+                };
+                if(aa==0){
+                    tab_child[aa].style.borderTopLeftRadius = "10px";
+                }else if(aa==tab_child.length-1){
+                    tab_child[aa].style.borderTopRightRadius = "10px";
+                }
+            }
+            click_div.addEventListener("click", function (e) {
+                var target = e.target;
+                for (var j = 0; j < check_append_modules.length; j++) {
+                    if (target.innerText == check_append_modules[j].modules_name) {
+                        location.href = "/index.php/Home/" + check_append_modules[j].modules_file;
+                    }
+                }
+            });
+        }
+    });
 };
 //页面加载事件  end
 
@@ -269,6 +313,8 @@ function ArrSort(page, num, content) {
 //员工信息页面搜索按钮  start
 find_btt.onclick = function () {
     document.getElementById("sousuo_img_out").style.display = "block";
+    document.querySelector(".hongwen_logo").style.display="none";
+
     var sel = document.getElementById("prov");
     if (sel.value == "campus") {
         var status = "campus";
@@ -656,7 +702,7 @@ $("#staff_xinxi").click(function () {
                     $("#check").val(basic_arr.check);
                     $("#user_id").val(basic_arr.user_id);
                     if (basic_arr.photo_max_url != "" || basic_arr.photo_max_url != null) {
-                        $("#photo_img").attr("src", basic_arr.photo_max_url +'?'+new Date().getTime());
+                        $("#photo_img").attr("src", basic_arr.photo_max_url + '?' + new Date().getTime());
                     }
 
                     for (var insure_i in insure_arr) {
@@ -727,7 +773,7 @@ document.getElementById("staff_gangwei").onclick = function () {
             }
             export_campus.prepend(export_campus_str);
 
-            if($('#export_campus').val() == '集团'){
+            if ($('#export_campus').val() == '集团') {
                 for (var i = 0; i < arr_class[2].length; i++) {
                     if (export_post_opt.indexOf(arr_class[2][i]) != -1) {
                         export_post_str += '<option selected value="' + arr_class[2][i] + '">' + arr_class[2][i] + '</option>';
@@ -736,7 +782,7 @@ document.getElementById("staff_gangwei").onclick = function () {
                     }
                 }
                 export_post.prepend(export_post_str);
-            }else{
+            } else {
                 for (var i = 0; i < arr_class[3].length; i++) {
                     if (export_post_opt.indexOf(arr_class[3][i]) != -1) {
                         export_post_str += '<option selected value="' + arr_class[3][i] + '">' + arr_class[3][i] + '</option>';
@@ -757,18 +803,18 @@ document.getElementById("staff_gangwei").onclick = function () {
 //员工岗位调动  end
 
 
-function fold_campus_save(){
+function fold_campus_save() {
     var fold_post = $("#fold_post");
-    if($('#fold_campus').val() == '集团'){
+    if ($('#fold_campus').val() == '集团') {
         fold_post.html("");
         var fold_post_str = "<option value='请选择'>请选择</option>";
         for (var i = 0; i < arr_class[2].length; i++) {
             fold_post_str += '<option value="' + arr_class[2][i] + '">' + arr_class[2][i] + '</option>';
         }
         fold_post.prepend(fold_post_str);
-    }else if($('#fold_campus').val() == '请选择'){
+    } else if ($('#fold_campus').val() == '请选择') {
         fold_post.html("");
-    }else{
+    } else {
         var fold_post_str = "<option value='请选择'>请选择</option>";
         fold_post.html("");
         for (var i = 0; i < arr_class[3].length; i++) {
@@ -879,44 +925,7 @@ function namesort(content) {
 
 
 //*************************     布局分页     *************************
-function blk(tabb) {
-    if (tabb == 1) {
-        location.href = "/index.php/Home/Content/staff";
-    } else if (tabb == 2) {
-        location.href = "/index.php/Home/Content/staff_move";
-    } else if (tabb == 3) {
-        location.href="/index.php/Home/Content/staff_level";
-    } else if (tabb == 4) {
-        location.href = "/index.php/Home/Content/staff_jiangfa";
-    } else if (tabb == 5) {
-        location.href="/index.php/Home/Content/staff_train";
-    } else if (tabb == 6) {
-        location.href = "/index.php/Home/Content/staff_insurance";
-    } else if (tabb == 7) {
-        location.href = "/index.php/Home/Content/staff_leave";
-    }
-}
 
-var tab = document.getElementById("tab_click");
-tab.addEventListener("click", function (e) {
-    var target = e.target;
-    tabb1.style.background = "#bbbbbb";
-    tabb2.style.background = "#bbbbbb";
-    tabb3.style.background = "#bbbbbb";
-    tabb4.style.background = "#bbbbbb";
-    tabb5.style.background = "#bbbbbb";
-    tabb6.style.background = "#bbbbbb";
-    tabb7.style.background = "#bbbbbb";
-    tabb1.style.color = "white";
-    tabb2.style.color = "white";
-    tabb3.style.color = "white";
-    tabb4.style.color = "white";
-    tabb5.style.color = "white";
-    tabb6.style.color = "white";
-    tabb7.style.color = "white";
-    target.style.background = "white";
-    target.style.color = "black";
-}, false);
 document.onscroll = function () {
     if (scrollY > 200) {
         $("#trr").addClass("setcss1");
@@ -926,7 +935,6 @@ document.onscroll = function () {
         $("#trr th").removeClass("setcss");
     }
 };
-
 
 
 //鼠标拖拽员工添加，修改页面

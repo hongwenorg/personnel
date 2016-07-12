@@ -71,10 +71,10 @@
 <div id="num_panduan1" style="display:none">1</div>
 <div class="zpgw" id="bq">
     <div class="zpgwl" id="tab">
-        <div id="tab_click" class="zpg_head" style="background-color: rgb(239, 239, 239) !important;">
+        <div id="tab_click" class="zpg_head" style="border-top-right-radius:10px;border-top-left-radius:10px;overflow: hidden; background-color: rgb(239, 239, 239) !important;">
         </div>
     </div>
-    <div id="container" style="width:94.8%;">
+    <div id="container" style="width:94.9%;">
         <div id="content1">
             <ul id="show_ul"></ul>
             <div class="sousuokuang" id="sou_sou" style="margin-top:30px; left:5%;">
@@ -92,7 +92,7 @@
             <!--*********************************************存放后台员工信息*****************************************************-->
             <div style="width:100%">
                 <table class="tb" cellpadding="2" cellspacing="0" id="tb">
-                    <tr class="trr1" id="trr">
+                    <tr class="trr1" id="trr" style="width: 85.4%;">
                         <th id="staff_num1" class="staff_num1" style="min-width: 30px">
                             <div>序号</div>
                         </th>
@@ -172,13 +172,12 @@
 
             <div id='page_all'></div>
             <input type='button' value='尾页' class='page_top' id="page_max" onclick='page_page(CountPage )'>
-
             <div id="pageall"></div>
             <!--**********************************************生成excel表格及打印表格*********************************************-->
             <input class="copy_excel" type="button" id="copy_excel" onclick="excel_blank()" value="生成excel"/>
             <input type="button" class="copy_dayin" id="copy_dayin" onclick="dayin_blank()" value="生成打印内容"/>
         </div>
-
+         <img src="/public/img/logo-1.jpg" alt="" style="width:600px" class="hongwen_logo">
     </div>
 </div>
 <div id="append_rules">
@@ -186,49 +185,6 @@
 </body>
 <script type="text/javascript" src="/public/js/checking_check.js"></script>
 <script>
-    var check_append = [];
-    window.onload = function () {
-        $.ajax({
-            url: "/index.php/Home/Index/modules",
-            data: {"the_level": 2},
-            type: "post",
-            async: "false",
-            success: function (data) {
-                var check_append_modules = [];
-                msg = JSON.parse(data);
-                var arr_num = [];
-                for (key in msg) {
-                    if (key != "status" && msg["status"] != 2) {
-                        check_append_modules.push(msg[key]);
-                    }
-                }
-                for (var i = 0; i < check_append_modules.length; i++) {
-                    var append_div = document.createElement("div");
-                    document.getElementById("tab_click").appendChild(append_div).innerHTML = "<div class='click_modules'>"+  check_append_modules[i].modules_name+"</div>";
-                }
-                var click_div=document.getElementById("tab_click");
-                click_div.style.width="95%";
-                var tab_child=document.querySelectorAll('.click_modules');
-                for(var aa=0;aa<tab_child.length;aa++){
-                    tab_child[aa].parentNode.style.width=100/tab_child.length+"%";
-                    if(tab_child[aa].innerText=="考勤记录"){
-                        tab_child[aa].style.background="white";
-                        tab_child[aa].style.color="black";
-
-                    }
-                }
-                click_div.addEventListener("click", function (e) {
-                    var target = e.target;
-                    for (var j = 0; j < check_append_modules.length; j++) {
-                        if (target.innerText == check_append_modules[j].modules_name) {
-                            location.href = "/index.php/Home/" + check_append_modules[j].modules_file;
-                        }
-                    }
-                });
-            }
-        });
-    };
-
     var close_append = document.getElementById("close_append");
     var append_out = document.getElementById("append_out");
 
