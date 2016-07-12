@@ -314,6 +314,7 @@ function ArrSort(page, num, content) {
 //员工信息页面搜索按钮  start
 find_btt.onclick = function () {
     document.getElementById("sousuo_img_out").style.display="block";
+    document.querySelector(".hongwen_logo").style.display="none";
     var sel = document.getElementById("prov");
     if (sel.value == "export_campus") {
         var status = "export_campus";

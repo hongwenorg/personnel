@@ -944,7 +944,7 @@ padding:5px;
     top:0;
 }
 .setcss_check1_index{
-    width:12.5%;
+    width:12.5% !important;
 }
 .setcss_check_border{
     border:none !important;
@@ -984,6 +984,12 @@ padding:5px;
     background-color:red;
     font-weight: bold;
     color:white;
+}
+.hongwen_logo{
+    position:absolute;
+    top:250px;
+    left:50%;
+    margin-left: -300px;
 }
 
 

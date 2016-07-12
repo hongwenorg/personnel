@@ -342,6 +342,7 @@ function ArrSort(page, num, content) {
 //分页处理搜索数据等  end
 //员工信息页面搜索按钮  start
 find_btt.onclick = function () {
+    document.querySelector(".hongwen_logo").style.display="none";
     document.getElementById("sousuo_img_out").style.display = "block";
     var sel = document.getElementById("prov");
     if (sel.value == "campus") {
