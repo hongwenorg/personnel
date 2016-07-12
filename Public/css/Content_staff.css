@@ -167,6 +167,10 @@ button {
     border-left: none;
     border-top:none;
     margin: 0 auto;
+    background-image: url(/public/img/logo-1.jpg);
+    background-repeat: no-repeat;
+    background-size:600px 180px;
+    background-position: 50% 150px;
 }
 
 #tb_head > ul {

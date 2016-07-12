@@ -1,61 +1,295 @@
-[ 2016-07-12T09:53:44+08:00 ] 127.0.0.1 /index.php/Home/Content/staff
+[ 2016-07-12T11:14:59+08:00 ] 192.168.2.107 /index.php/Home//Checking/check_index
 INFO: [ app_begin ] --START--
 INFO: Run Behavior\ReadHtmlCache [ RunTime:0.001000s ]
-INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
 INFO: [ view_parse ] --START--
 INFO: [ template_filter ] --START--
 INFO: Run Behavior\ContentReplace [ RunTime:0.000000s ]
 INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
-INFO: Run Behavior\ParseTemplate [ RunTime:0.015001s ]
-INFO: [ view_parse ] --END-- [ RunTime:0.016001s ]
+INFO: Run Behavior\ParseTemplate [ RunTime:0.008001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.008001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCache [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2016-07-12T11:14:59+08:00 ] 192.168.2.107 /index.php/Home/Index/modules
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\web\personnel\hw_personnel\Library\Think\Db\Driver\Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `power` [ RunTime:0.005001s ]
+SQL: SHOW COLUMNS FROM `modules` [ RunTime:0.005000s ]
+SQL: SELECT * FROM `power` WHERE ( `id` = 1 ) LIMIT 1   [ RunTime:0.000000s ]
+SQL: SELECT * FROM `modules` WHERE ( the_level = '2' and id in (6,7,8,9,10,11,12,13,14,15) and status='1' )  [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2016-07-12T11:15:00+08:00 ] 192.168.2.107 /index.php/Home/Content/head
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplace [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplate [ RunTime:0.008000s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.009000s ]
 INFO: [ view_filter ] --START--
 INFO: Run Behavior\WriteHtmlCache [ RunTime:0.001000s ]
 INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
 INFO: [ app_end ] --START--
 INFO: Run Behavior\ShowPageTrace [ RunTime:0.001000s ]
-INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
 
-[ 2016-07-12T09:53:44+08:00 ] 127.0.0.1 /index.php/Home/Content/head
+[ 2016-07-12T11:15:00+08:00 ] 192.168.2.107 /index.php/Home/Content/post
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\web\personnel\hw_personnel\Library\Think\Db\Driver\Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `campus_class_post` [ RunTime:0.005000s ]
+SQL: SELECT * FROM `campus_class_post` WHERE ( type!=3 )  [ RunTime:0.001000s ]
+SQL: SELECT * FROM `campus_class_post` WHERE ( type=3 )  [ RunTime:0.000000s ]
+SQL: SELECT * FROM `campus_class_post` WHERE ( type!=1 )  [ RunTime:0.002000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2016-07-12T11:15:00+08:00 ] 192.168.2.107 /index.php/Home/Staff/head_con
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\web\personnel\hw_personnel\Library\Think\Db\Driver\Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `users` [ RunTime:0.006000s ]
+SQL: SHOW COLUMNS FROM `user_basic` [ RunTime:0.005000s ]
+SQL: SHOW COLUMNS FROM `power` [ RunTime:0.005001s ]
+SQL: SELECT * FROM `users` WHERE ( `user` = 'admin' ) LIMIT 1   [ RunTime:0.000000s ]
+SQL: SELECT * FROM `user_basic` WHERE ( `user_id` = 1 ) LIMIT 1   [ RunTime:0.001000s ]
+SQL: SELECT * FROM `power` WHERE ( `id` = 1 ) LIMIT 1   [ RunTime:0.000000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2016-07-12T11:15:02+08:00 ] 192.168.2.107 /index.php/Home/Checking/index_select
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\web\personnel\hw_personnel\Library\Think\Db\Driver\Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `users` [ RunTime:0.004001s ]
+SQL: SELECT users.id,user_basic.user_id,users.user,user_basic.name,user_basic.sex,user_basic.campus,user_basic.post,checking.atten_time FROM `users` INNER JOIN user_basic ON users.id = user_basic.user_id INNER JOIN checking ON users.user = checking.atten_uid  WHERE ( users.id!=1 and users.status!=0 and user_basic.status!=0 and (checking.atten_time_str between '1464732000' and '1467324000') ) ORDER BY checking.atten_time  [ RunTime:0.429024s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.056003s ]
+INFO: [ app_end ] --END-- [ RunTime:0.057003s ]
+
+[ 2016-07-12T11:15:06+08:00 ] 192.168.2.107 /index.php/Home/Content/index
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplace [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+INFO: Run Behavior\ParseTemplate [ RunTime:0.008000s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.008000s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCache [ RunTime:0.000000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2016-07-12T11:15:06+08:00 ] 192.168.2.107 /index.php/Home/Content/head
 INFO: [ app_begin ] --START--
 INFO: Run Behavior\ReadHtmlCache [ RunTime:0.002000s ]
 INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
 INFO: [ view_parse ] --START--
 INFO: [ template_filter ] --START--
-INFO: Run Behavior\ContentReplace [ RunTime:0.001000s ]
+INFO: Run Behavior\ContentReplace [ RunTime:0.000000s ]
 INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
-INFO: Run Behavior\ParseTemplate [ RunTime:0.018001s ]
-INFO: [ view_parse ] --END-- [ RunTime:0.019001s ]
+INFO: Run Behavior\ParseTemplate [ RunTime:0.009000s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.009000s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCache [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2016-07-12T11:15:06+08:00 ] 192.168.2.107 /index.php/Home/Content/authority_index
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\web\personnel\hw_personnel\Library\Think\Db\Driver\Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `power` [ RunTime:0.006000s ]
+SQL: SHOW COLUMNS FROM `modules` [ RunTime:0.005001s ]
+SQL: SELECT * FROM `power` WHERE ( `id` = 1 ) LIMIT 1   [ RunTime:0.001000s ]
+SQL: SELECT * FROM `modules` WHERE ( id in (1,2,3,4,5) and status='1' )  [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2016-07-12T11:15:06+08:00 ] 192.168.2.107 /index.php/Home/Staff/head_con
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\web\personnel\hw_personnel\Library\Think\Db\Driver\Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `users` [ RunTime:0.005001s ]
+SQL: SHOW COLUMNS FROM `user_basic` [ RunTime:0.009000s ]
+SQL: SHOW COLUMNS FROM `power` [ RunTime:0.005001s ]
+SQL: SELECT * FROM `users` WHERE ( `user` = 'admin' ) LIMIT 1   [ RunTime:0.001000s ]
+SQL: SELECT * FROM `user_basic` WHERE ( `user_id` = 1 ) LIMIT 1   [ RunTime:0.001000s ]
+SQL: SELECT * FROM `power` WHERE ( `id` = 1 ) LIMIT 1   [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2016-07-12T11:15:07+08:00 ] 192.168.2.107 /index.php/Home/Content/staff
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplace [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+INFO: Run Behavior\ParseTemplate [ RunTime:0.009000s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.009000s ]
 INFO: [ view_filter ] --START--
 INFO: Run Behavior\WriteHtmlCache [ RunTime:0.000000s ]
 INFO: [ view_filter ] --END-- [ RunTime:0.000000s ]
 INFO: [ app_end ] --START--
-INFO: Run Behavior\ShowPageTrace [ RunTime:0.001000s ]
-INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000000s ]
 
-[ 2016-07-12T09:53:44+08:00 ] 127.0.0.1 /index.php/Home/Index/modules
+[ 2016-07-12T11:15:07+08:00 ] 192.168.2.107 /index.php/Home/Content/head
 INFO: [ app_begin ] --START--
 INFO: Run Behavior\ReadHtmlCache [ RunTime:0.001000s ]
-INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
-NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\web\personnel\hw_personnel\Library\Think\Db\Driver\Mysql.class.php 第 52 行.
-SQL: SHOW COLUMNS FROM `power` [ RunTime:0.007000s ]
-SQL: SHOW COLUMNS FROM `modules` [ RunTime:0.007001s ]
-SQL: SELECT * FROM `power` WHERE ( `id` = 1 ) LIMIT 1   [ RunTime:0.000000s ]
-SQL: SELECT * FROM `modules` WHERE ( the_level = '1' and id in (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15) and status='1' )  [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.004000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplace [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplate [ RunTime:0.012000s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.013000s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCache [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
 INFO: [ app_end ] --START--
 INFO: Run Behavior\ShowPageTrace [ RunTime:0.001000s ]
 INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
 
-[ 2016-07-12T09:53:44+08:00 ] 127.0.0.1 /index.php/Home/Staff/head_con
+[ 2016-07-12T11:15:07+08:00 ] 192.168.2.107 /index.php/Home/Index/modules
 INFO: [ app_begin ] --START--
-INFO: Run Behavior\ReadHtmlCache [ RunTime:0.002000s ]
-INFO: [ app_begin ] --END-- [ RunTime:0.004000s ]
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.001001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002001s ]
 NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\web\personnel\hw_personnel\Library\Think\Db\Driver\Mysql.class.php 第 52 行.
-SQL: SHOW COLUMNS FROM `users` [ RunTime:0.005001s ]
-SQL: SHOW COLUMNS FROM `user_basic` [ RunTime:0.007000s ]
-SQL: SHOW COLUMNS FROM `power` [ RunTime:0.007001s ]
-SQL: SELECT * FROM `users` WHERE ( `user` = 'admin' ) LIMIT 1   [ RunTime:0.000000s ]
+SQL: SHOW COLUMNS FROM `power` [ RunTime:0.007000s ]
+SQL: SHOW COLUMNS FROM `modules` [ RunTime:0.005001s ]
+SQL: SELECT * FROM `power` WHERE ( `id` = 1 ) LIMIT 1   [ RunTime:0.000000s ]
+SQL: SELECT * FROM `modules` WHERE ( the_level = '1' and id in (6,7,8,9,10,11,12,13,14,15) and status='1' )  [ RunTime:0.000000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2016-07-12T11:15:07+08:00 ] 192.168.2.107 /index.php/Home/Staff/head_con
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\web\personnel\hw_personnel\Library\Think\Db\Driver\Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `users` [ RunTime:0.005000s ]
+SQL: SHOW COLUMNS FROM `user_basic` [ RunTime:0.006000s ]
+SQL: SHOW COLUMNS FROM `power` [ RunTime:0.005000s ]
+SQL: SELECT * FROM `users` WHERE ( `user` = 'admin' ) LIMIT 1   [ RunTime:0.001000s ]
 SQL: SELECT * FROM `user_basic` WHERE ( `user_id` = 1 ) LIMIT 1   [ RunTime:0.001000s ]
 SQL: SELECT * FROM `power` WHERE ( `id` = 1 ) LIMIT 1   [ RunTime:0.000000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2016-07-12T11:15:08+08:00 ] 192.168.2.107 /index.php/Home//Content/staff_index
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplace [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplate [ RunTime:0.009001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.009001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCache [ RunTime:0.000000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2016-07-12T11:15:08+08:00 ] 192.168.2.107 /index.php/Home/Content/head
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplace [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplate [ RunTime:0.011000s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.012001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCache [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2016-07-12T11:15:09+08:00 ] 192.168.2.107 /index.php/Home/Content/post
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\web\personnel\hw_personnel\Library\Think\Db\Driver\Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `campus_class_post` [ RunTime:0.005000s ]
+SQL: SELECT * FROM `campus_class_post` WHERE ( type!=3 )  [ RunTime:0.001000s ]
+SQL: SELECT * FROM `campus_class_post` WHERE ( type=3 )  [ RunTime:0.001000s ]
+SQL: SELECT * FROM `campus_class_post` WHERE ( type!=1 )  [ RunTime:0.000000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000000s ]
+
+[ 2016-07-12T11:15:09+08:00 ] 192.168.2.107 /index.php/Home/Index/modules
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\web\personnel\hw_personnel\Library\Think\Db\Driver\Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `power` [ RunTime:0.004000s ]
+SQL: SHOW COLUMNS FROM `modules` [ RunTime:0.005001s ]
+SQL: SELECT * FROM `power` WHERE ( `id` = 1 ) LIMIT 1   [ RunTime:0.000000s ]
+SQL: SELECT * FROM `modules` WHERE ( the_level = '1' and id in (6,7,8,9,10,11,12,13,14,15) and status='1' )  [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2016-07-12T11:15:09+08:00 ] 192.168.2.107 /index.php/Home/Staff/head_con
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\web\personnel\hw_personnel\Library\Think\Db\Driver\Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `users` [ RunTime:0.006000s ]
+SQL: SHOW COLUMNS FROM `user_basic` [ RunTime:0.006001s ]
+SQL: SHOW COLUMNS FROM `power` [ RunTime:0.006000s ]
+SQL: SELECT * FROM `users` WHERE ( `user` = 'admin' ) LIMIT 1   [ RunTime:0.001000s ]
+SQL: SELECT * FROM `user_basic` WHERE ( `user_id` = 1 ) LIMIT 1   [ RunTime:0.001000s ]
+SQL: SELECT * FROM `power` WHERE ( `id` = 1 ) LIMIT 1   [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2016-07-12T11:15:10+08:00 ] 192.168.2.107 /index.php/Home/Content/page_con/content/undefined/status/undefined
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002001s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead D:\web\personnel\hw_personnel\Library\Think\Db\Driver\Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `users` [ RunTime:0.005001s ]
+SQL: SELECT * FROM `users` INNER JOIN user_basic ON users.id = user_basic.user_id  WHERE ( users.id!=1 and users.status!=0 and user_basic.status!=0 )  [ RunTime:0.006000s ]
 INFO: [ app_end ] --START--
 INFO: Run Behavior\ShowPageTrace [ RunTime:0.001000s ]
 INFO: [ app_end ] --END-- [ RunTime:0.002000s ]

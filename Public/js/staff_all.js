@@ -368,6 +368,7 @@ find_btt.onclick = function () {
                 ArrSort(0);
             } else {
                 document.getElementById("sousuo_img_out").style.display = "none";
+                document.querySelector(".hongwen_logo").style.display="block";
                 alert("根据查询，无数据~！");
             }
         }

@@ -277,8 +277,9 @@ function ArrSort(page, num, content) {
     });
 
     $(".td_sty").mouseout(function () {
-        $(".td_sty").css("background-color", "white");
+        $(".td_sty").css("background", "none");
     });
+
 
 
     if (num == 2) {
