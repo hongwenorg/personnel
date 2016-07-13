@@ -15,7 +15,6 @@ class PropertyController extends CommonController {
 	function purchase(){
 		$this->display();
 	}
-
 }
 
 ?>

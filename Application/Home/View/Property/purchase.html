@@ -110,9 +110,12 @@
             success: function (data) {
                 var check_append_modules = [];
                 msg = JSON.parse(data);
+<<<<<<< HEAD
 
                 console.log(msg);
                 mouse_modules = msg[1];
+=======
+>>>>>>> 416b779a3b5feb9bc8c0c74e90f60a83d64babb3
                 var arr_num = [];
                 for (key in msg[0]) {
                     if (key != "status" && msg["status"] != 2) {

@@ -17,6 +17,6 @@ return array(
 	/* 跳转页面模板 */
 	'TMPL_ACTION_ERROR'     =>  'Public/error',			// 默认错误跳转对应的模板文件
 	'TMPL_ACTION_SUCCESS'   =>  'Public/success',		// 默认成功跳转对应的模板文件
-	'TMPL_EXCEPTION_FILE'   =>  '/index.php/Home/Index/exceptions',		// 异常页面的模板文件
-	'EMPTY_PATH'			=>	'/index.php/Home/Index/exceptions',/*访问不存在的模块时跳转的地址*/
+	'TMPL_EXCEPTION_FILE'   =>  './Application/Home/View/Public/exception.html',		// 异常页面的模板文件
+	'EMPTY_PATH'			=>	'./Application/Home/View/Public/exception.html',/*访问不存在的模块时跳转的地址*/
 );
