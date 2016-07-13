@@ -3,7 +3,7 @@
 *@Author:温加宝
 *@Email:wen8555955@163.com
 *@DateTime:2016/3/17
-*@Description:调用考勤系统接口
+*@Description:考勤系统
 */
 namespace Home\Controller;
 use Think\Controller;
