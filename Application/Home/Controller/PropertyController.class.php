@@ -2,7 +2,7 @@
 /**
 *@Author:温加宝
 *@Email:wen8555955@163.com
-*@DateTime:2016/3/17
+*@DateTime:2016/7/13
 *@Description:固定资产系统
 */
 namespace Home\Controller;

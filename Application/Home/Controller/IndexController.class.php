@@ -9,6 +9,7 @@ namespace Home\Controller;
 use Think\Controller;
 header('Access-Control-Allow-Origin: *');
 header('P3P: CP="ALL ADM DEV PSAi COM OUR OTRo STP IND ONL"');
+header("Content-type:text/html;charset=utf-8");
 require_once( "/Public/public.php" );
 class IndexController extends Controller {
 	//登陆后首页（如果未登陆则进入登陆页面）
@@ -56,13 +57,19 @@ class IndexController extends Controller {
 		$where = " and status='1'";
 		$power_arr = array();
 		$modules_arr = array();
+		$modules_two_arr = array();
 		$power_id = $_SESSION['power_id'];
 		$power = D('power');
 		$modules = D('modules');
 		$power_arr = $power->where(array("id"=>$power_id))->find();
 		$modules_arr = $modules->where("the_level = '$the_level' and id in (".$power_arr['modules_tail_id'].")".$where)->select();
-		$data = $modules_arr;
+		$modules_two_arr = $modules->where("id in (".$power_arr['modules_three_id'].")".$where)->select();
+		//echo $modules->getLastSql();
+		$data[] = $modules_arr;
+		$data[] = $modules_two_arr;
 		$data['status'] = 1;
+		//echo "<pre>";
+		//print_r($data);die;
 		echo json_encode($data);
 	}
 	
