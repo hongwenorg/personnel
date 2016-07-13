@@ -52,6 +52,25 @@
             left:50%;
             margin-left: -300px;
         }
+        .purchase_div{
+            width:100%;
+            height:30px;
+            border:1px solid red;
+            margin-top:-2px;
+        }
+        .purchase_div>ul>li{
+            float:left;
+            text-align:center;
+            margin:0;
+            border:1px solid black;
+        }
+        .purchase_div>ul{
+            width:100%;
+        }
+        .mouse_modules:hover{
+            background-color: white;
+            color:black;
+        }
 
     </style>
 </head>
@@ -75,10 +94,12 @@
 </div>
 <img src="/public/img/logo-1.jpg" alt="" style="width:600px;z-index: 1" class="hongwen_logo">
 <div id="container" style="width:94.87%">
+    <div id="purchase_div" class="purchase_div"></div>
 </div>
 </body>
 <script>
     var check_append = [];
+    var mouse_modules=[];
     window.onload = function () {
         var check_append = [];
         $.ajax({
@@ -89,16 +110,18 @@
             success: function (data) {
                 var check_append_modules = [];
                 msg = JSON.parse(data);
-                var arr_num = [];
+
                 console.log(msg);
-                for (key in msg) {
+                mouse_modules = msg[1];
+                var arr_num = [];
+                for (key in msg[0]) {
                     if (key != "status" && msg["status"] != 2) {
-                        check_append_modules.push(msg[key]);
+                        check_append_modules.push(msg[0][key]);
                     }
                 }
                 for (var i = 0; i < check_append_modules.length; i++) {
                     var append_div = document.createElement("div");
-                    document.getElementById("tab_click").appendChild(append_div).innerHTML = "<div class='mouse_modules'>"+  check_append_modules[i].modules_name+"</div>";
+                    document.getElementById("tab_click").appendChild(append_div).innerHTML = "<div class='mouse_modules' onmouseover='id_over("+check_append_modules[i].id+")'>"+  check_append_modules[i].modules_name+"</div>";
                 }
                 var click_div=document.getElementById("tab_click");
                 var tab_child=document.querySelectorAll('.mouse_modules');
@@ -110,31 +133,40 @@
 //                        tab_child[aa].style.color="black";
 //                    }
                 }
-                var append_ul = document.createElement("ul");
-                click_div.addEventListener("mouseover", function (e) {
-                    var target = e.target;
-                 $(".mouse_modules").css("background","#bbbbbb");
-                 $(".mouse_modules").css("color","white");
-                    target.style.backgroundColor="white";
-                    target.style.color="black";
-                    for (var j = 0; j < check_append_modules.length; j++) {
-                        if (target.innerText == check_append_modules[j].modules_name) {
-                            document.getElementById("container").appendChild(append_ul).innerHTML = "<li class='mouse_modules'>"+ check_append_modules[j].modules_file+"</li>";
-                        }
-                    }
-                });
-                append_ul.addEventListener("mouseout",function(e){
-                   append_ul.innerHTML="";
-                })
             }
         });
     };
 
+    function id_over(id) {
+        var append_ul = document.createElement("ul");
+        document.getElementById("purchase_div").innerHTML="";
+        var append_li;
+        for(var i=0;i<mouse_modules.length;i++){
+            if(mouse_modules[i].the_level==id){
+                append_li=document.createElement("li");
+                append_li.innerHTML =mouse_modules[i].modules_name;
+                append_ul.appendChild(append_li);
+                document.getElementById("purchase_div").appendChild(append_ul);
+            }
+        }
+    }
+document.getElementById("purchase_div").addEventListener("click",function(e){
+    var target= e.target;
+    for(var i=0;i<mouse_modules.length;i++){
+        switch (target.innerText){
+            case mouse_modules[i].modules_name:alert(1);
+                    location.href="/index.php/Home"+mouse_modules[i].modules_file;
+                break;
+        }
+    }
+});
 
 
 
+//        document.getElementById("purchase_div").onmouseout=function(){
+//            document.getElementById("purchase_div").innerHTML="";
+//        };
     var close_append = document.getElementById("close_append");
-
     var append_out = document.getElementById("append_out");
     $("#btt").click(function () {
         $.get('append_staff.html', function (data) {
