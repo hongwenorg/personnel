@@ -367,7 +367,6 @@ find_btt.onclick = function () {
 
 //打印页面   start
 function dayin_blank() {
-
     if ($("tr:first").text() != "") {
         window.open("/index.php/Home/Staff/dayin");
     } else {
