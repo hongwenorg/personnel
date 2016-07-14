@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <script type="text/javascript" src="/public/js/jquery.js"></script>
-    <script src="/public/js/laydate/laydate.js"></script>
     <script type="text/javascript" src="/public/js/public.js"></script>
     <title>固定资产</title>
     <link rel="stylesheet" href="/public/css/Content_staff.css" type="text/css">
+    <link rel="import" href="" id="purchase_append">
     <style>
         .trr > li {
             width: 11.111%;
@@ -55,7 +55,6 @@
         .purchase_div{
             width:100%;
             height:30px;
-            border:1px solid red;
             margin-top:-2px;
         }
         .purchase_div>ul>li{
@@ -70,6 +69,10 @@
         .mouse_modules:hover{
             background-color: white;
             color:black;
+        }
+        .purchase_body{
+            width:100%;
+            height:100%;
         }
 
     </style>
@@ -95,9 +98,12 @@
 <img src="/public/img/logo-1.jpg" alt="" style="width:600px;z-index: 1" class="hongwen_logo">
 <div id="container" style="width:94.87%">
     <div id="purchase_div" class="purchase_div"></div>
+    <div id="purchase_body" class="purchase_body"></div>
+    <div id="append_link"></div>
 </div>
 </body>
 <script>
+
     var check_append = [];
     var mouse_modules=[];
     window.onload = function () {
@@ -110,12 +116,9 @@
             success: function (data) {
                 var check_append_modules = [];
                 msg = JSON.parse(data);
-<<<<<<< HEAD
-
-                console.log(msg);
+//                console.log(msg);
                 mouse_modules = msg[1];
-=======
->>>>>>> 416b779a3b5feb9bc8c0c74e90f60a83d64babb3
+
                 var arr_num = [];
                 for (key in msg[0]) {
                     if (key != "status" && msg["status"] != 2) {
@@ -131,10 +134,6 @@
                 click_div.style.width="95%";
                 for(var aa=0;aa<tab_child.length;aa++){
                     tab_child[aa].parentNode.style.width=100/tab_child.length+"%";
-//                    if(tab_child[aa].innerText=="考勤规则"){
-//                        tab_child[aa].style.background="white";
-//                        tab_child[aa].style.color="black";
-//                    }
                 }
             }
         });
@@ -153,13 +152,24 @@
             }
         }
     }
+
+
+
 document.getElementById("purchase_div").addEventListener("click",function(e){
     var target= e.target;
     for(var i=0;i<mouse_modules.length;i++){
-        switch (target.innerText){
-            case mouse_modules[i].modules_name:alert(1);
-                    location.href="/index.php/Home"+mouse_modules[i].modules_file;
-                break;
+        if (target.innerText===mouse_modules[i].modules_name){
+            alert(mouse_modules[i].modules_file)
+            document.getElementById("append_link").innerHTML="";
+            var modules_files=mouse_modules[i].modules_file;
+            var purchase_link=document.createElement("link");
+            purchase_link.setAttribute("rel","import");
+            purchase_link.href=modules_files.substr(10)+".html";
+            document.getElementById("append_link").appendChild(purchase_link);
+            purchase_link.onload=function(){
+                document.getElementById("purchase_body").innerHTML=purchase_link.import.body.innerHTML;
+            };
+            return;
         }
     }
 });
