@@ -467,36 +467,3 @@ function namesort(content) {
 }();
 
 
-//*************************     布局分页     *************************
-
-//document.onscroll=function(){
-//    if (scrollY >200){
-//        var tl=$("#tb tr:not(:first)").children('td.td_sty');
-//        var el = tb.firstElementChild.querySelectorAll("th");
-//        var arr_width=[];
-//        var td_width=[];
-//        //el.forEach(function(val,index){
-//        //    arr_width.push(getComputedStyle(val).width);
-//        //});
-//        tl.forEach(function(val,index){
-//            td_width.push(getComputedStyle(val).width);
-//        });
-//
-//        console.log(td_width)
-//        //console.log(arr_width);
-//
-//
-//        //$("#tb>tr>td").addClass("setcss_move_td");
-//        //$("#trr1 th").addClass("setcss_move");
-//        $("#trr1").addClass("setcss_move1");
-//        //$("#staff_state1_div").addClass("staff_state1_div")
-//    }else{
-//        $("#td_styd").css("min-width",187+"px");
-//        $("#td_styd").css("max-width",200+"px");
-//        $("#staff_state1").css("min-width",187+"px");
-//        $("#staff_state1").css("max-width",200+"px");
-//        $("#tb>tr>td").removeClass("setcss_move_td");
-//        $("#trr1").removeClass("setcss_move1");
-//        $("#trr1 th").removeClass("setcss_move");
-//    }
-//}
