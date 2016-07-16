@@ -18,18 +18,17 @@ class PropertyController extends CommonController {
 
 	//计划申请页面信息
 	function plan_list(){
-		echo 1;die;
 		$data_arr = array();
-		$data_arr[] = $this->school_sel();
-		$data_arr[] = $this->plan_sel();
-		$data_arr[] = $this->purchase();
-		$data_arr[] = $this->finance_type();
+		$data_arr['school'] = $this->school_sel();
+		$data_arr['plan'] = $this->plan_sel();
+		$data_arr['purchase'] = $this->purchase_sel();
+		$data_arr['finance_type'] = $this->finance_type_sel();
 
 		/*$oa_apply = D("oa_apply");
 		$arr = array();
 		$arr = $oa_apply->where("is_del!=1")->select();
-		//echo "<pre>";
-		//print_r($class_arr);*/
+		echo "<pre>";
+		print_r($data_arr);*/
 		echo json_encode($data_arr);
 	}
 
@@ -52,7 +51,7 @@ class PropertyController extends CommonController {
 
 
 	//科目类别的数据
-	function purchase(){
+	function purchase_sel(){
 		$model = D('property_purchase');
 		$array = array();
 		$array = $model->select();
@@ -61,7 +60,7 @@ class PropertyController extends CommonController {
 
 
 	//采购类型
-	function finance_type(){
+	function finance_type_sel(){
 		$model = D('property_finance_type');
 		$array = array();
 		$array = $model->where(array('is_del'=>0))->select();
