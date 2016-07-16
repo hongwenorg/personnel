@@ -140,11 +140,11 @@ window.onload = function () {
         async: "false",
         success: function (data) {
             var check_append_modules = [];
-            msg = JSON.parse(data);
+            msg= JSON.parse(data);
             var arr_num = [];
-            for (key in msg) {
+            for (key in msg[0]) {
                 if (key != "status" && msg["status"] != 2) {
-                    check_append_modules.push(msg[key]);
+                    check_append_modules.push(msg[0][key]);
                 }
             }
             for (var i = 0; i < check_append_modules.length; i++) {
