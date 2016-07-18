@@ -308,14 +308,22 @@
                     var money = $("#money");
                     var price_val = $("#price").val();
                     var count_val = $("#count").val();
-                    money.val((price_val*count_val).toFixed(2));
+                    if(price_val!="" && count_val!=""){
+                        money.val((price_val*count_val).toFixed(2));
+                    }else{
+                        money.val("");
+                    }
                 });
 
                 $("#price").change(function(){
                     var money = $("#money");
                     var price_val = $("#price").val();
                     var count_val = $("#count").val();
-                    money.val((price_val*count_val).toFixed(2));
+                    if(price_val!="" && count_val!=""){
+                        money.val((price_val*count_val).toFixed(2));
+                    }else{
+                        money.val("");
+                    }
                 });
 
 
@@ -323,14 +331,22 @@
                     var money = $("#money");
                     var price_val = $("#price").val();
                     var count_val = $("#count").val();
-                    money.val((price_val*count_val).toFixed(2));
+                    if(price_val!="" && count_val!=""){
+                        money.val((price_val*count_val).toFixed(2));
+                    }else{
+                        money.val("");
+                    }
                 });
 
                 $("#count").change(function(){
                     var money = $("#money");
                     var price_val = $("#price").val();
                     var count_val = $("#count").val();
-                    money.val((price_val*count_val).toFixed(2));
+                    if(price_val!="" && count_val!=""){
+                        money.val((price_val*count_val).toFixed(2));
+                    }else{
+                        money.val("");
+                    }
                 });
                 //计算金额函数结束
                 
