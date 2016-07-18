@@ -96,7 +96,6 @@
 </div>
 </body>
 <script>
-
     var check_append = [];
     var mouse_modules = [];
     window.onload = function () {
@@ -160,10 +159,9 @@
                 purchase_link.setAttribute("rel", "import");
                 var filename = modules_files.substr(modules_files.lastIndexOf("/") + 1);
                 purchase_link.href = filename + ".html";
+//                alert(filename);
                 document.getElementById("append_link").appendChild(purchase_link);
 //            document.querySelector("head").appendChild(append_js);
-
-
                 purchase_link.onload = function () {
                     var container = purchase_link.import.body;
                     document.getElementById("purchase_body").innerHTML = container.innerHTML;

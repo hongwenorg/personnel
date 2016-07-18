@@ -21,7 +21,6 @@
             width: 320px;
             height: 30px;
             line-height: 30px;
-            line-height: 25px;
             float: left;
             text-align: left;
             margin-left: 50px;
@@ -127,12 +126,37 @@
             font-size: 16px;
             border: none;
         }
+        .plan_date{
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            font-size: 18px;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: dimgray;
+        }
+        .plan_date>input{
+            width: 190px;
+            height: 22px;
+            font-size: 18px;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            border-bottom: 2px solid dimgray;
+            border-radius: 10px;
+            outline: none;
+            padding-left: 10px;
+        }
     </style>
     <link rel="stylesheet" href="/public/css/Content_staff.css" type="text/css">
     <script type="text/javascript" src="/public/js/jquery.js"></script>
 
     <!--*********************************************存放后台员工信息*****************************************************-->
     <form method="post" id="myform_one" onSubmit="return false;">
+        <div class="plan_date">
+            选择期次：<input type="month" id="plan_date" value="">
+        </div>
         <div class="append_plan">
             <div class="append_plhead">
                 计划申请
@@ -157,28 +181,28 @@
                         </select>
                     </li>
                     <li>明细内容 <input type="text" name='info' class="append_plan_li" required></li>
-                    <li>单位 <input type="text" name='unit' class="append_plan_li" required></li>
-                    <li>单价 <input type="number" name='unit_price' id='price' class="append_plan_li" min="0" step="0.001" required></li>
-                    <li>数量 <input type="number" name='count' id='count' min="0" class="append_plan_li" required></li>
-                    <li>金额 <input type="number" name='money' id='money' min="0" step="0.01" class="append_plan_only" readonly></li>
+                    <li>单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位 <input type="text" name='unit' class="append_plan_li" required></li>
+                    <li>单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价 <input type="number" name='unit_price' id='price' class="append_plan_li" min="0" step="0.001" required></li>
+                    <li>数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量 <input type="number" name='count' id='count' min="0" class="append_plan_li" required></li>
+                    <li>金&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;额 <input type="number" name='money' id='money' min="0" step="0.01" class="append_plan_only" readonly></li>
                     <li>接收校区
                         <select name="receive_school" class="append_plan_sel" id="select_04">
                             <option value="" id="opt_04">--请选择--</option>
                         </select>
                     </li>
-                    <li>接收人 <input type="text" name='receive_user' class="append_plan_li" required></li>
+                    <li>接收&nbsp;&nbsp;&nbsp;&nbsp;人 <input type="text" name='receive_user' class="append_plan_li" required></li>
                     <li>接受卡号 <input type="text" name='receive_card' class="append_plan_li" required></li>
                     <li>期望审批日期 <input type="date" name='expect_date' class="append_plan_li"></li>
-                    <li>备注 <input type="text" name='other' class="append_plan_li"></li>
+                    <li>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注 <input type="text" name='other' class="append_plan_li"></li>
                     <li>采购类型
                         <select name="buy_type" class="append_plan_sel" id="select_05">
                             <option value="" id="opt_05">--请选择--</option>
                         </select>
                     </li>
-                    <li>品牌 <input type="text" name='buy_brand' class="append_plan_li"></li>
+                    <li>品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;牌 <input type="text" name='buy_brand' class="append_plan_li"></li>
                     <li>型号/规格 <input type="text" name='buy_info' class="append_plan_li"></li>
                     <li>物流信息 <input type="text" name='buy_transport' class="append_plan_li"></li>
-                    <li>期次 <input type="month" name='month' id="month" class="append_plan_li"></li>
+                    <li>期&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;次 <input type="month" name='month' id="month" class="append_plan_li"></li>
                 </ul>
             </div>
         </div>
