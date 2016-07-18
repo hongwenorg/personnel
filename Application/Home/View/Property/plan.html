@@ -132,12 +132,12 @@
     <script type="text/javascript" src="/public/js/jquery.js"></script>
 
     <!--*********************************************存放后台员工信息*****************************************************-->
-    <form method="post" id="myform" onSubmit="return false;">
+    <form method="post" id="myform_one" onSubmit="return false;">
         <div class="append_plan">
             <div class="append_plhead">
                 计划申请
                 <input type="reset"  value="清空" class="foot_qingkong" id="foot_qingkong">
-                <input type="submit" value="保存" class="foot_baocun">
+                <input type="submit" value="保存" class="foot_baocun" id="submit_one">
             </div>
             <div class="append_plan_body">
                 <ul id="appende_plan_ul">
@@ -184,6 +184,7 @@
         </div>
     </form>
     <div style="width:95%;margin-left:2.5%;overflow-x: scroll">
+        <form method="post" id="myform_two" onSubmit="return false;">
         <table class="tb" cellpadding="2" cellspacing="0" id="tb">
             <tr class="trr1">
                 <th class="staff_num1" style="width:50px;">
@@ -276,11 +277,12 @@
                 </th>
             </tr>
         </table>
+        </form>
     </div>
     <!--**********************************************生成excel表格及打印表格*********************************************-->
     <div style="width:95%;margin-left:2.5%">
         <input type="button" value="删除" class="delet_apply" id="delet_apply"/>
-        <input type="button" value="提交申请" class="tj_apply"/>
+        <input type="button" value="提交申请" id="submit_two" class="tj_apply"/>
     </div>
     <script>
         var plan = function () {
@@ -530,8 +532,8 @@
                 };
 
 
-                document.getElementById("foot_qingkong").onclick = function () {
-                    var data = $('#myform').serialize();//将表单数据以字符串形式获取
+                $("#submit_two").click(function () {
+                    var data = $('#myform_two').serialize();//将表单数据以字符串形式获取
                     $.ajax({
                         url: "",
                         data: {'data': data},
@@ -551,7 +553,31 @@
                         }
 
                     });
-                }
+                });
+                
+
+                $("#submit_one").click(function(){
+                    var data = $('#myform_one').serialize();//将表单数据以字符串形式获取
+                    $.ajax({
+                        url: "",
+                        data: {'data': data},
+                        type: "post",
+                        async: "false",
+                        traditional: "true",
+                        cache: "false",
+                        success: function (msg) {
+                            if (msg == 1) {
+                                alert("保存成功！");
+                            } else if (msg == 2) {
+                                alert("修改成功！");
+                            } else if (msg == 3) {
+                                alert("保存失败,请填写完整数据！");
+                            }
+
+                        }
+
+                    });
+                });
 
 
             })()
