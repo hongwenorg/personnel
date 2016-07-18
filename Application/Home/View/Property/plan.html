@@ -112,58 +112,83 @@
             font-size: 16px;
             border: none;
         }
+        .plan_date{
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            font-size: 18px;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: dimgray;
+        }
+        .plan_date>input{
+            width: 190px;
+            height: 22px;
+            font-size: 18px;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            border-bottom: 2px solid dimgray;
+            border-radius: 10px;
+            outline: none;
+            padding-left: 10px;
+        }
     </style>
     <link rel="stylesheet" href="/public/css/Content_staff.css" type="text/css">
     <script type="text/javascript" src="/public/js/jquery.js"></script>
 
     <!--*********************************************存放后台员工信息*****************************************************-->
     <form action="" method="post" id="myform">
+        <div class="plan_date">
+        选择期次：<input type="month" id="plan_date" value="">
+        </div>
         <div class="append_plan">
             <div class="append_plhead">
-                计划申请
+                申请/修改：
                 <input type="reset"  value="清空" class="foot_qingkong" id="foot_qingkong">
                 <input type="button" value="保存" class="foot_baocun">
             </div>
             <div class="append_plan_body">
                 <ul id="appende_plan_ul">
-                    <li>计划类型
+                    <li>计划类型：
                         <select name="" id="select_01">
                             <option value="" id="opt_01">--请选择--</option>
                         </select>
                     </li>
-                    <li>归属校区
+                    <li>归属校区：
                         <select name="" id="select_02">
                             <option value="" id="opt_02">--请选择--</option>
                         </select>
                     </li>
-                    <li>科目类别
+                    <li>科目类别：
                         <select name="" id="select_03">
                             <option value="" id="opt_03">--请选择--</option>
                         </select>
                     </li>
-                    <li>明细内容 <input type="text" class="append_plan_li"></li>
-                    <li>单位 <input type="text" class="append_plan_li" required></li>
-                    <li>单价 <input type="text" class="append_plan_li"></li>
-                    <li>数量 <input type="number" class="append_plan_li"></li>
-                    <li>金额 <input type="text" class="append_plan_li"></li>
-                    <li>接收校区
+                    <li>明细内容： <input type="text" class="append_plan_li"></li>
+                    <li>单位： <input type="text" class="append_plan_li" required></li>
+                    <li>单价： <input type="text" class="append_plan_li"></li>
+                    <li>数量： <input type="number" class="append_plan_li"></li>
+                    <li>金额： <input type="text" class="append_plan_li"></li>
+                    <li>接收校区：
                         <select name="" id="select_04">
                             <option value="" id="opt_04">--请选择--</option>
                         </select>
                     </li>
-                    <li>接收人 <input type="text" class="append_plan_li"></li>
-                    <li>接受卡号 <input type="text" class="append_plan_li"></li>
-                    <li>期望审批日期 <input type="text" class="append_plan_li"></li>
-                    <li>备注 <input type="text" class="append_plan_li"></li>
-                    <li>采购类型
+                    <li>接收人： <input type="text" class="append_plan_li"></li>
+                    <li>接受卡号： <input type="text" class="append_plan_li"></li>
+                    <li>期望审批日期： <input type="date" class="append_plan_li"></li>
+                    <li>备注：<input type="text" class="append_plan_li"></li>
+                    <li>采购类型：
                         <select name="" id="select_05">
                             <option value="" id="opt_05">--请选择--</option>
                         </select>
                     </li>
-                    <li>品牌 <input type="text" class="append_plan_li"></li>
-                    <li>型号/规格 <input type="text" class="append_plan_li"></li>
-                    <li>物流信息 <input type="text" class="append_plan_li"></li>
-                    <li>期次 <input type="text" class="append_plan_li"></li>
+                    <li>品牌： <input type="text" class="append_plan_li"></li>
+                    <li>型号/规格： <input type="text" class="append_plan_li"></li>
+                    <li>物流信息： <input type="text" class="append_plan_li"></li>
+                    <li>期次： <input type="text" class="append_plan_li"></li>
                 </ul>
             </div>
         </div>
@@ -262,7 +287,6 @@
             </tr>
         </table>
     </div>
-    <!--**********************************************生成excel表格及打印表格*********************************************-->
     <div style="width:95%;margin-left:2.5%">
         <input type="button" value="删除" class="delet_apply" id="delet_apply"/>
         <input type="button" value="提交申请" class="tj_apply"/>
@@ -277,8 +301,6 @@
                 var copy_dayin = document.getElementById("copy_dayin");
                 var tb = document.getElementById("tb");
                 var tb_content = tb.innerHTML;
-
-
                 var school_option = [];
                 var plan_option = [];
                 var purchase_option = [];
@@ -443,7 +465,6 @@
                         } else {
                             document.getElementById("sousuo_img_out").style.display = "none";
                             document.querySelector(".hongwen_logo").style.display = "block";
-                            alert("根据查询，无数据~！");
                         }
                     }
                 };
@@ -503,9 +524,7 @@
                         }
 
                     });
-                }
-
-
+                };
             })()
         };
 
