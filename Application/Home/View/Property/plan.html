@@ -164,24 +164,25 @@
                 <input type="submit" value="保存" class="foot_baocun" id="submit_one">
             </div>
             <div class="append_plan_body">
+            <input type="hidden" value="" name='id' id="apply_id">
                 <ul id="appende_plan_ul">
                     <li>计划类型
-                        <select name="type" class="append_plan_sel" id="select_01">
+                        <select name="plan_id" class="append_plan_sel" id="select_01">
                             <option value="" id="opt_01">--请选择--</option>
                         </select>
                     </li>
                     <li>归属校区
-                        <select name="belong" class="append_plan_sel" id="select_02">
+                        <select name="class_post_id" class="append_plan_sel" id="select_02">
                             <option value="" id="opt_02">--请选择--</option>
                         </select>
                     </li>
                     <li>科目类别
-                        <select name="subject" class="append_plan_sel" id="select_03">
+                        <select name="finance_type_id" class="append_plan_sel" id="select_03">
                             <option value="" id="opt_03">--请选择--</option>
                         </select>
                     </li>
-                    <li>明细内容 <input type="text" name='info' class="append_plan_li" required></li>
-                    <li>单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位 <input type="text" name='unit' class="append_plan_li" required></li>
+                    <li>明细内容 <input type="text" name='info' class="append_plan_li" id='info' required></li>
+                    <li>单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位 <input type="text" name='unit' class="append_plan_li" id='unit' required></li>
                     <li>单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价 <input type="number" name='unit_price' id='price' class="append_plan_li" min="0" step="0.001" required></li>
                     <li>数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量 <input type="number" name='count' id='count' min="0" class="append_plan_li" required></li>
                     <li>金&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;额 <input type="number" name='money' id='money' min="0" step="0.01" class="append_plan_only" readonly></li>
@@ -190,18 +191,18 @@
                             <option value="" id="opt_04">--请选择--</option>
                         </select>
                     </li>
-                    <li>接收&nbsp;&nbsp;&nbsp;&nbsp;人 <input type="text" name='receive_user' class="append_plan_li" required></li>
-                    <li>接受卡号 <input type="text" name='receive_card' class="append_plan_li" required></li>
-                    <li>期望审批日期 <input type="date" name='expect_date' class="append_plan_li"></li>
-                    <li>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注 <input type="text" name='other' class="append_plan_li"></li>
+                    <li>接收&nbsp;&nbsp;&nbsp;&nbsp;人 <input type="text" id='receive_user' name='receive_user' class="append_plan_li" required></li>
+                    <li>接受卡号 <input type="text" name='receive_card' id='receive_card' class="append_plan_li" required></li>
+                    <li>期望审批日期 <input type="date" name='expect_date' id='expect_date' class="append_plan_li"></li>
+                    <li>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注 <input type="text" id='other' name='other' class="append_plan_li"></li>
                     <li>采购类型
-                        <select name="buy_type" class="append_plan_sel" id="select_05">
+                        <select name="purchase_id" class="append_plan_sel" id="select_05">
                             <option value="" id="opt_05">--请选择--</option>
                         </select>
                     </li>
-                    <li>品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;牌 <input type="text" name='buy_brand' class="append_plan_li"></li>
-                    <li>型号/规格 <input type="text" name='buy_info' class="append_plan_li"></li>
-                    <li>物流信息 <input type="text" name='buy_transport' class="append_plan_li"></li>
+                    <li>品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;牌 <input type="text" name='buy_brand' id='buy_brand' class="append_plan_li"></li>
+                    <li>型号/规格 <input type="text" name='buy_info' id='buy_info' class="append_plan_li"></li>
+                    <li>物流信息 <input type="text" name='buy_transport' id='buy_transport' class="append_plan_li"></li>
                     <li>期&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;次 <input type="month" name='month' id="month" class="append_plan_li"></li>
                 </ul>
             </div>
@@ -326,6 +327,8 @@
                 var finance_type_option = [];
                 //alert(month);
                 document.getElementById('month').valueAsDate = new Date();
+                document.getElementById('plan_date').valueAsDate = new Date();
+                
 
                 //以下是计算金额的函数
                 $("#price").blur(function(){
@@ -401,7 +404,7 @@
                 var i;
                 for (i = 0; i < plan_option.length; i++) {
                     var option_01 = document.createElement("option");
-                    option_01.value=plan_option[i].plan_num;
+                    option_01.value=plan_option[i].id;
                     document.getElementById("select_01").appendChild(option_01).innerText = plan_option[i].plan_name;
                 }
                 for (i = 0; i < school_option.length; i++) {
@@ -421,7 +424,7 @@
                 }
                 for (i = 0; i < purchase_option.length; i++) {
                     var option_04 = document.createElement("option");
-                    option_04.value=purchase_option[i].purchase_num;
+                    option_04.value=purchase_option[i].id;
                     document.getElementById("select_05").appendChild(option_04).innerText = purchase_option[i].purchase_name;
                 }
 
@@ -474,35 +477,35 @@
                             arr_staff[j].state = "无数据";
                         }
                         var tr = document.createElement("tr");
-                        tb.appendChild(tr).innerHTML = "<td class='td_sty'><input type='checkbox' class='plan_checkbox'>" + "</div>" + "</td>" +
-                                "<td class='td_sty'>" + "<div>" + "<input type='button' value='修改' class='plan_xiugai'>" + "</div>" + "</td>" +
+                        tb.appendChild(tr).innerHTML = "<td class='td_sty'><input type='checkbox' name='check_box" + arr_staff[j].id + "' value='" + arr_staff[j].id + "' class='plan_checkbox'>" + "</div>" + "</td>" +
+                                "<td class='td_sty'>" + "<div>" + "<input type='button' value='修改' id='update_sql' up_id='" + arr_staff[j].id + "' class='plan_xiugai'>" + "</div>" + "</td>" +
                                 "<td class='td_sty'>" + "<div>" + arr_num[j] + "</div>" + "</td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].user + "' class='hidden_input' id='' name=''>" + "</td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].name + "' class='hidden_input' id='' name=''>" + "</td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input' id='' name=''>" + "</td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input' id='' name=''>" + "</td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input' id='' name=''>" + "</td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input' id='' name=''>" + "</td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input' id='' name=''>" + "</td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input' id='' name=''>" + "</td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input' id='' name=''>" + "</td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input' id='' name=''>" + "</td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input' id='' name=''>" + "</td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input' id='' name=''>" + "</td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input' id='' name=''>" + "</td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input' id='' name=''>" + "</td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input' id='' name=''>" + "</td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input' id='' name=''>" + "</td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input' id='' name=''>" + "</td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input' id='' name=''>" + "</td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input' id='' name=''>" + "</td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input' id='' name=''>" + "</td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input' id='' name=''>" + "</td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input' id='' name=''>" + "</td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input' id='' name=''>" + "</td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input' id='' name=''>" + "</td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input' id='' name=''>" + "</td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input' id='' name=''>" + "</td>";
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].project_type + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].check_name + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + "" + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].plan_name + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].class_post_plan + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].class_post_plan + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].receive_school + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].finance_type_name + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].info + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].unit + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].count + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].money + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].money_last + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].notes + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].receive_user + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].receive_card + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].expect_date + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].user_name + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].purchase_name + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].buy_brand + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].buy_info + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].buy_transport + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].other + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].money_time + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].update_time + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].create_time + "' class='hidden_input' id='' name=''>" + "</td>";
 
                     }
 
@@ -513,30 +516,73 @@
 
 
 //员工信息页面搜索按钮  start
-                $("#tb tr:not(:first)").empty();
-                var xhr = new XMLHttpRequest();
-                xhr.open("get", "/index.php/Home/Content/change_find/content/status/" + status);
-                xhr.send();
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState == 4 && xhr.status == 200) {
-                        document.getElementById("sousuo_img_out").style.display = "none";
-                        var msg = JSON.parse(xhr.responseText);
-                        for (key in msg) {
-                            if (key != "status" && msg["status"] != 2) {
-                                arr_staff.push(msg[key]);
-                                arr_staff.sort(function (b, a) {
-                                    return a["time"].localeCompare(b["time"]);
-                                });
-                            }
-                        }
-                        if (msg["status"] != 2) {
-                            ArrSort(0);
-                        } else {
+            onload_in();
+                function onload_in(){
+                    arr_staff = [];
+                    $("#tb tr:not(:first)").empty();
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("get", "/index.php/Home/Property/plan_table");
+                    xhr.send();
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
                             document.getElementById("sousuo_img_out").style.display = "none";
-                            document.querySelector(".hongwen_logo").style.display = "block";
+                            var msg = JSON.parse(xhr.responseText);
+                            for (key in msg) {
+                                if (key != "status" && msg["status"] != 2) {
+                                    arr_staff.push(msg[key]);
+                                }
+                            }
+                            if (msg["status"] != 2) {
+                                ArrSort(0);
+                            } else {
+                                document.getElementById("sousuo_img_out").style.display = "none";
+                                document.querySelector(".hongwen_logo").style.display = "block";
+                            }
+
+
+                            $("#update_sql").click(function(){
+                                var id = $("#update_sql").attr('up_id');
+                                $.ajax({
+                                    url: "/index.php/Home/Property/update_list",
+                                    data: {'id': id},
+                                    type: "post",
+                                    async: "false",
+                                    traditional: "true",
+                                    cache: "false",
+                                    success: function (msg) {
+                                        if (msg == 2) {
+                                            alert("数据出错，请联系管理员！");
+                                        } else {
+                                           var data = JSON.parse(msg);
+                                            $("#apply_id").val(data.id);
+                                            $("#select_01").val(data.plan_id);
+                                            $("#select_02").val(data.class_post_id);
+                                            $("#select_03").val(data.finance_type_id);
+                                            $("#info").val(data.info);
+                                            $("#unit").val(data.unit);
+                                            $("#price").val(data.unit_price);
+                                            $("#count").val(data.count);
+                                            $("#money").val(data.money);
+                                            $("#select_04").val(data.receive_school);
+                                            $("#receive_user").val(data.receive_user);
+                                            $("#receive_card").val(data.receive_card);
+                                            $("#expect_date").val(data.expect_date);
+                                            $("#other").val(data.other);
+                                            $("#select_05").val(data.purchase_id);
+                                            $("#buy_brand").val(data.buy_brand);
+                                            $("#buy_info").val(data.buy_info);
+                                            $("#buy_transport").val(data.buy_transport);
+                                            $("#month").val(data.month);
+                                            
+                                        }
+
+                                    }
+
+                                });
+                            });
                         }
-                    }
-                };
+                    };
+                }
 
 //页面搜索按钮  end
 //                document.getElementById("foot_qingkong").onclick = function () {
@@ -575,7 +621,7 @@
                 $("#submit_two").click(function () {
                     var data = $('#myform_two').serialize();//将表单数据以字符串形式获取
                     $.ajax({
-                        url: "",
+                        url: "/index.php/Home/Property/plan_add",
                         data: {'data': data},
                         type: "post",
                         async: "false",
@@ -583,33 +629,38 @@
                         cache: "false",
                         success: function (msg) {
                             if (msg == 1) {
-                                alert("保存成功！");
+                                alert("提交成功！");
+                                onload_in();
                             } else if (msg == 2) {
-                                alert("修改成功！");
+                                alert("提交失败！");
                             } else if (msg == 3) {
-                                alert("保存失败,请填写完整数据！");
+                                alert("保存失败,请选择要提交的项目！");
                             }
 
                         }
 
                     });
                 });
+
                 
 
                 $("#submit_one").click(function(){
                     var data = $('#myform_one').serialize();//将表单数据以字符串形式获取
                     $.ajax({
-                        url: "",
+                        url: "/index.php/Home/Property/plan_pro",
                         data: {'data': data},
                         type: "post",
                         async: "false",
                         traditional: "true",
                         cache: "false",
                         success: function (msg) {
+                            //console.log(msg);return;
                             if (msg == 1) {
                                 alert("保存成功！");
+                                onload_in();
                             } else if (msg == 2) {
                                 alert("修改成功！");
+                                onload_in();
                             } else if (msg == 3) {
                                 alert("保存失败,请填写完整数据！");
                             }
