@@ -48,12 +48,17 @@
             height: 30px;
             margin-top: -2px;
         }
-
         .purchase_div > ul > li {
             float: left;
             text-align: center;
+            line-height: 30px;
+            height:30px;
             margin: 0;
-            border: 1px solid black;
+            color:white;
+            cursor: pointer;
+        }
+        .purchase_div > ul > li:hover {
+            color:black;
         }
 
         .purchase_div > ul {
@@ -133,6 +138,11 @@
 
     function id_over(id) {
         var append_ul = document.createElement("ul");
+            append_ul.style.width="100%";
+            append_ul.style.height="30px";
+            append_ul.style.background="#d9d9d9";
+            append_ul.id="append_ulall";
+            append_ul.class="append_ulall";
         document.getElementById("purchase_div").innerHTML = "";
         var append_li;
         for (var i = 0; i < mouse_modules.length; i++) {
@@ -143,14 +153,34 @@
                 document.getElementById("purchase_div").appendChild(append_ul);
             }
         }
+        var append_liall=document.querySelectorAll("#append_ulall li");
+        for(var j=0;j<append_liall.length;j++){
+            append_liall[j].style.width=100/append_liall.length+"%";
+        }
+
     }
-    //    document.getElementById("tab_click").addEventListener("mouseover",function(){
-    //
-    //    });
+        document.getElementById("tab_click").addEventListener("mouseover",function(e){
+            var mouse_modules02=document.querySelectorAll(".mouse_modules");
+            for(var i=0;i<mouse_modules02.length;i++){
+                mouse_modules02[i].style.background="#bbbbbb";
+                mouse_modules02[i].style.color="white";
+            }
+            var target= e.target;
+            target.style.backgroundColor="#d9d9d9";
+            target.style.color="black";
+        });
 
 
     document.getElementById("purchase_div").addEventListener("click", function (e) {
         var target = e.target;
+        var append_allli=document.querySelectorAll("#append_ulall li");
+        for(var j=0;j<append_allli.length;j++){
+            append_allli[j].style.color="white";
+            append_allli[j].style.fontWeight="100";
+        }
+        target.appendChild(purchase_up);
+        target.style.color="black";
+        target.style.fontWeight="bold";
         for (var i = 0; i < mouse_modules.length; i++) {
             if (target.innerText === mouse_modules[i].modules_name) {
                 document.getElementById("append_link").innerHTML = "";
@@ -159,9 +189,8 @@
                 purchase_link.setAttribute("rel", "import");
                 var filename = modules_files.substr(modules_files.lastIndexOf("/") + 1);
                 purchase_link.href = filename + ".html";
-//                alert(filename);
+                alert(filename);
                 document.getElementById("append_link").appendChild(purchase_link);
-//            document.querySelector("head").appendChild(append_js);
                 purchase_link.onload = function () {
                     var container = purchase_link.import.body;
                     document.getElementById("purchase_body").innerHTML = container.innerHTML;
