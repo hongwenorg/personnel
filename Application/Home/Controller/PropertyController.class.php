@@ -26,8 +26,16 @@ class PropertyController extends CommonController {
 		echo json_encode($data_arr);
 	}
 
-	//计划申请页面列表信息
+	//页面列表信息
 	function plan_table(){
+		if(empty($_POST['status_name'])){
+			$array['status'] = 2;
+			echo json_encode($array);exit;
+		}else{
+			$status_name = $_POST['status_name'];
+		}
+		//echo $_GET['status_name'];die;
+		//$status_name = '资金申请';
 		$model = D('property_apply');
 		$class_post_array = $this->school_sel();
 		$plan_array = $this->plan_sel();
@@ -37,11 +45,18 @@ class PropertyController extends CommonController {
 		$array = array();
 		$user_basic = D("user_basic");
 		//echo $_SESSION['userid'];die;
-		$array = $model->where("check_id = 2 and is_del=0 and add_user='".$_SESSION['userid']."'")->select();
+		foreach($check_array as $check_val){
+			if($check_val['check_name'] == $status_name){
+				$check_id =  $check_val['id'];
+				$check_name = $check_val['check_name'];
+			}
+		}
+		$array = $model->where("check_id = $check_id and is_del=0 and add_user='".$_SESSION['userid']."'")->select();
 		if(!empty($array)){
 			foreach($array as &$val){
 				$user_basic_array = $user_basic->where("user_id='".$_SESSION['userid']."'")->find();
 				$val['user_name'] = $user_basic_array['name'];
+				$val['check_name'] = $check_name;
 				foreach($class_post_array as $class_post_val){
 					if($val['class_post_id'] == $class_post_val['id']){
 						$val['class_post_plan'] =  $class_post_val['class'];
@@ -50,11 +65,7 @@ class PropertyController extends CommonController {
 						$val['receive_school'] =  $class_post_val['class'];
 					}
 				}
-				foreach($check_array as $check_val){
-					if($val['check_id'] == $check_val['id']){
-						$val['check_name'] =  $check_val['check_name'];
-					}
-				}
+				
 				foreach($plan_array as $plan_val){
 					if($val['plan_id'] == $plan_val['id']){
 						$val['plan_name'] =  $plan_val['plan_name'];
@@ -80,7 +91,7 @@ class PropertyController extends CommonController {
 		echo json_encode($array);exit;
 	}
 
-	//添加计划申请的提交申请
+	//提交申请
 	function plan_add(){
 		$perfs = explode("&", $_POST['data']);
 		foreach($perfs as $perf) {
@@ -91,7 +102,7 @@ class PropertyController extends CommonController {
 		if(!empty($arr)){
 			$model = D('property_apply');
 			foreach($arr as $val){
-				$stult = $model->where("id='".$val."'")->save(array("check_id"=>4));
+				$stult = $model->where("id='".$val."'")->save(array("check_id"=>$_POST['num'],'project_type'=>$_POST['type']));
 				if($stult){
 					echo 1;exit;//提交成功
 				}else{
@@ -105,7 +116,8 @@ class PropertyController extends CommonController {
 
 	}
 
-	//删除计划申请的操作
+
+	//删除操作
 	function plan_del(){
 		$perfs = explode("&", $_POST['data']);
 		foreach($perfs as $perf) {
