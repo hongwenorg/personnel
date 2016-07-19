@@ -150,13 +150,11 @@
     </div>
     <div class="sousuokuang" id="sousuokuang" style="left:2.5%;margin-top:10px;margin-bottom: 10px">
         <!--<div class="prov_boder">-->
-        <select name="" id="prov" onchange="prov_change()">
+        <select name="" id="prov">
             <option value="0">按条件搜索</option>
-            <option value="">计划类型</option>
-            <option value="post">科目类别</option>
-            <option value="time">申请日期</option>
-            <option value="user">按员工号查询</option>
-            <option value="name" id="click_findname">申请人</option>
+            <option value="plan_type">计划类型</option>
+            <option value="subject">科目类别</option>
+            <option value="name" id="capital_peo">申请人</option>
         </select>
         <!--</div>-->
         <select name="" id="city"></select>
@@ -309,60 +307,33 @@
 
 
                 //*****************************     select列表，input，日期 切换 start     ***********************
-                var prov_change = function () {
+                document.getElementById("prov").addEventListener("change", function () {
+                    var porv_val = document.getElementById("prov").value;
                     var opt = "";
                     var sel = document.getElementById("prov");
-                    if (sel.value == "export_campus" || sel.value == "fold_campus") {
-                        for (var i = 0; i < arr_class[0].length; i++) {
-                            opt = opt + '<option value="' + arr_class[0][i] + '">' + "arr_class[0][i]" + '</option>';
+                    if (porv_val == "0") {
+                        document.getElementById("prov_append").innerHTML = "";
+                        document.getElementById("city").style.display = "none";
+                    }else if (porv_val == "name") {
+                        document.getElementById("prov_append").innerHTML = "<input type='text' id='find'>";
+//                        var find_name = document.getElementById("find");
+                        document.getElementById("city").style.display = "none";
+                    }else if (sel.value == "plan_type") {
+                        for (var i = 0; i < plan_option.length; i++) {
+                            opt = opt + '<option value="' + plan_option[i].plan_name + '">' + plan_option[i].plan_name + '</option>';
+                            document.getElementById("city").innerHTML = opt;
+                            city.style.display = "block";
+                            document.getElementById("prov_append").innerHTML = "";
                         }
-                    } else if (sel.value == "export_post" || sel.value == "fold_post") {
-                        for (var i = 0; i < arr_class[2].length; i++) {
-                            opt = opt + '<option value="' + arr_class[2][i] + '">' + arr_class[2][i] + '</option>';
+                    } else if (sel.value == "subject") {
+                        for (var i = 0; i < finance_type_option.length; i++) {
+                            opt = opt + '<option>' + finance_type_option[i].name + '</option>';
+                            document.getElementById("city").innerHTML = opt;
+                            city.style.display = "block";
+                            document.getElementById("prov_append").innerHTML = "";
                         }
                     }
                     document.getElementById("city").innerHTML = opt;
-                };
-                document.getElementById("prov").addEventListener("change", function () {
-                    var porv_val = document.getElementById("prov").value;
-                    if (porv_val == "name") {
-                        document.getElementById("prov_append").innerHTML = "<input type='text' id='find'>";
-                        var find_name = document.getElementById("find");
-                        document.getElementById("click_findname").onclick = function () {
-                            document.getElementById("show_li").style.display = "block";
-                        };
-                        $(function () {
-                            for (var i = 0; i < arr_staff.length; i++) {
-                                var show_li = document.createElement("li");
-                                document.getElementById("show_ul").appendChild(show_li).innerHTML = "<div class='none_li'>" + arr_staff[i].name + "</div>";
-                            }
-                            $("#find").keyup(function () {
-                                $("#show_ul li").hide();
-                                $("#show_ul li:contains('" + $("#find").val() + "')").show();
-                            });
-                        });
-                        document.getElementById("show_ul").addEventListener("click", function (l) {
-                            var target = l.target;
-                            find_name.value = target.innerHTML;
-                            $("#show_ul li").hide();
-                        });
-                        window.onclick = function () {
-                            $("#show_ul li").hide();
-                        };
-                        city.style.display = "none";
-                    } else if (porv_val == "user") {
-                        document.getElementById("prov_append").innerHTML = "<input type='text' id='find'>";
-                        city.style.display = "none";
-                    } else if (porv_val == "time") {
-                        document.getElementById("prov_append").innerHTML = "<input placeholder='最小时间' class='laydate-icon' onclick='laydate()' id='laydate_icon' name='date_star'><input placeholder='最大时间' class='laydate-icon' name='date_over' onclick='laydate()' id='laydate_icon'>";
-                        city.style.display = "none";
-                    } else if (porv_val == "0") {
-                        document.getElementById("prov_append").innerHTML = "";
-                        city.style.display = "none";
-                    } else {
-                        document.getElementById("prov_append").innerHTML = "";
-                        city.style.display = "block";
-                    }
 
                 });
 //*****************************     select列表，input，日期 切换 end     ***********************
@@ -452,40 +423,23 @@
 
 
 //员工信息页面搜索按钮  start
+                document.getElementById('plan_date').onblur=function(){
+                    find_btt.click();
+                };
                 find_btt.onclick = function () {
                     var sel = document.getElementById("prov");
-                    if (sel.value == "export_campus") {
-                        var status = "export_campus";
+                    if (sel.value == "plan_type") {
+                        var status = "plan_type";
                         var content = $("#city").val();
-                    } else if (sel.value == "export_post") {
-                        var status = "export_post";
+                    } else if (sel.value == "subject") {
+                        var status = "subject";
                         var content = $("#city").val();
-                    } else if (sel.value == "fold_campus") {
-                        var status = "fold_campus";
-                        var content = $("#city").val();
-                    } else if (sel.value == "fold_post") {
-                        var status = "fold_post";
-                        var content = $("#city").val();
-                    } else if (sel.value == "time") {
-                        var date_star = document.getElementsByName("date_star")[0].value;
-                        var date_over = document.getElementsByName("date_over")[0].value;
-                        var dateStar_str = new Date(date_star).getTime();
-                        var dateOver_str = new Date(date_over).getTime();
-
-                        if (dateOver_str < dateStar_str) {
-                            alert("输入查询时间有误！");
-                            return false;
-                        } else {
-                            var status = "time";
-                            var content = date_star + "," + date_over;
-                        }
-
                     } else if (sel.value == "name") {
                         var status = "name";
-                        var content = $("#find").val();
-                    } else if (sel.value == "user") {
-                        var status = "user";
-                        var content = $("#find").val();
+                        var content = $("#city").val();
+                    } else if (sel.value == "time") {
+                        var status = "time";
+                        var content = date_star + "," + date_over;
                     }
                     $("#tb tr:not(:first)").empty();
                     arr_staff = [];
