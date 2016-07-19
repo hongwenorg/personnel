@@ -166,14 +166,12 @@
         <!--时间控件-->
     </div>
     <div style="width:95%;margin-left:2.5%;overflow-x: scroll">
+        <form method="post" id="myform_two" onSubmit="return false;">
         <table class="tb" cellpadding="2" cellspacing="0" id="tb">
             <tr class="trr1">
                 <th class="staff_num1" style="width:50px;">
                     <div><input type="checkbox" class="checkbox_all" id="checkbox_all">
                         <label for="checkbox_all">全选</label></div>
-                </th>
-                <th class="staff_num1" style="width:50px;">
-                    <div>修改</div>
                 </th>
                 <th id="staff_num1" class="staff_num1" style="width:50px;">
                     <div>序号</div>
@@ -258,10 +256,11 @@
                 </th>
             </tr>
         </table>
+        </form>
     </div>
     <!--**********************************************生成excel表格及打印表格*********************************************-->
     <div style="width:95%;margin-left:2.5%">
-        <input type="button" value="报销申请" class="tj_apply"/>
+        <input type="button" value="报销申请" id="submit_two" class="tj_apply"/>
     </div>
     <script>
         var reimbursement = function () {
@@ -414,7 +413,6 @@
                         }
                         var tr = document.createElement("tr");
                         tb.appendChild(tr).innerHTML = "<td class='td_sty'><input type='checkbox' name='check_box" + arr_staff[j].id + "' value='" + arr_staff[j].id + "' class='plan_checkbox'>" + "</div>" + "</td>" +
-                                "<td class='td_sty'>" + "<div>" + "<input type='button' value='修改' id='update_sql' up_id='" + arr_staff[j].id + "' class='plan_xiugai'>" + "</div>" + "</td>" +
                                 "<td class='td_sty'>" + "<div>" + arr_num[j] + "</div>" + "</td>" +
                                 "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].project_type + "' class='hidden_input' id='' name=''>" + "</td>" +
                                 "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].check_name + "' class='hidden_input' id='' name=''>" + "</td>" +
@@ -491,7 +489,7 @@
                     arr_staff = [];
                     $.ajax({
                         url: "/index.php/Home/Property/plan_table",
-                        data: {'status_name': '资金申请'},
+                        data: {'status_name': '报销申请'},
                         type: "post",
                         async: "false",
                         traditional: "true",
@@ -527,6 +525,32 @@
                         }
                     }
                 };
+
+
+                //计划申请页提交神请操作
+                $("#submit_two").click(function () {
+                    var data = $('#myform_two').serialize();//将表单数据以字符串形式获取
+                    $.ajax({
+                        url: "/index.php/Home/Property/plan_add",
+                        data: {'data': data,'num':'15','type':'报销申请审核中'},
+                        type: "post",
+                        async: "false",
+                        traditional: "true",
+                        cache: "false",
+                        success: function (msg) {
+                            if (msg == 1) {
+                                alert("提交成功！");
+                                find_btt.click();
+                            } else if (msg == 2) {
+                                alert("提交失败！");
+                            } else if (msg == 3) {
+                                alert("保存失败,请选择要提交的项目！");
+                            }
+
+                        }
+
+                    });
+                });
             })()
         };
 

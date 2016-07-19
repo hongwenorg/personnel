@@ -91,7 +91,7 @@ class PropertyController extends CommonController {
 		echo json_encode($array);exit;
 	}
 
-	//添加计划申请的提交申请
+	//提交申请
 	function plan_add(){
 		$perfs = explode("&", $_POST['data']);
 		foreach($perfs as $perf) {
@@ -102,7 +102,7 @@ class PropertyController extends CommonController {
 		if(!empty($arr)){
 			$model = D('property_apply');
 			foreach($arr as $val){
-				$stult = $model->where("id='".$val."'")->save(array("check_id"=>4));
+				$stult = $model->where("id='".$val."'")->save(array("check_id"=>$_POST['num'],'project_type'=>$_POST['type']));
 				if($stult){
 					echo 1;exit;//提交成功
 				}else{
@@ -117,7 +117,7 @@ class PropertyController extends CommonController {
 	}
 
 
-	//删除计划申请的操作
+	//删除操作
 	function plan_del(){
 		$perfs = explode("&", $_POST['data']);
 		foreach($perfs as $perf) {

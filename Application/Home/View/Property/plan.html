@@ -645,7 +645,7 @@
                     var data = $('#myform_two').serialize();//将表单数据以字符串形式获取
                     $.ajax({
                         url: "/index.php/Home/Property/plan_add",
-                        data: {'data': data},
+                        data: {'data': data,'num':'4','type':'计划申请审批中'},
                         type: "post",
                         async: "false",
                         traditional: "true",

@@ -162,11 +162,11 @@
         <!--</div>-->
         <select name="" id="city"></select>
         <span id='prov_append'></span>
-        <button type="button" id="find_btt" style="float:right"><img src="/public/img/sousuo.png"
-                                                                     class="sou_suo" alt=""></button>
+        <button type="button" id="find_btt" style="float:right"><img src="/public/img/sousuo.png" class="sou_suo" alt=""></button>
         <!--时间控件-->
     </div>
     <div style="width:95%;margin-left:2.5%;overflow-x: scroll">
+        <form method="post" id="myform_two" onSubmit="return false;">
         <table class="tb" cellpadding="2" cellspacing="0" id="tb">
             <tr class="trr1">
                 <th class="staff_num1" style="width:50px;">
@@ -259,11 +259,12 @@
                 </th>
             </tr>
         </table>
+        </form>
     </div>
     <!--**********************************************生成excel表格及打印表格*********************************************-->
     <div style="width:95%;margin-left:2.5%">
         <input type="button" value="删除" class="delet_apply" id="delet_apply"/>
-        <input type="button" value="申请使用" class="tj_apply"/>
+        <input type="button" value="申请使用" id="submit_two" class="tj_apply"/>
     </div>
     <script>
         var capital = function () {
@@ -540,6 +541,60 @@
                         }
                     }
                 };
+
+                //计划申请页删除操作
+                $("#delet_apply").click(function () {
+                    if (confirm("是否删除所选内容")) {
+                        var data = $('#myform_two').serialize();//将表单数据以字符串形式获取
+                        $.ajax({
+                            url: "/index.php/Home/Property/plan_del",
+                            data: {'data': data},
+                            type: "post",
+                            async: "false",
+                            traditional: "true",
+                            cache: "false",
+                            success: function (msg) {
+                                if (msg == 1) {
+                                    alert("删除成功！");
+                                    find_btt.click();
+                                } else if (msg == 2) {
+                                    alert("删除失败！");
+                                } else if (msg == 3) {
+                                    alert("删除失败,请选择要提交的项目！");
+                                }
+
+                            }
+
+                        });
+                    }
+                });
+
+
+                //计划申请页提交神请操作
+                $("#submit_two").click(function () {
+                    var data = $('#myform_two').serialize();//将表单数据以字符串形式获取
+                    $.ajax({
+                        url: "/index.php/Home/Property/plan_add",
+                        data: {'data': data,'num':'11','type':'资金申请审核中'},
+                        type: "post",
+                        async: "false",
+                        traditional: "true",
+                        cache: "false",
+                        success: function (msg) {
+                            if (msg == 1) {
+                                alert("提交成功！");
+                                find_btt.click();
+                            } else if (msg == 2) {
+                                alert("提交失败！");
+                            } else if (msg == 3) {
+                                alert("保存失败,请选择要提交的项目！");
+                            }
+
+                        }
+
+                    });
+                });
+
             })()
         };
 
