@@ -365,6 +365,7 @@
                     }
                 });
 
+                
                 $("#count").change(function(){
                     var money = $("#money");
                     var price_val = $("#price").val();
@@ -377,6 +378,7 @@
                 });
                 //计算金额函数结束
                 
+                //几个下拉菜单数据获取
                 $.ajax({
                     url: "/index.php/Home/Property/plan_list",
                     type: "post",
@@ -539,7 +541,7 @@
                                 document.querySelector(".hongwen_logo").style.display = "block";
                             }
 
-
+                            //修改数据根据id获取
                             $("#update_sql").click(function(){
                                 var id = $("#update_sql").attr('up_id');
                                 $.ajax({
@@ -605,19 +607,37 @@
                         }
                     }
                 };
-                document.getElementById("delet_apply").onclick = function () {
-                    var plan_checkbox = document.querySelectorAll(".plan_checkbox");
-                    for (var i = 0; i < plan_checkbox.length; i++) {
-                        if (plan_checkbox[i].checked == true) {
-                            if (confirm("是否删除所选内容")) {
-                                var remove_parenod = plan_checkbox[i].parentNode.parentNode.parentNode;
-                                remove_parenod.parentNode.removeChild(remove_parenod);
+
+
+                //计划申请页删除操作
+                $("#delet_apply").click(function () {
+                    if (confirm("是否删除所选内容")) {
+                        var data = $('#myform_two').serialize();//将表单数据以字符串形式获取
+                        $.ajax({
+                            url: "/index.php/Home/Property/plan_del",
+                            data: {'data': data},
+                            type: "post",
+                            async: "false",
+                            traditional: "true",
+                            cache: "false",
+                            success: function (msg) {
+                                if (msg == 1) {
+                                    alert("删除成功！");
+                                    onload_in();
+                                } else if (msg == 2) {
+                                    alert("删除失败！");
+                                } else if (msg == 3) {
+                                    alert("删除失败,请选择要提交的项目！");
+                                }
+
                             }
-                        }
+
+                        });
                     }
-                };
+                });
 
 
+                //计划申请页提交神请操作
                 $("#submit_two").click(function () {
                     var data = $('#myform_two').serialize();//将表单数据以字符串形式获取
                     $.ajax({
@@ -643,7 +663,7 @@
                 });
 
                 
-
+                //计划申请页保存或者修改操作
                 $("#submit_one").click(function(){
                     var data = $('#myform_one').serialize();//将表单数据以字符串形式获取
                     $.ajax({

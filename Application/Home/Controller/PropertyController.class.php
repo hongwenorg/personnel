@@ -91,7 +91,7 @@ class PropertyController extends CommonController {
 		if(!empty($arr)){
 			$model = D('property_apply');
 			foreach($arr as $val){
-				$stult = $model->where("id='".$val."' and check_id = 2 and is_del=0 and add_user='".$_SESSION['userid']."'")->save(array("check_id"=>4));
+				$stult = $model->where("id='".$val."'")->save(array("check_id"=>4));
 				if($stult){
 					echo 1;exit;//提交成功
 				}else{
@@ -101,6 +101,31 @@ class PropertyController extends CommonController {
 		
 		}else{
 			echo 3;exit;//提交失败
+		}
+
+	}
+
+	//删除计划申请的操作
+	function plan_del(){
+		$perfs = explode("&", $_POST['data']);
+		foreach($perfs as $perf) {
+		    $perf_key_values = explode("=", $perf);
+		    $arr[urldecode($perf_key_values[0])] = urldecode($perf_key_values[1]);
+		}
+		//echo json_encode($arr);exit;
+		if(!empty($arr)){
+			$model = D('property_apply');
+			foreach($arr as $val){
+				$stult = $model->where("id='".$val."'")->delete();
+				if($stult){
+					echo 1;exit;//删除成功
+				}else{
+					echo 2;exit;//删除失败
+				}
+			}
+		
+		}else{
+			echo 3;exit;//删除失败
 		}
 
 	}
