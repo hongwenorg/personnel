@@ -365,7 +365,7 @@
                     }
                 });
 
-                
+
                 $("#count").change(function(){
                     var money = $("#money");
                     var price_val = $("#price").val();
@@ -522,13 +522,16 @@
                 function onload_in(){
                     arr_staff = [];
                     $("#tb tr:not(:first)").empty();
-                    var xhr = new XMLHttpRequest();
-                    xhr.open("get", "/index.php/Home/Property/plan_table");
-                    xhr.send();
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState == 4 && xhr.status == 200) {
+                    $.ajax({
+                        url: "/index.php/Home/Property/plan_table",
+                        data: {'status_name': '待提交'},
+                        type: "post",
+                        async: "false",
+                        traditional: "true",
+                        cache: "false",
+                        success: function (data) {
                             document.getElementById("sousuo_img_out").style.display = "none";
-                            var msg = JSON.parse(xhr.responseText);
+                            var msg = JSON.parse(data);
                             for (key in msg) {
                                 if (key != "status" && msg["status"] != 2) {
                                     arr_staff.push(msg[key]);
@@ -583,7 +586,7 @@
                                 });
                             });
                         }
-                    };
+                    });
                 }
 
 //页面搜索按钮  end

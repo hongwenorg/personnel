@@ -413,35 +413,35 @@
                             arr_staff[j].state = "无数据";
                         }
                         var tr = document.createElement("tr");
-                        tb.appendChild(tr).innerHTML = "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + "<input type='checkbox' class='plan_checkbox'>" + "</div>" + "</td>" +
-                                "<td class='td_sty'>" + "<div>" + "<input type='button' value='修改' class='plan_xiugai'>" + "</div>" + "</td>" +
+                        tb.appendChild(tr).innerHTML = "<td class='td_sty'><input type='checkbox' name='check_box" + arr_staff[j].id + "' value='" + arr_staff[j].id + "' class='plan_checkbox'>" + "</div>" + "</td>" +
+                                "<td class='td_sty'>" + "<div>" + "<input type='button' value='修改' id='update_sql' up_id='" + arr_staff[j].id + "' class='plan_xiugai'>" + "</div>" + "</td>" +
                                 "<td class='td_sty'>" + "<div>" + arr_num[j] + "</div>" + "</td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].user + "' class='hidden_input'>" + "<input type='hidden' class='user_sort' value='" + 1 + "'></td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].name + "' class='hidden_input'>" + "<input type='hidden' class='name_sort' value='" + 1 + "'></td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='export_campus_sort' value='" + 1 + "'></td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='export_post_sort' value='" + 1 + "'></td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='fold_campus_sort' value='" + 1 + "'></td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='fold_post_sort' value='" + 1 + "'></td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>";
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].project_type + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].check_name + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + "" + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].plan_name + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].class_post_plan + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].class_post_plan + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].receive_school + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].finance_type_name + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].info + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].unit + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].count + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].money + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].money_last + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].notes + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].receive_user + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].receive_card + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].expect_date + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].user_name + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].purchase_name + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].buy_brand + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].buy_info + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].buy_transport + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].other + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].money_time + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].update_time + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].create_time + "' class='hidden_input' id='' name=''>" + "</td>";
 
                     }
 
@@ -489,19 +489,19 @@
                     }
                     $("#tb tr:not(:first)").empty();
                     arr_staff = [];
-                    var xhr = new XMLHttpRequest();
-                    xhr.open("get", "/index.php/Home/Content/change_find/content/status/" + status);
-                    xhr.send();
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState == 4 && xhr.status == 200) {
+                    $.ajax({
+                        url: "/index.php/Home/Property/plan_table",
+                        data: {'status_name': '资金申请'},
+                        type: "post",
+                        async: "false",
+                        traditional: "true",
+                        cache: "false",
+                        success: function (data) {
                             document.getElementById("sousuo_img_out").style.display = "none";
-                            var msg = JSON.parse(xhr.responseText);
+                            var msg = JSON.parse(data);
                             for (key in msg) {
                                 if (key != "status" && msg["status"] != 2) {
                                     arr_staff.push(msg[key]);
-                                    arr_staff.sort(function (b, a) {
-                                        return a["time"].localeCompare(b["time"]);
-                                    });
                                 }
                             }
                             if (msg["status"] != 2) {
@@ -511,7 +511,7 @@
                                 document.querySelector(".hongwen_logo").style.display = "block";
                             }
                         }
-                    }
+                    });
                 };
                 find_btt.click();
                 var checkbox_all = document.querySelector(".checkbox_all");
