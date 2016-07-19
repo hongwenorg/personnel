@@ -281,6 +281,8 @@
                 var plan_option = [];
                 var purchase_option = [];
                 var finance_type_option = [];
+                
+                document.getElementById('plan_date').valueAsDate = new Date();
                 $.ajax({
                     url: "/index.php/Home/Property/plan_list",
                     type: "post",
