@@ -178,7 +178,6 @@
             append_allli[j].style.color="white";
             append_allli[j].style.fontWeight="100";
         }
-        target.appendChild(purchase_up);
         target.style.color="black";
         target.style.fontWeight="bold";
         for (var i = 0; i < mouse_modules.length; i++) {
@@ -189,7 +188,6 @@
                 purchase_link.setAttribute("rel", "import");
                 var filename = modules_files.substr(modules_files.lastIndexOf("/") + 1);
                 purchase_link.href = filename + ".html";
-                alert(filename);
                 document.getElementById("append_link").appendChild(purchase_link);
                 purchase_link.onload = function () {
                     var container = purchase_link.import.body;

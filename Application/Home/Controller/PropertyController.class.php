@@ -240,6 +240,7 @@ class PropertyController extends CommonController {
 		$user_id = $_SESSION['userid'];
 		$arr['add_user'] = $user_id;
 		$arr['project_type'] = "计划申请";
+		$arr['check_id'] = 2;
 		if(!empty($arr["id"])){
 			//计划申请修改
 			$property_apply = M("property_apply");
