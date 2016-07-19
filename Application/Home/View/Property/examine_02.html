@@ -1,0 +1,548 @@
+<div id="plan">
+    <style>
+        .append_plhead {
+            height: 40px;
+            background-color: #efefef;
+            text-align: left;
+            line-height: 40px;
+            font-size: 18px;
+            font-weight: bold;
+            color: dimgray;
+            width: 95%;
+            margin-left: 2.5%;
+        }
+
+        .append_plan {
+            width: 95%;
+            margin-left: 2.5%;
+            border: 1px solid #efefef;
+            height: 250px;
+        }
+
+        .append_plan_body > ul > li {
+            width: 320px;
+            height: 25px;
+            line-height: 25px;
+            float: left;
+            text-align: left;
+            margin-left: 50px;
+            margin-top: 10px;
+            font-weight: bold;
+            font-family: "微软雅黑";
+            color: dimgray;
+        }
+
+        .append_plan_body > ul > li > input {
+            width: 190px;
+            float: right;
+            height: 22px;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            border-bottom: 2px solid dimgray;
+            border-radius: 10px;
+            outline: none;
+            padding-left: 10px;
+        }
+
+        .append_plan_body > ul > li > select {
+            height: 25px;
+            width: 200px;
+            float: right;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            border-bottom: 2px solid dimgray;
+            border-radius: 10px;
+            outline: none;
+            padding-left: 10px;
+        }
+
+        .append_plan_foot {
+            padding-left: 155px;
+            width: 100%;
+        }
+
+        .append_plhead > input {
+            margin-top: 5px;
+            float: right;
+            width: 100px;
+            height: 30px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .tj_apply, .delet_apply {
+            margin-top: 5px;
+            float: right;
+            width: 100px;
+            height: 30px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .plan_xiugai {
+            width: 50px;
+            background-color: #00c8c8;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .foot_baocun, .tj_apply {
+            background-color: #00c8c8;
+        }
+
+        .foot_qingkong, .delet_apply {
+            background-color: #ed5565;
+        }
+
+        .hidden_input {
+            text-align: center;
+            width: 100%;
+            height: 30px;
+            font-size: 16px;
+            border: none;
+        }
+        .plan_date{
+            height: 40px;
+            text-align: center;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            line-height: 40px;
+            font-size: 18px;
+            font-weight: bold;
+            color: dimgray;
+        }
+        .plan_date>input{
+            width: 190px;
+            height: 22px;
+            font-size: 18px;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            border-bottom: 2px solid dimgray;
+            border-radius: 10px;
+            outline: none;
+            padding-left: 10px;
+        }
+
+    </style>
+    <link rel="stylesheet" href="/public/css/Content_staff.css" type="text/css">
+    <script type="text/javascript" src="/public/js/jquery.js"></script>
+
+    <!--*********************************************存放后台员工信息*****************************************************-->
+    <div class="plan_date">
+        选择期次：<input type="month" id="plan_date" value="">
+    </div>
+    <div class="append_plhead">
+        申请审核：
+    </div>
+    <div class="sousuokuang" id="sousuokuang" style="left:2.5%;margin-top:10px;margin-bottom: 10px">
+        <!--<div class="prov_boder">-->
+        <select name="" id="prov" onchange="prov_change()">
+            <option value="0">按条件搜索</option>
+            <option value="">计划类型</option>
+            <option value="post">科目类别</option>
+            <option value="time">申请日期</option>
+            <option value="user">按员工号查询</option>
+            <option value="name" id="click_findname">申请人</option>
+        </select>
+        <!--</div>-->
+        <select name="" id="city"></select>
+        <span id='prov_append'></span>
+        <button type="button" id="find_btt" style="float:right"><img src="/public/img/sousuo.png"
+                                                                     class="sou_suo" alt=""></button>
+        <!--时间控件-->
+    </div>
+    <div style="width:95%;margin-left:2.5%;overflow-x: scroll">
+        <table class="tb" cellpadding="2" cellspacing="0" id="tb">
+            <tr class="trr1">
+                <th class="staff_num1" style="width:50px;">
+                    <div><input type="checkbox" class="checkbox_all" id="checkbox_all">
+                        <label for="checkbox_all">全选</label></div>
+                </th>
+                <th class="staff_num1" style="width:50px;">
+                    <div>修改</div>
+                </th>
+                <th id="staff_num1" class="staff_num1" style="width:50px;">
+                    <div>序号</div>
+                </th>
+                <th id="staff_user1">
+                    <div>项目阶段</div>
+                </th>
+                <th id="staff_name1">
+                    <div>审核状态</div>
+                </th>
+                <th id="staff_export_campus1">
+                    <div>审核部门</div>
+                </th>
+                <th id="staff_export_post1">
+                    <div>计划类型</div>
+                </th>
+                <th id="staff_fold_campus1">
+                    <div>申请校区</div>
+                </th>
+                <th id="staff_fold_post1">
+                    <div>归属校区</div>
+                </th>
+                <th id="staff_time1">
+                    <div>接收校区</div>
+                </th>
+                <th id="staff_state1">
+                    <div>科目类型</div>
+                </th>
+                <th>
+                    <div>明细内容</div>
+                </th>
+                <th>
+                    <div>单位</div>
+                </th>
+                <th>
+                    <div>数量</div>
+                </th>
+                <th>
+                    <div>合计</div>
+                </th>
+                <th>
+                    <div>实际支出</div>
+                </th>
+                <th>
+                    <div>支出说明</div>
+                </th>
+                <th>
+                    <div>接收人</div>
+                </th>
+                <th>
+                    <div>接收卡号</div>
+                </th>
+                <th>
+                    <div>期望审批日期</div>
+                </th>
+                <th>
+                    <div>申请人</div>
+                </th>
+                <th>
+                    <div>采购类型</div>
+                </th>
+                <th>
+                    <div>品牌</div>
+                </th>
+                <th>
+                    <div>型号</div>
+                </th>
+                <th>
+                    <div>物流</div>
+                </th>
+                <th>
+                    <div>备注</div>
+                </th>
+                <th>
+                    <div>预算审批时间</div>
+                </th>
+                <th>
+                    <div>最后审核时间</div>
+                </th>
+                <th>
+                    <div>数据创建时间</div>
+                </th>
+            </tr>
+        </table>
+    </div>
+    <!--**********************************************生成excel表格及打印表格*********************************************-->
+    <div style="width:95%;margin-left:2.5%">
+        <input type="button" value="删除" class="delet_apply" id="delet_apply"/>
+        <input type="button" value="退回" class="tj_apply"/>
+        <input type="button" value="通过" class="tj_apply"/>
+    </div>
+    <script>
+        var examine = function () {
+            (function () {
+                var arr_staff = [];
+                var CountPage, PageSize = 5;
+                var pageall = document.getElementById("pageall");
+                var copy_excel = document.getElementById("copy_excel");
+                var copy_dayin = document.getElementById("copy_dayin");
+                var tb = document.getElementById("tb");
+                var find_btt=document.getElementById("find_btt");
+                var tb_content = tb.innerHTML;
+                var school_option = [];
+                var plan_option = [];
+                var purchase_option = [];
+                var finance_type_option = [];
+                $.ajax({
+                    url: "/index.php/Home/Property/plan_list",
+                    type: "post",
+                    async: false,
+                    cache: "false",
+                    success: function (data) {
+                        msg = JSON.parse(data);
+
+                        for (keys in msg) {
+                            for (key in msg[keys]) {
+                                if (keys == 'school') {
+                                    school_option.push(msg['school'][key]);
+                                } else if (keys == 'plan') {
+                                    plan_option.push(msg['plan'][key]);
+                                } else if (keys == 'purchase') {
+                                    purchase_option.push(msg['purchase'][key]);
+                                } else if (keys == 'finance_type') {
+                                    finance_type_option.push(msg['finance_type'][key]);
+                                }
+                            }
+                        }
+                    }
+
+                });
+
+
+//******************************     全局变量  end    ***************************
+
+
+                //*****************************     select列表，input，日期 切换 start     ***********************
+                var prov_change = function () {
+                    var opt = "";
+                    var sel = document.getElementById("prov");
+                    if (sel.value == "export_campus" || sel.value == "fold_campus") {
+                        for (var i = 0; i < arr_class[0].length; i++) {
+                            opt = opt + '<option value="' + arr_class[0][i] + '">' + "arr_class[0][i]" + '</option>';
+                        }
+                    } else if (sel.value == "export_post" || sel.value == "fold_post") {
+                        for (var i = 0; i < arr_class[2].length; i++) {
+                            opt = opt + '<option value="' + arr_class[2][i] + '">' + arr_class[2][i] + '</option>';
+                        }
+                    }
+                    document.getElementById("city").innerHTML = opt;
+                };
+                document.getElementById("prov").addEventListener("change", function () {
+                    var porv_val = document.getElementById("prov").value;
+                    if (porv_val == "name") {
+                        document.getElementById("prov_append").innerHTML = "<input type='text' id='find'>";
+                        var find_name = document.getElementById("find");
+                        document.getElementById("click_findname").onclick = function () {
+                            document.getElementById("show_li").style.display = "block";
+                        };
+                        $(function () {
+                            for (var i = 0; i < arr_staff.length; i++) {
+                                var show_li = document.createElement("li");
+                                document.getElementById("show_ul").appendChild(show_li).innerHTML = "<div class='none_li'>" + arr_staff[i].name + "</div>";
+                            }
+                            $("#find").keyup(function () {
+                                $("#show_ul li").hide();
+                                $("#show_ul li:contains('" + $("#find").val() + "')").show();
+                            });
+                        });
+                        document.getElementById("show_ul").addEventListener("click", function (l) {
+                            var target = l.target;
+                            find_name.value = target.innerHTML;
+                            $("#show_ul li").hide();
+                        });
+                        window.onclick = function () {
+                            $("#show_ul li").hide();
+                        };
+                        city.style.display = "none";
+                    } else if (porv_val == "user") {
+                        document.getElementById("prov_append").innerHTML = "<input type='text' id='find'>";
+                        city.style.display = "none";
+                    } else if (porv_val == "time") {
+                        document.getElementById("prov_append").innerHTML = "<input placeholder='最小时间' class='laydate-icon' onclick='laydate()' id='laydate_icon' name='date_star'><input placeholder='最大时间' class='laydate-icon' name='date_over' onclick='laydate()' id='laydate_icon'>";
+                        city.style.display = "none";
+                    } else if (porv_val == "0") {
+                        document.getElementById("prov_append").innerHTML = "";
+                        city.style.display = "none";
+                    } else {
+                        document.getElementById("prov_append").innerHTML = "";
+                        city.style.display = "block";
+                    }
+
+                });
+//*****************************     select列表，input，日期 切换 end     ***********************
+                /*
+                 * 循环显示内容函数
+                 * page=分页页码
+                 * num=排序正反
+                 * content=点击要排序字段
+                 * start
+                 * */
+                function ArrSort(page, num, content) {
+                    var len;
+                    var page_str;
+                    if (typeof page === "undefined") {
+                        page = 0;
+                        len = arr_staff.length;
+                    } else {
+                        if (arr_staff.length >= (page + 1) * PageSize) {
+                            len = (page + 1) * PageSize;
+                        } else {
+                            len = arr_staff.length;
+                        }
+                    }
+                    var arr_num = [];
+                    for (var l = 0; l < len; l++) {
+                        arr_num[l] = l + 1;
+                    }
+
+                    for (var j = page * PageSize; j < len; j++) {
+                        if (arr_staff[j].name == null) {
+                            arr_staff[j].name = "无数据";
+                        }
+                        if (arr_staff[j].export_campus == null) {
+                            arr_staff[j].export_campus = "无数据";
+                        }
+                        if (arr_staff[j].export_post == null) {
+                            arr_staff[j].export_post = "无数据";
+                        }
+                        if (arr_staff[j].fold_campus == null) {
+                            arr_staff[j].fold_campus = "无数据";
+                        }
+                        if (arr_staff[j].fold_post == null) {
+                            arr_staff[j].fold_post = "无数据";
+                        }
+                        if (!arr_staff[j].time) {
+                            arr_staff[j].time = "无数据";
+                        }
+                        if (!arr_staff[j].state) {
+                            arr_staff[j].state = "无数据";
+                        }
+                        var tr = document.createElement("tr");
+                        tb.appendChild(tr).innerHTML = "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + "<input type='checkbox' class='plan_checkbox'>" + "</div>" + "</td>" +
+                                "<td class='td_sty'>" + "<div>" + "<input type='button' value='修改' class='plan_xiugai'>" + "</div>" + "</td>" +
+                                "<td class='td_sty'>" + "<div>" + arr_num[j] + "</div>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].user + "' class='hidden_input'>" + "<input type='hidden' class='user_sort' value='" + 1 + "'></td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].name + "' class='hidden_input'>" + "<input type='hidden' class='name_sort' value='" + 1 + "'></td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='export_campus_sort' value='" + 1 + "'></td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='export_post_sort' value='" + 1 + "'></td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='fold_campus_sort' value='" + 1 + "'></td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='fold_post_sort' value='" + 1 + "'></td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].state + "' class='hidden_input'>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>";
+
+                    }
+
+                }
+
+
+//分页处理搜索数据等  end
+                document.getElementById("delet_apply").onclick = function () {
+                    var plan_checkbox = document.querySelectorAll(".plan_checkbox");
+                    for (var i = 0; i < plan_checkbox.length; i++) {
+                        if (plan_checkbox[i].checked == true) {
+                            if (confirm("是否删除所选内容")) {
+                                var remove_parenod = plan_checkbox[i].parentNode.parentNode.parentNode;
+                                remove_parenod.parentNode.removeChild(remove_parenod);
+                            }
+                        }
+                    }
+                };
+
+
+//员工信息页面搜索按钮  start
+                find_btt.onclick = function () {
+                    var sel = document.getElementById("prov");
+                    if (sel.value == "export_campus") {
+                        var status = "export_campus";
+                        var content = $("#city").val();
+                    } else if (sel.value == "export_post") {
+                        var status = "export_post";
+                        var content = $("#city").val();
+                    } else if (sel.value == "fold_campus") {
+                        var status = "fold_campus";
+                        var content = $("#city").val();
+                    } else if (sel.value == "fold_post") {
+                        var status = "fold_post";
+                        var content = $("#city").val();
+                    } else if (sel.value == "time") {
+                        var date_star = document.getElementsByName("date_star")[0].value;
+                        var date_over = document.getElementsByName("date_over")[0].value;
+                        var dateStar_str = new Date(date_star).getTime();
+                        var dateOver_str = new Date(date_over).getTime();
+
+                        if (dateOver_str < dateStar_str) {
+                            alert("输入查询时间有误！");
+                            return false;
+                        } else {
+                            var status = "time";
+                            var content = date_star + "," + date_over;
+                        }
+
+                    } else if (sel.value == "name") {
+                        var status = "name";
+                        var content = $("#find").val();
+                    } else if (sel.value == "user") {
+                        var status = "user";
+                        var content = $("#find").val();
+                    }
+                    $("#tb tr:not(:first)").empty();
+                    arr_staff = [];
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("get", "/index.php/Home/Content/change_find/content/status/" + status);
+                    xhr.send();
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                            document.getElementById("sousuo_img_out").style.display = "none";
+                            var msg = JSON.parse(xhr.responseText);
+                            for (key in msg) {
+                                if (key != "status" && msg["status"] != 2) {
+                                    arr_staff.push(msg[key]);
+                                    arr_staff.sort(function (b, a) {
+                                        return a["time"].localeCompare(b["time"]);
+                                    });
+                                }
+                            }
+                            if (msg["status"] != 2) {
+                                ArrSort(0);
+                            } else {
+                                document.getElementById("sousuo_img_out").style.display = "none";
+                                document.querySelector(".hongwen_logo").style.display = "block";
+                            }
+                        }
+                    }
+                };
+                find_btt.click();
+                var checkbox_all = document.querySelector(".checkbox_all");
+                var check_num = 0;
+                checkbox_all.onclick = function () {
+                    check_num += 1;
+                    var plan_checkbox = document.querySelectorAll(".plan_checkbox");
+                    for (var i = 0; i < plan_checkbox.length; i++) {
+                        if (check_num % 2 != 0) {
+                            plan_checkbox[i].checked = true;
+                        } else {
+                            plan_checkbox[i].checked = false;
+                        }
+                    }
+                };
+            })()
+        };
+
+
+    </script>
+</div>
