@@ -186,7 +186,6 @@
                 var purchase_link = document.createElement("link");
                 purchase_link.setAttribute("rel", "import");
                 var filename = modules_files.substr(modules_files.lastIndexOf("/") + 1);
-                alert(filename);
                 purchase_link.href = filename + ".html";
                 document.getElementById("append_link").appendChild(purchase_link);
                 purchase_link.onload = function () {

@@ -325,14 +325,14 @@
                         document.getElementById("city").style.display = "none";
                     } else if (sel.value == "plan_type") {
                         for (var i = 0; i < plan_option.length; i++) {
-                            opt = opt + '<option value="' + plan_option[i].plan_name + '">' + plan_option[i].plan_name + '</option>';
+                            opt = opt + '<option value="' + plan_option[i].id + '">' + plan_option[i].plan_name + '</option>';
                             document.getElementById("city").innerHTML = opt;
                             city.style.display = "block";
                             document.getElementById("prov_append").innerHTML = "";
                         }
                     } else if (sel.value == "subject") {
                         for (var i = 0; i < finance_type_option.length; i++) {
-                            opt = opt + '<option>' + finance_type_option[i].name + '</option>';
+                            opt = opt + '<option value="' + finance_type_option[i].id + '">' + finance_type_option[i].name + '</option>';
                             document.getElementById("city").innerHTML = opt;
                             city.style.display = "block";
                             document.getElementById("prov_append").innerHTML = "";
@@ -410,7 +410,7 @@
                                 "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].receive_user + "' class='hidden_input' id='' name=''>" + "</td>" +
                                 "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].receive_card + "' class='hidden_input' id='' name=''>" + "</td>" +
                                 "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].expect_date + "' class='hidden_input' id='' name=''>" + "</td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].user_name + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].add_user_name + "' class='hidden_input' id='' name=''>" + "</td>" +
                                 "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].purchase_name + "' class='hidden_input' id='' name=''>" + "</td>" +
                                 "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].buy_brand + "' class='hidden_input' id='' name=''>" + "</td>" +
                                 "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].buy_info + "' class='hidden_input' id='' name=''>" + "</td>" +
@@ -427,32 +427,30 @@
 
 //分页处理搜索数据等  end
 
+                //期次的选择（当这个文本框失去鼠标时触动）执行搜索
+                document.getElementById('plan_date').onblur=function(){
+                    find_btt.click();
+                };
 
 //员工信息页面搜索按钮  start
-
-                document.getElementById('plan_date').onblur=function(){
-                   find_btt.click();
-                };
                 find_btt.onclick = function () {
                     var sel = document.getElementById("prov");
                     if (sel.value == "plan_type") {
-                        var status = "plan_type";
+                        var status = "plan_id";
                         var content = $("#city").val();
                     } else if (sel.value == "subject") {
-                        var status = "subject";
+                        var status = "finance_type_id";
                         var content = $("#city").val();
                     } else if (sel.value == "name") {
-                        var status = "name";
-                        var content = $("#city").val();
-                    } else if (sel.value == "time") {
-                        var status = "time";
-                        var content = date_star + "," + date_over;
+                        var status = "add_user_name";
+                        var content = $("#find").val();
                     }
+                    var month = $("#plan_date").val();
                     $("#tb tr:not(:first)").empty();
                     arr_staff = [];
                     $.ajax({
                         url: "/index.php/Home/Property/plan_table",
-                        data: {'status_name': '资金申请'},
+                        data: {'status_name': '资金申请','status':status,'content':content,"month":month},
                         type: "post",
                         async: "false",
                         traditional: "true",
