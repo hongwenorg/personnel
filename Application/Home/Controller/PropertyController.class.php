@@ -28,6 +28,16 @@ class PropertyController extends CommonController {
 
 	//页面列表信息
 	function plan_table(){
+		$where = '';
+		if(!empty($_POST['month'])){
+			$month = $_POST['month'];
+			$where .= " and month = '".$month."'";
+		}
+		if(!empty($_POST['status']) && !empty($_POST['content'])){
+			$status = $_POST['status'];
+			$content = $_POST['content'];
+			$where .= " and ".$status."='".$content."'";
+		}
 		if(empty($_POST['status_name'])){
 			$array['status'] = 2;
 			echo json_encode($array);exit;
@@ -51,11 +61,9 @@ class PropertyController extends CommonController {
 				$check_name = $check_val['check_name'];
 			}
 		}
-		$array = $model->where("check_id = $check_id and is_del=0 and add_user='".$_SESSION['userid']."'")->select();
+		$array = $model->where("check_id = $check_id and is_del=0 and add_user='".$_SESSION['userid']."'".$where)->select();
 		if(!empty($array)){
 			foreach($array as &$val){
-				$user_basic_array = $user_basic->where("user_id='".$_SESSION['userid']."'")->find();
-				$val['user_name'] = $user_basic_array['name'];
 				$val['check_name'] = $check_name;
 				foreach($class_post_array as $class_post_val){
 					if($val['class_post_id'] == $class_post_val['id']){
@@ -250,7 +258,10 @@ class PropertyController extends CommonController {
 			exit;//状态码3：请填写完整信息
 		}
 		$user_id = $_SESSION['userid'];
+		$user_basic = D('user_basic');
+		$user_basic_arr = $user_basic->where("user_id = $user_id")->find();
 		$arr['add_user'] = $user_id;
+		$arr['add_user_name'] = $user_basic_arr['name'];
 		$arr['project_type'] = "计划申请";
 		$arr['check_id'] = 2;
 		if(!empty($arr["id"])){

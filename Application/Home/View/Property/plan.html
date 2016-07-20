@@ -499,7 +499,7 @@
                                 "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].receive_user + "' class='hidden_input' id='' name=''>" + "</td>" +
                                 "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].receive_card + "' class='hidden_input' id='' name=''>" + "</td>" +
                                 "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].expect_date + "' class='hidden_input' id='' name=''>" + "</td>" +
-                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].user_name + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].add_user_name + "' class='hidden_input' id='' name=''>" + "</td>" +
                                 "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].purchase_name + "' class='hidden_input' id='' name=''>" + "</td>" +
                                 "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].buy_brand + "' class='hidden_input' id='' name=''>" + "</td>" +
                                 "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].buy_info + "' class='hidden_input' id='' name=''>" + "</td>" +
@@ -516,15 +516,19 @@
 
 //分页处理搜索数据等  end
 
-
+                //期次的选择（当这个文本框失去鼠标时触动）执行搜索
+                document.getElementById('plan_date').onblur=function(){
+                    onload_in();
+                };
 //员工信息页面搜索按钮  start
-            onload_in();
+                onload_in();
                 function onload_in(){
                     arr_staff = [];
                     $("#tb tr:not(:first)").empty();
+                    var month = $("#plan_date").val();
                     $.ajax({
                         url: "/index.php/Home/Property/plan_table",
-                        data: {'status_name': '待提交'},
+                        data: {'status_name': '待提交','month':month},
                         type: "post",
                         async: "false",
                         traditional: "true",
