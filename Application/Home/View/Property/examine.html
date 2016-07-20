@@ -261,6 +261,7 @@
             </table>
         </form>
     </div>
+    <input type="hidden" name="" value='1' id='page_page'>
     <!--**********************************************分页签，上一页/下一页***********************************************-->
     <input type='button' value='首页' class='page_top' id="page_min" onclick='page_page(1)' style="display:block">
     <div id='page_all'></div>
@@ -397,7 +398,12 @@
                         pageall.style.display = "block";
                         pagemin.style.display = "block";
                         pagemax.style.display = "block";
-                    }/*
+                    }
+                    page_str = "<span class='page' id='page'>" + 1 + "</span>";
+                    page_str += "<span class='page' id='page'>" + 2 + "</span>";
+                    page_str += "<span class='page' id='page'>" + 3 + "</span>";
+                    $("#page_all").html(page_str);
+                    /*
                     //下面是分页处理
                     CountPage = arr_staff.length % PageSize === 0 ? (arr_staff.length / PageSize) : (parseInt(arr_staff.length / PageSize) + 1);
                     var page_current = (parseInt(page) + 1);
@@ -434,6 +440,7 @@
 
 //员工信息页面搜索按钮  start
                 find_btt.onclick = function () {
+                    var page = $("#page_page").val();
                     var sel = document.getElementById("prov");
                     if (sel.value == "plan_type") {
                         var status = "plan_id";
@@ -450,7 +457,7 @@
                     arr_staff = [];
                     $.ajax({
                         url: "/index.php/Home/Property/plan_table_page",
-                        data: {'status_name': '校长审核','status':status,'content':content,"month":month},
+                        data: {'status_name': '校长审核','status':status,'content':content,"month":month,'page':page},
                         type: "post",
                         async: "false",
                         traditional: "true",
@@ -471,7 +478,8 @@
                                 document.querySelector(".hongwen_logo").style.display = "block";
                             }
                             $(".page").click(function (){
-                                alert($(this).html());
+                                $("#page_page").val($(this).text());
+                                find_btt.click();
                             });
                         }
                     });
