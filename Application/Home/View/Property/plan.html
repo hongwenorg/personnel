@@ -439,45 +439,12 @@
                  * start
                  * */
                 function ArrSort(page, num, content) {
-                    var len;
-                    var page_str;
-                    if (typeof page === "undefined") {
-                        page = 0;
-                        len = arr_staff.length;
-                    } else {
-                        if (arr_staff.length >= (page + 1) * PageSize) {
-                            len = (page + 1) * PageSize;
-                        } else {
-                            len = arr_staff.length;
-                        }
-                    }
+                    len = arr_staff.length;
                     var arr_num = [];
                     for (var l = 0; l < len; l++) {
                         arr_num[l] = l + 1;
                     }
-
-                    for (var j = page * PageSize; j < len; j++) {
-                        if (arr_staff[j].name == null) {
-                            arr_staff[j].name = "无数据";
-                        }
-                        if (arr_staff[j].export_campus == null) {
-                            arr_staff[j].export_campus = "无数据";
-                        }
-                        if (arr_staff[j].export_post == null) {
-                            arr_staff[j].export_post = "无数据";
-                        }
-                        if (arr_staff[j].fold_campus == null) {
-                            arr_staff[j].fold_campus = "无数据";
-                        }
-                        if (arr_staff[j].fold_post == null) {
-                            arr_staff[j].fold_post = "无数据";
-                        }
-                        if (!arr_staff[j].time) {
-                            arr_staff[j].time = "无数据";
-                        }
-                        if (!arr_staff[j].state) {
-                            arr_staff[j].state = "无数据";
-                        }
+                    for (var j = 0; j < len; j++) {
                         var tr = document.createElement("tr");
                         tb.appendChild(tr).innerHTML = "<td class='td_sty'><input type='checkbox' name='check_box" + arr_staff[j].id + "' value='" + arr_staff[j].id + "' class='plan_checkbox'>" + "</div>" + "</td>" +
                                 "<td class='td_sty'>" + "<div>" + "<input type='button' value='修改' id='update_sql' up_id='" + arr_staff[j].id + "' class='plan_xiugai'>" + "</div>" + "</td>" +
@@ -550,7 +517,7 @@
 
                             //修改数据根据id获取
                             $(".plan_xiugai").click(function(){
-                                var id = $("this").attr('up_id');
+                                var id = $(this).attr('up_id');
                                 $.ajax({
                                     url: "/index.php/Home/Property/update_list",
                                     data: {'id': id},

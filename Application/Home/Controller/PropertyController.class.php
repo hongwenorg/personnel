@@ -99,6 +99,100 @@ class PropertyController extends CommonController {
 		echo json_encode($array);exit;
 	}
 
+
+	//页面列表信息
+	function plan_table_page(){
+		$where = '';
+		if(!empty($_POST['month'])){
+			$month = $_POST['month'];
+			$where .= " and month = '".$month."'";
+		}
+		if(!empty($_POST['status']) && !empty($_POST['content'])){
+			$status = $_POST['status'];
+			$content = $_POST['content'];
+			$where .= " and ".$status."='".$content."'";
+		}
+		if(empty($_POST['status_name'])){
+			$array['status'] = 2;
+			echo json_encode($array);exit;
+		}else{
+			$status_name = $_POST['status_name'];
+		}
+		$model = D('property_apply');
+		//echo $_GET['status_name'];die;
+		//$status_name = '资金申请';
+		$class_post_array = $this->school_sel();
+		$plan_array = $this->plan_sel();
+		$purchase_array = $this->purchase_sel();
+		$finance_type_array = $this->finance_type_sel();
+		$check_array = $this->check_sel();
+		$array = array();
+		$user_basic = D("user_basic");
+		//echo $_SESSION['userid'];die;
+		foreach($check_array as $check_val){
+			if($check_val['check_name'] == $status_name){
+				$check_id =  $check_val['id'];
+				$check_name = $check_val['check_name'];
+			}
+		}
+		/*
+		* 以下是分页程序
+		*/
+		//第几页
+		if(empty($_POST['page'])){
+			$page = 1;
+		}else{
+			$page = $_POST['page'];
+		}
+		$page_num = 10;//每页多少条
+		$count = $model->where("check_id = $check_id and is_del=0 and add_user='".$_SESSION['userid']."'".$where)->count(); //获得记录总数
+		$totalPage = ceil($count/$page_num); //计算出总页数
+		$startCount = ($page-1)*$page_num; //分页开始,根据此方法计算出开始的记录
+		/*
+		* 分页程序结束
+		*/
+		
+		$array = $model->where("check_id = $check_id and is_del=0 and add_user='".$_SESSION['userid']."'".$where)->limit($startCount,$page_num)->select();
+		if(!empty($array)){
+			foreach($array as &$val){
+				$val['check_name'] = $check_name;
+				foreach($class_post_array as $class_post_val){
+					if($val['class_post_id'] == $class_post_val['id']){
+						$val['class_post_plan'] =  $class_post_val['class'];
+					}
+					if($val['receive_school'] == $class_post_val['id']){
+						$val['receive_school'] =  $class_post_val['class'];
+					}
+				}
+				
+				foreach($plan_array as $plan_val){
+					if($val['plan_id'] == $plan_val['id']){
+						$val['plan_name'] =  $plan_val['plan_name'];
+					}
+				}
+				foreach($purchase_array as $purchase_val){
+					if($val['purchase_id'] == $purchase_val['id']){
+						$val['purchase_name'] =  $purchase_val['purchase_name'];
+					}
+				}
+				foreach($finance_type_array as $finance_type_val){
+					if($val['finance_type_id'] == $finance_type_val['id']){
+						$val['finance_type_name'] =  $finance_type_val['name'];
+					}
+				}
+			}
+			$array['status'] = 1;
+			$array['page_arr']['count'] = $count;
+			$array['page_arr']['page_count'] = $totalPage;
+			$array['page_arr']['page'] = $page;
+		}else{
+			$array['status'] = 2;
+		}
+		//echo "<pre>";
+		//print_r($array);
+		echo json_encode($array);exit;
+	}
+
 	//提交申请
 	function plan_add(){
 		$perfs = explode("&", $_POST['data']);

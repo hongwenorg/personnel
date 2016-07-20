@@ -261,6 +261,7 @@
             </table>
         </form>
     </div>
+    <input type="hidden" name="" value='1' id='page_page'>
     <!--**********************************************分页签，上一页/下一页***********************************************-->
     <input type='button' value='首页' class='page_top' id="page_min" onclick='page_page(1)' style="display:block">
     <div id='page_all'></div>
@@ -276,7 +277,7 @@
         var examine = function () {
             (function () {
                 var arr_staff = [];
-                var CurrentPage = 0, CountPage, PageSize = 1;
+                var CurrentPage = 0, CountPage, PageSize = 10;
                 var pageall = document.getElementById("pageall");
                 var pagemin = document.getElementById("page_min");
                 var pagemax = document.getElementById("page_max");
@@ -357,46 +358,13 @@
                  * content=点击要排序字段
                  * start
                  * */
-                function ArrSort(page, num, content) {
-                    var len;
-                    var page_str;
-                    if (typeof page === "undefined") {
-                        page = 0;
-                        len = arr_staff.length;
-                    } else {
-                        if (arr_staff.length >= (page + 1) * PageSize) {
-                            len = (page + 1) * PageSize;
-                        } else {
-                            len = arr_staff.length;
-                        }
-                    }
+                function ArrSort() {
+                    len = arr_staff.length;
                     var arr_num = [];
                     for (var l = 0; l < len; l++) {
                         arr_num[l] = l + 1;
                     }
-
-                    for (var j = page * PageSize; j < len; j++) {
-                        if (arr_staff[j].name == null) {
-                            arr_staff[j].name = "无数据";
-                        }
-                        if (arr_staff[j].export_campus == null) {
-                            arr_staff[j].export_campus = "无数据";
-                        }
-                        if (arr_staff[j].export_post == null) {
-                            arr_staff[j].export_post = "无数据";
-                        }
-                        if (arr_staff[j].fold_campus == null) {
-                            arr_staff[j].fold_campus = "无数据";
-                        }
-                        if (arr_staff[j].fold_post == null) {
-                            arr_staff[j].fold_post = "无数据";
-                        }
-                        if (!arr_staff[j].time) {
-                            arr_staff[j].time = "无数据";
-                        }
-                        if (!arr_staff[j].state) {
-                            arr_staff[j].state = "无数据";
-                        }
+                    for (var j = 0; j < len; j++) {
                         var tr = document.createElement("tr");
                         tb.appendChild(tr).innerHTML = "<td class='td_sty'><input type='checkbox' name='check_box" + arr_staff[j].id + "' value='" + arr_staff[j].id + "' class='plan_checkbox'>" + "</div>" + "</td>" +
                                 "<td class='td_sty'>" + "<div>" + arr_num[j] + "</div>" + "</td>" +
@@ -431,63 +399,32 @@
                         pagemin.style.display = "block";
                         pagemax.style.display = "block";
                     }
-                    if (num == 2) {
-                        $("." + content + "_sort:first").val("2");
-                    } else {
-                        $("." + content + "_sort:first").val("1");
-                    }
+                    page_str = "<span class='page' id='page'>" + 1 + "</span>";
+                    page_str += "<span class='page' id='page'>" + 2 + "</span>";
+                    page_str += "<span class='page' id='page'>" + 3 + "</span>";
+                    $("#page_all").html(page_str);
+                    /*
                     //下面是分页处理
                     CountPage = arr_staff.length % PageSize === 0 ? (arr_staff.length / PageSize) : (parseInt(arr_staff.length / PageSize) + 1);
                     var page_current = (parseInt(page) + 1);
                     var page_top = "page_top";
                     var page_next = "page_next";
                     if (document.getElementById("page_min").style.display=="block") {
-                        page_str = "<input type='button' value='上一页' class='page_top' onclick='page_page(" + page_current + "," + '"' + page_top + '"' + ")' id='page_top'>";
+                        page_str = "<input t pe='button' value='上一页' class='page_top' id='page_top'>";
                     }else if(tb.innerHTML==""){
                         document.getElementById("page_min").display="none";
                         document.getElementById("page_max").display="none";
                         document.getElementById("page_all").display="none";
                     }
-
-                    //************************     判断当前页     *****************************
-                    if (page_current == 1 || page_current == 2 || page_current == 3) {
-                        if (CountPage <= 5) {
-                            for (var page_i = 1; page_i <= CountPage; page_i++) {
-                                page_str += "<span class='page' id='page" + (page_i) + "' onclick='page_page(" + (page_i) + ")'>" + (page_i) + "</span>";
-                            }
-                        } else {
-                            for (var page_i = 1; page_i <= 5; page_i++) {
-                                page_str += "<span class='page' id='page" + (page_i) + "' onclick='page_page(" + (page_i) + ")'>" + (page_i) + "</span>";
-                            }
-                        }
-
-                    } else if (page_current == CountPage || page_current == (CountPage - 1) || page_current == (CountPage - 2)) {
-                        if (CountPage <= 5) {
-                            for (var page_i = 1; page_i <= CountPage; page_i++) {
-                                page_str += "<span class='page' id='page" + (page_i) + "' onclick='page_page(" + (page_i) + ")'>" + (page_i) + "</span>";
-                            }
-                        } else {
-                            for (var page_i = (CountPage - 4); page_i <= CountPage; page_i++) {
-                                page_str += "<span class='page' id='page" + (page_i) + "' onclick='page_page(" + (page_i) + ")'>" + (page_i) + "</span>";
-                            }
-                        }
-                    } else {
-                        if (CountPage <= 5) {
-                            for (var page_i = 1; page_i <= CountPage; page_i++) {
-                                page_str += "<span class='page' id='page" + (page_i) + "' onclick='page_page(" + (page_i) + ")'>" + (page_i) + "</span>";
-                            }
-                        } else {
-                            for (var page_i = (page_current - 2); page_i <= (page_current + 2); page_i++) {
-                                page_str += "<span class='page' id='page" + (page_i) + "' onclick='page_page(" + (page_i) + ")'>" + (page_i) + "</span>";
-                            }
-                        }
+                    for (var page_i = 0; page_i <= page_current; page_i++) {
+                        page_str += "<span class='page' id='page" + (page_i) + "'>" + (page_i) + "</span>";
                     }
                     if (document.getElementById("page_min").style.display=="block") {
-                        page_str += "<input type='button' class='page_next' value='下一页' onclick='page_page(" + page_current + "," + '"' + page_next + '"' + ")' id='page_next'>";
+                        page_str += "<input type='button' class='page_next' value='下一页' id='page_next'>";
                     }
                     $("#page_all").html(page_str);
                     document.getElementById("page" + page_current).style.backgroundColor = "#00c8c8";
-                    document.getElementById("pageall").innerHTML = "共" + CountPage + "页";
+                    document.getElementById("pageall").innerHTML = "共" + CountPage + "页";*/
                 }
 
 
@@ -503,6 +440,7 @@
 
 //员工信息页面搜索按钮  start
                 find_btt.onclick = function () {
+                    var page = $("#page_page").val();
                     var sel = document.getElementById("prov");
                     if (sel.value == "plan_type") {
                         var status = "plan_id";
@@ -518,8 +456,8 @@
                     $("#tb tr:not(:first)").empty();
                     arr_staff = [];
                     $.ajax({
-                        url: "/index.php/Home/Property/plan_table",
-                        data: {'status_name': '资金申请','status':status,'content':content,"month":month},
+                        url: "/index.php/Home/Property/plan_table_page",
+                        data: {'status_name': '校长审核','status':status,'content':content,"month":month,'page':page},
                         type: "post",
                         async: "false",
                         traditional: "true",
@@ -528,34 +466,25 @@
                             document.getElementById("sousuo_img_out").style.display = "none";
                             var msg = JSON.parse(data);
                             for (key in msg) {
-                                if (key != "status" && msg["status"] != 2) {
+                                if (key != "status" && key != "page_arr" && msg["status"] != 2) {
                                     arr_staff.push(msg[key]);
                                 }
                             }
+                            console.log(msg['page_arr']);
                             if (msg["status"] != 2) {
-                                ArrSort(0);
+                                ArrSort();
                             } else {
                                 document.getElementById("sousuo_img_out").style.display = "none";
                                 document.querySelector(".hongwen_logo").style.display = "block";
                             }
+                            $(".page").click(function (){
+                                $("#page_page").val($(this).text());
+                                find_btt.click();
+                            });
                         }
                     });
                 };
 
-
-                //分页点击事件上，页码，下
-                function page_page(page, page_status) {
-                    if (page_status == "page_top" && page != 1) {
-                        tb.innerHTML = tb_content;
-                        ArrSort(page - 2)
-                    } else if (page_status == "page_next" && page != CountPage) {
-                        tb.innerHTML = tb_content;
-                        ArrSort(page)
-                    } else {
-                        tb.innerHTML = tb_content;
-                        ArrSort(page - 1)
-                    }
-                }
                 find_btt.click();
                 var checkbox_all = document.querySelector(".checkbox_all");
                 var check_num = 0;
