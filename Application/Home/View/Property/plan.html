@@ -549,8 +549,8 @@
                             }
 
                             //修改数据根据id获取
-                            $("#update_sql").click(function(){
-                                var id = $("#update_sql").attr('up_id');
+                            $(".plan_xiugai").click(function(){
+                                var id = $("this").attr('up_id');
                                 $.ajax({
                                     url: "/index.php/Home/Property/update_list",
                                     data: {'id': id},
@@ -582,7 +582,7 @@
                                             $("#buy_info").val(data.buy_info);
                                             $("#buy_transport").val(data.buy_transport);
                                             $("#month").val(data.month);
-                                            
+
                                         }
 
                                     }
@@ -594,12 +594,6 @@
                 }
 
 //页面搜索按钮  end
-//                document.getElementById("foot_qingkong").onclick = function () {
-//                    var append_plan_li = document.querySelectorAll(".append_plan_li");
-//                    for (var i = 0; i < append_plan_li.length; i++) {
-//                        append_plan_li[i].value = "";
-//                    }
-//                };
 
                 var checkbox_all = document.querySelector(".checkbox_all");
                 var check_num = 0;

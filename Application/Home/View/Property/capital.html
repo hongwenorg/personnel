@@ -8,8 +8,7 @@
             font-size: 18px;
             font-weight: bold;
             color: dimgray;
-            width: 95%;
-            margin-left: 2.5%;
+            width: 100%;
         }
 
         .append_plan {
@@ -17,6 +16,7 @@
             margin-left: 2.5%;
             border: 1px solid #efefef;
             height: 250px;
+            display:none;
         }
 
         .append_plan_body > ul > li {
@@ -150,7 +150,7 @@
     <div class="plan_date">
         选择期次：<input type="month" id="plan_date" value="" >
     </div>
-    <div class="append_plhead">
+    <div class="append_plhead" style="width:95%; margin-left: 2.5%">
         资金申请：
     </div>
     <div class="sousuokuang" id="sousuokuang" style="left:2.5%;margin-top:10px;margin-bottom: 10px">
@@ -168,6 +168,61 @@
                                                                      alt=""></button>
         <!--时间控件-->
     </div>
+
+
+
+    <form method="post" id="myform_one" onSubmit="return false;">
+        <div class="append_plan">
+            <div class="append_plhead">
+                <input type="reset"  value="清空" class="foot_qingkong" id="foot_qingkong">
+                <input type="submit" value="保存" class="foot_baocun" id="submit_one">
+            </div>
+            <div class="append_plan_body">
+                <input type="hidden" value="" name='id' id="apply_id">
+                <ul id="appende_plan_ul">
+                    <li>计划类型
+                        <select name="plan_id" class="append_plan_sel" id="select_01">
+                            <option value="" id="opt_01">--请选择--</option>
+                        </select>
+                    </li>
+                    <li>归属校区
+                        <select name="class_post_id" class="append_plan_sel" id="select_02">
+                            <option value="" id="opt_02">--请选择--</option>
+                        </select>
+                    </li>
+                    <li>科目类别
+                        <select name="finance_type_id" class="append_plan_sel" id="select_03">
+                            <option value="" id="opt_03">--请选择--</option>
+                        </select>
+                    </li>
+                    <li>明细内容 <input type="text" name='info' class="append_plan_li" id='info' required></li>
+                    <li>单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位 <input type="text" name='unit' class="append_plan_li" id='unit' required></li>
+                    <li>单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价 <input type="number" name='unit_price' id='price' class="append_plan_li" min="0" step="0.001" required></li>
+                    <li>数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量 <input type="number" name='count' id='count' min="0" class="append_plan_li" required></li>
+                    <li>金&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;额 <input type="number" name='money' id='money' min="0" step="0.01" class="append_plan_only" readonly></li>
+                    <li>接收校区
+                        <select name="receive_school" class="append_plan_sel" id="select_04">
+                            <option value="" id="opt_04">--请选择--</option>
+                        </select>
+                    </li>
+                    <li>接&nbsp;&nbsp;收&nbsp;&nbsp;人 <input type="text" id='receive_user' name='receive_user' class="append_plan_li" required></li>
+                    <li>接受卡号 <input type="text" name='receive_card' id='receive_card' class="append_plan_li" required></li>
+                    <li>期望审批日期 <input type="date" name='expect_date' id='expect_date' class="append_plan_li"></li>
+                    <li>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注 <input type="text" id='other' name='other' class="append_plan_li"></li>
+                    <li>采购类型
+                        <select name="purchase_id" class="append_plan_sel" id="select_05">
+                            <option value="" id="opt_05">--请选择--</option>
+                        </select>
+                    </li>
+                    <li>品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;牌 <input type="text" name='buy_brand' id='buy_brand' class="append_plan_li"></li>
+                    <li>型号/规格 <input type="text" name='buy_info' id='buy_info' class="append_plan_li"></li>
+                    <li>物流信息 <input type="text" name='buy_transport' id='buy_transport' class="append_plan_li"></li>
+                    <li>期&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;次 <input type="month" name='month' id="month" class="append_plan_li"></li>
+                </ul>
+            </div>
+        </div>
+    </form>
+
     <div style="width:95%;margin-left:2.5%;overflow-x: scroll">
         <form method="post" id="myform_two" onSubmit="return false;">
             <table class="tb" cellpadding="2" cellspacing="0" id="tb">
@@ -273,7 +328,7 @@
         var capital = function () {
             (function () {
                 var arr_staff = [];
-                var PageSize = 5;
+                var PageSize = 20;
                 var pageall = document.getElementById("pageall");
                 var copy_excel = document.getElementById("copy_excel");
                 var copy_dayin = document.getElementById("copy_dayin");
@@ -285,7 +340,61 @@
                 var purchase_option = [];
                 var finance_type_option = [];
 
+                document.getElementById('month').valueAsDate = new Date();
                 document.getElementById('plan_date').valueAsDate = new Date();
+
+
+
+                //以下是计算金额的函数
+                $("#price").blur(function(){
+                    var money = $("#money");
+                    var price_val = $("#price").val();
+                    var count_val = $("#count").val();
+                    if(price_val!="" && count_val!=""){
+                        money.val((price_val*count_val).toFixed(2));
+                    }else{
+                        money.val("");
+                    }
+                });
+
+                $("#price").change(function(){
+                    var money = $("#money");
+                    var price_val = $("#price").val();
+                    var count_val = $("#count").val();
+                    if(price_val!="" && count_val!=""){
+                        money.val((price_val*count_val).toFixed(2));
+                    }else{
+                        money.val("");
+                    }
+                });
+
+
+                $("#count").blur(function(){
+                    var money = $("#money");
+                    var price_val = $("#price").val();
+                    var count_val = $("#count").val();
+                    if(price_val!="" && count_val!=""){
+                        money.val((price_val*count_val).toFixed(2));
+                    }else{
+                        money.val("");
+                    }
+                });
+
+
+                $("#count").change(function(){
+                    var money = $("#money");
+                    var price_val = $("#price").val();
+                    var count_val = $("#count").val();
+                    if(price_val!="" && count_val!=""){
+                        money.val((price_val*count_val).toFixed(2));
+                    }else{
+                        money.val("");
+                    }
+                });
+
+
+
+
                 $.ajax({
                     url: "/index.php/Home/Property/plan_list",
                     type: "post",
@@ -310,6 +419,32 @@
                     }
 
                 });
+                var i;
+                for (i = 0; i < plan_option.length; i++) {
+                    var option_01 = document.createElement("option");
+                    option_01.value=plan_option[i].id;
+                    document.getElementById("select_01").appendChild(option_01).innerText = plan_option[i].plan_name;
+                }
+                for (i = 0; i < school_option.length; i++) {
+                    var option_02 = document.createElement("option");
+                    option_02.value=school_option[i].id;
+                    document.getElementById("select_02").appendChild(option_02).innerText = school_option[i].class;
+                }
+                for (i = 0; i < finance_type_option.length; i++) {
+                    var option_03 = document.createElement("option");
+                    option_03.value=finance_type_option[i].id;
+                    document.getElementById("select_03").appendChild(option_03).innerText = finance_type_option[i].name;
+                }
+                for (i = 0; i < school_option.length; i++) {
+                    var option_05 = document.createElement("option");
+                    option_05.value=school_option[i].id;
+                    document.getElementById("select_04").appendChild(option_05).innerText = school_option[i].class;
+                }
+                for (i = 0; i < purchase_option.length; i++) {
+                    var option_04 = document.createElement("option");
+                    option_04.value=purchase_option[i].id;
+                    document.getElementById("select_05").appendChild(option_04).innerText = purchase_option[i].purchase_name;
+                }
 
 //******************************     全局变量  end    ***************************
 
@@ -476,6 +611,90 @@
                     });
                 };
                 find_btt.click();
+
+                //期次的选择（当这个文本框失去鼠标时触动）执行搜索
+                document.getElementById('plan_date').onblur=function(){
+                    onload_in();
+                };
+//员工信息页面搜索按钮  start
+                onload_in();
+                function onload_in(){
+                    $("#tb tr:not(:first)").empty();
+                    arr_staff = [];
+                    var month = $("#plan_date").val();
+                    $.ajax({
+                        url: "/index.php/Home/Property/plan_table",
+                        data: {'status_name': '待提交','month':month},
+                        type: "post",
+                        async: "false",
+                        traditional: "true",
+                        cache: "false",
+                        success: function (data) {
+                            document.getElementById("sousuo_img_out").style.display = "none";
+                            var msg = JSON.parse(data);
+                            for (key in msg) {
+                                if (key != "status" && msg["status"] != 2) {
+                                    arr_staff.push(msg[key]);
+                                }
+                            }
+                            if (msg["status"] != 2) {
+                                ArrSort(0);
+                            } else {
+                                document.getElementById("sousuo_img_out").style.display = "none";
+                                document.querySelector(".hongwen_logo").style.display = "block";
+                            }
+
+                            //修改数据根据id获取
+                            $(".plan_xiugai").click(function(){
+                                document.querySelector(".append_plan").style.display="block";
+                                var id = $("#update_sql").attr('up_id');
+                                $.ajax({
+                                    url: "/index.php/Home/Property/update_list",
+                                    data: {'id': id},
+                                    type: "post",
+                                    async: "false",
+                                    traditional: "true",
+                                    cache: "false",
+                                    success: function (msg) {
+                                        if (msg == 2) {
+                                            alert("数据出错，请联系管理员！");
+                                        } else {
+                                            var data = JSON.parse(msg);
+                                            $("#apply_id").val(data.id);
+                                            $("#select_01").val(data.plan_id);
+                                            $("#select_02").val(data.class_post_id);
+                                            $("#select_03").val(data.finance_type_id);
+                                            $("#info").val(data.info);
+                                            $("#unit").val(data.unit);
+                                            $("#price").val(data.unit_price);
+                                            $("#count").val(data.count);
+                                            $("#money").val(data.money);
+                                            $("#select_04").val(data.receive_school);
+                                            $("#receive_user").val(data.receive_user);
+                                            $("#receive_card").val(data.receive_card);
+                                            $("#expect_date").val(data.expect_date);
+                                            $("#other").val(data.other);
+                                            $("#select_05").val(data.purchase_id);
+                                            $("#buy_brand").val(data.buy_brand);
+                                            $("#buy_info").val(data.buy_info);
+                                            $("#buy_transport").val(data.buy_transport);
+                                            $("#month").val(data.month);
+
+                                        }
+
+                                    }
+
+                                });
+                            });
+                        }
+                    });
+                }
+
+
+
+
+
+
                 var checkbox_all = document.querySelector(".checkbox_all");
                 var check_num = 0;
                 checkbox_all.onclick = function () {
@@ -553,6 +772,39 @@
 
                     });
                 });
+
+
+                //计划申请页保存或者修改操作
+                $("#submit_one").click(function(){
+                    var data = $('#myform_one').serialize();//将表单数据以字符串形式获取
+                    $.ajax({
+                        url: "/index.php/Home/Property/plan_pro",
+                        data: {'data': data},
+                        type: "post",
+                        async: "false",
+                        traditional: "true",
+                        cache: "false",
+                        success: function (msg) {
+                            //console.log(msg);return;
+                            if (msg == 2) {
+                                alert("修改成功！");
+                                document.querySelector(".append_plan").style.display="none";
+                                $("#foot_qingkong").trigger("click");
+                                onload_in();
+                            } else if (msg == 3) {
+                                alert("保存失败,请填写完整数据！");
+                            }
+
+                        }
+
+                    });
+                });
+
+
+
+
+
+
 
             })()
         };
