@@ -1,4 +1,4 @@
-<div id="plan">
+<div id="plan" style="background:white; height:900px;border-bottom: none">
     <style>
         .append_plhead {
             height: 40px;
@@ -525,9 +525,7 @@
                 }
 
 
-//分页处理搜索数据等  end
-
-                //期次的选择（当这个文本框失去鼠标时触动）执行搜索
+//期次的选择（当这个文本框失去鼠标时触动）执行搜索
                 document.getElementById('plan_date').onblur=function(){
                     find_btt.click();
                 };
@@ -578,11 +576,11 @@
                 document.getElementById('plan_date').onblur=function(){
                     onload_in();
                 };
-//员工信息页面搜索按钮  start
                 onload_in();
+//员工信息页面搜索按钮  start
                 function onload_in(){
-                    $("#tb tr:not(:first)").empty();
                     arr_staff = [];
+                    $("#tb tr:not(:first)").empty();
                     var month = $("#plan_date").val();
                     $.ajax({
                         url: "/index.php/Home/Property/plan_table",
@@ -641,11 +639,8 @@
                                             $("#buy_info").val(data.buy_info);
                                             $("#buy_transport").val(data.buy_transport);
                                             $("#month").val(data.month);
-
                                         }
-
                                     }
-
                                 });
                             });
                         }
@@ -702,9 +697,7 @@
                                 } else if (msg == 3) {
                                     alert("删除失败,请选择要提交的项目！");
                                 }
-
                             }
-
                         });
                     }
                 });
@@ -756,18 +749,9 @@
                             } else if (msg == 3) {
                                 alert("保存失败,请填写完整数据！");
                             }
-
                         }
-
                     });
                 });
-
-
-
-
-
-
-
             })()
         };
 
