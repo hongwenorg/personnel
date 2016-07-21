@@ -609,7 +609,7 @@
                             //修改数据根据id获取
                             $(".plan_xiugai").click(function(){
                                 document.querySelector(".append_plan").style.display="block";
-                                var id = $("#update_sql").attr('up_id');
+                                var id = $(this).attr('up_id');
                                 $.ajax({
                                     url: "/index.php/Home/Property/update_list",
                                     data: {'id': id},

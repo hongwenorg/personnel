@@ -138,8 +138,9 @@
             outline: none;
             padding-left: 10px;
         }
-        #city{
-            width:195px !important;
+
+        #city {
+            width: 195px !important;
         }
 
     </style>
@@ -148,7 +149,7 @@
 
     <!--*********************************************存放后台员工信息*****************************************************-->
     <div class="plan_date">
-        选择期次：<input type="month" id="plan_date" value="" >
+        选择期次：<input type="month" id="plan_date" value="">
     </div>
     <div class="append_plhead">
         申请审核：
@@ -263,21 +264,23 @@
     </div>
     <input type="hidden" name="" value='1' id='page_page'>
     <!--**********************************************分页签，上一页/下一页***********************************************-->
-    <input type='button' value='首页' class='page_top' id="page_min" onclick='page_page(1)' style="display:block">
+    <input type='button' value='首页' class='page_top' id="page_min" style="display:block">
+    <input type="button" value="上一页" class='page_top' id="page_u" style="display:block">
+
     <div id='page_all'></div>
-    <input type='button' value='尾页' class='page_top' id="page_max" onclick='page_page(CountPage )' style="display:block">
+    <input type="button" value="下一页" class='page_top' id="page_d" style="display:block">
+    <input type='button' value='尾页' class='page_top' id="page_max" style="display:block">
 
     <div id="pageall" style="display:block"></div>
     <div style="width:95%;margin-left:2.5%">
-        <input type="button" value="删除" class="delet_apply" id="delet_apply"/>
-        <input type="button" value="退回" id="" class="tj_apply"/>
-        <input type="button" value="通过" id="submit_two" class="tj_apply"/>
+        <input type="button" style="margin-top: 30px" value="删除" class="delet_apply" id="delet_apply"/>
+        <input type="button" style="margin-top: 30px" value="退回" class="tj_apply"/>
+        <input type="button" style="margin-top: 30px" value="通过" id="submit_two" class="tj_apply"/>
     </div>
     <script>
         var examine = function () {
             (function () {
                 var arr_staff = [];
-                var CurrentPage = 0, CountPage, PageSize = 10;
                 var pageall = document.getElementById("pageall");
                 var pagemin = document.getElementById("page_min");
                 var pagemax = document.getElementById("page_max");
@@ -399,42 +402,36 @@
                         pagemin.style.display = "block";
                         pagemax.style.display = "block";
                     }
-                    page_str = "<span class='page' id='page'>" + 1 + "</span>";
-                    page_str += "<span class='page' id='page'>" + 2 + "</span>";
-                    page_str += "<span class='page' id='page'>" + 3 + "</span>";
-                    $("#page_all").html(page_str);
+
                     /*
-                    //下面是分页处理
-                    CountPage = arr_staff.length % PageSize === 0 ? (arr_staff.length / PageSize) : (parseInt(arr_staff.length / PageSize) + 1);
-                    var page_current = (parseInt(page) + 1);
-                    var page_top = "page_top";
-                    var page_next = "page_next";
-                    if (document.getElementById("page_min").style.display=="block") {
-                        page_str = "<input t pe='button' value='上一页' class='page_top' id='page_top'>";
-                    }else if(tb.innerHTML==""){
-                        document.getElementById("page_min").display="none";
-                        document.getElementById("page_max").display="none";
-                        document.getElementById("page_all").display="none";
-                    }
-                    for (var page_i = 0; page_i <= page_current; page_i++) {
-                        page_str += "<span class='page' id='page" + (page_i) + "'>" + (page_i) + "</span>";
-                    }
-                    if (document.getElementById("page_min").style.display=="block") {
-                        page_str += "<input type='button' class='page_next' value='下一页' id='page_next'>";
-                    }
-                    $("#page_all").html(page_str);
-                    document.getElementById("page" + page_current).style.backgroundColor = "#00c8c8";
-                    document.getElementById("pageall").innerHTML = "共" + CountPage + "页";*/
+                     //下面是分页处理
+                     CountPage = arr_staff.length % PageSize === 0 ? (arr_staff.length / PageSize) : (parseInt(arr_staff.length / PageSize) + 1);
+                     var page_current = (parseInt(page) + 1);
+                     var page_top = "page_top";
+                     var page_next = "page_next";
+                     if (document.getElementById("page_min").style.display=="block") {
+                     page_str = "<input t pe='button' value='上一页' class='page_top' id='page_top'>";
+                     }else if(tb.innerHTML==""){
+                     document.getElementById("page_min").display="none";
+                     document.getElementById("page_max").display="none";
+                     document.getElementById("page_all").display="none";
+                     }
+                     for (var page_i = 0; page_i <= page_current; page_i++) {
+                     page_str += "<span class='page' id='page" + (page_i) + "'>" + (page_i) + "</span>";
+                     }
+                     if (document.getElementById("page_min").style.display=="block") {
+                     page_str += "<input type='button' class='page_next' value='下一页' id='page_next'>";
+                     }
+                     $("#page_all").html(page_str);
+                     document.getElementById("page" + page_current).style.backgroundColor = "#00c8c8";
+                     document.getElementById("pageall").innerHTML = "共" + CountPage + "页";*/
                 }
-
-
-
 
 
 //分页处理搜索数据等  end
 
                 //期次的选择（当这个文本框失去鼠标时触动）执行搜索
-                document.getElementById('plan_date').onblur=function(){
+                document.getElementById('plan_date').onblur = function () {
                     find_btt.click();
                 };
 
@@ -455,9 +452,15 @@
                     var month = $("#plan_date").val();
                     $("#tb tr:not(:first)").empty();
                     arr_staff = [];
-                    $.ajax({
+                                  $.ajax({
                         url: "/index.php/Home/Property/plan_table_page",
-                        data: {'status_name': '校长审核','status':status,'content':content,"month":month,'page':page},
+                        data: {
+                            'status_name': '校长审核',
+                            'status': status,
+                            'content': content,
+                            "month": month,
+                            'page': page
+                        },
                         type: "post",
                         async: "false",
                         traditional: "true",
@@ -477,10 +480,70 @@
                                 document.getElementById("sousuo_img_out").style.display = "none";
                                 document.querySelector(".hongwen_logo").style.display = "block";
                             }
-                            $(".page").click(function (){
+                            var page_num = [];
+                            for (var i = 0; i < msg["page_arr"].page_count; i++) {
+                                var page_one = document.createElement("span");
+                                page_num[i] = i + 1;
+                                page_one.setAttribute("class", "page");
+                                page_one.innerText = parseFloat(page_num[i]);
+                                document.getElementById("page_all").appendChild(page_one);
+                                var page_parent=page_one.parentNode;
+                                if(page_one.innerText==msg["page_arr"].page){
+                                    page_one.style.background="#00c8c8";
+                                }
+                                if(page_one.innerText<parseFloat(msg["page_arr"].page)-2){
+                                    page_parent.removeChild(page_one);
+                                }
+                                if(page_one.innerText>parseFloat(msg["page_arr"].page)+2){
+                                    page_one.style.display="none";
+                                    page_parent.removeChild(page_one);
+
+                                }
+                            }
+                            document.getElementById("pageall").innerText="共"+ msg["page_arr"].page_count+"页";
+                            $(".page").click(function () {
+                                $("#tb tr:not(:first)").empty();
+                                document.getElementById("page_all").innerHTML = "";
                                 $("#page_page").val($(this).text());
                                 find_btt.click();
                             });
+//                            var page_up=document.querySelectorAll(".page_top");
+//                            for(var j=0;j<page_up.length;j++){
+//                                page_up[j].addEventListener("click",function(e){
+//                                    var target= e.target;
+//                                    if(target.value=="首页"){
+//                                        $("#page_page").val(1);
+//                                        $("#tb tr:not(:first)").empty();
+//                                        find_btt.click();
+//                                    }
+//                                })
+//
+//                            }
+                            document.getElementById("page_min").onclick=function(){
+                                document.getElementById("page_all").innerHTML = "";
+                                $("#page_page").val(1);
+                                find_btt.click();
+                            };
+                            document.getElementById("page_max").onclick=function(){
+                                document.getElementById("page_all").innerHTML = "";
+                                $("#page_page").val(msg["page_arr"].page_count);
+                                find_btt.click();
+                            };
+                            document.getElementById("page_u").onclick=function(){
+                                document.getElementById("page_all").innerHTML = "";
+                                $("#page_page").val(parseFloat(msg["page_arr"].page)-1);
+                                find_btt.click();
+                            };
+                            document.getElementById("page_d").onclick=function(){
+                                $("#page_page").val(parseFloat(msg["page_arr"].page)+1);
+                                if($("#page_page").val()<=parseFloat(msg["page_arr"].page_count)){
+                                    document.getElementById("page_all").innerHTML = "";
+                                    find_btt.click();
+                                }
+                            };
+
+
+
                         }
                     });
                 };
