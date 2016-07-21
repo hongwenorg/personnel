@@ -193,6 +193,68 @@ class PropertyController extends CommonController {
 		echo json_encode($array);exit;
 	}
 
+
+	//退回申请
+	function plan_return(){
+		$perfs = explode("&", $_POST['data']);
+		foreach($perfs as $perf) {
+		    $perf_key_values = explode("=", $perf);
+		    $arr[urldecode($perf_key_values[0])] = urldecode($perf_key_values[1]);
+		}
+		//echo json_encode($arr);exit;
+		if(!empty($arr)){
+			$check_array = $this->check_sel();
+			$model = D('property_apply');
+			foreach($arr as $val){
+				$array = array();
+				$user_basic = D("user_basic");
+				//echo $_SESSION['userid'];die;
+				$apply_arr = $model->where("id='".$val."'")->find();
+				foreach($check_array as $check_val){
+					if($check_val['id'] == $apply_arr['check_id']){
+						if($check_val['check_name'] == '校长审核'){
+							$check_name = '计划退回';
+						}else if($check_val['check_name'] == '部门审核'){
+							$check_name = '计划退回';
+						}else if($check_val['check_name'] == '中心审核'){
+							$check_name = '计划退回';
+						}else if($check_val['check_name'] == '总裁审核'){
+							$check_name = '计划退回';
+						}else if($check_val['check_name'] == '资金申请'){
+							$check_name = '申请退回';
+						}else if($check_val['check_name'] == '资金审批'){
+							$check_name = '申请退回';
+						}else if($check_val['check_name'] == '校长确认'){
+							$check_name = '退回报销';
+						}else if($check_val['check_name'] == '部门确认'){
+							$check_name = '退回报销';
+						}else if($check_val['check_name'] == '中心确认'){
+							$check_name = '退回报销';
+						}else if($check_val['check_name'] == '总裁确认'){
+							$check_name = '退回报销';
+						}else if($check_val['check_name'] == '费用确认'){
+							$check_name = '退回报销';
+						}else if($check_val['check_name'] == '入账确认'){
+							$check_name = '退回报销';
+						}
+					}
+				}
+				foreach($check_array as $check_val){
+					if($check_val['check_name'] == $check_name){
+						$check_id = $check_val['id'];
+					}
+				}
+
+				$stult = $model->where("id='".$val."'")->save(array("check_id"=>$check_id,'project_type'=>$check_name));
+			}
+			echo 1;exit;
+		
+		}else{
+			echo 3;exit;//提交失败
+		}
+
+	}
+
 	//提交申请
 	function plan_add(){
 		$perfs = explode("&", $_POST['data']);
@@ -202,15 +264,57 @@ class PropertyController extends CommonController {
 		}
 		//echo json_encode($arr);exit;
 		if(!empty($arr)){
+			$check_array = $this->check_sel();
 			$model = D('property_apply');
 			foreach($arr as $val){
-				$stult = $model->where("id='".$val."'")->save(array("check_id"=>$_POST['num'],'project_type'=>$_POST['type']));
-				if($stult){
-					echo 1;exit;//提交成功
-				}else{
-					echo 2;exit;//提交失败
+				$array = array();
+				$user_basic = D("user_basic");
+				//echo $_SESSION['userid'];die;
+				$apply_arr = $model->where("id='".$val."'")->find();
+				foreach($check_array as $check_val){
+					if($check_val['id'] == $apply_arr['check_id']){
+						if($check_val['check_name'] == '校长审核'){
+							$check_name = '部门审核';
+						}else if($check_val['check_name'] == '部门审核'){
+							$check_name = '中心审核';
+						}else if($check_val['check_name'] == '中心审核'){
+							$check_name = '总裁审核';
+						}else if($check_val['check_name'] == '总裁审核'){
+							$check_name = '计划通过';
+						}else if($check_val['check_name'] == '计划通过'){
+							$check_name = '资金申请';
+						}else if($check_val['check_name'] == '资金申请'){
+							$check_name = '资金审批';
+						}else if($check_val['check_name'] == '资金审批'){
+							$check_name = '审批通过';
+						}else if($check_val['check_name'] == '审批通过'){
+							$check_name = '报销申请';
+						}else if($check_val['check_name'] == '报销申请'){
+							$check_name = '校长确认';
+						}else if($check_val['check_name'] == '校长确认'){
+							$check_name = '部门确认';
+						}else if($check_val['check_name'] == '部门确认'){
+							$check_name = '中心确认';
+						}else if($check_val['check_name'] == '中心确认'){
+							$check_name = '总裁确认';
+						}else if($check_val['check_name'] == '总裁确认'){
+							$check_name = '费用确认';
+						}else if($check_val['check_name'] == '费用确认'){
+							$check_name = '入账确认';
+						}else if($check_val['check_name'] == '入账确认'){
+							$check_name = '审核完成';
+						}
+					}
 				}
+				foreach($check_array as $check_val){
+					if($check_val['check_name'] == $check_name){
+						$check_id = $check_val['id'];
+					}
+				}
+
+				$stult = $model->where("id='".$val."'")->save(array("check_id"=>$check_id,'project_type'=>$check_name));
 			}
+			echo 1;exit;
 		
 		}else{
 			echo 3;exit;//提交失败
@@ -230,16 +334,15 @@ class PropertyController extends CommonController {
 		if(!empty($arr)){
 			$model = D('property_apply');
 			foreach($arr as $val){
-				$stult = $model->where("id='".$val."'")->delete();
-				if($stult){
-					echo 1;exit;//删除成功
-				}else{
-					echo 2;exit;//删除失败
-				}
+				$array = array();
+				$user_basic = D("user_basic");
+				//echo $_SESSION['userid'];die;
+				$stult = $model->where("id='".$val."'")->save(array("is_del"=>1));
 			}
+			echo 1;exit;
 		
 		}else{
-			echo 3;exit;//删除失败
+			echo 3;exit;//提交失败
 		}
 
 	}
@@ -356,8 +459,22 @@ class PropertyController extends CommonController {
 		$user_basic_arr = $user_basic->where("user_id = $user_id")->find();
 		$arr['add_user'] = $user_id;
 		$arr['add_user_name'] = $user_basic_arr['name'];
-		$arr['project_type'] = "计划申请";
-		$arr['check_id'] = 2;
+
+		if(empty($_POST['status_name'])){
+			$array['status'] = 2;
+			echo json_encode($array);exit;
+		}else{
+			$status_name = $_POST['status_name'];
+		}
+		$check_array = $this->check_sel();
+		foreach($check_array as $check_val){
+			if($check_val['check_name'] == $status_name){
+				$check_id =  $check_val['id'];
+				$check_name = $check_val['check_name'];
+			}
+		}
+		$arr['project_type'] = $status_name;
+		$arr['check_id'] = $check_id;
 		if(!empty($arr["id"])){
 			//计划申请修改
 			$property_apply = M("property_apply");

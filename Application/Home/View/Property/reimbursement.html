@@ -452,12 +452,12 @@
                 };
 
 
-                //计划申请页提交神请操作
+                //提交神请操作
                 $("#submit_two").click(function () {
                     var data = $('#myform_two').serialize();//将表单数据以字符串形式获取
                     $.ajax({
                         url: "/index.php/Home/Property/plan_add",
-                        data: {'data': data,'num':'15','type':'报销申请审核中'},
+                        data: {'data': data},
                         type: "post",
                         async: "false",
                         traditional: "true",
