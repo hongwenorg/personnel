@@ -100,7 +100,7 @@ class PropertyController extends CommonController {
 	}
 
 
-	//页面列表信息
+	//页面分页显示列表信息
 	function plan_table_page(){
 		$where = '';
 		if(!empty($_POST['month'])){
