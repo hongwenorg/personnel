@@ -407,28 +407,6 @@
                         pagemax.style.display = "block";
                     }
 
-                    /*
-                     //下面是分页处理
-                     CountPage = arr_staff.length % PageSize === 0 ? (arr_staff.length / PageSize) : (parseInt(arr_staff.length / PageSize) + 1);
-                     var page_current = (parseInt(page) + 1);
-                     var page_top = "page_top";
-                     var page_next = "page_next";
-                     if (document.getElementById("page_min").style.display=="block") {
-                     page_str = "<input t pe='button' value='上一页' class='page_top' id='page_top'>";
-                     }else if(tb.innerHTML==""){
-                     document.getElementById("page_min").display="none";
-                     document.getElementById("page_max").display="none";
-                     document.getElementById("page_all").display="none";
-                     }
-                     for (var page_i = 0; page_i <= page_current; page_i++) {
-                     page_str += "<span class='page' id='page" + (page_i) + "'>" + (page_i) + "</span>";
-                     }
-                     if (document.getElementById("page_min").style.display=="block") {
-                     page_str += "<input type='button' class='page_next' value='下一页' id='page_next'>";
-                     }
-                     $("#page_all").html(page_str);
-                     document.getElementById("page" + page_current).style.backgroundColor = "#00c8c8";
-                     document.getElementById("pageall").innerHTML = "共" + CountPage + "页";*/
                 }
 
 
@@ -501,7 +479,6 @@
                                 if(page_one.innerText>parseFloat(msg["page_arr"].page)+2){
                                     page_one.style.display="none";
                                     page_parent.removeChild(page_one);
-
                                 }
                             }
                             document.getElementById("pageall").innerText="共"+ msg["page_arr"].page_count+"页";
@@ -511,18 +488,6 @@
                                 $("#page_page").val($(this).text());
                                 find_btt.click();
                             });
-//                            var page_up=document.querySelectorAll(".page_top");
-//                            for(var j=0;j<page_up.length;j++){
-//                                page_up[j].addEventListener("click",function(e){
-//                                    var target= e.target;
-//                                    if(target.value=="首页"){
-//                                        $("#page_page").val(1);
-//                                        $("#tb tr:not(:first)").empty();
-//                                        find_btt.click();
-//                                    }
-//                                })
-//
-//                            }
                             document.getElementById("page_min").onclick=function(){
                                 document.getElementById("page_all").innerHTML = "";
                                 $("#page_page").val(1);
@@ -581,6 +546,7 @@
                             success: function (msg) {
                                 if (msg == 1) {
                                     alert("删除成功！");
+                                    document.getElementById("page_all").innerHTML="";
                                     find_btt.click();
                                 } else if (msg == 2) {
                                     alert("删除失败！");
@@ -608,6 +574,7 @@
                         success: function (msg) {
                             if (msg == 1) {
                                 alert("通过成功！");
+                                document.getElementById("page_all").innerHTML="";
                                 find_btt.click();
                             } else if (msg == 2) {
                                 alert("通过失败！");
@@ -634,6 +601,7 @@
                         success: function (msg) {
                             if (msg == 1) {
                                 alert("退回成功！");
+                                document.getElementById("page_all").innerHTML="";
                                 find_btt.click();
                             } else if (msg == 2) {
                                 alert("退回失败！");

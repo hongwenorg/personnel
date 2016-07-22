@@ -410,6 +410,7 @@
 
                 //期次的选择（当这个文本框失去鼠标时触动）执行搜索
                 document.getElementById('plan_date').onblur = function () {
+                    document.getElementById("page_all").innerHTML="";
                     find_btt.click();
                 };
 
@@ -430,7 +431,7 @@
                     var month = $("#plan_date").val();
                     $("#tb tr:not(:first)").empty();
                     arr_staff = [];
-                                  $.ajax({
+                    $.ajax({
                         url: "/index.php/Home/Property/plan_table_page",
                         data: {
                             'status_name': '校长审核',
@@ -508,9 +509,6 @@
                                     find_btt.click();
                                 }
                             };
-
-
-
                         }
                     });
                 };
@@ -544,6 +542,7 @@
                             success: function (msg) {
                                 if (msg == 1) {
                                     alert("删除成功！");
+                                    document.getElementById("page_all").innerHTML="";
                                     find_btt.click();
                                 } else if (msg == 2) {
                                     alert("删除失败！");
@@ -571,6 +570,7 @@
                         success: function (msg) {
                             if (msg == 1) {
                                 alert("通过成功！");
+                                document.getElementById("page_all").innerHTML="";
                                 find_btt.click();
                             } else if (msg == 2) {
                                 alert("通过失败！");
@@ -597,6 +597,7 @@
                         success: function (msg) {
                             if (msg == 1) {
                                 alert("退回成功！");
+                                document.getElementById("page_all").innerHTML="";
                                 find_btt.click();
                             } else if (msg == 2) {
                                 alert("退回失败！");
