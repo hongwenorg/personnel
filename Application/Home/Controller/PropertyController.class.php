@@ -491,8 +491,6 @@ class PropertyController extends CommonController {
 		$user_id = $_SESSION['userid'];
 		$user_basic = D('user_basic');
 		$user_basic_arr = $user_basic->where("user_id = $user_id")->find();
-		$arr['add_user'] = $user_id;
-		$arr['add_user_name'] = $user_basic_arr['name'];
 
 		if(!empty($_POST['status_name'])){
 			$status_name = $_POST['status_name'];
@@ -505,6 +503,9 @@ class PropertyController extends CommonController {
 			}
 			$arr['project_type'] = $status_name;
 			$arr['check_id'] = $check_id;
+			
+			$arr['add_user'] = $user_id;
+			$arr['add_user_name'] = $user_basic_arr['name'];
 		}
 		
 		if(!empty($arr["id"])){
