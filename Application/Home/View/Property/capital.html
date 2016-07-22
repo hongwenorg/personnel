@@ -43,6 +43,7 @@
             border-radius: 10px;
             outline: none;
             padding-left: 10px;
+            background:none;
         }
 
         .append_plan_body > ul > li > select {
@@ -56,6 +57,7 @@
             border-radius: 10px;
             outline: none;
             padding-left: 10px;
+            background:none;
         }
 
         .append_plan_foot {
@@ -141,6 +143,12 @@
         #city{
             width:195px !important;
         }
+        .append_plan{
+            background-image: url(/public/img/logo-1.jpg);
+            background-repeat: no-repeat;
+            background-size: 600px 180px;
+            background-position: 50% 90px;
+        }
 
     </style>
     <link rel="stylesheet" href="/public/css/Content_staff.css" type="text/css">
@@ -168,9 +176,6 @@
                                                                      alt=""></button>
         <!--时间控件-->
     </div>
-
-
-
     <form method="post" id="myform_one" onSubmit="return false;">
         <div class="append_plan">
             <div class="append_plhead">
@@ -565,7 +570,6 @@
                                 ArrSort(0);
                             } else {
                                 document.getElementById("sousuo_img_out").style.display = "none";
-                                document.querySelector(".hongwen_logo").style.display = "block";
                             }
                             //修改数据根据id获取
                             $(".plan_xiugai").click(function(){
@@ -686,7 +690,7 @@
                     var data = $('#myform_one').serialize();//将表单数据以字符串形式获取
                     $.ajax({
                         url: "/index.php/Home/Property/plan_pro",
-                        data: {'data': data,'status_name': '资金申请'},
+                        data: {'data': data},
                         type: "post",
                         async: "false",
                         traditional: "true",

@@ -494,21 +494,19 @@ class PropertyController extends CommonController {
 		$arr['add_user'] = $user_id;
 		$arr['add_user_name'] = $user_basic_arr['name'];
 
-		if(empty($_POST['status_name'])){
-			$array['status'] = 2;
-			echo json_encode($array);exit;
-		}else{
+		if(!empty($_POST['status_name'])){
 			$status_name = $_POST['status_name'];
-		}
-		$check_array = $this->check_sel();
-		foreach($check_array as $check_val){
-			if($check_val['check_name'] == $status_name){
-				$check_id =  $check_val['id'];
-				$check_name = $check_val['check_name'];
+			$check_array = $this->check_sel();
+			foreach($check_array as $check_val){
+				if($check_val['check_name'] == $status_name){
+					$check_id =  $check_val['id'];
+					$check_name = $check_val['check_name'];
+				}
 			}
+			$arr['project_type'] = $status_name;
+			$arr['check_id'] = $check_id;
 		}
-		$arr['project_type'] = $status_name;
-		$arr['check_id'] = $check_id;
+		
 		if(!empty($arr["id"])){
 			//计划申请修改
 			$property_apply = M("property_apply");

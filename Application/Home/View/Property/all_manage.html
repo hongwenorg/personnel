@@ -142,6 +142,12 @@
         #city {
             width: 195px !important;
         }
+        .append_plan{
+            background-image: url(/public/img/logo-1.jpg);
+            background-repeat: no-repeat;
+            background-size: 600px 180px;
+            background-position: 50% 90px;
+        }
 
     </style>
     <link rel="stylesheet" href="/public/css/Content_staff.css" type="text/css">
@@ -161,6 +167,8 @@
             <option value="plan_type">计划类型</option>
             <option value="subject">科目类别</option>
             <option value="name">申请人</option>
+            <option value="check">审核状态</option>
+            <option value="stage">项目阶段</option>
         </select>
         <!--</div>-->
         <select name="" id="city"></select>
@@ -169,6 +177,57 @@
                                                                      alt=""></button>
         <!--时间控件-->
     </div>
+    <form method="post" id="myform_one" onSubmit="return false;">
+        <div class="append_plan" style="width:100%;margin:0;display:none;">
+            <div class="append_plhead">
+                <input type="reset"  value="清空" class="foot_qingkong" id="foot_qingkong">
+                <input type="submit" value="保存" class="foot_baocun" id="submit_one">
+            </div>
+            <div class="append_plan_body">
+                <input type="hidden" value="" name='id' id="apply_id">
+                <ul id="appende_plan_ul">
+                    <li>计划类型
+                        <select name="plan_id" class="append_plan_sel" id="select_01">
+                            <option value="" id="opt_01">--请选择--</option>
+                        </select>
+                    </li>
+                    <li>归属校区
+                        <select name="class_post_id" class="append_plan_sel" id="select_02">
+                            <option value="" id="opt_02">--请选择--</option>
+                        </select>
+                    </li>
+                    <li>科目类别
+                        <select name="finance_type_id" class="append_plan_sel" id="select_03">
+                            <option value="" id="opt_03">--请选择--</option>
+                        </select>
+                    </li>
+                    <li>明细内容 <input type="text" name='info' class="append_plan_li" id='info' required></li>
+                    <li>单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位 <input type="text" name='unit' class="append_plan_li" id='unit' required></li>
+                    <li>单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价 <input type="number" name='unit_price' id='price' class="append_plan_li" min="0" step="0.001" required></li>
+                    <li>数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量 <input type="number" name='count' id='count' min="0" class="append_plan_li" required></li>
+                    <li>金&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;额 <input type="number" name='money' id='money' min="0" step="0.01" class="append_plan_only" readonly></li>
+                    <li>接收校区
+                        <select name="receive_school" class="append_plan_sel" id="select_04">
+                            <option value="" id="opt_04">--请选择--</option>
+                        </select>
+                    </li>
+                    <li>接&nbsp;&nbsp;收&nbsp;&nbsp;人 <input type="text" id='receive_user' name='receive_user' class="append_plan_li" required></li>
+                    <li>接受卡号 <input type="text" name='receive_card' id='receive_card' class="append_plan_li" required></li>
+                    <li>期望审批日期 <input type="date" name='expect_date' id='expect_date' class="append_plan_li"></li>
+                    <li>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注 <input type="text" id='other' name='other' class="append_plan_li"></li>
+                    <li>采购类型
+                        <select name="purchase_id" class="append_plan_sel" id="select_05">
+                            <option value="" id="opt_05">--请选择--</option>
+                        </select>
+                    </li>
+                    <li>品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;牌 <input type="text" name='buy_brand' id='buy_brand' class="append_plan_li"></li>
+                    <li>型号/规格 <input type="text" name='buy_info' id='buy_info' class="append_plan_li"></li>
+                    <li>物流信息 <input type="text" name='buy_transport' id='buy_transport' class="append_plan_li"></li>
+                    <li>期&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;次 <input type="month" name='month' id="month" class="append_plan_li"></li>
+                </ul>
+            </div>
+        </div>
+    </form>
     <div style="width:95%;margin-left:2.5%;overflow-x: scroll">
         <form method="post" id="myform_two" onSubmit="return false;">
             <table class="tb" cellpadding="2" cellspacing="0" id="tb">
@@ -176,6 +235,9 @@
                     <th style="min-width:50px">
                         <div><input type="checkbox" class="checkbox_all" id="checkbox_all">
                             <label for="checkbox_all">全选</label></div>
+                    </th>
+                    <th style="min-width:70px">
+                        <div>修改</div>
                     </th>
                     <th style="min-width:40px">
                         <div>序号</div>
@@ -323,6 +385,32 @@
                     }
 
                 });
+                var i;
+                for (i = 0; i < plan_option.length; i++) {
+                    var option_01 = document.createElement("option");
+                    option_01.value=plan_option[i].id;
+                    document.getElementById("select_01").appendChild(option_01).innerText = plan_option[i].plan_name;
+                }
+                for (i = 0; i < school_option.length; i++) {
+                    var option_02 = document.createElement("option");
+                    option_02.value=school_option[i].id;
+                    document.getElementById("select_02").appendChild(option_02).innerText = school_option[i].class;
+                }
+                for (i = 0; i < finance_type_option.length; i++) {
+                    var option_03 = document.createElement("option");
+                    option_03.value=finance_type_option[i].id;
+                    document.getElementById("select_03").appendChild(option_03).innerText = finance_type_option[i].name;
+                }
+                for (i = 0; i < school_option.length; i++) {
+                    var option_05 = document.createElement("option");
+                    option_05.value=school_option[i].id;
+                    document.getElementById("select_04").appendChild(option_05).innerText = school_option[i].class;
+                }
+                for (i = 0; i < purchase_option.length; i++) {
+                    var option_04 = document.createElement("option");
+                    option_04.value=purchase_option[i].id;
+                    document.getElementById("select_05").appendChild(option_04).innerText = purchase_option[i].purchase_name;
+                }
 
 //******************************     全局变量  end    ***************************
 
@@ -354,6 +442,23 @@
                             document.getElementById("prov_append").innerHTML = "";
                         }
                     }
+                    else if (sel.value == "check") {
+                        for (var i = 0; i < check_option.length; i++) {
+                            opt = opt + '<option value="' + check_option[i].check_name + '">' + check_option[i].check_name + '</option>';
+                            document.getElementById("city").innerHTML = opt;
+                            city.style.display = "block";
+                            document.getElementById("prov_append").innerHTML = "";
+                        }
+                    }else if (sel.value == "stage") {
+                            opt = opt + '<option value="' + "plan" + '">' + "计划申请" + '</option>'+
+                                    '<option value="' + "capital" + '">' + "资金申请" + '</option>'+
+                                    '<option value="' + "reimbursement" + '">' + "报销申请" + '</option>'+
+                                    '<option value="' + "examine" + '">' + "审核申请" + '</option>'+
+                                    '<option value="' + "all_manage" + '">' + "数据管理" + '</option>';
+                            document.getElementById("city").innerHTML = opt;
+                            city.style.display = "block";
+                            document.getElementById("prov_append").innerHTML = "";
+                    }
                     document.getElementById("city").innerHTML = opt;
 
                 });
@@ -374,6 +479,7 @@
                     for (var j = 0; j < len; j++) {
                         var tr = document.createElement("tr");
                         tb.appendChild(tr).innerHTML = "<td class='td_sty'><input type='checkbox' name='check_box" + arr_staff[j].id + "' value='" + arr_staff[j].id + "' class='plan_checkbox'>" + "</div>" + "</td>" +
+                                "<td class='td_sty'>" + "<div>" + "<input type='button' value='修改' id='update_sql' up_id='" + arr_staff[j].id + "' class='plan_xiugai'>" + "</div>" + "</td>" +
                                 "<td class='td_sty'>" + "<div>" + arr_num[j] + "</div>" + "</td>" +
                                 "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].project_type + "' class='hidden_input' id='' name=''>" + "</td>" +
                                 "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].check_name + "' class='hidden_input' id='' name=''>" + "</td>" +
@@ -414,6 +520,7 @@
 
                 //期次的选择（当这个文本框失去鼠标时触动）执行搜索
                 document.getElementById('plan_date').onblur = function () {
+                    document.getElementById("page_all").innerHTML="";
                     find_btt.click();
                 };
 
@@ -460,27 +567,30 @@
                                 ArrSort();
                             } else {
                                 document.getElementById("sousuo_img_out").style.display = "none";
-                                document.querySelector(".hongwen_logo").style.display = "block";
                             }
                             var page_num = [];
                             for (var i = 0; i < msg["page_arr"].page_count; i++) {
-                                var page_one = document.createElement("span");
-                                page_num[i] = i + 1;
-                                page_one.setAttribute("class", "page");
-                                page_one.innerText = parseFloat(page_num[i]);
-                                document.getElementById("page_all").appendChild(page_one);
-                                var page_parent=page_one.parentNode;
-                                if(page_one.innerText==msg["page_arr"].page){
-                                    page_one.style.background="#00c8c8";
-                                }
-                                if(page_one.innerText<parseFloat(msg["page_arr"].page)-2){
-                                    page_parent.removeChild(page_one);
-                                }
-                                if(page_one.innerText>parseFloat(msg["page_arr"].page)+2){
-                                    page_one.style.display="none";
-                                    page_parent.removeChild(page_one);
-                                }
+//                                if(arr_staff!=[]){
+                                    var page_one = document.createElement("span");
+                                    page_num[i] = i + 1;
+                                    page_one.setAttribute("class", "page");
+                                    page_one.innerText = parseFloat(page_num[i]);
+                                    document.getElementById("page_all").appendChild(page_one);
+                                    var page_parent=page_one.parentNode;
+                                    if(page_one.innerText==msg["page_arr"].page){
+                                        page_one.style.background="#00c8c8";
+                                    }
+                                    if(page_one.innerText<parseFloat(msg["page_arr"].page)-2){
+                                        page_parent.removeChild(page_one);
+                                    }
+                                    if(page_one.innerText>parseFloat(msg["page_arr"].page)+2){
+                                        page_one.style.display="none";
+                                        page_parent.removeChild(page_one);
+                                    }
+//                                }
+
                             }
+
                             document.getElementById("pageall").innerText="共"+ msg["page_arr"].page_count+"页";
                             $(".page").click(function () {
                                 $("#tb tr:not(:first)").empty();
@@ -510,12 +620,48 @@
                                     find_btt.click();
                                 }
                             };
-
-
-
+                            $(".plan_xiugai").click(function(){
+                                document.querySelector(".append_plan").style.display="block";
+                                var id = $(this).attr('up_id');
+                                $.ajax({
+                                    url: "/index.php/Home/Property/update_list",
+                                    data: {'id': id},
+                                    type: "post",
+                                    async: "false",
+                                    traditional: "true",
+                                    cache: "false",
+                                    success: function (msg) {
+                                        if (msg == 2) {
+                                            alert("数据出错，请联系管理员！");
+                                        } else {
+                                            var data = JSON.parse(msg);
+                                            $("#apply_id").val(data.id);
+                                            $("#select_01").val(data.plan_id);
+                                            $("#select_02").val(data.class_post_id);
+                                            $("#select_03").val(data.finance_type_id);
+                                            $("#info").val(data.info);
+                                            $("#unit").val(data.unit);
+                                            $("#price").val(data.unit_price);
+                                            $("#count").val(data.count);
+                                            $("#money").val(data.money);
+                                            $("#select_04").val(data.receive_school);
+                                            $("#receive_user").val(data.receive_user);
+                                            $("#receive_card").val(data.receive_card);
+                                            $("#expect_date").val(data.expect_date);
+                                            $("#other").val(data.other);
+                                            $("#select_05").val(data.purchase_id);
+                                            $("#buy_brand").val(data.buy_brand);
+                                            $("#buy_info").val(data.buy_info);
+                                            $("#buy_transport").val(data.buy_transport);
+                                            $("#month").val(data.month);
+                                        }
+                                    }
+                                });
+                            });
                         }
                     });
                 };
+
 
                 find_btt.click();
                 var checkbox_all = document.querySelector(".checkbox_all");
@@ -611,6 +757,29 @@
 
                         }
 
+                    });
+                });
+//                保存修改
+                $("#submit_one").click(function(){
+                    var data = $('#myform_one').serialize();//将表单数据以字符串形式获取
+                    $.ajax({
+                        url: "/index.php/Home/Property/plan_pro",
+                        data: {'data': data},
+                        type: "post",
+                        async: "false",
+                        traditional: "true",
+                        cache: "false",
+                        success: function (msg) {
+                            if (msg == 2) {
+                                alert("修改成功！");
+                                document.querySelector(".append_plan").style.display="none";
+                                $("#foot_qingkong").trigger("click");
+                                document.getElementById("page_all").innerHTML="";
+                                find_btt.click();
+                            } else if (msg == 3) {
+                                alert("保存失败,请填写完整数据！");
+                            }
+                        }
                     });
                 });
 

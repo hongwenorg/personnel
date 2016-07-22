@@ -91,12 +91,11 @@
          style="border-top-right-radius:10px;border-top-left-radius:10px;overflow: hidden; background-color: rgb(239, 239, 239) !important;">
     </div>
 </div>
-<div id="container" style="width:94.87%">
+<div id="container" style="width:94.87%;">
     <div id="purchase_div" class="purchase_div"></div>
     <div id="purchase_body" class="purchase_body"></div>
     <div id="append_link"></div>
 </div>
-<img src="/public/img/logo-1.jpg" alt="" style="width:600px" class="hongwen_logo" id="hongwen_logo">
 </body>
 <script>
     var check_append = [];
@@ -190,7 +189,6 @@
                 purchase_link.onload = function () {
                     var container = purchase_link.import.body;
                     document.getElementById("purchase_body").innerHTML = container.innerHTML;
-                    document.getElementById("hongwen_logo").style.display="none";
                     window[filename]();
                 };
                 return;

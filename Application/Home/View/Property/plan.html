@@ -41,6 +41,7 @@
             border-radius: 10px;
             outline: none;
             padding-left: 10px;
+            background:none;
         }
 
         .append_plan_only {
@@ -68,6 +69,7 @@
             border-radius: 10px;
             outline: none;
             padding-left: 10px;
+            background:none;
         }
 
         .append_plan_foot {
@@ -148,6 +150,13 @@
             outline: none;
             padding-left: 10px;
         }
+        .append_plan{
+            background-image: url(/public/img/logo-1.jpg);
+            background-repeat: no-repeat;
+            background-size: 600px 180px;
+            background-position: 50% 90px;
+        }
+
     </style>
     <link rel="stylesheet" href="/public/css/Content_staff.css" type="text/css">
     <script type="text/javascript" src="/public/js/jquery.js"></script>
@@ -512,7 +521,6 @@
                                 ArrSort(0);
                             } else {
                                 document.getElementById("sousuo_img_out").style.display = "none";
-                                document.querySelector(".hongwen_logo").style.display = "block";
                             }
 
                             //修改数据根据id获取
