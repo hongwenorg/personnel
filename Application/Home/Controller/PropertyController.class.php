@@ -23,6 +23,7 @@ class PropertyController extends CommonController {
 		$data_arr['plan'] = $this->plan_sel();
 		$data_arr['purchase'] = $this->purchase_sel();
 		$data_arr['finance_type'] = $this->finance_type_sel();
+		$data_arr['check'] = $this->checks_sel();
 		echo json_encode($data_arr);
 	}
 
@@ -112,12 +113,6 @@ class PropertyController extends CommonController {
 			$content = $_POST['content'];
 			$where .= " and ".$status."='".$content."'";
 		}
-		if(empty($_POST['status_name'])){
-			$array['status'] = 2;
-			echo json_encode($array);exit;
-		}else{
-			$status_name = $_POST['status_name'];
-		}
 		$model = D('property_apply');
 		//echo $_GET['status_name'];die;
 		//$status_name = '资金申请';
@@ -129,10 +124,14 @@ class PropertyController extends CommonController {
 		$array = array();
 		$user_basic = D("user_basic");
 		//echo $_SESSION['userid'];die;
-		foreach($check_array as $check_val){
-			if($check_val['check_name'] == $status_name){
-				$check_id =  $check_val['id'];
-				$check_name = $check_val['check_name'];
+		
+		if(!empty($_POST['status_name'])){
+			$status_name = $_POST['status_name'];
+			foreach($check_array as $check_val){
+				if($check_val['check_name'] == $status_name){
+					$check_id =  $check_val['id'];
+					$check_name = $check_val['check_name'];
+				}
 			}
 		}
 		/*
@@ -145,17 +144,35 @@ class PropertyController extends CommonController {
 			$page = $_POST['page'];
 		}
 		$page_num = 10;//每页多少条
-		$count = $model->where("check_id = $check_id and is_del=0 and add_user='".$_SESSION['userid']."'".$where)->count(); //获得记录总数
+		if(!empty($_POST['status_name'])){
+			$count = $model->where("check_id = $check_id and is_del=0 and add_user='".$_SESSION['userid']."'".$where)->count(); //获得记录总数
+		}else{
+			$count = $model->where("check_id not in(1,2,3,8,9,12,14,21) and iis_del=0 and add_user='".$_SESSION['userid']."'".$where)->count(); //获得记录总数
+		}
+		
 		$totalPage = ceil($count/$page_num); //计算出总页数
 		$startCount = ($page-1)*$page_num; //分页开始,根据此方法计算出开始的记录
 		/*
 		* 分页程序结束
 		*/
+		if(!empty($_POST['status_name'])){
+			$array = $model->where("check_id = $check_id and is_del=0 and add_user='".$_SESSION['userid']."'".$where)->limit($startCount,$page_num)->select();
+		}else{
+			$array = $model->where("check_id not in(1,2,3,8,9,12,14,21) and is_del=0 and add_user='".$_SESSION['userid']."'".$where)->limit($startCount,$page_num)->order("check_id")->select();
+		}
 		
-		$array = $model->where("check_id = $check_id and is_del=0 and add_user='".$_SESSION['userid']."'".$where)->limit($startCount,$page_num)->select();
+		
 		if(!empty($array)){
 			foreach($array as &$val){
+				if(empty($_POST['status_name'])){
+					foreach($check_array as $check_val){
+						if($check_val['id'] == $val['check_id']){
+							$check_name = $check_val['check_name'];
+						}
+					}
+				}
 				$val['check_name'] = $check_name;
+				
 				foreach($class_post_array as $class_post_val){
 					if($val['class_post_id'] == $class_post_val['id']){
 						$val['class_post_plan'] =  $class_post_val['class'];
@@ -275,34 +292,43 @@ class PropertyController extends CommonController {
 					if($check_val['id'] == $apply_arr['check_id']){
 						if($check_val['check_name'] == '校长审核'){
 							$check_name = '部门审核';
+							$project_type = '计划申请';
 						}else if($check_val['check_name'] == '部门审核'){
 							$check_name = '中心审核';
+							$project_type = '计划申请';
 						}else if($check_val['check_name'] == '中心审核'){
 							$check_name = '总裁审核';
+							$project_type = '计划申请';
 						}else if($check_val['check_name'] == '总裁审核'){
 							$check_name = '计划通过';
+							$project_type = '资金申请';
 						}else if($check_val['check_name'] == '计划通过'){
-							$check_name = '资金申请';
-						}else if($check_val['check_name'] == '资金申请'){
 							$check_name = '资金审批';
+							$project_type = '资金申请';
 						}else if($check_val['check_name'] == '资金审批'){
 							$check_name = '审批通过';
+							$project_type = '报销申请';
 						}else if($check_val['check_name'] == '审批通过'){
-							$check_name = '报销申请';
-						}else if($check_val['check_name'] == '报销申请'){
 							$check_name = '校长确认';
+							$project_type = '报销申请';
 						}else if($check_val['check_name'] == '校长确认'){
 							$check_name = '部门确认';
+							$project_type = '报销申请';
 						}else if($check_val['check_name'] == '部门确认'){
 							$check_name = '中心确认';
+							$project_type = '报销申请';
 						}else if($check_val['check_name'] == '中心确认'){
 							$check_name = '总裁确认';
+							$project_type = '报销申请';
 						}else if($check_val['check_name'] == '总裁确认'){
 							$check_name = '费用确认';
+							$project_type = '报销申请';
 						}else if($check_val['check_name'] == '费用确认'){
 							$check_name = '入账确认';
+							$project_type = '报销申请';
 						}else if($check_val['check_name'] == '入账确认'){
 							$check_name = '审核完成';
+							$project_type = '审核完成';
 						}
 					}
 				}
@@ -347,7 +373,7 @@ class PropertyController extends CommonController {
 
 	}
 
-
+	//修改时显示内容
 	function update_list(){
 		if(empty($_POST['id'])){
 			echo 2;exit;
@@ -356,6 +382,14 @@ class PropertyController extends CommonController {
 		$array = array();
 		$array = $model->where(array('id'=>$_POST['id']))->find();
 		echo json_encode($array);
+	}
+
+	//审核状态的数据
+	function checks_sel(){
+		$model = D('property_check');
+		$array = array();
+		$array = $model->where("id not in(1,2,3,8,9,12,14,21)")->select();
+		return $array;
 	}
 
 

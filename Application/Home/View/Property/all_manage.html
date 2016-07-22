@@ -274,7 +274,7 @@
     <div id="pageall" style="display:block"></div>
     <div style="width:95%;margin-left:2.5%">
         <input type="button" style="margin-top: 30px" value="删除" class="delet_apply" id="delet_apply"/>
-        <input type="button" style="margin-top: 30px" value="退回" class="tj_apply"/>
+        <input type="button" style="margin-top: 30px" value="退回" class="tj_apply" id='submit_three'/>
         <input type="button" style="margin-top: 30px" value="通过" id="submit_two" class="tj_apply"/>
     </div>
     <script>
@@ -293,6 +293,7 @@
                 var plan_option = [];
                 var purchase_option = [];
                 var finance_type_option = [];
+                var check_option = [];
 
                 document.getElementById('plan_date').valueAsDate = new Date();
                 $.ajax({
@@ -313,9 +314,12 @@
                                     purchase_option.push(msg['purchase'][key]);
                                 } else if (keys == 'finance_type') {
                                     finance_type_option.push(msg['finance_type'][key]);
+                                } else if (keys == 'check') {
+                                    check_option.push(msg['check'][key]);
                                 }
                             }
                         }
+                        console.log(check_option);
                     }
 
                 });
@@ -455,7 +459,7 @@
                     $.ajax({
                         url: "/index.php/Home/Property/plan_table_page",
                         data: {
-                            'status_name': '校长审核',
+                            'status_name': '',
                             'status': status,
                             'content': content,
                             "month": month,
@@ -562,17 +566,6 @@
                         }
                     }
                 };
-                document.getElementById("delet_apply").onclick = function () {
-                    var plan_checkbox = document.querySelectorAll(".plan_checkbox");
-                    for (var i = 0; i < plan_checkbox.length; i++) {
-                        if (plan_checkbox[i].checked == true) {
-                            if (confirm("是否删除所选内容")) {
-                                var remove_parenod = plan_checkbox[i].parentNode.parentNode.parentNode;
-                                remove_parenod.parentNode.removeChild(remove_parenod);
-                            }
-                        }
-                    }
-                };
 
                 //申请审核页删除操作
                 $("#delet_apply").click(function () {
@@ -607,19 +600,45 @@
                     var data = $('#myform_two').serialize();//将表单数据以字符串形式获取
                     $.ajax({
                         url: "/index.php/Home/Property/plan_add",
-                        data: {'data': data, 'num': '11', 'type': '资金申请审核中'},
+                        data: {'data': data},
                         type: "post",
                         async: "false",
                         traditional: "true",
                         cache: "false",
                         success: function (msg) {
                             if (msg == 1) {
-                                alert("提交成功！");
+                                alert("通过成功！");
                                 find_btt.click();
                             } else if (msg == 2) {
-                                alert("提交失败！");
+                                alert("通过失败！");
                             } else if (msg == 3) {
-                                alert("保存失败,请选择要提交的项目！");
+                                alert("通过失败,请选择要通过的项目！");
+                            }
+
+                        }
+
+                    });
+                });
+
+
+                //申请审核页提交神请操作
+                $("#submit_three").click(function () {
+                    var data = $('#myform_two').serialize();//将表单数据以字符串形式获取
+                    $.ajax({
+                        url: "/index.php/Home/Property/plan_return",
+                        data: {'data': data},
+                        type: "post",
+                        async: "false",
+                        traditional: "true",
+                        cache: "false",
+                        success: function (msg) {
+                            if (msg == 1) {
+                                alert("退回成功！");
+                                find_btt.click();
+                            } else if (msg == 2) {
+                                alert("退回失败！");
+                            } else if (msg == 3) {
+                                alert("退回失败,请选择要退回的项目！");
                             }
 
                         }
