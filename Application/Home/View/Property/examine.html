@@ -1,4 +1,4 @@
-<div id="plan">
+<div id="plan" style="background-color:white;padding-bottom:100px;">
     <style>
         .append_plhead {
             height: 40px;
@@ -147,7 +147,10 @@
             background-image: url(/public/img/logo-1.jpg);
             background-repeat: no-repeat;
             background-size: 600px 180px;
-            background-position: 50% 90px;
+            background-position: 50% 50px;
+        }
+        .hidden_input{
+            background: none;
         }
 
     </style>
@@ -241,7 +244,7 @@
     </form>
     <div style="width:95%;margin-left:2.5%;overflow-x: scroll">
         <form method="post" id="myform_two" onSubmit="return false;">
-            <table class="tb" cellpadding="2" cellspacing="0" id="tb">
+            <table class="tb" cellpadding="2" cellspacing="0" id="tb" style="background:none">
                 <tr class="trr1" style="min-width:50px ">
                     <th style="min-width:50px">
                         <div><input type="checkbox" class="checkbox_all" id="checkbox_all">
@@ -337,12 +340,12 @@
     </div>
     <input type="hidden" name="" value='1' id='page_page'>
     <!--**********************************************分页签，上一页/下一页***********************************************-->
-    <input type='button' value='首页' class='page_top' id="page_min" style="display:block">
-    <input type="button" value="上一页" class='page_top' id="page_u" style="display:block">
+    <input type='button' value='首页' class='page_top' id="page_min" style="display:none">
+    <input type="button" value="上一页" class='page_top' id="page_u" style="display:none">
 
     <div id='page_all'></div>
-    <input type="button" value="下一页" class='page_top' id="page_d" style="display:block">
-    <input type='button' value='尾页' class='page_top' id="page_max" style="display:block">
+    <input type="button" value="下一页" class='page_top' id="page_d" style="display:none">
+    <input type='button' value='尾页' class='page_top' id="page_max" style="display:none">
 
     <div id="pageall" style="display:block"></div>
     <div style="width:95%;margin-left:2.5%">
@@ -350,6 +353,7 @@
         <input type="button" style="margin-top: 30px" value="退回" class="tj_apply" id='submit_three'/>
         <input type="button" style="margin-top: 30px" value="通过" id="submit_two" class="tj_apply"/>
     </div>
+    <div id="panduan" style="display:none"></div>
     <script>
         var examine = function () {
             (function () {
@@ -501,6 +505,7 @@
                         pageall.style.display = "block";
                         pagemin.style.display = "block";
                         pagemax.style.display = "block";
+                        document.getElementById("panduan").innerHTML=arr_num[j];
                     }
 
                 }
@@ -510,12 +515,12 @@
 
                 //期次的选择（当这个文本框失去鼠标时触动）执行搜索
                 document.getElementById('plan_date').onblur = function () {
-                    document.getElementById("page_all").innerHTML = "";
                     find_btt.click();
                 };
 
 //员工信息页面搜索按钮  start
                 find_btt.onclick = function () {
+                    document.getElementById("page_all").innerHTML = "";
                     var page = $("#page_page").val();
                     var sel = document.getElementById("prov");
                     if (sel.value == "plan_type") {
@@ -552,16 +557,15 @@
                                     arr_staff.push(msg[key]);
                                 }
                             }
-                            console.log(msg['page_arr']);
+//                            console.log(msg['page_arr']);
                             if (msg["status"] != 2) {
                                 ArrSort();
                             } else {
                                 document.getElementById("sousuo_img_out").style.display = "none";
                             }
                             var page_num = [];
-                            if (msg["page_arr"].page_count != undefined) {
+                            if (document.getElementById("panduan").innerHTML!="") {
                                 for (var i = 0; i < msg["page_arr"].page_count; i++) {
-                                    if (arr_staff != []) {
                                         var page_one = document.createElement("span");
                                         page_num[i] = i + 1;
                                         page_one.setAttribute("class", "page");
@@ -577,41 +581,45 @@
                                         if (page_one.innerText > parseFloat(msg["page_arr"].page) + 2) {
                                             page_one.style.display = "none";
                                             page_parent.removeChild(page_one);
-
                                         }
-                                    }
                                 }
-                            }
-                            document.getElementById("pageall").innerText = "共" + msg["page_arr"].page_count + "页";
-                            $(".page").click(function () {
-                                $("#tb tr:not(:first)").empty();
-                                document.getElementById("page_all").innerHTML = "";
-                                $("#page_page").val($(this).text());
-                                find_btt.click();
-                            });
-
-                            document.getElementById("page_min").onclick = function () {
-                                document.getElementById("page_all").innerHTML = "";
-                                $("#page_page").val(1);
-                                find_btt.click();
-                            };
-                            document.getElementById("page_max").onclick = function () {
-                                document.getElementById("page_all").innerHTML = "";
-                                $("#page_page").val(msg["page_arr"].page_count);
-                                find_btt.click();
-                            };
-                            document.getElementById("page_u").onclick = function () {
-                                document.getElementById("page_all").innerHTML = "";
-                                $("#page_page").val(parseFloat(msg["page_arr"].page) - 1);
-                                find_btt.click();
-                            };
-                            document.getElementById("page_d").onclick = function () {
-                                $("#page_page").val(parseFloat(msg["page_arr"].page) + 1);
-                                if ($("#page_page").val() <= parseFloat(msg["page_arr"].page_count)) {
-                                    document.getElementById("page_all").innerHTML = "";
+                                document.getElementById("page_min").style.display="block";
+                                document.getElementById("page_max").style.display="block";
+                                document.getElementById("page_u").style.display="block";
+                                document.getElementById("page_d").style.display="block";
+                                document.getElementById("pageall").style.display="block";
+                                document.getElementById("pageall").innerText = "共" + msg["page_arr"].page_count + "页";
+                                $(".page").click(function () {
+                                    $("#tb tr:not(:first)").empty();
+                                    $("#page_page").val($(this).text());
                                     find_btt.click();
-                                }
-                            };
+                                });
+
+                                document.getElementById("page_min").onclick = function () {
+                                    $("#page_page").val(1);
+                                    find_btt.click();
+                                };
+                                document.getElementById("page_max").onclick = function () {
+                                    $("#page_page").val(msg["page_arr"].page_count);
+                                    find_btt.click();
+                                };
+                                document.getElementById("page_u").onclick = function () {
+                                    $("#page_page").val(parseFloat(msg["page_arr"].page) - 1);
+                                    find_btt.click();
+                                };
+                                document.getElementById("page_d").onclick = function () {
+                                    $("#page_page").val(parseFloat(msg["page_arr"].page) + 1);
+                                    if ($("#page_page").val() <= parseFloat(msg["page_arr"].page_count)) {
+                                        find_btt.click();
+                                    }
+                                };
+                            }else{
+                                document.getElementById("page_min").style.display="none";
+                                document.getElementById("page_max").style.display="none";
+                                document.getElementById("page_u").style.display="none";
+                                document.getElementById("page_d").style.display="none";
+                                document.getElementById("pageall").style.display="none";
+                            }
                         }
                     });
                 };
@@ -684,7 +692,6 @@
                             success: function (msg) {
                                 if (msg == 1) {
                                     alert("删除成功！");
-                                    document.getElementById("page_all").innerHTML = "";
                                     find_btt.click();
                                 } else if (msg == 2) {
                                     alert("删除失败！");
@@ -712,7 +719,6 @@
                         success: function (msg) {
                             if (msg == 1) {
                                 alert("通过成功！");
-                                document.getElementById("page_all").innerHTML = "";
                                 find_btt.click();
                             } else if (msg == 2) {
                                 alert("通过失败！");
@@ -739,7 +745,6 @@
                         success: function (msg) {
                             if (msg == 1) {
                                 alert("退回成功！");
-                                document.getElementById("page_all").innerHTML = "";
                                 find_btt.click();
                             } else if (msg == 2) {
                                 alert("退回失败！");
@@ -766,7 +771,6 @@
                                 alert("修改成功！");
                                 document.querySelector(".append_plan").style.display = "none";
                                 $("#foot_qingkong").trigger("click");
-                                document.getElementById("page_all").innerHTML = "";
                                 find_btt.click();
                             } else if (msg == 3) {
                                 alert("保存失败,请填写完整数据！");

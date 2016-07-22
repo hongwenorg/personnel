@@ -1,4 +1,4 @@
-<div id="plan">
+<div id="plan" style="background-color:white;padding-bottom:100px;">
     <style>
         .append_plhead {
             height: 40px;
@@ -43,6 +43,7 @@
             border-radius: 10px;
             outline: none;
             padding-left: 10px;
+            background: none;
         }
 
         .append_plan_body > ul > li > select {
@@ -56,6 +57,7 @@
             border-radius: 10px;
             outline: none;
             padding-left: 10px;
+            background:none;
         }
 
         .append_plan_foot {
@@ -142,11 +144,16 @@
         #city {
             width: 195px !important;
         }
-        .append_plan{
+
+        .append_plan {
             background-image: url(/public/img/logo-1.jpg);
             background-repeat: no-repeat;
             background-size: 600px 180px;
-            background-position: 50% 90px;
+            background-position: 50% 50px;
+            border:none;
+        }
+        .hidden_input{
+            background: none;
         }
 
     </style>
@@ -178,9 +185,9 @@
         <!--时间控件-->
     </div>
     <form method="post" id="myform_one" onSubmit="return false;">
-        <div class="append_plan" style="width:100%;margin:0;display:none;">
-            <div class="append_plhead">
-                <input type="reset"  value="清空" class="foot_qingkong" id="foot_qingkong">
+        <div class="append_plan" style="width:95%;margin-left:2.5%;display:none;">
+            <div class="append_plhead" style="width:100%;margin:0">
+                <input type="reset" value="清空" class="foot_qingkong" id="foot_qingkong">
                 <input type="submit" value="保存" class="foot_baocun" id="submit_one">
             </div>
             <div class="append_plan_body">
@@ -202,35 +209,48 @@
                         </select>
                     </li>
                     <li>明细内容 <input type="text" name='info' class="append_plan_li" id='info' required></li>
-                    <li>单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位 <input type="text" name='unit' class="append_plan_li" id='unit' required></li>
-                    <li>单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价 <input type="number" name='unit_price' id='price' class="append_plan_li" min="0" step="0.001" required></li>
-                    <li>数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量 <input type="number" name='count' id='count' min="0" class="append_plan_li" required></li>
-                    <li>金&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;额 <input type="number" name='money' id='money' min="0" step="0.01" class="append_plan_only" readonly></li>
+                    <li>单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位 <input type="text" name='unit'
+                                                                            class="append_plan_li" id='unit' required>
+                    </li>
+                    <li>单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价 <input type="number" name='unit_price' id='price'
+                                                                            class="append_plan_li" min="0" step="0.001"
+                                                                            required></li>
+                    <li>数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量 <input type="number" name='count' id='count'
+                                                                            min="0" class="append_plan_li" required>
+                    </li>
+                    <li>金&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;额 <input type="number" name='money' id='money'
+                                                                            min="0" step="0.01" class="append_plan_only"
+                                                                            readonly></li>
                     <li>接收校区
                         <select name="receive_school" class="append_plan_sel" id="select_04">
                             <option value="" id="opt_04">--请选择--</option>
                         </select>
                     </li>
-                    <li>接&nbsp;&nbsp;收&nbsp;&nbsp;人 <input type="text" id='receive_user' name='receive_user' class="append_plan_li" required></li>
-                    <li>接受卡号 <input type="text" name='receive_card' id='receive_card' class="append_plan_li" required></li>
+                    <li>接&nbsp;&nbsp;收&nbsp;&nbsp;人 <input type="text" id='receive_user' name='receive_user'
+                                                           class="append_plan_li" required></li>
+                    <li>接受卡号 <input type="text" name='receive_card' id='receive_card' class="append_plan_li" required>
+                    </li>
                     <li>期望审批日期 <input type="date" name='expect_date' id='expect_date' class="append_plan_li"></li>
-                    <li>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注 <input type="text" id='other' name='other' class="append_plan_li"></li>
+                    <li>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注 <input type="text" id='other' name='other'
+                                                                            class="append_plan_li"></li>
                     <li>采购类型
                         <select name="purchase_id" class="append_plan_sel" id="select_05">
                             <option value="" id="opt_05">--请选择--</option>
                         </select>
                     </li>
-                    <li>品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;牌 <input type="text" name='buy_brand' id='buy_brand' class="append_plan_li"></li>
+                    <li>品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;牌 <input type="text" name='buy_brand' id='buy_brand'
+                                                                            class="append_plan_li"></li>
                     <li>型号/规格 <input type="text" name='buy_info' id='buy_info' class="append_plan_li"></li>
                     <li>物流信息 <input type="text" name='buy_transport' id='buy_transport' class="append_plan_li"></li>
-                    <li>期&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;次 <input type="month" name='month' id="month" class="append_plan_li"></li>
+                    <li>期&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;次 <input type="month" name='month' id="month"
+                                                                            class="append_plan_li"></li>
                 </ul>
             </div>
         </div>
     </form>
     <div style="width:95%;margin-left:2.5%;overflow-x: scroll">
         <form method="post" id="myform_two" onSubmit="return false;">
-            <table class="tb" cellpadding="2" cellspacing="0" id="tb">
+            <table class="tb" cellpadding="2" cellspacing="0" id="tb" style="background:none">
                 <tr class="trr1" style="min-width:50px ">
                     <th style="min-width:50px">
                         <div><input type="checkbox" class="checkbox_all" id="checkbox_all">
@@ -326,19 +346,22 @@
     </div>
     <input type="hidden" name="" value='1' id='page_page'>
     <!--**********************************************分页签，上一页/下一页***********************************************-->
-    <input type='button' value='首页' class='page_top' id="page_min" style="display:block">
-    <input type="button" value="上一页" class='page_top' id="page_u" style="display:block">
+    <input type='button' value='首页' class='page_top' id="page_min" style="display:none">
+    <input type="button" value="上一页" class='page_top' id="page_u" style="display:none">
 
     <div id='page_all'></div>
-    <input type="button" value="下一页" class='page_top' id="page_d" style="display:block">
-    <input type='button' value='尾页' class='page_top' id="page_max" style="display:block">
+    <input type="button" value="下一页" class='page_top' id="page_d" style="display:none">
+    <input type='button' value='尾页' class='page_top' id="page_max" style="display:none">
 
-    <div id="pageall" style="display:block"></div>
+    <div id="pageall" style="display:none"></div>
     <div style="width:95%;margin-left:2.5%">
         <input type="button" style="margin-top: 30px" value="删除" class="delet_apply" id="delet_apply"/>
+        <input class="tj_apply" type="button" id="copy_excel" value="生成excel" style="margin-top: 30px"/>
         <input type="button" style="margin-top: 30px" value="退回" class="tj_apply" id='submit_three'/>
         <input type="button" style="margin-top: 30px" value="通过" id="submit_two" class="tj_apply"/>
+
     </div>
+    <div id="panduan" style="display:none"></div>
     <script>
         var all_manage = function () {
             (function () {
@@ -388,27 +411,27 @@
                 var i;
                 for (i = 0; i < plan_option.length; i++) {
                     var option_01 = document.createElement("option");
-                    option_01.value=plan_option[i].id;
+                    option_01.value = plan_option[i].id;
                     document.getElementById("select_01").appendChild(option_01).innerText = plan_option[i].plan_name;
                 }
                 for (i = 0; i < school_option.length; i++) {
                     var option_02 = document.createElement("option");
-                    option_02.value=school_option[i].id;
+                    option_02.value = school_option[i].id;
                     document.getElementById("select_02").appendChild(option_02).innerText = school_option[i].class;
                 }
                 for (i = 0; i < finance_type_option.length; i++) {
                     var option_03 = document.createElement("option");
-                    option_03.value=finance_type_option[i].id;
+                    option_03.value = finance_type_option[i].id;
                     document.getElementById("select_03").appendChild(option_03).innerText = finance_type_option[i].name;
                 }
                 for (i = 0; i < school_option.length; i++) {
                     var option_05 = document.createElement("option");
-                    option_05.value=school_option[i].id;
+                    option_05.value = school_option[i].id;
                     document.getElementById("select_04").appendChild(option_05).innerText = school_option[i].class;
                 }
                 for (i = 0; i < purchase_option.length; i++) {
                     var option_04 = document.createElement("option");
-                    option_04.value=purchase_option[i].id;
+                    option_04.value = purchase_option[i].id;
                     document.getElementById("select_05").appendChild(option_04).innerText = purchase_option[i].purchase_name;
                 }
 
@@ -449,15 +472,15 @@
                             city.style.display = "block";
                             document.getElementById("prov_append").innerHTML = "";
                         }
-                    }else if (sel.value == "stage") {
-                            opt = opt + '<option value="' + "plan" + '">' + "计划申请" + '</option>'+
-                                    '<option value="' + "capital" + '">' + "资金申请" + '</option>'+
-                                    '<option value="' + "reimbursement" + '">' + "报销申请" + '</option>'+
-                                    '<option value="' + "examine" + '">' + "审核申请" + '</option>'+
-                                    '<option value="' + "all_manage" + '">' + "数据管理" + '</option>';
-                            document.getElementById("city").innerHTML = opt;
-                            city.style.display = "block";
-                            document.getElementById("prov_append").innerHTML = "";
+                    } else if (sel.value == "stage") {
+                        opt = opt + '<option value="' + "plan" + '">' + "计划申请" + '</option>' +
+                                '<option value="' + "capital" + '">' + "资金申请" + '</option>' +
+                                '<option value="' + "reimbursement" + '">' + "报销申请" + '</option>' +
+                                '<option value="' + "examine" + '">' + "审核申请" + '</option>' +
+                                '<option value="' + "all_manage" + '">' + "数据管理" + '</option>';
+                        document.getElementById("city").innerHTML = opt;
+                        city.style.display = "block";
+                        document.getElementById("prov_append").innerHTML = "";
                     }
                     document.getElementById("city").innerHTML = opt;
 
@@ -511,6 +534,7 @@
                         pageall.style.display = "block";
                         pagemin.style.display = "block";
                         pagemax.style.display = "block";
+                        document.getElementById("panduan").innerHTML = arr_num[j];
                     }
 
                 }
@@ -518,14 +542,15 @@
 
 //分页处理搜索数据等  end
 
+
                 //期次的选择（当这个文本框失去鼠标时触动）执行搜索
                 document.getElementById('plan_date').onblur = function () {
-                    document.getElementById("page_all").innerHTML="";
                     find_btt.click();
                 };
 
 //员工信息页面搜索按钮  start
                 find_btt.onclick = function () {
+                    document.getElementById("page_all").innerHTML = "";
                     var page = $("#page_page").val();
                     var sel = document.getElementById("prov");
                     if (sel.value == "plan_type") {
@@ -569,59 +594,64 @@
                                 document.getElementById("sousuo_img_out").style.display = "none";
                             }
                             var page_num = [];
-                            for (var i = 0; i < msg["page_arr"].page_count; i++) {
-//                                if(arr_staff!=[]){
+                            if (document.getElementById("panduan").innerHTML != "") {
+                                for (var i = 0; i < msg["page_arr"].page_count; i++) {
                                     var page_one = document.createElement("span");
                                     page_num[i] = i + 1;
                                     page_one.setAttribute("class", "page");
                                     page_one.innerText = parseFloat(page_num[i]);
                                     document.getElementById("page_all").appendChild(page_one);
-                                    var page_parent=page_one.parentNode;
-                                    if(page_one.innerText==msg["page_arr"].page){
-                                        page_one.style.background="#00c8c8";
+                                    var page_parent = page_one.parentNode;
+                                    if (page_one.innerText == msg["page_arr"].page) {
+                                        page_one.style.background = "#00c8c8";
                                     }
-                                    if(page_one.innerText<parseFloat(msg["page_arr"].page)-2){
+                                    if (page_one.innerText < parseFloat(msg["page_arr"].page) - 2) {
                                         page_parent.removeChild(page_one);
                                     }
-                                    if(page_one.innerText>parseFloat(msg["page_arr"].page)+2){
-                                        page_one.style.display="none";
+                                    if (page_one.innerText > parseFloat(msg["page_arr"].page) + 2) {
+                                        page_one.style.display = "none";
                                         page_parent.removeChild(page_one);
                                     }
-//                                }
-
-                            }
-
-                            document.getElementById("pageall").innerText="共"+ msg["page_arr"].page_count+"页";
-                            $(".page").click(function () {
-                                $("#tb tr:not(:first)").empty();
-                                document.getElementById("page_all").innerHTML = "";
-                                $("#page_page").val($(this).text());
-                                find_btt.click();
-                            });
-                            document.getElementById("page_min").onclick=function(){
-                                document.getElementById("page_all").innerHTML = "";
-                                $("#page_page").val(1);
-                                find_btt.click();
-                            };
-                            document.getElementById("page_max").onclick=function(){
-                                document.getElementById("page_all").innerHTML = "";
-                                $("#page_page").val(msg["page_arr"].page_count);
-                                find_btt.click();
-                            };
-                            document.getElementById("page_u").onclick=function(){
-                                document.getElementById("page_all").innerHTML = "";
-                                $("#page_page").val(parseFloat(msg["page_arr"].page)-1);
-                                find_btt.click();
-                            };
-                            document.getElementById("page_d").onclick=function(){
-                                $("#page_page").val(parseFloat(msg["page_arr"].page)+1);
-                                if($("#page_page").val()<=parseFloat(msg["page_arr"].page_count)){
-                                    document.getElementById("page_all").innerHTML = "";
-                                    find_btt.click();
                                 }
-                            };
-                            $(".plan_xiugai").click(function(){
-                                document.querySelector(".append_plan").style.display="block";
+                                document.getElementById("page_min").style.display="block";
+                                document.getElementById("page_max").style.display="block";
+                                document.getElementById("page_u").style.display="block";
+                                document.getElementById("page_d").style.display="block";
+                                document.getElementById("pageall").style.display="block";
+
+                                document.getElementById("pageall").innerText = "共" + msg["page_arr"].page_count + "页";
+                                $(".page").click(function () {
+                                    $("#tb tr:not(:first)").empty();
+                                    $("#page_page").val($(this).text());
+                                    find_btt.click();
+                                });
+                                document.getElementById("page_min").onclick = function () {
+                                    $("#page_page").val(1);
+                                    find_btt.click();
+                                };
+                                document.getElementById("page_max").onclick = function () {
+                                    $("#page_page").val(msg["page_arr"].page_count);
+                                    find_btt.click();
+                                };
+                                document.getElementById("page_u").onclick = function () {
+                                    $("#page_page").val(parseFloat(msg["page_arr"].page) - 1);
+                                    find_btt.click();
+                                };
+                                document.getElementById("page_d").onclick = function () {
+                                    $("#page_page").val(parseFloat(msg["page_arr"].page) + 1);
+                                    if ($("#page_page").val() <= parseFloat(msg["page_arr"].page_count)) {
+                                        find_btt.click();
+                                    }
+                                };
+                            }else{
+                                document.getElementById("page_min").style.display="none";
+                                document.getElementById("page_max").style.display="none";
+                                document.getElementById("page_u").style.display="none";
+                                document.getElementById("page_d").style.display="none";
+                                document.getElementById("pageall").style.display="none";
+                            }
+                            $(".plan_xiugai").click(function () {
+                                document.querySelector(".append_plan").style.display = "block";
                                 var id = $(this).attr('up_id');
                                 $.ajax({
                                     url: "/index.php/Home/Property/update_list",
@@ -692,7 +722,6 @@
                             success: function (msg) {
                                 if (msg == 1) {
                                     alert("删除成功！");
-                                    document.getElementById("page_all").innerHTML="";
                                     find_btt.click();
                                 } else if (msg == 2) {
                                     alert("删除失败！");
@@ -720,7 +749,6 @@
                         success: function (msg) {
                             if (msg == 1) {
                                 alert("通过成功！");
-                                document.getElementById("page_all").innerHTML="";
                                 find_btt.click();
                             } else if (msg == 2) {
                                 alert("通过失败！");
@@ -747,7 +775,6 @@
                         success: function (msg) {
                             if (msg == 1) {
                                 alert("退回成功！");
-                                document.getElementById("page_all").innerHTML="";
                                 find_btt.click();
                             } else if (msg == 2) {
                                 alert("退回失败！");
@@ -759,8 +786,16 @@
 
                     });
                 });
+//                excel
+                document.getElementById("copy_excel").onclick=function() {
+                    if ($("tr:first").text() != "") {
+                        window.open("/index.php/Home/Staff/php_excel");
+                    } else {
+                        alert("程序有误，请联系管理员！");
+                    }
+                };
 //                保存修改
-                $("#submit_one").click(function(){
+                $("#submit_one").click(function () {
                     var data = $('#myform_one').serialize();//将表单数据以字符串形式获取
                     $.ajax({
                         url: "/index.php/Home/Property/plan_pro",
@@ -772,9 +807,8 @@
                         success: function (msg) {
                             if (msg == 2) {
                                 alert("修改成功！");
-                                document.querySelector(".append_plan").style.display="none";
+                                document.querySelector(".append_plan").style.display = "none";
                                 $("#foot_qingkong").trigger("click");
-                                document.getElementById("page_all").innerHTML="";
                                 find_btt.click();
                             } else if (msg == 3) {
                                 alert("保存失败,请填写完整数据！");

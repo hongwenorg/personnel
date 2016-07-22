@@ -1,4 +1,4 @@
-<div id="plan" style="background:white; height:900px;border-bottom: none">
+<div id="plan" style="background-color:white;padding-bottom:200px;">
     <style>
         .append_plhead {
             height: 40px;
@@ -149,6 +149,22 @@
             background-size: 600px 180px;
             background-position: 50% 90px;
         }
+        .hidden_input{
+            background: none;
+        }
+        .procedure{
+            width:400px;
+            margin-left: 2.5%;
+            margin-top: 15px;
+            background-color: #ed5565;
+            border-top-left-radius:5px;
+            border-top-right-radius:5px;
+            height:30px;
+            color:white;
+            line-height: 30px;
+            font-weight: bold;
+            padding-left:20px;
+        }
 
     </style>
     <link rel="stylesheet" href="/public/css/Content_staff.css" type="text/css">
@@ -227,10 +243,10 @@
             </div>
         </div>
     </form>
-
+    <div class="procedure">资金申请流程：☞&nbsp;资金申请&nbsp;☞&nbsp;资金审批&nbsp;☞&nbsp;审批通过</div>
     <div style="width:95%;margin-left:2.5%;overflow-x: scroll">
         <form method="post" id="myform_two" onSubmit="return false;">
-            <table class="tb" cellpadding="2" cellspacing="0" id="tb">
+            <table class="tb" cellpadding="2" cellspacing="0" id="tb" style="background:none">
                 <tr class="trr1" style="min-width:50px ">
                     <th style="min-width:50px">
                         <div><input type="checkbox" class="checkbox_all" id="checkbox_all">
