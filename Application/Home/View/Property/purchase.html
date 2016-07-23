@@ -192,6 +192,7 @@
                 purchase_link.href = filename + ".html";
                 document.getElementById("append_link").appendChild(purchase_link);
                 purchase_link.onload = function () {
+                    console.log(filename);
                     var container = purchase_link.import.body;
                     document.getElementById("purchase_body").innerHTML = container.innerHTML;
                     document.getElementById("purchase_body").style.background="none";

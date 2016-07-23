@@ -62,9 +62,22 @@ class PropertyController extends CommonController {
 				$check_name = $check_val['check_name'];
 			}
 		}
-		$array = $model->where("check_id = $check_id and is_del=0 and add_user='".$_SESSION['userid']."'".$where)->select();
+		if($check_name == "待提交"){
+			$array = $model->where("check_id in ($check_id,3) and is_del=0 and add_user='".$_SESSION['userid']."'".$where)->select();
+		}else if($check_name == "计划通过"){
+			$array = $model->where("check_id in ($check_id,9) and is_del=0 and add_user='".$_SESSION['userid']."'".$where)->select();
+		}else{
+			$array = $model->where("check_id in ($check_id,14) and is_del=0 and add_user='".$_SESSION['userid']."'".$where)->select();
+		}
+		
 		if(!empty($array)){
 			foreach($array as &$val){
+				foreach($check_array as $check_val){
+					if($check_val['id'] == $val['check_id']){
+						$check_id =  $check_val['id'];
+						$check_name = $check_val['check_name'];
+					}
+				}
 				$val['check_name'] = $check_name;
 				foreach($class_post_array as $class_post_val){
 					if($val['class_post_id'] == $class_post_val['id']){
@@ -126,13 +139,15 @@ class PropertyController extends CommonController {
 		//echo $_SESSION['userid'];die;
 		
 		if(!empty($_POST['status_name'])){
-			$status_name = $_POST['status_name'];
-			foreach($check_array as $check_val){
-				if($check_val['check_name'] == $status_name){
-					$check_id =  $check_val['id'];
-					$check_name = $check_val['check_name'];
+			$status_name = explode(",",$_POST['status_name']);
+			foreach($status_name as $status_val){
+				foreach($check_array as $check_val){
+					if($check_val['check_name'] == $status_val){
+						$check_id .=  $check_val['id'].",";
+					}
 				}
 			}
+			$check_id = rtrim($check_id,",");
 		}
 		/*
 		* 以下是分页程序
@@ -145,7 +160,7 @@ class PropertyController extends CommonController {
 		}
 		$page_num = 10;//每页多少条
 		if(!empty($_POST['status_name'])){
-			$count = $model->where("check_id = $check_id and is_del=0 and add_user='".$_SESSION['userid']."'".$where)->count(); //获得记录总数
+			$count = $model->where("check_id in ($check_id) and is_del=0 and add_user='".$_SESSION['userid']."'".$where)->count(); //获得记录总数
 		}else{
 			$count = $model->where("check_id not in(1,2,3,8,9,12,14,21) and is_del=0 and add_user='".$_SESSION['userid']."'".$where)->count(); //获得记录总数
 		}
@@ -156,7 +171,7 @@ class PropertyController extends CommonController {
 		* 分页程序结束
 		*/
 		if(!empty($_POST['status_name'])){
-			$array = $model->where("check_id = $check_id and is_del=0 and add_user='".$_SESSION['userid']."'".$where)->limit($startCount,$page_num)->select();
+			$array = $model->where("check_id in ($check_id) and is_del=0 and add_user='".$_SESSION['userid']."'".$where)->limit($startCount,$page_num)->select();
 		}else{
 			$array = $model->where("check_id not in(1,2,3,8,9,12,14,21) and is_del=0 and add_user='".$_SESSION['userid']."'".$where)->limit($startCount,$page_num)->order("check_id")->select();
 		}
@@ -164,11 +179,9 @@ class PropertyController extends CommonController {
 		
 		if(!empty($array)){
 			foreach($array as &$val){
-				if(empty($_POST['status_name'])){
-					foreach($check_array as $check_val){
-						if($check_val['id'] == $val['check_id']){
-							$check_name = $check_val['check_name'];
-						}
+				foreach($check_array as $check_val){
+					if($check_val['id'] == $val['check_id']){
+						$check_name = $check_val['check_name'];
 					}
 				}
 				$val['check_name'] = $check_name;
@@ -287,10 +300,14 @@ class PropertyController extends CommonController {
 				$array = array();
 				$user_basic = D("user_basic");
 				//echo $_SESSION['userid'];die;
-				$apply_arr = $model->where("id='".$val."'")->find();
+				$apply_arr = $model->where("id=".$val)->find();
+				//echo json_encode($apply_arr);exit;
 				foreach($check_array as $check_val){
 					if($check_val['id'] == $apply_arr['check_id']){
-						if($check_val['check_name'] == '校长审核'){
+						if($check_val['check_name'] == '待提交'){
+							$check_name = '校长审核';
+							$project_type = '计划申请';
+						}else if($check_val['check_name'] == '校长审核'){
 							$check_name = '部门审核';
 							$project_type = '计划申请';
 						}else if($check_val['check_name'] == '部门审核'){
@@ -338,7 +355,7 @@ class PropertyController extends CommonController {
 					}
 				}
 
-				$stult = $model->where("id='".$val."'")->save(array("check_id"=>$check_id,'project_type'=>$check_name));
+				$stult = $model->where("id='".$val."'")->save(array("check_id"=>$check_id,'project_type'=>$project_type));
 			}
 			echo 1;exit;
 		
@@ -501,7 +518,7 @@ class PropertyController extends CommonController {
 					$check_name = $check_val['check_name'];
 				}
 			}
-			$arr['project_type'] = $status_name;
+			$arr['project_type'] = "计划申请";
 			$arr['check_id'] = $check_id;
 			
 			$arr['add_user'] = $user_id;

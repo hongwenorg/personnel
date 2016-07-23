@@ -434,7 +434,7 @@
                                   $.ajax({
                         url: "/index.php/Home/Property/plan_table_page",
                         data: {
-                            'status_name': '校长审核',
+                            'status_name': '中心审核,中心确认',
                             'status': status,
                             'content': content,
                             "month": month,
@@ -575,7 +575,7 @@
                     var data = $('#myform_two').serialize();//将表单数据以字符串形式获取
                     $.ajax({
                         url: "/index.php/Home/Property/plan_add",
-                        data: {'data': data, 'num': '11', 'type': '资金申请审核中'},
+                        data: {'data': data},
                         type: "post",
                         async: "false",
                         traditional: "true",
