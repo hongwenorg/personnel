@@ -150,7 +150,7 @@
         for (var i = 0; i < mouse_modules.length; i++) {
             if (mouse_modules[i].the_level == id) {
                 append_li = document.createElement("li");
-                append_li.innerHTML = mouse_modules[i].modules_name;
+                append_li.innerHTML = mouse_modules[i].modules_name+"<div style='opacity:0;border:1px solid red;position:relative;top:-30px;'>" + mouse_modules[i].id + "</div>";
                 append_ul.appendChild(append_li);
                 document.getElementById("purchase_div").appendChild(append_ul);
             }
@@ -159,7 +159,6 @@
         for(var j=0;j<append_liall.length;j++){
             append_liall[j].style.width=100/append_liall.length+"%";
         }
-
     }
         document.getElementById("tab_click").addEventListener("mouseover",function(e){
             var mouse_modules02=document.querySelectorAll(".mouse_modules");
@@ -180,10 +179,10 @@
             append_allli[j].style.color="white";
             append_allli[j].style.fontWeight="100";
         }
-        target.style.color="#474848";
-        target.style.fontWeight="bold";
+        target.parentNode.style.color="#474848";
+        target.parentNode.style.fontWeight="bold";
         for (var i = 0; i < mouse_modules.length; i++) {
-            if (target.innerText === mouse_modules[i].modules_name) {
+            if (target.innerText === mouse_modules[i].id) {
                 document.getElementById("append_link").innerHTML = "";
                 var modules_files = mouse_modules[i].modules_file;
                 var purchase_link = document.createElement("link");
