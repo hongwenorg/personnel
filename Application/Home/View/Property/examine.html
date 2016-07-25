@@ -43,6 +43,7 @@
             border-radius: 10px;
             outline: none;
             padding-left: 10px;
+            background: none;
         }
 
         .append_plan_body > ul > li > select {
@@ -56,6 +57,7 @@
             border-radius: 10px;
             outline: none;
             padding-left: 10px;
+            background:none;
         }
 
         .append_plan_foot {
@@ -148,6 +150,7 @@
             background-repeat: no-repeat;
             background-size: 600px 180px;
             background-position: 50% 50px;
+            border:none;
         }
         .hidden_input{
             background: none;
@@ -177,10 +180,11 @@
         <span id='prov_append'></span>
         <button type="button" id="find_btt" style="float:right"><img src="/public/img/sousuo.png" class="sou_suo"
                                                                      alt=""></button>
+        <!--时间控件-->
     </div>
     <form method="post" id="myform_one" onSubmit="return false;">
-        <div class="append_plan" style="width:100%;margin:0;display:none;">
-            <div class="append_plhead">
+        <div class="append_plan" style="width:95%;margin-left:2.5%;display:none;">
+            <div class="append_plhead" style="width:100%;margin:0">
                 <input type="reset" value="清空" class="foot_qingkong" id="foot_qingkong">
                 <input type="submit" value="保存" class="foot_baocun" id="submit_one">
             </div>
@@ -347,7 +351,7 @@
     <input type="button" value="下一页" class='page_top' id="page_d" style="display:none">
     <input type='button' value='尾页' class='page_top' id="page_max" style="display:none">
 
-    <div id="pageall" style="display:block"></div>
+    <div id="pageall" style="display:none"></div>
     <div style="width:95%;margin-left:2.5%">
         <input type="button" style="margin-top: 30px" value="删除" class="delet_apply" id="delet_apply"/>
         <input type="button" style="margin-top: 30px" value="退回" class="tj_apply" id='submit_three'/>
@@ -362,7 +366,6 @@
                 var pagemin = document.getElementById("page_min");
                 var pagemax = document.getElementById("page_max");
                 var copy_excel = document.getElementById("copy_excel");
-                var copy_dayin = document.getElementById("copy_dayin");
                 var tb = document.getElementById("tb");
                 var find_btt = document.getElementById("find_btt");
                 var tb_content = tb.innerHTML;
@@ -370,6 +373,7 @@
                 var plan_option = [];
                 var purchase_option = [];
                 var finance_type_option = [];
+                var check_option = [];
 
                 document.getElementById('plan_date').valueAsDate = new Date();
                 $.ajax({
@@ -390,9 +394,12 @@
                                     purchase_option.push(msg['purchase'][key]);
                                 } else if (keys == 'finance_type') {
                                     finance_type_option.push(msg['finance_type'][key]);
+                                } else if (keys == 'check') {
+                                    check_option.push(msg['check'][key]);
                                 }
                             }
                         }
+                        console.log(check_option);
                     }
 
                 });
@@ -505,13 +512,14 @@
                         pageall.style.display = "block";
                         pagemin.style.display = "block";
                         pagemax.style.display = "block";
-                        document.getElementById("panduan").innerHTML=arr_num[j];
+                        document.getElementById("panduan").innerHTML = arr_num[j];
                     }
 
                 }
 
 
 //分页处理搜索数据等  end
+
 
                 //期次的选择（当这个文本框失去鼠标时触动）执行搜索
                 document.getElementById('plan_date').onblur = function () {
@@ -557,44 +565,44 @@
                                     arr_staff.push(msg[key]);
                                 }
                             }
-//                            console.log(msg['page_arr']);
+                            console.log(msg['page_arr']);
                             if (msg["status"] != 2) {
                                 ArrSort();
                             } else {
                                 document.getElementById("sousuo_img_out").style.display = "none";
                             }
                             var page_num = [];
-                            if (document.getElementById("panduan").innerHTML!="") {
+                            if (document.getElementById("panduan").innerHTML != "") {
                                 for (var i = 0; i < msg["page_arr"].page_count; i++) {
-                                        var page_one = document.createElement("span");
-                                        page_num[i] = i + 1;
-                                        page_one.setAttribute("class", "page");
-                                        page_one.innerText = parseFloat(page_num[i]);
-                                        document.getElementById("page_all").appendChild(page_one);
-                                        var page_parent = page_one.parentNode;
-                                        if (page_one.innerText == msg["page_arr"].page) {
-                                            page_one.style.background = "#00c8c8";
-                                        }
-                                        if (page_one.innerText < parseFloat(msg["page_arr"].page) - 2) {
-                                            page_parent.removeChild(page_one);
-                                        }
-                                        if (page_one.innerText > parseFloat(msg["page_arr"].page) + 2) {
-                                            page_one.style.display = "none";
-                                            page_parent.removeChild(page_one);
-                                        }
+                                    var page_one = document.createElement("span");
+                                    page_num[i] = i + 1;
+                                    page_one.setAttribute("class", "page");
+                                    page_one.innerText = parseFloat(page_num[i]);
+                                    document.getElementById("page_all").appendChild(page_one);
+                                    var page_parent = page_one.parentNode;
+                                    if (page_one.innerText == msg["page_arr"].page) {
+                                        page_one.style.background = "#00c8c8";
+                                    }
+                                    if (page_one.innerText < parseFloat(msg["page_arr"].page) - 2) {
+                                        page_parent.removeChild(page_one);
+                                    }
+                                    if (page_one.innerText > parseFloat(msg["page_arr"].page) + 2) {
+                                        page_one.style.display = "none";
+                                        page_parent.removeChild(page_one);
+                                    }
                                 }
                                 document.getElementById("page_min").style.display="block";
                                 document.getElementById("page_max").style.display="block";
                                 document.getElementById("page_u").style.display="block";
                                 document.getElementById("page_d").style.display="block";
                                 document.getElementById("pageall").style.display="block";
+
                                 document.getElementById("pageall").innerText = "共" + msg["page_arr"].page_count + "页";
                                 $(".page").click(function () {
                                     $("#tb tr:not(:first)").empty();
                                     $("#page_page").val($(this).text());
                                     find_btt.click();
                                 });
-
                                 document.getElementById("page_min").onclick = function () {
                                     $("#page_page").val(1);
                                     find_btt.click();
@@ -620,47 +628,47 @@
                                 document.getElementById("page_d").style.display="none";
                                 document.getElementById("pageall").style.display="none";
                             }
+                            $(".plan_xiugai").click(function () {
+                                document.querySelector(".append_plan").style.display = "block";
+                                var id = $(this).attr('up_id');
+                                $.ajax({
+                                    url: "/index.php/Home/Property/update_list",
+                                    data: {'id': id},
+                                    type: "post",
+                                    async: "false",
+                                    traditional: "true",
+                                    cache: "false",
+                                    success: function (msg) {
+                                        if (msg == 2) {
+                                            alert("数据出错，请联系管理员！");
+                                        } else {
+                                            var data = JSON.parse(msg);
+                                            $("#apply_id").val(data.id);
+                                            $("#select_01").val(data.plan_id);
+                                            $("#select_02").val(data.class_post_id);
+                                            $("#select_03").val(data.finance_type_id);
+                                            $("#info").val(data.info);
+                                            $("#unit").val(data.unit);
+                                            $("#price").val(data.unit_price);
+                                            $("#count").val(data.count);
+                                            $("#money").val(data.money);
+                                            $("#select_04").val(data.receive_school);
+                                            $("#receive_user").val(data.receive_user);
+                                            $("#receive_card").val(data.receive_card);
+                                            $("#expect_date").val(data.expect_date);
+                                            $("#other").val(data.other);
+                                            $("#select_05").val(data.purchase_id);
+                                            $("#buy_brand").val(data.buy_brand);
+                                            $("#buy_info").val(data.buy_info);
+                                            $("#buy_transport").val(data.buy_transport);
+                                            $("#month").val(data.month);
+                                        }
+                                    }
+                                });
+                            });
                         }
                     });
                 };
-                $(".plan_xiugai").click(function () {
-                    document.querySelector(".append_plan").style.display = "block";
-                    var id = $(this).attr('up_id');
-                    $.ajax({
-                        url: "/index.php/Home/Property/update_list",
-                        data: {'id': id},
-                        type: "post",
-                        async: "false",
-                        traditional: "true",
-                        cache: "false",
-                        success: function (msg) {
-                            if (msg == 2) {
-                                alert("数据出错，请联系管理员！");
-                            } else {
-                                var data = JSON.parse(msg);
-                                $("#apply_id").val(data.id);
-                                $("#select_01").val(data.plan_id);
-                                $("#select_02").val(data.class_post_id);
-                                $("#select_03").val(data.finance_type_id);
-                                $("#info").val(data.info);
-                                $("#unit").val(data.unit);
-                                $("#price").val(data.unit_price);
-                                $("#count").val(data.count);
-                                $("#money").val(data.money);
-                                $("#select_04").val(data.receive_school);
-                                $("#receive_user").val(data.receive_user);
-                                $("#receive_card").val(data.receive_card);
-                                $("#expect_date").val(data.expect_date);
-                                $("#other").val(data.other);
-                                $("#select_05").val(data.purchase_id);
-                                $("#buy_brand").val(data.buy_brand);
-                                $("#buy_info").val(data.buy_info);
-                                $("#buy_transport").val(data.buy_transport);
-                                $("#month").val(data.month);
-                            }
-                        }
-                    });
-                });
 
 
                 find_btt.click();
@@ -756,7 +764,8 @@
 
                     });
                 });
-                //保存或者修改操作
+
+//                保存修改
                 $("#submit_one").click(function () {
                     var data = $('#myform_one').serialize();//将表单数据以字符串形式获取
                     $.ajax({
@@ -778,6 +787,7 @@
                         }
                     });
                 });
+
             })()
         };
 
