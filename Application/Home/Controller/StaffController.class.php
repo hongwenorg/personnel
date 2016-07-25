@@ -108,7 +108,7 @@ class StaffController extends CommonController {
 			foreach($detailed_arr as $detailed_val){
 				if(strstr($detailed_val['check_content'],"旷工")){
 					$str .= date("d",strtotime($detailed_val['check_date']))."旷工；";
-				}else if(strstr($detailed_val['check_content'],"灵活打卡异常"){
+				}else if(strstr($detailed_val['check_content'],"灵活打卡异常")){
 					$str .= date("d",strtotime($detailed_val['check_date']))."灵活打卡异常；";
 				}else{
 					$str .= date("d",strtotime($detailed_val['check_date'])).$detailed_val['check_content']."；";
