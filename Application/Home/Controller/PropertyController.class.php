@@ -287,6 +287,10 @@ class PropertyController extends CommonController {
 
 	//提交申请
 	function plan_add(){
+		if(empty($_POST['data'])){
+			echo 3;//提交失败
+			exit;
+		}
 		$perfs = explode("&", $_POST['data']);
 		foreach($perfs as $perf) {
 		    $perf_key_values = explode("=", $perf);

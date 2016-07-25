@@ -666,7 +666,6 @@ class CheckingController extends CommonController {
 				if($val['count_yes'] < 0){
 					$val['count_yes'] = 0;
 				}
-				
 
 
 				//是否满勤
@@ -675,6 +674,7 @@ class CheckingController extends CommonController {
 				}else{
 					$val['is_no'] = '否';
 				}
+				$val['date'] = $check_where;
 			}
 			$data_arr['month'] = $month_arr[Intval($now_time)-1];
 			$data_arr['count_day'] = $day_day;
@@ -685,6 +685,7 @@ class CheckingController extends CommonController {
 			$data_arr['status'] = 1;
 			$data_arr['check_content'] = $check_content;
 			//print_r($data_arr);die;
+			$_SESSION['time_date'] = $year_day."年".$month_day."月";
 			$_SESSION['select_content'] = $data_arr;
 			echo json_encode($data_arr);
 		}else{

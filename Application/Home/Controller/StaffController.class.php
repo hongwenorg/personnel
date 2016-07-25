@@ -77,11 +77,12 @@ class StaffController extends CommonController {
 		//Excel表格式,这里简略写了8列
 		$letter = array('A','B','C','D','E','F','F','G','H','I','J','K','L','M','N','O','P','Q');
 		//表头数组
-		$tableheader = array('序号','姓名','单位部门','职务','讲师级别','绩效系数','元老补助','迟到','早退','事假','病假','加班','旷工','未打卡','应出勤天数','核算出勤天数','是否满勤');
+		$tableheader = array('序号','姓名','单位部门','职务','讲师级别','绩效系数','元老补助','迟到','早退','事假','病假','加班','旷工','未打卡','应出勤天数','核算出勤天数','是否满勤','详细信息');
 		//填充表头信息
 		for($i = 0;$i < count($tableheader);$i++) {
 			$excel->getActiveSheet()->setCellValue("$letter[$i]1","$tableheader[$i]");
 		}
+		$check_record = D('check_record');
 		//表格数组
 		foreach($content_arr as $key => $val){
 			$data[$key][0] = ($key+1);
@@ -101,6 +102,22 @@ class StaffController extends CommonController {
 			$data[$key][14] = $val["over_count_day"];
 			$data[$key][15] = $val["count_yes"];
 			$data[$key][16] = $val["is_no"];
+
+			$detailed_arr = $check_record->query("SELECT check_date,check_content FROM `check_record` WHERE ( `user_id` = ".$val['user_id']." ) AND ( `check` = '不合格' ) ".$val["date"]);
+			$str = "";
+			foreach($detailed_arr as $detailed_val){
+				if(strstr($detailed_val['check_content'],"旷工")){
+					$str .= date("d",strtotime($detailed_val['check_date']))."旷工；";
+				}else if(strstr($detailed_val['check_content'],"灵活打卡异常"){
+					$str .= date("d",strtotime($detailed_val['check_date']))."灵活打卡异常；";
+				}else{
+					$str .= date("d",strtotime($detailed_val['check_date'])).$detailed_val['check_content']."；";
+				}
+				
+			}
+			
+			$val['detailed'] = rtrim($str,'；');
+			$data[$key][17] = $val["detailed"];
 		}
 		//填充表格信息
 		for ($i = 2;$i <= count($data) + 1;$i++) {
@@ -119,7 +136,7 @@ class StaffController extends CommonController {
 		header("Content-Type:application/vnd.ms-execl");
 		header("Content-Type:application/octet-stream");
 		header("Content-Type:application/download");;
-		header('Content-Disposition:attachment;filename="鸿文员工考勤表.xls"');
+		header('Content-Disposition:attachment;filename="'.$_SESSION['time_date'].'鸿文员工考勤表.xls"');
 		header("Content-Transfer-Encoding:binary");
 		$write->save('php://output');
 	}
