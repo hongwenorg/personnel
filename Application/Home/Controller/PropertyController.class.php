@@ -162,7 +162,7 @@ class PropertyController extends CommonController {
 		if(!empty($_POST['status_name'])){
 			$count = $model->where("check_id in ($check_id) and is_del=0 and add_user='".$_SESSION['userid']."'".$where)->count(); //获得记录总数
 		}else{
-			$count = $model->where("check_id not in(1,2,3,8,9,12,14,21) and is_del=0 and add_user='".$_SESSION['userid']."'".$where)->count(); //获得记录总数
+			$count = $model->where("check_id not in(1,2,3,8,9,12,14) and is_del=0 and add_user='".$_SESSION['userid']."'".$where)->count(); //获得记录总数
 		}
 		
 		$totalPage = ceil($count/$page_num); //计算出总页数
@@ -173,7 +173,7 @@ class PropertyController extends CommonController {
 		if(!empty($_POST['status_name'])){
 			$array = $model->where("check_id in ($check_id) and is_del=0 and add_user='".$_SESSION['userid']."'".$where)->limit($startCount,$page_num)->select();
 		}else{
-			$array = $model->where("check_id not in(1,2,3,8,9,12,14,21) and is_del=0 and add_user='".$_SESSION['userid']."'".$where)->limit($startCount,$page_num)->order("check_id")->select();
+			$array = $model->where("check_id not in(1,2,3,8,9,12,14) and is_del=0 and add_user='".$_SESSION['userid']."'".$where)->limit($startCount,$page_num)->order("check_id")->select();
 		}
 		
 		
