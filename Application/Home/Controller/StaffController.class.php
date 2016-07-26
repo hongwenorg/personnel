@@ -12,7 +12,7 @@ header("Content-type:text/html;charset=utf-8");
 header('Access-Control-Allow-Origin: *');
 require_once( "/Public/public.php" );
 class StaffController extends CommonController {
-	//excel生成函数
+	//员工信息excel生成函数
 	public function staff_excel(){
 		if(empty($_SESSION['select_content'])){
 			$this->error("生成页面错误，请联系管理员！");exit;
@@ -63,8 +63,59 @@ class StaffController extends CommonController {
 		$write->save('php://output');
 	}
 
+	//打卡记录生成excel生成函数
+	public function check_index_excel(){
+		if(empty($_SESSION['select_content'])){
+			$this->error("生成页面错误，请联系管理员！");exit;
+		}
+		$content_arr = array();
+		$content_arr = $_SESSION['select_content'];
+		import("Vendor.PHPExcel");
+		//创建对象
+		$excel = new \PHPExcel();
+		//Excel表格式,这里简略写了8列
+		$letter = array('A','B','C','D','E','F','F','G');
+		//表头数组
+		$tableheader = array('序号','员工号','姓名','单位部门','职务','打卡时间');
+		//填充表头信息
+		for($i = 0;$i < count($tableheader);$i++) {
+			$excel->getActiveSheet()->setCellValue("$letter[$i]1","$tableheader[$i]");
+		}
+		//表格数组
+		foreach($content_arr as $key => $val){
+			$data[$key][0] = ($key+1);
+			$data[$key][1] = $val["user"];
+			$data[$key][2] = $val["name"];
+			$data[$key][3] = $val["entry_date"];
+			$data[$key][4] = $val["campus"];
+			$data[$key][5] = $val["post"];
+			$data[$key][6] = $val["telephone"];
+			$data[$key][7] = $val["qq"];
+		}
+		//填充表格信息
+		for ($i = 2;$i <= count($data) + 1;$i++) {
+			$j = 0;
+			foreach ($data[$i - 2] as $key=>$value) {
+				$excel->getActiveSheet()->setCellValue("$letter[$j]$i","$value");
+				$j++;
+			}
+		}
+		//创建Excel输入对象
+		$write = new \PHPExcel_Writer_Excel5($excel);
+		header("Pragma: public");
+		header("Expires: 0");
+		header("Cache-Control:must-revalidate, post-check=0, pre-check=0");
+		header("Content-Type:application/force-download");
+		header("Content-Type:application/vnd.ms-execl");
+		header("Content-Type:application/octet-stream");
+		header("Content-Type:application/download");;
+		header('Content-Disposition:attachment;filename="鸿文员工档案表.xls"');
+		header("Content-Transfer-Encoding:binary");
+		$write->save('php://output');
+	}
 
-	//excel生成函数
+
+	//考勤记录excel生成函数
 	public function check_excel(){
 		if(empty($_SESSION['select_content'])){
 			$this->error("生成页面错误，请联系管理员！");exit;

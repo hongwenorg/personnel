@@ -332,7 +332,7 @@ function dayin_blank() {
 function excel_blank() {
 
     if ($("tr:first").text() != "") {
-        window.open("/index.php/Home/Staff/php_excel");
+        window.open("/index.php/Home/Staff/check_index_excel");
     } else {
         alert("程序有误，请联系管理员！");
     }
