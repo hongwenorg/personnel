@@ -48,17 +48,19 @@
             height: 30px;
             margin-top: -2px;
         }
+
         .purchase_div > ul > li {
             float: left;
             text-align: center;
             line-height: 30px;
-            height:30px;
+            height: 30px;
             margin: 0;
-            color:white;
+            color: white;
             cursor: pointer;
         }
+
         .purchase_div > ul > li:hover {
-            color:#474848;
+            color: #474848;
         }
 
         .purchase_div > ul {
@@ -69,7 +71,8 @@
             width: 100%;
             height: 100%;
         }
-        .purchase_body{
+
+        .purchase_body {
             background-image: url(/public/img/logo-1.jpg);
             background-repeat: no-repeat;
             background-size: 600px 180px;
@@ -79,32 +82,29 @@
     </style>
 </head>
 <body style="background-color: #efefef">
-<div style="width:100%;height:5000px;z-index:99999;position:fixed;top:0;display:none;background-color: white;opacity: 0.5" id="sousuo_img_out">
+    <div style="width:100%;height:5000px;z-index:99999;position:fixed;top:0;display:none;background-color: white;opacity: 0.5" id="sousuo_img_out">
     <img src="/public/img/sousuo.gif" alt="" id="sousuo_img">
-    <p style="color:#00c8c8;font-size: 20px;font-weight:bold; position:fixed;left:44%;top:460px; z-index: 99999"
-       id="sousuo_img_txt">数据正在拼命加载中。。。。</p>
-</div>
-<div style="width:100%;height:5000px;z-index:99999;position:fixed;top:0;display:none;background-color: #555a5a;opacity: 0.5"
-     id="kaoqin_out"></div>
-<!--*********************         头部引用        **************** **-->
-<div class="head_01">
-    <p id="bigfont">固定资产管理</p>
-    <script src="/public/js/head.js" type="text/javascript" charset="utf-8"></script>
-</div>
-<div class="zpgwl" id="tab">
-    <div id="tab_click" class="zpg_head"
-         style="border-top-right-radius:10px;border-top-left-radius:10px;overflow: hidden; background-color: rgb(239, 239, 239) !important;">
+    <p style="color:#00c8c8;font-size: 20px;font-weight:bold; position:fixed;left:44%;top:460px; z-index: 99999" id="sousuo_img_txt">数据正在拼命加载中。。。。</p>
     </div>
-</div>
-<div id="container" style="width:94.87%; margin:5px auto;">
-    <div id="purchase_div" class="purchase_div"></div>
-    <div id="purchase_body" class="purchase_body"></div>
-    <div id="append_link"></div>
-</div>
+    <div style="width:100%;height:5000px;z-index:99999;position:fixed;top:0;display:none;background-color: #555a5a;opacity: 0.5" id="kaoqin_out"></div>
+<!--*********************         头部引用        **************** **-->
+    <div class="head_01">
+        <p id="bigfont">固定资产管理</p>
+        <script src="/public/js/head.js" type="text/javascript" charset="utf-8"></script>
+    </div>
+    <div class="zpgwl" id="tab">
+        <div id="tab_click" class="zpg_head" style="border-top-right-radius:10px;border-top-left-radius:10px;overflow: hidden; background-color: rgb(239, 239, 239) !important;"></div>
+    </div>
+    <div id="container" style="width:94.87%; margin:5px auto;">
+        <div id="purchase_div" class="purchase_div"></div>
+        <div id="purchase_body" class="purchase_body"></div>
+        <div id="append_link"></div>
+    </div>
 </body>
 <script>
     var check_append = [];
     var mouse_modules = [];
+    //页面加载事件
     window.onload = function () {
         var check_append = [];
         $.ajax({
@@ -114,20 +114,21 @@
             async: "false",
             success: function (data) {
                 var check_append_modules = [];
-                msg = JSON.parse(data);
-                console.log(msg);
-                mouse_modules = msg[1];
-
+                    msg = JSON.parse(data);
+                    mouse_modules = msg[1];
                 var arr_num = [];
                 for (key in msg[0]) {
                     if (key != "status" && msg["status"] != 2) {
                         check_append_modules.push(msg[0][key]);
                     }
                 }
+
                 for (var i = 0; i < check_append_modules.length; i++) {
                     var append_div = document.createElement("div");
+                    //给导航条添加 鼠标移入事件
                     document.getElementById("tab_click").appendChild(append_div).innerHTML = "<div class='mouse_modules' onmouseover='id_over(" + check_append_modules[i].id + ")'>" + check_append_modules[i].modules_name + "</div>";
                 }
+
                 var click_div = document.getElementById("tab_click");
                 var tab_child = document.querySelectorAll('.mouse_modules');
                 click_div.style.width = "95%";
@@ -137,65 +138,76 @@
             }
         });
     };
-
+    //鼠标移入  创建  ul li
     function id_over(id) {
+    //创建ul标签
         var append_ul = document.createElement("ul");
-            append_ul.style.width="100%";
-            append_ul.style.height="30px";
-            append_ul.style.background="#3cb2b6";
-            append_ul.id="append_ulall";
-            append_ul.class="append_ulall";
-        document.getElementById("purchase_div").innerHTML = "";
+            append_ul.style.width = "100%";
+            append_ul.style.height = "30px";
+            append_ul.style.background = "#3cb2b6";
+            append_ul.id = "append_ulall";
+            append_ul.class = "append_ulall";
+            document.getElementById("purchase_div").innerHTML = "";
         var append_li;
         for (var i = 0; i < mouse_modules.length; i++) {
             if (mouse_modules[i].the_level == id) {
                 append_li = document.createElement("li");
-                append_li.innerHTML = mouse_modules[i].modules_name+"<div style='opacity:0;border:1px solid red;position:relative;top:-30px;'>" + mouse_modules[i].id + "</div>";
+                append_li.innerHTML = mouse_modules[i].modules_name + "<div style='opacity:0;border:1px solid red;position:relative;top:-30px;'>" + mouse_modules[i].id + "</div>";
                 append_ul.appendChild(append_li);
                 document.getElementById("purchase_div").appendChild(append_ul);
             }
         }
-        var append_liall=document.querySelectorAll("#append_ulall li");
-        for(var j=0;j<append_liall.length;j++){
-            append_liall[j].style.width=100/append_liall.length+"%";
+        var append_liall = document.querySelectorAll("#append_ulall li");
+        for (var j = 0; j < append_liall.length; j++) {
+            append_liall[j].style.width = 100 / append_liall.length + "%";
         }
     }
-        document.getElementById("tab_click").addEventListener("mouseover",function(e){
-            var mouse_modules02=document.querySelectorAll(".mouse_modules");
-            for(var i=0;i<mouse_modules02.length;i++){
-                mouse_modules02[i].style.background="#bbbbbb";
-                mouse_modules02[i].style.color="white";
-            }
-            var target= e.target;
-            target.style.backgroundColor="#3cb2b6";
-            target.style.color="#474848";
-        });
+    document.getElementById("tab_click").addEventListener("mouseover", function (e) {
+        var mouse_modules02 = document.querySelectorAll(".mouse_modules");
+        for (var i = 0; i < mouse_modules02.length; i++) {
+            mouse_modules02[i].style.background = "#bbbbbb";
+            mouse_modules02[i].style.color = "white";
+            mouse_modules02[i].style.fontWeight = "100";
+        }
+     //鼠标移入样式
+        var  target = e.target;
+             target.style.backgroundColor = "#3cb2b6";
+             target.style.fontWeight = "600";
+             target.style.color = "#474848";
+    });
 
-
+    //点击  导航  显示内容
     document.getElementById("purchase_div").addEventListener("click", function (e) {
         var target = e.target;
-        var append_allli=document.querySelectorAll("#append_ulall li");
-        for(var j=0;j<append_allli.length;j++){
-            append_allli[j].style.color="white";
-            append_allli[j].style.fontWeight="100";
-        }
-        target.parentNode.style.color="#474848";
-        target.parentNode.style.fontWeight="bold";
+        //获取所有 ul下的li 标签
+             var append_allli = document.querySelectorAll("#append_ulall li");
+             for (var j = 0; j < append_allli.length; j++) {
+                    append_allli[j].style.color = "white";
+                 append_allli[j].style.fontWeight = "100";
+             }
+        //点击某个元素  添加样式
+            target.parentNode.style.color = "#474848";
+             target.parentNode.style.fontWeight = "bold";
         for (var i = 0; i < mouse_modules.length; i++) {
             if (target.innerText === mouse_modules[i].id) {
                 document.getElementById("append_link").innerHTML = "";
                 var modules_files = mouse_modules[i].modules_file;
-                var purchase_link = document.createElement("link");
-                purchase_link.setAttribute("rel", "import");
-                var filename = modules_files.substr(modules_files.lastIndexOf("/") + 1);
-                purchase_link.href = filename + ".html";
-                document.getElementById("append_link").appendChild(purchase_link);
+                //创建一个 link 标签  rel 为 import ，
+                //href 地址 为 filename>html页面的名字  也就是要引入的页面
+                     var purchase_link = document.createElement("link");
+                         purchase_link.setAttribute("rel", "import");
+                     var filename = modules_files.substr(modules_files.lastIndexOf("/") + 1);
+                         purchase_link.href = filename + ".html";
+                         document.getElementById("append_link").appendChild(purchase_link);
+
+                //为link 添加一个加载事件
                 purchase_link.onload = function () {
-                    console.log(filename);
-                    var container = purchase_link.import.body;
-                    document.getElementById("purchase_body").innerHTML = container.innerHTML;
-                    document.getElementById("purchase_body").style.background="none";
-                    window[filename]();
+                     //将引入的页面内容放到 id 为 purchase_body 的标签中
+                        var container = purchase_link.import.body;
+                         document.getElementById("purchase_body").innerHTML = container.innerHTML;
+                         document.getElementById("purchase_body").style.background = "none";
+                    //调用 函数 filename
+                         window[filename]();
                 };
                 return;
             }

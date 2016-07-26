@@ -439,43 +439,6 @@ function namesort(content) {
 }();
 
 
-//*************************     布局分页     *************************
-function blk(tabb) {
-    if (tabb == 1) {
-        location.href = "/index.php/Home/Content/staff";
-    } else if (tabb == 2) {
-        location.href = "/index.php/Home/Content/staff_move";
-    } else if (tabb == 3) {
-        location.href="/index.php/Home/Content/staff_level";
-    } else if (tabb == 4) {
-        location.href="/index.php/Home/Content/staff_jiangfa"
-    } else if (tabb == 5) {
-        location.href="/index.php/Home/Content/staff_train";
-    } else if (tabb == 6) {
-        location.href="/index.php/Home/Content/staff_insurance"
-    } else if (tabb == 7) {
-        location.href = "/index.php/Home/Content/staff_leave"
-    }
-}
 
-var tab = document.getElementById("tab_click");
-tab.addEventListener("click", function (e) {
-    var target = e.target;
-    tabb1.style.background = "#bbbbbb";
-    tabb2.style.background = "#bbbbbb";
-    tabb3.style.background = "#bbbbbb";
-    tabb4.style.background = "#bbbbbb";
-    tabb5.style.background = "#bbbbbb";
-    tabb6.style.background = "#bbbbbb";
-    tabb7.style.background = "#bbbbbb";
-    tabb1.style.color = "white";
-    tabb2.style.color = "white";
-    tabb3.style.color = "white";
-    tabb4.style.color = "white";
-    tabb5.style.color = "white";
-    tabb6.style.color = "white";
-    tabb7.style.color = "white";
-    target.style.background = "white";
-    target.style.color = "black";
-}, false);
+
 

@@ -399,9 +399,7 @@
                                 }
                             }
                         }
-                        console.log(check_option);
                     }
-
                 });
                 var i;
                 for (i = 0; i < plan_option.length; i++) {
@@ -518,15 +516,15 @@
                 }
 
 
-//分页处理搜索数据等  end
+        //分页处理搜索数据等  end
 
 
-                //期次的选择（当这个文本框失去鼠标时触动）执行搜索
+        //期次的选择（当这个文本框失去鼠标时触动）执行搜索
                 document.getElementById('plan_date').onblur = function () {
                     find_btt.click();
                 };
 
-//员工信息页面搜索按钮  start
+        //员工信息页面搜索按钮  start
                 find_btt.onclick = function () {
                     document.getElementById("page_all").innerHTML = "";
                     var page = $("#page_page").val();
@@ -565,24 +563,28 @@
                                     arr_staff.push(msg[key]);
                                 }
                             }
-                            console.log(msg['page_arr']);
                             if (msg["status"] != 2) {
                                 ArrSort();
                             } else {
                                 document.getElementById("sousuo_img_out").style.display = "none";
                             }
                             var page_num = [];
+                          // 如果  id为 panduan 的标签 里的内容不为空  就正常加载  按扭
                             if (document.getElementById("panduan").innerHTML != "") {
                                 for (var i = 0; i < msg["page_arr"].page_count; i++) {
+                         //创建 分页中按扭  为span标签
                                     var page_one = document.createElement("span");
                                     page_num[i] = i + 1;
+                         //添加一个class为 page
                                     page_one.setAttribute("class", "page");
                                     page_one.innerText = parseFloat(page_num[i]);
                                     document.getElementById("page_all").appendChild(page_one);
                                     var page_parent = page_one.parentNode;
+                         //如果页码中的  数字  如后台的 页码数 相同  增添背景色
                                     if (page_one.innerText == msg["page_arr"].page) {
                                         page_one.style.background = "#00c8c8";
                                     }
+                         //如果页码数 为当前页的后面两个  与前面两个  就把其他按扭删除
                                     if (page_one.innerText < parseFloat(msg["page_arr"].page) - 2) {
                                         page_parent.removeChild(page_one);
                                     }
@@ -591,6 +593,7 @@
                                         page_parent.removeChild(page_one);
                                     }
                                 }
+                         //如果有数据的话  就将 这几个按扭  显示出来
                                 document.getElementById("page_min").style.display="block";
                                 document.getElementById("page_max").style.display="block";
                                 document.getElementById("page_u").style.display="block";
@@ -603,24 +606,29 @@
                                     $("#page_page").val($(this).text());
                                     find_btt.click();
                                 });
+                                //点击  首页按扭 触发
                                 document.getElementById("page_min").onclick = function () {
                                     $("#page_page").val(1);
                                     find_btt.click();
                                 };
+                                //点击 最后一页 触发
                                 document.getElementById("page_max").onclick = function () {
                                     $("#page_page").val(msg["page_arr"].page_count);
                                     find_btt.click();
                                 };
+                                //点击 上一页
                                 document.getElementById("page_u").onclick = function () {
                                     $("#page_page").val(parseFloat(msg["page_arr"].page) - 1);
                                     find_btt.click();
                                 };
+                                //点击下一页
                                 document.getElementById("page_d").onclick = function () {
                                     $("#page_page").val(parseFloat(msg["page_arr"].page) + 1);
                                     if ($("#page_page").val() <= parseFloat(msg["page_arr"].page_count)) {
                                         find_btt.click();
                                     }
                                 };
+                         //否则 如果  如果页面没有数据  就把按扭隐藏
                             }else{
                                 document.getElementById("page_min").style.display="none";
                                 document.getElementById("page_max").style.display="none";
@@ -672,6 +680,7 @@
 
 
                 find_btt.click();
+                //全选按扭  如果点击全选  所有数据都被选中
                 var checkbox_all = document.querySelector(".checkbox_all");
                 var check_num = 0;
                 checkbox_all.onclick = function () {
