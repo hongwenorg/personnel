@@ -19,35 +19,9 @@ var copy_excel = document.getElementById("copy_excel");
 var copy_dayin = document.getElementById("copy_dayin");
 var tb = document.getElementById("tb");
 var city = document.getElementById("city");
-var tabb1 = document.getElementById("tabb1");
-var tabb2 = document.getElementById("tabb2");
-var tabb3 = document.getElementById("tabb3");
-var tabb4 = document.getElementById("tabb4");
-var tabb5 = document.getElementById("tabb5");
-var tabb6 = document.getElementById("tabb6");
-var tabb7 = document.getElementById("tabb7");
 var tb_content = tb.innerHTML;
 //******************************     全局变量  end    ***************************
 //自适应宽度
-//var tab_click = document.getElementById("tab_click");
-//var container_width = document.getElementById("container").style.width;
-//var div_length = tab_click.children.length ;
-//document.getElementById("tab_click").style.width=container_width;
-//var tab_chile_width=document.querySelectorAll('.tab_width');
-//for(var t=0;t<tab_chile_width.length;t++) {
-// tab_chile_width[t].style.width=100/div_length+"%";
-//    if(t==tab_chile_width.length-1){
-//        tab_chile_width[t].style.borderTopRightRadius="10px";
-//        tab_chile_width[t].style.overflow="hidden";
-//    }else if(t==0){
-//        tab_chile_width[t].style.borderTopLeftRadius="10px";
-//        tab_chile_width[t].style.overflow="hidden";
-//        tab_chile_width[t].style.background="white";
-//        tab_chile_width[t].style.color="black";
-//    }
-//}
-
-
 //<!--表格id-->
 //    按回车键触发搜索按钮
 document.getElementById("sousuokuang").onkeydown = function () {
@@ -135,7 +109,6 @@ window.onload = function () {
             for (var key in json_text) {
                 arr_class.push(json_text[key]);
             }
-            console.log(arr_class);
         }
     };
     var check_append = [];

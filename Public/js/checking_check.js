@@ -226,21 +226,11 @@ function ArrSort(page, num, content) {
         if (arr_staff[j].noclock == null) {
             arr_staff[j].noclock = "无";
         }
-        //if (arr_staff[j].absenteeism== 0) {
-        //    arr_staff[j].absenteeism = "<div>" + arr_staff[j].absenteeism + "</div>";
-        //}else{
-        //    arr_staff[j].absenteeism = "<div  class='absen_red'>" + arr_staff[j].absenteeism + "</div>";
-        //}
-        //if(arr_staff[j].is_no==="是"){
-        //    arr_staff[j].is_no="<div class='div_gree'>" + arr_staff[j].is_no + "</div>";
-        //}
-        //if(arr_staff[j].is_no==="否"){
-        //    arr_staff[j].is_no="<div class='div_red'>" + arr_staff[j].is_no + "</div>";
-        //}
         var tr = document.createElement("tr");
+        console.log(arr_staff);
         tb.appendChild(tr).innerHTML =
             "<td class='td_sty td_a1' num='1'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_num[j] + "</div>" + "</td>" +
-            "<td class='td_sty td_a2' num='2'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].name + "</div>" + "<input type='hidden' class='name_sort' value='" + 1 + "'></td>" +
+            "<td class='td_sty td_a2' num='2'>" +"<div style='display:none;'>"+arr_staff[j].id+"</div>" +"<input type='hidden' class='name_sort' value='" + 1 + "'>"+"<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].name +"</div>"+"</td>"+
             "<td class='td_sty td_a3' num='3'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].campus + "</div>" + "<input type='hidden' class='campus_sort' value='" + 1 + "'></td>" +
             "<td class='td_sty td_a4' num='4'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].post + "</div>" + "<input type='hidden' class='post_sort' value='" + 1 + "'></td>" +
             "<td class='td_sty td_a5' num='5'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].level + "</div>" + "<input type='hidden' class='level_sort' value='" + 1 + "'></td>" +
@@ -423,6 +413,7 @@ function excel_blank() {
 //个人考勤信息查询
 //ajax获取数据
 document.getElementById("tb").addEventListener("click", function (e) {
+    document.getElementById("append_rules").innerHTML="";
     var user_id = $(e.target).attr("name");
     html_str = '';
     $.ajax({
@@ -450,7 +441,7 @@ document.getElementById("tb").addEventListener("click", function (e) {
     var target = e.target;
     var parent_node=target.parentNode.parentNode.firstChild.nextSibling.firstChild.innerHTML;
     for (var i = 0; i < arr_staff.length; i++) {
-        if (arr_staff[i].name == parent_node) {
+        if (arr_staff[i].id == parent_node) {
             document.getElementById("kaoqin_out").style.display="block";
             var append_rules_yes;
             var append_rule;
@@ -479,7 +470,7 @@ document.getElementById("tb").addEventListener("click", function (e) {
             append_rules_head.style.fontWeight = "bold";
             append_rules_head.style.lineHeight = "40px";
             append_rules_head.style.textAlign = "center";
-            append_rules_head.innerText = "员工 " + parent_node + " 打卡时间";
+            append_rules_head.innerText = "员工 " + target.parentNode.parentNode.firstChild.nextSibling.lastChild.innerHTML+ " 打卡时间";
             append_rules_head.appendChild(append_rules_close);
             append_rules_close.style.position = "absolute";
             append_rules_close.style.right = 0;
