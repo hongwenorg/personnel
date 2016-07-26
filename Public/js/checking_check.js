@@ -226,17 +226,17 @@ function ArrSort(page, num, content) {
         if (arr_staff[j].noclock == null) {
             arr_staff[j].noclock = "无";
         }
-        if (arr_staff[j].absenteeism== 0) {
-            arr_staff[j].absenteeism = "<div>" + arr_staff[j].absenteeism + "</div>";
-        }else{
-            arr_staff[j].absenteeism = "<div  class='absen_red'>" + arr_staff[j].absenteeism + "</div>";
-        }
-        if(arr_staff[j].is_no==="是"){
-            arr_staff[j].is_no="<div class='div_gree'>" + arr_staff[j].is_no + "</div>";
-        }
-        if(arr_staff[j].is_no==="否"){
-            arr_staff[j].is_no="<div class='div_red'>" + arr_staff[j].is_no + "</div>";
-        }
+        //if (arr_staff[j].absenteeism== 0) {
+        //    arr_staff[j].absenteeism = "<div>" + arr_staff[j].absenteeism + "</div>";
+        //}else{
+        //    arr_staff[j].absenteeism = "<div  class='absen_red'>" + arr_staff[j].absenteeism + "</div>";
+        //}
+        //if(arr_staff[j].is_no==="是"){
+        //    arr_staff[j].is_no="<div class='div_gree'>" + arr_staff[j].is_no + "</div>";
+        //}
+        //if(arr_staff[j].is_no==="否"){
+        //    arr_staff[j].is_no="<div class='div_red'>" + arr_staff[j].is_no + "</div>";
+        //}
         var tr = document.createElement("tr");
         tb.appendChild(tr).innerHTML =
             "<td class='td_sty td_a1' num='1'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_num[j] + "</div>" + "</td>" +
@@ -253,12 +253,12 @@ function ArrSort(page, num, content) {
             "<td class='td_sty td_a12' num='12'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].sick_leave + "</div>" + "<input type='hidden' class='sick_leave_sort' value='" + 1 + "'></td>" +
             "<td class='td_sty td_a13' num='13'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].sick_leave_count + "</div>" + "<input type='hidden' class='sick_leave_count_sort' value='" + 1 + "'></td>" +
             "<td class='td_sty td_a14' num='14'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].overtime + "</div>" + "<input type='hidden' class='overtime_sort' value='" + 1 + "'></td>" +
-            "<td class='td_sty td_a15' num='15'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].absenteeism + "</div>" + "<input type='hidden' class='absenteeism_sort' value='" + 1 + "'></td>" +
+            "<td class='td_sty td_a15' num='15'>" + "<div name='" + arr_staff[j].user + "' class='div_inner check_no' style='width:100%;height:100%'>" + arr_staff[j].absenteeism + "</div>" + "<input type='hidden' class='absenteeism_sort' value='" + 1 + "'></td>" +
             "<td class='td_sty td_a16' num='16'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].noclock + "</div>" + "<input type='hidden' class='noclock_sort' value='" + 1 + "'></td>" +
             "<td class='td_sty td_a17' num='17'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].errors + "</div>" + "<input type='hidden' class='errors_sort' value='" + 1 + "'></td>" +
             "<td class='td_sty td_a18' num='18'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].over_count_day + "</div>" + "<input type='hidden' class='over_count_day_sort' value='" + 1 + "'></td>" +
             "<td class='td_sty td_a19' num='19'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].count_yes + "</div>" + "<input type='hidden' class='count_yes_sort' value='" + 1 + "'></td>" +
-            "<td class='td_sty td_a20' num='20'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].is_no + "</div>" + "<input type='hidden' class='is_no_sort' value='" + 1 + "'></td>";
+            "<td class='td_sty td_a20' num='20'>" + "<div name='" + arr_staff[j].user + "' class='div_inner check_no'>" + arr_staff[j].is_no + "</div>" + "<input type='hidden' class='is_no_sort' value='" + 1 + "'></td>";
         pageall.style.display = "block";
         pageall.style.display = "block";
         pagemin.style.display = "block";
@@ -266,7 +266,18 @@ function ArrSort(page, num, content) {
         copy_excel.style.display = "block";
         copy_dayin.style.display = "block";
     }
-
+    //判断  如果内容为否，或者为零  背景色就为红色
+    //否则为  绿色
+        var check_no=document.querySelectorAll(".check_no");
+    for(var i=0;i<check_no.length;i++){
+        if(check_no[i].innerText=="否"||check_no[i].innerText>0){
+            check_no[i].style.background="#ed5565";
+            check_no[i].style.color="white";
+        }else if(check_no[i].innerText=="是"||check_no[i].innerText==0){
+            check_no[i].style.background="#00c8c8";
+            check_no[i].style.color="white";
+        }
+    }
 
 
 
@@ -588,29 +599,8 @@ function namesort(content) {
 }();
 
 
-//*************************     布局分页     *************************
-function blk(tabb) {
-    if (tabb == 1) {
-        location.href = "/index.php/Home/Checking/check_index";
-    } else if (tabb == 2) {
-        location.href = "/index.php/Home/Checking/check_check";
-    } else if (tabb == 3) {
-        location.href = "/index.php/Home/Checking/check_checkrules";
-    }
-}
-
 var tab = document.getElementById("tab_click");
-//tab.addEventListener("click", function (e) {
-//    var target = e.target;
-//    tabb1.style.background = "#bbbbbb";
-//    tabb2.style.background = "#bbbbbb";
-//    tabb3.style.background = "#bbbbbb";
-//    tabb1.style.color = "white";
-//    tabb2.style.color = "white";
-//    tabb3.style.color = "white";
-//    target.style.background = "white";
-//    target.style.color = "black";
-//}, false);
+
 document.onscroll = function () {
     if (scrollY > 200) {
         $("#trr").addClass("setcss_check1");

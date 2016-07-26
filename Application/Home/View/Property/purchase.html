@@ -115,7 +115,6 @@
             success: function (data) {
                 var check_append_modules = [];
                 msg = JSON.parse(data);
-                console.log(msg);
                 mouse_modules = msg[1];
 
                 var arr_num = [];
@@ -191,7 +190,6 @@
                 purchase_link.href = filename + ".html";
                 document.getElementById("append_link").appendChild(purchase_link);
                 purchase_link.onload = function () {
-                    console.log(filename);
                     var container = purchase_link.import.body;
                     document.getElementById("purchase_body").innerHTML = container.innerHTML;
                     document.getElementById("purchase_body").style.background="none";
