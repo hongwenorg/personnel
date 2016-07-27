@@ -95,8 +95,8 @@ class PublicController extends Controller {
 		// 创建一个新cURL资源
 		$ch = curl_init();
 		$time = time();
-		$start = '2016-07-01';//date("Y-m-d",strtotime("-1 day"));
-		$end = '2016-07-01';//date("Y-m-d",strtotime("-1 day"));
+		$start = '2016-07-21';//date("Y-m-d",strtotime("-1 day"));
+		$end = '2016-07-21';//date("Y-m-d",strtotime("-1 day"));
 		//公共必传参数
 		$data = array(
 		'account'=>'21c4a357f585a1a50ea794fcf96fad73',//API帐号
@@ -501,37 +501,35 @@ class PublicController extends Controller {
 	}
 
 
-	//定时小程序，每到月一号计算上个月考勤记录表请假，休息，旷工等数据处理,顺序执行  4
+	//导入oa人员信息
 	function check_ycs(){
+		die;
+		$url = "http://i.ihongwen.com/oa_old/weixin.php/userService/listAllUserRecords?time1=2016-05-01&time2=2016-07-26";
+		$ch = curl_init ();
+		curl_setopt ( $ch, CURLOPT_URL, $url );
+		curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, 1 );
+		curl_setopt ( $ch, CURLOPT_CONNECTTIMEOUT, 10 );
+		$file_contents = curl_exec ( $ch );
+		$data = json_decode($file_contents,true);
+		$user_basic = D('user_basic');
+		$users = D('users');
+		$num = 684;
+		foreach($data as &$val){
 
-			//print_r($all_noclock_data);die; 上班未打卡，下班未打卡  下班未打卡
-			/*//下班未打卡的申请
-			$max_noclock_data = $leaveing->query("SELECT atten_uid,time_date,info from leaveing where class='意外事项' and state = '审核通过' and  info like '下班未打卡%'".$leave_where);
+			$results = $users->add(array("id"=>$num,'user'=>$val['atten_uid']));
+			if(!$results){
+				$this->error("程序出错！");exit;
+			}
+			$val['user_id'] = $num;
+			$results = $user_basic->add($val);
+			if(!$results){
+				$this->error("程序出错！");exit;
+			}
+			$num++;
+		}
+		echo 1;
+		curl_close ( $ch );
 			
-			//上班未打卡的申请
-			$min_noclock_data = $leaveing->query("SELECT atten_uid,time_date,info from leaveing where class='意外事项' and state = '审核通过' and id NOT IN(select id from leaveing where class='意外事项' and info like '上班未打卡，下班未打卡%') and info like '%上班未打卡%'".$leave_where);
-
-			$agile_data = $leaveing->query("SELECT atten_uid,time_date,info from leaveing where class='灵活作息' and state = '审核通过'".$leave_where);*/
-
-			/*foreach($min_noclock_data as $min_noclock_val){
-				$check_record->where("atten_uid='".$min_noclock_val['atten_uid']."' and check_date='".$min_noclock_val['time_date']."'")->save(array("check"=>"合格","check_content"=>"由于意外事项申请，".$min_noclock_val['info']));
-			}
-			foreach($max_noclock_data as $max_noclock_val){
-				$check_record->where("atten_uid='".$max_noclock_val['atten_uid']."' and check_date='".$max_noclock_val['time_date']."'")->save(array("check"=>"合格","check_content"=>"由于意外事项申请，".$max_noclock_val['info']));
-			}
-
-
-			foreach($agile_data as $agile_val){
-				$check_arr_arr = $check_record->where("atten_uid='".$agile_val['atten_uid']."' and check_date='".$agile_val['time_date']."'")->find();
-				$check_maxtime = strtotime($check_arr_arr['check_maxtime']);
-				$check_mintime = strtotime($check_arr_arr['check_mintime']);
-				if(($check_maxtime-$check_mintime) >= (floatval($time_num)*3600)){
-					$check_record->where("atten_uid='".$agile_val['atten_uid']."' and check_date='".$agile_val['time_date']."'")->save(array("check"=>"合格","check_content"=>"由于灵活作息申请，".$agile_val['info']));
-				}else{
-					$check_record->where("atten_uid='".$agile_val['atten_uid']."' and check_date='".$agile_val['time_date']."'")->save(array("check"=>"不合格","check_content"=>"灵活打卡异常，虽然灵活作息申请，但是打卡时间不满".$time_num."个小时"));
-				}
-			}
-*/
 	}
 }
 ?>

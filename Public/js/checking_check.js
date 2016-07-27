@@ -227,7 +227,6 @@ function ArrSort(page, num, content) {
             arr_staff[j].noclock = "无";
         }
         var tr = document.createElement("tr");
-        console.log(arr_staff);
         tb.appendChild(tr).innerHTML =
             "<td class='td_sty td_a1' num='1'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_num[j] + "</div>" + "</td>" +
             "<td class='td_sty td_a2' num='2'>" +"<div style='display:none;'>"+arr_staff[j].id+"</div>" +"<input type='hidden' class='name_sort' value='" + 1 + "'>"+"<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].name +"</div>"+"</td>"+
