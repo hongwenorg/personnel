@@ -528,6 +528,9 @@
 //员工信息页面搜索按钮  start
                 find_btt.onclick = function () {
                     document.getElementById("page_all").innerHTML = "";
+                    if(document.getElementById("panduan").innerHTML!=""){
+                        document.getElementById("panduan").innerHTML="";
+                    }
                     var page = $("#page_page").val();
                     var sel = document.getElementById("prov");
                     if (sel.value == "plan_type") {
@@ -697,10 +700,7 @@
                             success: function (msg) {
                                 if (msg == 1) {
                                     alert("删除成功！");
-                                    if(document.getElementById("panduan").innerHTML!=""){
-                                        document.getElementById("panduan").innerHTML="";
-                                        find_btt.click();
-                                    }
+                                    find_btt.click();
                                 } else if (msg == 2) {
                                     alert("删除失败！");
                                 } else if (msg == 3) {
@@ -727,10 +727,7 @@
                         success: function (msg) {
                             if (msg == 1) {
                                 alert("通过成功！");
-                                if(document.getElementById("panduan").innerHTML!=""){
-                                    document.getElementById("panduan").innerHTML="";
-                                    find_btt.click();
-                                }
+                                find_btt.click();
                             } else if (msg == 2) {
                                 alert("通过失败！");
                             } else if (msg == 3) {
@@ -756,11 +753,7 @@
                         success: function (msg) {
                             if (msg == 1) {
                                 alert("退回成功！");
-                                alert("通过成功！");
-                                if(document.getElementById("panduan").innerHTML!=""){
-                                    document.getElementById("panduan").innerHTML="";
-                                    find_btt.click();
-                                }
+                                find_btt.click();
                             } else if (msg == 2) {
                                 alert("退回失败！");
                             } else if (msg == 3) {
