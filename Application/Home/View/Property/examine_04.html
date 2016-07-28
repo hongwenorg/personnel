@@ -528,6 +528,9 @@
 //员工信息页面搜索按钮  start
                 find_btt.onclick = function () {
                     document.getElementById("page_all").innerHTML = "";
+                    if(document.getElementById("panduan").innerHTML!=""){
+                        document.getElementById("panduan").innerHTML="";
+                    }
                     var page = $("#page_page").val();
                     var sel = document.getElementById("prov");
                     if (sel.value == "plan_type") {
