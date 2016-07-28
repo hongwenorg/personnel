@@ -156,7 +156,7 @@ window.onload = function () {
                 var target = e.target;
                 for (var j = 0; j < check_append_modules.length; j++) {
                     if (target.innerText == check_append_modules[j].modules_name) {
-                        location.href = "/index.php/Home/" + check_append_modules[j].modules_file;
+                        location.href = "/index.php/Home" + check_append_modules[j].modules_file;
                     }
                 }
             });

@@ -143,7 +143,7 @@ window.onload = function () {
                 var target = e.target;
                 for (var j = 0; j < check_append_modules.length; j++) {
                     if (target.innerText == check_append_modules[j].modules_name) {
-                        location.href = "/index.php/Home/" + check_append_modules[j].modules_file;
+                        location.href = "/index.php/Home" + check_append_modules[j].modules_file;
                     }
                 }
             });
@@ -327,7 +327,6 @@ function dayin_blank() {
 }
 //打印页面  end
 
-
 //excel操作  start
 function excel_blank() {
 
@@ -403,30 +402,7 @@ function namesort(content) {
     })
 }();
 
-
-//*************************     布局分页     *************************
-function blk(tabb) {
-    if (tabb == 1) {
-        location.href = "/index.php/Home/Checking/check_index";
-    } else if (tabb == 2) {
-        location.href = "/index.php/Home/Checking/check_check";
-    } else if (tabb == 3) {
-        location.href = "/index.php/Home/Checking/check_checkrules";
-    }
-}
-
 var tab = document.getElementById("tab_click");
-//tab.addEventListener("click", function (e) {
-//    var target = e.target;
-//    tabb1.style.background = "#bbbbbb";
-//    tabb2.style.background = "#bbbbbb";
-//    tabb3.style.background = "#bbbbbb";
-//    tabb1.style.color = "white";
-//    tabb2.style.color = "white";
-//    tabb3.style.color = "white";
-//    target.style.background = "white";
-//    target.style.color = "black";
-//}, false);
 document.onscroll = function () {
     if (scrollY > 200) {
         $("#trr").addClass("setcss_check_index");
@@ -437,4 +413,4 @@ document.onscroll = function () {
         $("#trr th").removeClass("setcss_check1_index");
         $("#trr th div").removeClass("setcss_check_border");
     }
-}
+};
