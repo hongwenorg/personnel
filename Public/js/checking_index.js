@@ -23,7 +23,7 @@ var tabb4 = document.getElementById("tabb4");
 var tabb5 = document.getElementById("tabb5");
 var tabb6 = document.getElementById("tabb6");
 var tabb7 = document.getElementById("tabb7");
-//var tb_content = tb.innerHTML;
+var tb_content = tb.innerHTML;
 //******************************     全局变量  end    ***************************
 
 var tab_click = document.getElementById("tab_click");

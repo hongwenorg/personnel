@@ -23,8 +23,6 @@ class PublicController extends Controller {
 		return floor(($days + $start_N - 1 - $end_N) / 7);//* 2 - $start_reduce + $end_add; 加上此处是计算多少周六日
 	} 
 
-
-
 	//计算每个月有多少个周？参数$b是最早日期，$e最晚日期，$num是周几
 	function get_one_days($b,$e,$num){
 		$n=0;
