@@ -2,7 +2,7 @@
 /**
 *@Author:温加宝
 *@Email:wen8555955@163.com
-*@DateTime:2016/3/17
+*@DateTime:2016/4/10
 *@Description:考勤系统
 */
 namespace Home\Controller;
@@ -338,7 +338,7 @@ class CheckingController extends CommonController {
 		$where .= " and (checking.atten_time_str between '$mintime' and '$maxtime')";
 
 		//echo $where;die;
-		$data_arr=$users->join('user_basic ON users.id = user_basic.user_id')->join('checking ON users.user = checking.atten_uid')->field('users.id,user_basic.user_id,users.user,user_basic.name,user_basic.sex,user_basic.campus,user_basic.post,checking.atten_time')->where($where)->order("checking.atten_time")->select();
+		$data_arr=$users->join('user_basic ON users.id = user_basic.user_id')->join('checking ON users.user = checking.atten_uid')->field('users.id,user_basic.user_id,users.user,user_basic.name,user_basic.sex,user_basic.campus,user_basic.post,checking.atten_time')->where($where)->order("checking.atten_time,user_basic.campus")->select();
 		//print_r($data_arr);die;
 		if(!empty($data_arr)){
 			foreach($data_arr as &$value){
