@@ -124,12 +124,6 @@
             float: right;
         }
 
-        .header_01 {
-            width: 100%;
-            height: 100px;
-            background-color: #555a5a;
-            min-width: 1366px;
-        }
 
         .return {
             width: 50px;
@@ -167,7 +161,7 @@
         .header_01 > ul {
             padding-top: 25px;
             margin-left: 40px;
-            height: 50px;
+            height: 30px;
         }
 
         .header_01 > ul > li {
@@ -223,14 +217,40 @@
         .append_preson{
             z-index: 999999;
         }
+        .user_profiles_head{
+            text-align: center;
+            position:relative;
+            top:-80px;
+            font-size: 40px;
+            font-weight: bold;
+            color:#00c8c8;
+            text-shadow: 0 6px 15px black;
+        }
+
+        .header_01 {
+            width: 100%;
+            height: 100px;
+            background-color: #555a5a;
+            min-width: 1366px;
+        }
+
 
     </style>
 </head>
 <body style="background-color:#555a5a;width:100%">
-<header >
-    <div class="head_01">
-        <script src="/public/js/head.js" type="text/javascript" charset="utf-8"></script>
+<header style="max-height: 100px">
+    <div class="header_01" >
+        <ul>
+        </ul>
+        <a href="/index.php/Home/Index/goout" id="remove_cook">
+            <div id="tuichudenglu"><input class="return_02" type="button" id="return_02" style="right:50px;top:-25px;">
+                <div class="return_p1" id="return_p1">
+                    退出<img src="/public/img/icon_tip.png" alt="" class="amg">登录
+                </div>
+            </div>
+        </a>
     </div>
+    <p class="user_profiles_head" id="user_profiles_head"></p>
 </header>
 <div class="body_index">
     <img src="/public/img/bluesky.jpg" alt="" style="width:100%">
@@ -305,6 +325,7 @@
                 console.log(txt);
 
 //                $("#jibie").text(basic_arr.name);
+                $("#user_profiles_head").text("员工 "+basic_arr.name+" 个人信息主页");
                 $("#danwei").text(basic_arr.campus);
                 $("#xingming").text(basic_arr.name);
                 $("#zhiwu").text(basic_arr.post);
@@ -342,7 +363,6 @@
         })
     });
 
-
 document.getElementById("btt_02").onclick = function (e) {
     document.getElementById("preson_out").style.display="block";
     var html_str = '';
@@ -375,6 +395,7 @@ document.getElementById("btt_02").onclick = function (e) {
             var append_rules_div = document.createElement("div");
             var append_rules_tr = document.createElement("tr");
             var append_rules_tr2 = html_str;
+
             //弹出个人考勤信息 样式
             //弹出框主体
             append_rules_div.style.width = "100%";
@@ -445,16 +466,19 @@ document.getElementById("btt_02").onclick = function (e) {
             append_rules_yes.value = "确定";
             append_rules_yes.onclick = function () {
                 append_rule.style.display = "none";
-                document.getElementById("preson_out").style.display = "none";
+        document.getElementById("preson_out").style.display = "none";
             };
             append_rules_close.onclick = function () {
                 append_rule.style.display = "none";
-                document.getElementById("preson_out").style.display = "none";
+        document.getElementById("preson_out").style.display = "none";
             };
+
         }
     };
 
 };
+
+
 
 
 

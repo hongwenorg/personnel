@@ -154,9 +154,9 @@
 <header>
     <div class="header_01">
         <ul>
-            <li><a id="return_a" target="_blank" href="/index.php/Home/Content/userprofilesmanage"><img src="/public/img/head.png" id="photo" alt="" style="margin:0 10px 0 10px; width:46px;height:46px;border-radius: 25px;"></a>
+            <li><a id="return_a" target="_blank" style="cursor: pointer" onclick="location_href()"><img src="/public/img/head.png" id="photo" alt="" style="margin:0 10px 0 10px; width:46px;height:46px;border-radius: 25px;"></a>
             </li>
-            <li><a href="/index.php/Home/Content/userprofilesmanage" id="group_name"><a class="xin_feng"><img src="/public/img/index6.png" alt=""></a></a><br/><a href="" id="post"></a> <a id="line_italic">｜</a> <a href="" id="name"></a></li>
+            <li><a id="group_name" style="cursor: pointer" onclick="location_href()"><a class="xin_feng"><img src="/public/img/index6.png" alt=""></a></a><br/><a href="" id="post"></a> <a id="line_italic">｜</a> <a href="" id="name"></a></li>
         </ul>
         <a href="/index.php/Home/Content/index"><input class="return" type="button" id="return"></a>
         <h1 class="return_p" style="height:0px !important;" id="return_p">
@@ -239,6 +239,24 @@
         }
 
     });
+    function location_href(){
+        var iOS;
+        var isAndroid;
+        var userType = {};
+        if (navigator.userAgent.toLowerCase().match(/(android)/)) {
+            isAndroid = true;
+            userType.isAndroid = true;
+            location.href = "/index.php/Home/Content/userprofilesmanage_adr";
+        } else if (navigator.userAgent.toLowerCase().match(/(iphone|ipod|ipad)/)) {
+            iOS = true;
+            userType.iOS = true;
+            location.href = "/index.php/Home/Content/userprofilesmanage_adr";
+        } else {
+            iOS = false;
+            isAndroid = false;
+            location.href = "/index.php/Home/Content/userprofilesmanage";
+        }
+    }
     
 </script>
 </html>
