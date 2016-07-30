@@ -451,7 +451,6 @@ $("#staff_rules_btt1").click(function () {
             success: function (msg) {
                 //console.log(msg);return;
                 if (msg == 1) {
-                    alert("保存成功！");
                     document.getElementById("staff_rules").style.display = "none";
                     document.getElementById("staff_rules_out").style.display = "none";
                 } else {

@@ -184,7 +184,7 @@
         var data = $('#personel_submit').serialize();//将表单数据以字符串形式获取
         $.ajax({
             url: "/index.php/Home/Staff/personel_pro",
-            data: {'data': data , 'user' : user_card},
+            data: {'data': data , 'user' : getCookie("username")},
             type: "post",
             async: "false",
             traditional: "true",
@@ -193,7 +193,7 @@
                 if (msg == 1) {
                     alert("保存成功！");
                 } else {
-                    alert("保存失败！");
+                    alert("保存失败，请确认修改数据！");
                 }
 
             }
