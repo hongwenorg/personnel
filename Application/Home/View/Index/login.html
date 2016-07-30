@@ -212,18 +212,16 @@
                     if (navigator.userAgent.toLowerCase().match(/(android)/)) {
                         isAndroid = true;
                         userType.isAndroid = true;
-                        location.href = "/index.php/Home/Content/userprofiles";
+                        location.href = "/index.php/Home/Content/userprofilesmanage_adrnohead";
                     } else if (navigator.userAgent.toLowerCase().match(/(iphone|ipod|ipad)/)) {
                         iOS = true;
                         userType.iOS = true;
-                        location.href = "/index.php/Home/Content/userprofiles";
+                        location.href = "/index.php/Home/Content/userprofilesmanage_adrnohead";
                     } else {
                         iOS = false;
                         isAndroid = false;
                         location.href = "/index.php/Home/Content/userprofiles";
                     }
-
-
                 } else if (txt.status == 1 && txt.level == 1) {
                     location.href = "/index.php/Home/Content/index";
                 }
