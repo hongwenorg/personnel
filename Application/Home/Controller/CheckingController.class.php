@@ -63,7 +63,7 @@ class CheckingController extends CommonController {
 		$user_rule = D("user_rule");
 		$basic_where = "users.id!=1 and users.status!=0 and user_basic.status!=0 and user_basic.campus like '%$content%'";
 		$rule_where = "";
-		$basic_arr = $user_basic->join('user_basic ON users.id = user_basic.user_id')->field('user_basic.id,user_basic.user_id,users.user,user_basic.name,user_basic.sex,user_basic.campus,user_basic.post,user_basic.rule_id')->where($basic_where)->select();
+		$basic_arr = $user_basic->join('user_basic ON users.id = user_basic.user_id')->field('user_basic.id,user_basic.user_id,users.user,user_basic.name,user_basic.sex,user_basic.campus,user_basic.post,user_basic.rule_id')->where($basic_where)->order('user_basic.post')->select();
 		$rule_arr = $user_rule->where($rule_where)->select();
 		foreach($basic_arr as &$value){
 			foreach($value as $key => $val){
