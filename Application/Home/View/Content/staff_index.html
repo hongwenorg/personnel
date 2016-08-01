@@ -8,6 +8,59 @@
     <title>员工信息</title>
     <link rel="stylesheet" href="/public/css/Content_staff.css" type="text/css">
     <style>
+        #trr > th {
+            width: 0;
+        }
+
+        .td_sty {
+            width: 0;
+        }
+
+        #tb > tr > td {
+            width: 0;
+            height: 30px !important;
+        }
+
+        #tb > tr > td > div {
+            line-height: 30px;
+        }
+
+        #tb {
+            width: 2500px;
+        }
+
+        .top_nav {
+            width: 2500px;
+        }
+
+        .float_top {
+            position: fixed;
+            top: 0;
+            width: 94.87%;
+            height: 30px;
+            left: 2.5%;
+            min-width: 1366px;
+            display:none;
+        }
+        .float_top_top{
+            width:90.2%;
+            margin-left:5%;
+            height:30px;
+            overflow: hidden;
+        }
+        .top_nav{
+            position:relative;
+            left:2px;
+        }
+
+        .top_nav > div {
+            border-left: 1px solid lightgray;
+            border-right: 1px solid lightgray;
+            background-color: #bbbbbb;
+            height: 30px;
+            float: left;
+            text-align: center;
+        }
     </style>
 </head>
 <body style="background-color: #efefef" id="staff_body">
@@ -25,7 +78,8 @@
 </div>
 <div class="zpgw" id="bq">
     <div class="zpgwl" id="tab">
-        <div class="zpg_head" id="tab_click" style="border-top-right-radius:10px;border-top-left-radius:10px;overflow: hidden; background-color: rgb(239, 239, 239) !important;">
+        <div class="zpg_head" id="tab_click"
+             style="border-top-right-radius:10px;border-top-left-radius:10px;overflow: hidden; background-color: rgb(239, 239, 239) !important;">
         </div>
     </div>
     <div id="container" style="width:94.87%">
@@ -52,32 +106,102 @@
                 <!--时间控件-->
             </div>
             <!--*********************************************存放后台员工信息*****************************************************-->
-            <div style="width:100%">
-                <table class="tb" cellpadding="2" cellspacing="0" id="tb" >
-                    <tr class="trr" id="trr" style="width:85.4%">
-                        <th id="staff_num">
+            <div style="width:90%;margin-left: 5%;overflow-x: scroll;border:1px solid lightgray" id="tb_parent">
+                <div class="float_top">
+                    <div class="float_top_top">
+                    <div class="top_nav">
+                        <div>序号</div>
+                        <div>员工号</div>
+                        <div>姓名</div>
+                        <div>性别</div>
+                        <div>民族</div>
+                        <div>身份证号</div>
+                        <div>婚姻状况</div>
+                        <div>出生日期</div>
+                        <div>政治面貌</div>
+                        <div>籍贯</div>
+                        <div>应急联系人</div>
+                        <div>应急联系电话</div>
+                        <div>毕业院校</div>
+                        <div>专业</div>
+                        <div>资格证书</div>
+                        <div>单位部门</div>
+                        <div>职务</div>
+                        <div>入职时间</div>
+                        <div>联系电话</div>
+                        <div>QQ</div>
+                        <div>微信</div>
+                        <div>E-mail</div>
+                    </div>
+                    </div>
+                </div>
+                <table class="tb" cellpadding="2" cellspacing="0" id="tb">
+                    <tr class="trr" id="trr" style="width:100%">
+                        <th id="staff_num" class="top_wid">
                             <div>序号</div>
                         </th>
-                        <th id="staff_user" onclick="namesort('user')">
+                        <th id="staff_user" onclick="namesort('user')" class="top_wid">
                             <div>员工号</div>
                         </th>
-                        <th id="staff_name" onclick="namesort('name')">
+                        <th id="staff_name" onclick="namesort('name')" class="top_wid">
                             <div>姓名</div>
                         </th>
-                        <th id="staff_date" onclick="namesort('entry_date')">
-                            <div>入职时间</div>
+                        <th id="staff_sex" onclick="namesort('sex')" class="top_wid">
+                            <div>性别</div>
                         </th>
-                        <th id="staff_campus" onclick="namesort('campus')">
+                        <th id="staff_nation" onclick="namesort('nation')" class="top_wid">
+                            <div>民族</div>
+                        </th>
+                        <th id="staff_card" onclick="namesort('card')" class="top_wid">
+                            <div>身份证号</div>
+                        </th>
+                        <th id="staff_marriage" onclick="namesort('marriage')" class="top_wid">
+                            <div>婚姻状况</div>
+                        </th>
+                        <th id="staff_birthday" onclick="namesort('birthday')" class="top_wid">
+                            <div>出生日期</div>
+                        </th>
+                        <th id="staff_polity" onclick="namesort('polity')" class="top_wid">
+                            <div>政治面貌</div>
+                        </th>
+                        <th id="staff_residence_booklet" onclick="namesort('residence_booklet')" class="top_wid">
+                            <div>籍贯</div>
+                        </th>
+                        <th id="staff_contacts" onclick="namesort('contacts')" class="top_wid">
+                            <div>应急联系人</div>
+                        </th>
+                        <th id="staff_urgency_telephone" onclick="namesort('urgency_telephone')" class="top_wid">
+                            <div>应急联系电话</div>
+                        </th>
+                        <th id="staff_school" onclick="namesort('school')" class="top_wid">
+                            <div>毕业院校</div>
+                        </th>
+                        <th id="staff_major" onclick="namesort('major')" class="top_wid">
+                            <div>专业</div>
+                        </th>
+                        <th id="staff_seniority" onclick="namesort('seniority')" class="top_wid">
+                            <div>资格证书</div>
+                        </th>
+                        <th id="staff_campus" onclick="namesort('campus')" class="top_wid">
                             <div>单位部门</div>
                         </th>
-                        <th id="staff_post" onclick="namesort('post')">
+                        <th id="staff_post" onclick="namesort('post')" class="top_wid">
                             <div> 职务</div>
                         </th>
-                        <th id="staff_telephone" onclick="namesort('telephone')">
+                        <th id="staff_entry_date" onclick="namesort('post')" class="top_wid">
+                            <div> 入职时间</div>
+                        </th>
+                        <th id="staff_telephone" onclick="namesort('telephone')" class="top_wid">
                             <div>联系电话</div>
                         </th>
-                        <th id="staff_qq" onclick="namesort('qq')">
+                        <th id="staff_qq" onclick="namesort('qq')" class="top_wid">
                             <div>QQ</div>
+                        </th>
+                        <th id="staff_wechat" onclick="namesort('wechat')" class="top_wid">
+                            <div>微信</div>
+                        </th>
+                        <th id="staff_email" onclick="namesort('email')" class="top_wid">
+                            <div>E-mail</div>
                         </th>
                     </tr>
                 </table>
