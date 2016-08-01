@@ -246,7 +246,7 @@
     <div class="header_01" >
         <ul>
         </ul>
-        <a href="/index.php/Home/Index/goout" id="remove_cook">
+        <a href="/Index/goout" id="remove_cook">
             <div id="tuichudenglu"><input class="return_02" type="button" id="return_02">
                 <div class="return_p1" id="return_p1">
                     退出<img src="/public/img/icon_tip.png" alt="" class="amg">登录
@@ -307,7 +307,7 @@
     }
     //页面加载信息
     $.ajax({
-        url: "/index.php/Home/Staff/head_con",
+        url: "/Staff/head_con",
         data: {"user": getCookie("username")},
         type: "post",
         async: "false",
@@ -362,7 +362,7 @@
     document.getElementById("btt_02").onclick = function (e) {
         var html_str = '';
         var xhr = new XMLHttpRequest();
-        xhr.open("get", "/index.php/Home/Checking/personel_check");
+        xhr.open("get", "/Checking/personel_check");
         xhr.send();
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
@@ -480,7 +480,7 @@
     });
 
     document.getElementById("Head_portrait").onclick=function(){
-        location.href = "/index.php/Home/Staff/imgs_prune_02";
+        location.href = "/Staff/imgs_prune_02";
     }
 
 

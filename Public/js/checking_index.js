@@ -94,7 +94,7 @@ document.getElementById("prov").addEventListener("change", function () {
 //页面加载事件  start
 window.onload = function () {
     var reques = new XMLHttpRequest();
-    reques.open("get", "/index.php/Home/Content/post");
+    reques.open("get", "/Content/post");
     reques.send();
     reques.onreadystatechange = function () {
         if (reques.readyState == 4 && reques.status == 200) {
@@ -107,7 +107,7 @@ window.onload = function () {
 
     var check_append = [];
     $.ajax({
-        url: "/index.php/Home/Index/modules",
+        url: "/Index/modules",
         data: {"the_level": 2},
         type: "post",
         async: "false",
@@ -143,7 +143,7 @@ window.onload = function () {
                 var target = e.target;
                 for (var j = 0; j < check_append_modules.length; j++) {
                     if (target.innerText == check_append_modules[j].modules_name) {
-                        location.href = "/index.php/Home" + check_append_modules[j].modules_file;
+                        location.href = check_append_modules[j].modules_file;
                     }
                 }
             });
@@ -286,7 +286,7 @@ find_btt.onclick = function () {
     $("#tb tr:not(:first)").empty();
     arr_staff = [];
     $.ajax({
-        url: "/index.php/Home/Checking/index_select",
+        url: "/Checking/index_select",
         data: {'content': content,'status':status},
         type: "post",
         async: "false",
@@ -320,7 +320,7 @@ find_btt.onclick = function () {
 function dayin_blank() {
 
     if ($("tr:first").text() != "") {
-        window.open("/index.php/Home/Staff/dayin");
+        window.open("/Staff/dayin");
     } else {
         alert("程序有误，请联系管理员！");
     }
@@ -331,7 +331,7 @@ function dayin_blank() {
 function excel_blank() {
 
     if ($("tr:first").text() != "") {
-        window.open("/index.php/Home/Staff/check_index_excel");
+        window.open("/Staff/check_index_excel");
     } else {
         alert("程序有误，请联系管理员！");
     }

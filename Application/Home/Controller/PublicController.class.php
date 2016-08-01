@@ -93,8 +93,8 @@ class PublicController extends Controller {
 		// 创建一个新cURL资源
 		$ch = curl_init();
 		$time = time();
-		$start = '2016-07-21';//date("Y-m-d",strtotime("-1 day"));
-		$end = '2016-07-21';//date("Y-m-d",strtotime("-1 day"));
+		$start = '2016-08-01';//date("Y-m-d",strtotime("-1 day"));
+		$end = '2016-08-01';//date("Y-m-d",strtotime("-1 day"));
 		//公共必传参数
 		$data = array(
 		'account'=>'21c4a357f585a1a50ea794fcf96fad73',//API帐号

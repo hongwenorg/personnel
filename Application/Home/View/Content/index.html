@@ -84,7 +84,7 @@
     window.onload = function(){
 
         $.ajax({
-            url: "/index.php/Home/Content/authority_index",
+            url: "/Content/authority_index",
             data: {},
             type: "post",
             async: "false",
@@ -112,7 +112,7 @@
 
     
     function index_button(num){
-        location.href="/index.php/Home"+bt_arr[num];
+        location.href=""+bt_arr[num];
     }
 
     

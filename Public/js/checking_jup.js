@@ -1,7 +1,7 @@
 var check_append = [];
 window.onload = function () {
     $.ajax({
-        url: "/index.php/Home/Index/modules",
+        url: "/Index/modules",
         data: {"the_level": 2},
         type: "post",
         async: "false",
@@ -25,7 +25,7 @@ window.onload = function () {
                 if (t == 0) {
                     for (var j = 0; j < check_append_modules.length; j++) {
                         if (tab_child[t].innerText == check_append_modules[j].modules_name) {
-                            location.href = "/index.php/Home/" + check_append_modules[j].modules_file;
+                            location.href = check_append_modules[j].modules_file;
                         }
                     }
                 }
@@ -34,7 +34,7 @@ window.onload = function () {
                 var target = e.target;
                 for (var j = 0; j < check_append_modules.length; j++) {
                     if (target.innerText == check_append_modules[j].modules_name) {
-                        location.href = "/index.php/Home/" + check_append_modules[j].modules_file;
+                        location.href = check_append_modules[j].modules_file;
                     }
                 }
             });

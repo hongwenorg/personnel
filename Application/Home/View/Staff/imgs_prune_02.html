@@ -201,7 +201,7 @@
 		<div class="header_01" >
 			<ul>
 			</ul>
-			<a href="/index.php/Home/Index/goout" id="remove_cook">
+			<a href="/Index/goout" id="remove_cook">
 				<div id="tuichudenglu"><input class="return_02" type="button" id="return_02" style="background-color: #555a5a">
 					<div class="return_p1" id="return_p1">
 					</div>
@@ -270,7 +270,7 @@
 		var my_form	  = document.getElementById('my_form');
 		var submit_click = function(){
 			$.ajax({
-	            url: "/index.php/Home/Staff/photo_upload",
+	            url: "/Staff/photo_upload",
 	            data: {'base_arr': base_arr,"user":getCookie("username")},
 	            type: "post",
 	            async: "false",
@@ -278,7 +278,7 @@
 	            success: function (msg) {
 	                if(msg==1){
 	                	alert("上传成功！");
-						location.href = "/index.php/Home/Content/userprofiles";
+						location.href = "/Content/userprofiles";
 	                }else{
 	                	alert("上传失败！");
 	                }

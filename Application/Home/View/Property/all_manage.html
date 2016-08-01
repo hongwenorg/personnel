@@ -382,7 +382,7 @@
 
                 document.getElementById('plan_date').valueAsDate = new Date();
                 $.ajax({
-                    url: "/index.php/Home/Property/plan_list",
+                    url: "/Property/plan_list",
                     type: "post",
                     async: false,
                     cache: "false",
@@ -569,7 +569,7 @@
                     $("#tb tr:not(:first)").empty();
                     arr_staff = [];
                     $.ajax({
-                        url: "/index.php/Home/Property/plan_table_page",
+                        url: "/Property/plan_table_page",
                         data: {
                             'status_name': '',
                             'status': status,
@@ -655,7 +655,7 @@
                                 document.querySelector(".append_plan").style.display = "block";
                                 var id = $(this).attr('up_id');
                                 $.ajax({
-                                    url: "/index.php/Home/Property/update_list",
+                                    url: "/Property/update_list",
                                     data: {'id': id},
                                     type: "post",
                                     async: "false",
@@ -714,7 +714,7 @@
                     if (confirm("是否删除所选内容")) {
                         var data = $('#myform_two').serialize();//将表单数据以字符串形式获取
                         $.ajax({
-                            url: "/index.php/Home/Property/plan_del",
+                            url: "/Property/plan_del",
                             data: {'data': data},
                             type: "post",
                             async: "false",
@@ -744,7 +744,7 @@
                 $("#submit_two").click(function () {
                     var data = $('#myform_two').serialize();//将表单数据以字符串形式获取
                     $.ajax({
-                        url: "/index.php/Home/Property/plan_add",
+                        url: "/Property/plan_add",
                         data: {'data': data},
                         type: "post",
                         async: "false",
@@ -773,7 +773,7 @@
                 $("#submit_three").click(function () {
                     var data = $('#myform_two').serialize();//将表单数据以字符串形式获取
                     $.ajax({
-                        url: "/index.php/Home/Property/plan_return",
+                        url: "/Property/plan_return",
                         data: {'data': data},
                         type: "post",
                         async: "false",
@@ -798,7 +798,7 @@
 //                excel
                 document.getElementById("copy_excel").onclick=function() {
                     if ($("tr:first").text() != "") {
-                        window.open("/index.php/Home/Staff/php_excel");
+                        window.open("/Staff/php_excel");
                     } else {
                         alert("程序有误，请联系管理员！");
                     }
@@ -807,7 +807,7 @@
                 $("#submit_one").click(function () {
                     var data = $('#myform_one').serialize();//将表单数据以字符串形式获取
                     $.ajax({
-                        url: "/index.php/Home/Property/plan_pro",
+                        url: "/Property/plan_pro",
                         data: {'data': data},
                         type: "post",
                         async: "false",

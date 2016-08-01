@@ -202,7 +202,7 @@
 		var my_form	  = document.getElementById('my_form');
 		var submit_click = function(){
 			$.ajax({
-	            url: "/index.php/Home/Staff/photo_upload",
+	            url: "/Staff/photo_upload",
 	            data: {'base_arr': base_arr,"user":getCookie("username")},
 	            type: "post",
 	            async: "false",

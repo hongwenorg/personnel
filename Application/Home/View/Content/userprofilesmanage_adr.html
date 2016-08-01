@@ -289,7 +289,7 @@
     }
     //页面加载信息
     $.ajax({
-        url: "/index.php/Home/Staff/head_con",
+        url: "/Staff/head_con",
         data: {"user":getCookie("username")},
         type: "post",
         async: "false",
@@ -347,7 +347,7 @@ document.getElementById("btt_02").onclick = function (e) {
     document.getElementById("preson_out").style.display="block";
     var html_str = '';
     var xhr = new XMLHttpRequest();
-    xhr.open("get", "/index.php/Home/Checking/personel_check");
+    xhr.open("get", "/Checking/personel_check");
     xhr.send();
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {

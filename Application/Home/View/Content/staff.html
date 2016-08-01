@@ -85,7 +85,7 @@
     window.onload = function () {
         var check_append = [];
         $.ajax({
-            url: "/index.php/Home/Index/modules",
+            url: "/Index/modules",
             data: {"the_level": 1},
             type: "post",
             async: "false",
@@ -112,7 +112,7 @@
                     var target = e.target;
                     for (var j = 0; j < staff_append_modules.length; j++) {
                         if (target.innerText == staff_append_modules[j].modules_name) {
-                            location.href = "/index.php/Home" + staff_append_modules[j].modules_file;
+                            location.href = "" + staff_append_modules[j].modules_file;
                         }
                     }
                 });

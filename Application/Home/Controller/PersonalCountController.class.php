@@ -39,7 +39,7 @@ class PersonalCountController extends Controller {
         }
         $model1 = D('oa_campustarget');
         $model2 = D('oa_personaltarget');
-        $model3 = D('oa_user');
+        $model3 = D('person_all');
         $model4 = D('oa_foo_info');
         $model5 = D('oa_position');
         $data = array();
@@ -52,8 +52,8 @@ class PersonalCountController extends Controller {
                     $school_id = $val['campus_id'];
                     $campus_arr = $model4->where(array('id'=>$school_id))->find();
                     $data_arr2 = $model2->where(array('date' => $date , 'campus_id' => $school_id))->select();
+                    $data2 = array();
                     if($data_arr2){
-                        $data2 = array();
                         foreach ($data_arr2 as $key => $value) {
                             $user_arr = $model3->where(array('id' => $value['user_id']))->find();
                             $post_arr = $model5->where(array('id' => $value['post_id']))->find();
