@@ -184,7 +184,7 @@
         var data = $('#personel_submit').serialize();//将表单数据以字符串形式获取
         $.ajax({
             url: "/index.php/Home/Staff/personel_pro",
-            data: {'data': data , 'user' : getCookie("username")},
+            data: {'data': data , 'user' :  getCookie("username")},
             type: "post",
             async: "false",
             traditional: "true",

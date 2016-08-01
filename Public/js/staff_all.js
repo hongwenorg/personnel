@@ -92,7 +92,6 @@ document.getElementById("prov").addEventListener("change", function () {
         document.getElementById("prov_append").innerHTML = "";
         city.style.display = "block";
     }
-
 });
 //*****************************     select列表，input，日期 切换 end     ***********************
 
@@ -188,32 +187,72 @@ function ArrSort(page, num, content) {
     for (var j = page * PageSize; j < len; j++) {
         if (arr_staff[j].name == null) {
             arr_staff[j].name = "无数据";
-        }
-        if (arr_staff[j].entry_date == null) {
+        }if (arr_staff[j].entry_date == null) {
             arr_staff[j].entry_date = "无数据";
-        }
-        if (arr_staff[j].campus == null) {
+        }if (arr_staff[j].campus == null) {
             arr_staff[j].campus = "无数据";
-        }
-        if (arr_staff[j].post == null) {
+        }if (arr_staff[j].post == null) {
             arr_staff[j].post = "无数据";
-        }
-        if (arr_staff[j].telephone == null) {
+        }if (arr_staff[j].telephone == null) {
             arr_staff[j].telephone = "无数据";
-        }
-        if (!arr_staff[j].qq) {
+        }if (!arr_staff[j].sex) {
+            arr_staff[j].sex = "无数据";
+        }if (!arr_staff[j].nation) {
+            arr_staff[j].nation = "无数据";
+        }if (!arr_staff[j].card) {
+            arr_staff[j].card = "无数据";
+        }if (!arr_staff[j].marriage) {
+            arr_staff[j].marriage = "无数据";
+        }if (!arr_staff[j].birthday) {
+            arr_staff[j].birthday = "无数据";
+        }if (!arr_staff[j].polity) {
+            arr_staff[j].polity = "无数据";
+        }if (!arr_staff[j].residence_booklet) {
+            arr_staff[j].residence_booklet = "无数据";
+        }if (!arr_staff[j].contacts) {
+            arr_staff[j].contacts = "无数据";
+        }if (!arr_staff[j].urgency_telephone) {
+            arr_staff[j].urgency_telephone = "无数据";
+        }if (!arr_staff[j].school) {
+            arr_staff[j].school = "无数据";
+        }if (!arr_staff[j].major) {
+            arr_staff[j].major = "无数据";
+        }if (!arr_staff[j].seniority) {
+            arr_staff[j].seniority = "无数据";
+        }if (!arr_staff[j].wechat) {
+            arr_staff[j].wechat = "无数据";
+        }if (!arr_staff[j].email) {
+            arr_staff[j].email = "无数据";
+        }if (!arr_staff[j].telephone) {
+            arr_staff[j].telephone = "无数据";
+        }if (!arr_staff[j].qq) {
             arr_staff[j].qq = "无数据";
         }
         var tr = document.createElement("tr");
+        console.log(arr_staff[j]);
         tb.appendChild(tr).innerHTML =
             "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_num[j] + "</div>" + "</td>" +
             "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].user + "</div>" + "<input type='hidden' class='user_sort' value='" + 1 + "'></td>" +
             "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].name + "</div>" + "<input type='hidden' class='name_sort' value='" + 1 + "'></td>" +
-            "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].entry_date + "</div>" + "<input type='hidden' class='entry_date_sort' value='" + 1 + "'></td>" +
+            "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].sex + "</div>" + "<input type='hidden' class='sex_sort' value='" + 1 + "'></td>" +
+            "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].nation + "</div>" + "<input type='hidden' class='nation_sort' value='" + 1 + "'></td>" +
+            "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].card + "</div>" + "<input type='hidden' class='card_sort' value='" + 1 + "'></td>" +
+            "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].marriage + "</div>" + "<input type='hidden' class='marriage_sort' value='" + 1 + "'></td>" +
+            "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].birthday + "</div>" + "<input type='hidden' class='birthday_sort' value='" + 1 + "'></td>" +
+            "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].polity + "</div>" + "<input type='hidden' class='polity_sort' value='" + 1 + "'></td>" +
+            "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].residence_booklet + "</div>" + "<input type='hidden' class='residence_booklet_sort' value='" + 1 + "'></td>" +
+            "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].contacts + "</div>" + "<input type='hidden' class='contacts_sort' value='" + 1 + "'></td>" +
+            "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].urgency_telephone + "</div>" + "<input type='hidden' class='urgency_telephone_sort' value='" + 1 + "'></td>" +
+            "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].school + "</div>" + "<input type='hidden' class='school_sort' value='" + 1 + "'></td>" +
+            "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].major + "</div>" + "<input type='hidden' class='major_sort' value='" + 1 + "'></td>" +
+            "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].seniority + "</div>" + "<input type='hidden' class='seniority_sort' value='" + 1 + "'></td>" +
             "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].campus + "</div>" + "<input type='hidden' class='campus_sort' value='" + 1 + "'></td>" +
             "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].post + "</div>" + "<input type='hidden' class='post_sort' value='" + 1 + "'></td>" +
+            "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].entry_date + "</div>" + "<input type='hidden' class='entry_date_sort' value='" + 1 + "'></td>" +
             "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].telephone + "</div>" + "<input type='hidden' class='telephone_sort' value='" + 1 + "'></td>" +
-            "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].qq + "</div>" + "<input type='hidden' class='qq_sort' value='" + 1 + "'></td>";
+            "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].qq + "</div>" + "<input type='hidden' class='qq_sort' value='" + 1 + "'></td>" +
+            "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].wechat + "</div>" + "<input type='hidden' class='wechat_sort' value='" + 1 + "'></td>" +
+            "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].email + "</div>" + "<input type='hidden' class='email_sort' value='" + 1 + "'></td>";
         pageall.style.display = "block";
         pagemin.style.display = "block";
         pagemax.style.display = "block";
@@ -901,13 +940,26 @@ function namesort(content) {
 //*************************     布局分页     *************************
 
 document.onscroll = function () {
-    if (scrollY > 200) {
-        $("#trr").addClass("setcss1");
-        $("#trr th").addClass("setcss");
+    var top_nav=document.querySelectorAll(".top_nav div");
+    var top_wid=document.querySelectorAll(".top_wid div");
+    if (scrollY > 250) {
+        document.querySelector(".float_top").style.display="block";
+        document.getElementById("trr").style.opacity=0;
+        for(var i=0;i<top_nav.length;i++){
+            for(var j=0;j<top_wid.length;j++){
+                if(top_nav[i].innerText==top_wid[j].innerText){
+                    top_nav[i].style.width=top_wid[j].clientWidth+"px";
+                }
+            }
+        }
+        document.querySelector(".top_nav").offsetTop=0;
     } else {
-        $("#trr").removeClass("setcss1");
-        $("#trr th").removeClass("setcss");
+        document.querySelector(".float_top").style.display="none";
+        document.getElementById("trr").style.opacity=1;
     }
+};
+document.getElementById("tb_parent").onscroll=function(){
+    document.querySelector(".top_nav").style.left=2-parseInt(document.getElementById("tb_parent").scrollLeft)+"px"
 };
 
 
