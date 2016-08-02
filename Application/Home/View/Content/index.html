@@ -97,7 +97,6 @@
                         if (key != "status" && txt["status"] != 2) {
                             str += '<a class="big_btt" name="big_btt"><button name="' + 'button' + txt[key].id + '" type="button"><img name="' + 'button' + txt[key].id + '" src="/public/img/index' + txt[key].id + '.png" alt=""></button></a>';
                             bt_arr.push(txt[key].modules_file);
-                            console.log(txt[key].id)
                         }
                     }
                     $(".butt_all").html(str);
