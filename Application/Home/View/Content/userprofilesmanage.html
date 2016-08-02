@@ -297,7 +297,7 @@
     }
     //页面加载信息
     $.ajax({
-        url: "/index.php/Home/Staff/head_con",
+        url: "/Staff/head_con",
         data: {"user": getCookie("username")},
         type: "post",
         async: "false",
@@ -349,7 +349,7 @@
     document.getElementById("btt_02").onclick = function (e) {
         var html_str = '';
         var xhr = new XMLHttpRequest();
-        xhr.open("get", "/index.php/Home/Checking/personel_check");
+        xhr.open("get", "/Checking/personel_check");
         xhr.send();
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
@@ -475,7 +475,7 @@
         append_alert.style.display = "block";
     });
     document.getElementById("Head_portrait").onclick = function () {
-        location.href = "/index.php/Home/Staff/imgs_prune";
+        location.href = "/Staff/imgs_prune";
     };
 
 </script>

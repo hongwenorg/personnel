@@ -1,4 +1,4 @@
-<form action="/index.php/Home/Staff/staff_pro" method="post" id="myform" name="myform" class="myform">
+<form action="/Staff/staff_pro" method="post" id="myform" name="myform" class="myform">
     <input type="hidden" id="user_id" name="user_id" value="">
 
     <div id="append_staff" class="append_staff">
@@ -140,7 +140,7 @@
 <script>
     var append_selstr = "";
     $.ajax({
-        url: "/index.php/Home/Staff/area_school",
+        url: "/Staff/area_school",
         data: {},
         type: "post",
         async: "false",
@@ -266,7 +266,7 @@
             insure_str = '{"is_no":"' + $("#is_no").val() + '","condition":"' + $("#condition").val() + '","begin_time":"' + $("#begin_time").val() + '","place":"' + $("#place").val() + '"}';
             var data = $('#myform').serialize();//将表单数据以字符串形式获取
             $.ajax({
-                url: "/index.php/Home/Staff/staff_pro",
+                url: "/Staff/staff_pro",
                 data: {'data': data, 'work_data': duties_str, "insure_arr": insure_str},
                 type: "post",
                 async: "false",
@@ -312,7 +312,7 @@
     $(".staf_bt1").click(function () {
         if ($(".user_div").text() == "") {
             $.ajax({
-                url: "/index.php/Home/Staff/create_user",
+                url: "/Staff/create_user",
                 type: "post",
                 async: "true",
                 success: function (data) {

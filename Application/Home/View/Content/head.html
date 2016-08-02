@@ -158,11 +158,11 @@
             </li>
             <li><a id="group_name" style="cursor: pointer" onclick="location_href()"><a class="xin_feng"><img src="/public/img/index6.png" alt=""></a></a><br/><a href="" id="post"></a> <a id="line_italic">｜</a> <a href="" id="name"></a></li>
         </ul>
-        <a href="/index.php/Home/Content/index"><input class="return" type="button" id="return"></a>
+        <a href="/Content/index"><input class="return" type="button" id="return"></a>
         <h1 class="return_p" style="height:0px !important;" id="return_p">
             <div id="return_sp">返回上<img src="/public/img/icon_tip.png" alt="" class="amg">一级别</div>
         </h1>
-        <a href="/index.php/Home/Index/goout" id="remove_cook">
+        <a href="/Index/goout" id="remove_cook">
             <div id="tuichudenglu"><input class="return_02" type="button" id="return_02">
                 <div class="return_p1" id="return_p1">
                     退出<img src="/public/img/icon_tip.png" alt="" class="amg">登录
@@ -212,11 +212,11 @@
         }
     };
     document.getElementById("return").onclick = function () {
-        location.href = "/index.php/Home/Content/index";
+        location.href = "/Content/index";
     };
     //页面加载信息
     $.ajax({
-        url: "/index.php/Home/Staff/head_con",
+        url: "/Staff/head_con",
         data: {"user":getCookie("username")},
         type: "post",
         async: "false",
@@ -246,15 +246,15 @@
         if (navigator.userAgent.toLowerCase().match(/(android)/)) {
             isAndroid = true;
             userType.isAndroid = true;
-            location.href = "/index.php/Home/Content/userprofilesmanage_adr";
+            location.href = "/Content/userprofilesmanage_adr";
         } else if (navigator.userAgent.toLowerCase().match(/(iphone|ipod|ipad)/)) {
             iOS = true;
             userType.iOS = true;
-            location.href = "/index.php/Home/Content/userprofilesmanage_adr";
+            location.href = "/Content/userprofilesmanage_adr";
         } else {
             iOS = false;
             isAndroid = false;
-            location.href = "/index.php/Home/Content/userprofilesmanage";
+            location.href = "/Content/userprofilesmanage";
         }
     }
     

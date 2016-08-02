@@ -189,13 +189,13 @@
     btt.onclick = function () {
         var user = document.getElementById("user").value;
         var pwd = document.getElementById("pwd").value;
-        var url = "/index.php/Home/Index/login_rtt?user=" + user + "&pwd=" + pwd;
+        var url = "/Index/login_rtt?user=" + user + "&pwd=" + pwd;
         if (user == "" || pwd == "") {
             alert("用户名或密码不能为空！");
             return;
         }
         $.ajax({
-            url: "/index.php/Home/Index/login_rtt",
+            url: "/Index/login_rtt",
             data: {"user": user, "pwd": pwd},
             type: "get",
             async: "true",
@@ -212,18 +212,18 @@
                     if (navigator.userAgent.toLowerCase().match(/(android)/)) {
                         isAndroid = true;
                         userType.isAndroid = true;
-                        location.href = "/index.php/Home/Content/userprofilesmanage_adrnohead";
+                        location.href = "/Content/userprofilesmanage_adrnohead";
                     } else if (navigator.userAgent.toLowerCase().match(/(iphone|ipod|ipad)/)) {
                         iOS = true;
                         userType.iOS = true;
-                        location.href = "/index.php/Home/Content/userprofilesmanage_adrnohead";
+                        location.href = "/Content/userprofilesmanage_adrnohead";
                     } else {
                         iOS = false;
                         isAndroid = false;
-                        location.href = "/index.php/Home/Content/userprofiles";
+                        location.href = "/Content/userprofiles";
                     }
                 } else if (txt.status == 1 && txt.level == 1) {
-                    location.href = "/index.php/Home/Content/index";
+                    location.href = "/Content/index";
                 }
                 if (box.checked) {
                     setCookie("check", 1, 7);

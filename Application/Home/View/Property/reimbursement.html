@@ -298,7 +298,7 @@
                 
                 document.getElementById('plan_date').valueAsDate = new Date();
                 $.ajax({
-                    url: "/index.php/Home/Property/plan_list",
+                    url: "/Property/plan_list",
                     type: "post",
                     async: false,
                     cache: "false",
@@ -430,7 +430,7 @@
                     $("#tb tr:not(:first)").empty();
                     arr_staff = [];
                     $.ajax({
-                        url: "/index.php/Home/Property/plan_table",
+                        url: "/Property/plan_table",
                         data: {'status_name': '审批通过','status':status,'content':content,"month":month},
                         type: "post",
                         async: "false",
@@ -472,7 +472,7 @@
                 $("#submit_two").click(function () {
                     var data = $('#myform_two').serialize();//将表单数据以字符串形式获取
                     $.ajax({
-                        url: "/index.php/Home/Property/plan_add",
+                        url: "/Property/plan_add",
                         data: {'data': data},
                         type: "post",
                         async: "false",

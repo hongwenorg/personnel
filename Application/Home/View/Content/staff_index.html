@@ -31,36 +31,57 @@
 
         .top_nav {
             width: 2500px;
+            /*border: 1px solid red;*/
         }
 
         .float_top {
             position: fixed;
             top: 0;
-            width: 94.87%;
+            /*width: 94.87%;*/
+            width:100%;
             height: 30px;
-            left: 2.5%;
-            min-width: 1366px;
-            display:none;
-        }
-        .float_top_top{
-            width:90.2%;
-            margin-left:5%;
-            height:30px;
+            /*left:2.5%;*/
+            margin:0 auto;
+            display: none;
             overflow: hidden;
+            /*border: 1px solid green;*/
+            min-width: 1180px;
         }
-        .top_nav{
-            position:relative;
-            left:2px;
+
+        .float_top_top {
+            width: 85.5%;
+            /*margin: 0 auto;*/
+            height: 30px;
+            overflow: hidden;
+            /*border: 1px solid red;*/
+            min-width: 1166px;
+        }
+
+        .top_nav {
+            position: relative;
+            left: 0px;
+            /*border: 1px solid blue;*/
+            height:30px;
         }
 
         .top_nav > div {
-            border-left: 1px solid lightgray;
-            border-right: 1px solid lightgray;
+            border-right: 2px solid lightgray;
             background-color: #bbbbbb;
             height: 30px;
             float: left;
             text-align: center;
+            line-height: 30px;
+            font-weight: bold;
         }
+
+        #tb_parent{
+            min-width: 1165px;
+        }
+        #tb{
+            border-left:none;
+            border-right:none;
+        }
+
     </style>
 </head>
 <body style="background-color: #efefef" id="staff_body">
@@ -68,8 +89,7 @@
      id="sousuo_img_out">
     <img src="/public/img/sousuo.gif" alt="" id="sousuo_img">
 
-    <p style="color:#00c8c8;font-size: 20px;font-weight:bold; position:fixed;left:44%;top:460px; z-index: 99999"
-       id="sousuo_img_txt">数据正在拼命加载中。。。。</p>
+    <p style="color:#00c8c8;font-size: 20px;font-weight:bold; position:fixed;left:44%;top:460px; z-index: 99999" id="sousuo_img_txt">数据正在拼命加载中。。。。</p>
 </div>
 <!--*********************         头部引用        ******************-->
 <div class="head_01">
@@ -83,7 +103,7 @@
         </div>
     </div>
     <div id="container" style="width:94.87%">
-        <div id="content1">
+        <div id="content1" style="min-width: 1288px">
             <ul id="show_ul"></ul>
             <button id="btt">
                 <img src="/public/img/tianjia.png" class="tian_jia" alt="">添加新员工
@@ -107,32 +127,34 @@
             </div>
             <!--*********************************************存放后台员工信息*****************************************************-->
             <div style="width:90%;margin-left: 5%;overflow-x: scroll;border:1px solid lightgray" id="tb_parent">
-                <div class="float_top">
-                    <div class="float_top_top">
-                    <div class="top_nav">
-                        <div>序号</div>
-                        <div>员工号</div>
-                        <div>姓名</div>
-                        <div>性别</div>
-                        <div>民族</div>
-                        <div>身份证号</div>
-                        <div>婚姻状况</div>
-                        <div>出生日期</div>
-                        <div>政治面貌</div>
-                        <div>籍贯</div>
-                        <div>应急联系人</div>
-                        <div>应急联系电话</div>
-                        <div>毕业院校</div>
-                        <div>专业</div>
-                        <div>资格证书</div>
-                        <div>单位部门</div>
-                        <div>职务</div>
-                        <div>入职时间</div>
-                        <div>联系电话</div>
-                        <div>QQ</div>
-                        <div>微信</div>
-                        <div>E-mail</div>
-                    </div>
+                <div style="width:100%">
+                    <div class="float_top">
+                        <div class="float_top_top">
+                            <div class="top_nav">
+                                <div>序号</div>
+                                <div>员工号</div>
+                                <div>姓名</div>
+                                <div>性别</div>
+                                <div>民族</div>
+                                <div>身份证号</div>
+                                <div>婚姻状况</div>
+                                <div>出生日期</div>
+                                <div>政治面貌</div>
+                                <div>籍贯</div>
+                                <div>应急联系人</div>
+                                <div>应急联系电话</div>
+                                <div>毕业院校</div>
+                                <div>专业</div>
+                                <div>资格证书</div>
+                                <div>单位部门</div>
+                                <div>职务</div>
+                                <div>入职时间</div>
+                                <div>联系电话</div>
+                                <div>QQ</div>
+                                <div>微信</div>
+                                <div>E-mail</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <table class="tb" cellpadding="2" cellspacing="0" id="tb">
@@ -273,7 +295,7 @@
                     <a class="jiangcheng_inner" id="jiangcheng_inner"></a>
                     <input type="button" value="×" class="close_diaodong" id="close_jiangcheng">
                 </div>
-                <form action="/index.php/Home/Staff/staff_record" method="post" id="record_form" name="record_form"
+                <form action="/Staff/staff_record" method="post" id="record_form" name="record_form"
                       class="record_form">
                     <div class="staff_diaodong_slt">
                         奖惩形式
@@ -301,7 +323,7 @@
                     <a class="jiangcheng_inner" id="ruzhi_inner"></a>
                     <input type="button" value="×" class="close_diaodong" id="close_ruzhi">
                 </div>
-                <form action="/index.php/Home/Staff/leave_pro" method="post" id="ruzhi_form" name="record_form"
+                <form action="/Staff/leave_pro" method="post" id="ruzhi_form" name="record_form"
                       class="record_form">
                     <div class="staff_ruzhi_slt" id="staff_ruzhi_slt">
                         <h4 class="ruzhi_date">合同签订日期</h4>

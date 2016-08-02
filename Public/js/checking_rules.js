@@ -43,7 +43,7 @@ var text_arr = [];
 window.onload = function () {
     var str = "";
     $.ajax({
-        url: "/index.php/Home/Checking/rule_load",
+        url: "/Checking/rule_load",
         type: "post",
         async: 'false',
         success: function (msg) {
@@ -62,7 +62,7 @@ window.onload = function () {
 
     var check_append = [];
     $.ajax({
-        url: "/index.php/Home/Index/modules",
+        url: "/Index/modules",
         data: {"the_level": 2},
         type: "post",
         async: "false",
@@ -99,7 +99,7 @@ window.onload = function () {
                 var target = e.target;
                 for (var j = 0; j < check_append_modules.length; j++) {
                     if (target.innerText == check_append_modules[j].modules_name) {
-                        location.href = "/index.php/Home" + check_append_modules[j].modules_file;
+                        location.href = check_append_modules[j].modules_file;
                     }
                 }
             });
@@ -144,7 +144,7 @@ function content_click(num, content) {
     if ($("#tb" + num).attr("class") == "hide") {
         var html_str = "";
         $.ajax({
-            url: "/index.php/Home/Checking/rule_select",
+            url: "/Checking/rule_select",
             data: {"content": content},
             type: "post",
             async: 'false',
@@ -187,7 +187,7 @@ function rule_save() {
     var html_time = "";
     $(".select_time_child").nextAll().remove();
     $.ajax({
-        url: "/index.php/Home/Checking/rule_all_select",
+        url: "/Checking/rule_all_select",
         type: "post",
         async: "false",
         cache: "false",
@@ -214,7 +214,7 @@ function rule_ajax() {
         $(".tr_content").remove();
     }
     $.ajax({
-        url: "/index.php/Home/Checking/rule_all_select",
+        url: "/Checking/rule_all_select",
         type: "post",
         async: "false",
         cache: "false",
@@ -261,7 +261,7 @@ function rule_update_pro(id) {
     var rule_mintime = $('#rule_min_td' + id).val();
     var rule_maxtime = $('#rule_max_td' + id).val();
     $.ajax({
-        url: "/index.php/Home/Checking/rule_update",
+        url: "/Checking/rule_update",
         data: {'id': id, "rule_mintime": rule_mintime, "rule_maxtime": rule_maxtime},
         type: "post",
         async: "false",
@@ -280,7 +280,7 @@ function rule_update_pro(id) {
 //时间规则制定删除程序
 function rule_delete(id) {
     $.ajax({
-        url: "/index.php/Home/Checking/rule_delete",
+        url: "/Checking/rule_delete",
         data: {'id': id},
         type: "post",
         async: "false",
@@ -317,7 +317,7 @@ function rule_submit_pro(bu_this) {
         return false;
     }
     $.ajax({
-        url: "/index.php/Home/Checking/rule_submit",
+        url: "/Checking/rule_submit",
         data: {"rule_mintime": rule_mintime, "rule_maxtime": rule_maxtime},
         type: "post",
         async: "false",
@@ -354,7 +354,7 @@ function rule_up_click(e) {
     $(".staff_rules_time").val("");
     $(".select_time_rules").val("0");
     $.ajax({
-        url: "/index.php/Home/Checking/check_rule_find",
+        url: "/Checking/check_rule_find",
         data: {'basic_id': basic_id},
         type: "post",
         async: "false",
@@ -442,7 +442,7 @@ $("#staff_rules_btt1").click(function () {
         var data_json = JSON.stringify(data);
         //console.log(data_json);return;
         $.ajax({
-            url: "/index.php/Home/Checking/check_rule_pro",
+            url: "/Checking/check_rule_pro",
             data: {'data': data_json, 'user_id': user_card},
             type: "post",
             async: "false",
@@ -466,11 +466,11 @@ $("#staff_rules_btt1").click(function () {
 //*************************     布局分页     *************************
 function blk(tabb) {
     if (tabb == 1) {
-        location.href = "/index.php/Home/Checking/check_index";
+        location.href = "/Checking/check_index";
     } else if (tabb == 2) {
-        location.href = "/index.php/Home/Checking/check_check";
+        location.href = "/Checking/check_check";
     } else if (tabb == 3) {
-        location.href = "/index.php/Home/Checking/check_checkrules";
+        location.href = "/Checking/check_checkrules";
     }
 }
 

@@ -14,9 +14,13 @@ return array(
     'DB_CHARSET'            => 'utf8',					// 数据库编码默认采用utf8
     'DB_DEPLOY_TYPE'        => 0,						// 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)
     'DB_RW_SEPARATE'        => false,					// 数据库读写是否分离 主从式有效
-	/* 跳转页面模板 */
-	'TMPL_ACTION_ERROR'     =>  'Public/error',			// 默认错误跳转对应的模板文件
-	'TMPL_ACTION_SUCCESS'   =>  'Public/success',		// 默认成功跳转对应的模板文件
-	'TMPL_EXCEPTION_FILE'   =>  './Application/Home/View/Public/exception.html',		// 异常页面的模板文件
-	'EMPTY_PATH'			=>	'./Application/Home/View/Public/exception.html',/*访问不存在的模块时跳转的地址*/
+    // 允许访问的模块列表
+    'MODULE_ALLOW_LIST'     => array('Home','Admin','User'),
+    'DEFAULT_MODULE'        => 'Home',  // 默认模块
+     'URL_MODEL'            => '2',
+    /* 跳转页面模板 */
+	'TMPL_ACTION_ERROR'     => 'Public/error',			// 默认错误跳转对应的模板文件
+	'TMPL_ACTION_SUCCESS'   => 'Public/success',		// 默认成功跳转对应的模板文件
+	'TMPL_EXCEPTION_FILE'   => './Application/Home/View/Public/exception.html',		// 异常页面的模板文件
+	'EMPTY_PATH'			=> './Application/Home/View/Public/exception.html',/*访问不存在的模块时跳转的地址*/
 );

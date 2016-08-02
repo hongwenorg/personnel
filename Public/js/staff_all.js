@@ -99,7 +99,7 @@ document.getElementById("prov").addEventListener("change", function () {
 //页面加载事件  start
 window.onload = function () {
     var reques = new XMLHttpRequest();
-    reques.open("get", "/index.php/Home/Content/post");
+    reques.open("get", "/Content/post");
     reques.send();
     reques.onreadystatechange = function () {
         if (reques.readyState == 4 && reques.status == 200) {
@@ -112,7 +112,7 @@ window.onload = function () {
     };
     var check_append = [];
     $.ajax({
-        url: "/index.php/Home/Index/modules",
+        url: "/Index/modules",
         data: {"the_level": 1},
         type: "post",
         async: "false",
@@ -148,7 +148,7 @@ window.onload = function () {
                 var target = e.target;
                 for (var j = 0; j < check_append_modules.length; j++) {
                     if (target.innerText == check_append_modules[j].modules_name) {
-                        location.href = "/index.php/Home" + check_append_modules[j].modules_file;
+                        location.href = "" + check_append_modules[j].modules_file;
                     }
                 }
             });
@@ -362,7 +362,7 @@ find_btt.onclick = function () {
 
     arr_staff = [];
     var xhr = new XMLHttpRequest();
-    xhr.open("get", "/index.php/Home/Content/page_con/content/" + content + "/status/" + status);
+    xhr.open("get", "/Content/page_con/content/" + content + "/status/" + status);
     xhr.send();
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
@@ -392,7 +392,7 @@ find_btt.onclick = function () {
 //打印页面   start
 function dayin_blank() {
     if ($("tr:first").text() != "") {
-        window.open("/index.php/Home/Staff/dayin");
+        window.open("/Staff/dayin");
     } else {
         alert("程序有误，请联系管理员！");
     }
@@ -405,7 +405,7 @@ function dayin_blank() {
 function excel_blank() {
 
     if ($("tr:first").text() != "") {
-        window.open("/index.php/Home/Staff/php_excel");
+        window.open("/Staff/php_excel");
     } else {
         alert("程序有误，请联系管理员！");
     }
@@ -460,7 +460,7 @@ $("#but_record").click(function () {
         var data = $('#record_form').serialize();//将表单数据以字符串形式获取
         var user_card = $("#user_card").val();
         $.ajax({
-            url: "/index.php/Home/Staff/staff_record",
+            url: "/Staff/staff_record",
             data: {'data': data, 'user_card': user_card},
             type: "post",
             async: "false",
@@ -492,7 +492,7 @@ $("#entry_leave").click(function () {
         var data = $('#ruzhi_form').serialize();//将表单数据以字符串形式获取
         var user_card = $("#user_card").val();
         $.ajax({
-            url: "/index.php/Home/Staff/leave_pro",
+            url: "/Staff/leave_pro",
             data: {'data': data, 'user_card': user_card},
             type: "post",
             async: "false",
@@ -541,7 +541,7 @@ $("#but_post").click(function () {
         var data = $('#export_fold').serialize();//将表单数据以字符串形式获取
         var user_card = $("#user_card").val();
         $.ajax({
-            url: "/index.php/Home/Staff/export_fold_pro",
+            url: "/Staff/export_fold_pro",
             data: {'data': data, 'user_card': user_card},
             type: "post",
             async: "false",
@@ -622,7 +622,7 @@ $("#staff_rz").click(function () {
     campus_post.children().remove();
     //获取员工信息
     $.ajax({
-        url: "/index.php/Home/Staff/staff_entry_leave",
+        url: "/Staff/staff_entry_leave",
         data: {"user": user_card},
         type: "post",
         async: "false",
@@ -679,7 +679,7 @@ $("#staff_xinxi").click(function () {
         var work_undergo_arr = [];
         //获取员工信息
         $.ajax({
-            url: "/index.php/Home/Staff/staff_user",
+            url: "/Staff/staff_user",
             data: {"user": user_card},
             type: "post",
             async: "false",
@@ -766,7 +766,7 @@ document.getElementById("staff_gangwei").onclick = function () {
     var fold_post_str = "<option value='请选择'>请选择</option>";
     //获取员工信息
     $.ajax({
-        url: "/index.php/Home/Staff/staff_post_leave",
+        url: "/Staff/staff_post_leave",
         data: {"user": user_card},
         type: "post",
         async: "false",
@@ -942,9 +942,9 @@ function namesort(content) {
 document.onscroll = function () {
     var top_nav=document.querySelectorAll(".top_nav div");
     var top_wid=document.querySelectorAll(".top_wid div");
-    if (scrollY > 250) {
+    var float_tt=document.querySelector(".float_top_top");
+    if (scrollY > 270) {
         document.querySelector(".float_top").style.display="block";
-        document.getElementById("trr").style.opacity=0;
         for(var i=0;i<top_nav.length;i++){
             for(var j=0;j<top_wid.length;j++){
                 if(top_nav[i].innerText==top_wid[j].innerText){
@@ -955,11 +955,10 @@ document.onscroll = function () {
         document.querySelector(".top_nav").offsetTop=0;
     } else {
         document.querySelector(".float_top").style.display="none";
-        document.getElementById("trr").style.opacity=1;
     }
 };
 document.getElementById("tb_parent").onscroll=function(){
-    document.querySelector(".top_nav").style.left=2-parseInt(document.getElementById("tb_parent").scrollLeft)+"px"
+    document.querySelector(".top_nav").style.left=-parseInt(document.getElementById("tb_parent").scrollLeft)+"px";
 };
 
 

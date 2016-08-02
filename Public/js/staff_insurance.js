@@ -59,7 +59,7 @@ function prov_change() {
     var sel = document.getElementById("prov");
     if (sel.value == "place") {
         $.ajax({
-            url: "/index.php/Home/Staff/area_school",
+            url: "/Staff/area_school",
             data: {},
             type: "post",
             async: "false",
@@ -131,7 +131,7 @@ document.getElementById("prov").addEventListener("change", function () {
 //页面加载事件  start
 window.onload = function () {
     var reques = new XMLHttpRequest();
-    reques.open("get", "/index.php/Home/Content/post");
+    reques.open("get", "/Content/post");
     reques.send();
     reques.onreadystatechange = function () {
         if (reques.readyState == 4 && reques.status == 200) {
@@ -144,7 +144,7 @@ window.onload = function () {
     }
     var check_append = [];
     $.ajax({
-        url: "/index.php/Home/Index/modules",
+        url: "/Index/modules",
         data: {"the_level": 1},
         type: "post",
         async: "false",
@@ -182,7 +182,7 @@ window.onload = function () {
                 var target = e.target;
                 for (var j = 0; j < check_append_modules.length; j++) {
                     if (target.innerText == check_append_modules[j].modules_name) {
-                        location.href = "/index.php/Home" + check_append_modules[j].modules_file;
+                        location.href = "" + check_append_modules[j].modules_file;
                     }
                 }
             });
@@ -337,7 +337,7 @@ find_btt.onclick = function () {
     $("#tb tr:not(:first)").empty();
     arr_staff = [];
     var xhr = new XMLHttpRequest();
-    xhr.open("get", "/index.php/Home/Content/insure_find/content/" + content + "/status/" + status);
+    xhr.open("get", "/Content/insure_find/content/" + content + "/status/" + status);
     xhr.send();
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
@@ -368,7 +368,7 @@ find_btt.onclick = function () {
 //打印页面   start
 function dayin_blank() {
     if ($("tr:first").text() != "") {
-        window.open("/index.php/Home/Staff/dayin");
+        window.open("/Staff/dayin");
     } else {
         alert("程序有误，请联系管理员！");
     }
@@ -380,7 +380,7 @@ function dayin_blank() {
 function excel_blank() {
 
     if ($("tr:first").text() != "") {
-        window.open("/index.php/Home/Staff/php_excel");
+        window.open("/Staff/php_excel");
     } else {
         alert("程序有误，请联系管理员！");
     }
