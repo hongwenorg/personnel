@@ -34,7 +34,6 @@ document.getElementById("sousuokuang").onkeydown = function () {
 function prov_change() {
     var opt = "";
     var sel = document.getElementById("prov");
-    //console.log(arr_class);
     if (sel.value == "campus") {
         for (var i = 0; i < arr_class[0].length; i++) {
             opt = opt + '<option value="' + arr_class[0][i] + '">' + arr_class[0][i] + '</option>';
@@ -229,7 +228,6 @@ function ArrSort(page, num, content) {
             arr_staff[j].qq = "无数据";
         }
         var tr = document.createElement("tr");
-        console.log(arr_staff[j]);
         tb.appendChild(tr).innerHTML =
             "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_num[j] + "</div>" + "</td>" +
             "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].user + "</div>" + "<input type='hidden' class='user_sort' value='" + 1 + "'></td>" +

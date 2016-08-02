@@ -70,11 +70,6 @@
 </div>
 <div class="text_01">
     <div class="butt_all">
-        <!-- <a><button type="button" id="bt1"><img src="/public/img/index1.png" alt=""></button></a>
-        <a><button type="button" id="bt2"><img src="/public/img/index2.png" alt=""></button></a>
-        <a><button type="button" id="bt3"><img src="/public/img/index3.png" alt=""></button></a>
-        <a><button type="button" id="bt4"><img src="/public/img/index4.png" alt=""></button></a>
-        <a><button type="button" id="bt5"><img src="/public/img/index5.png" alt=""></button></a> -->
     </div>
     <div class="tongzhi"></div>
 </div>
@@ -99,10 +94,10 @@
                     return false;
                 } else {
                     for (key in txt) {
-                        console.log(txt[key]);
                         if (key != "status" && txt["status"] != 2) {
-                            str += '<a><button type="button" onclick="index_button(' + key + ')"><img src="/public/img/index' + txt[key].id + '.png" alt=""></button></a>';
+                            str += '<a class="big_btt" name="big_btt"><button name="' + 'button' + txt[key].id + '" type="button"><img name="' + 'button' + txt[key].id + '" src="/public/img/index' + txt[key].id + '.png" alt=""></button></a>';
                             bt_arr.push(txt[key].modules_file);
+                            console.log(txt[key].id)
                         }
                     }
                     $(".butt_all").html(str);
@@ -112,32 +107,32 @@
         });
     };
 
-
-    function index_button(num) {
-        console.log(num);
-        $.ajax({
-            url: "/Index/modules",
-            data: {"the_level": num + 1},
-            type: "post",
-            async: "false",
-            success: function (data) {
-                var staff_append_modules = [];
-                msg = JSON.parse(data);
-                var arr_num = [];
-                for (key in msg[0]) {
-                    if (key != "status" && msg["status"] != 2) {
-                        staff_append_modules.push(msg[0][key].modules_file);
+    document.querySelector(".butt_all").addEventListener("click", function (e) {
+        var target = e.target;
+        var pnod=target.parentNode.getAttribute("name");
+        var pnod2=target.parentNode.parentNode.getAttribute("name");
+        if(pnod=="big_btt"||pnod2=="big_btt"){
+            var btt_num = target.getAttribute("name").substr(6);
+            $.ajax({
+                url: "/Index/modules",
+                data: {"the_level": btt_num},
+                type: "post",
+                async: "false",
+                success: function (data) {
+                    var staff_append_modules = [];
+                    msg = JSON.parse(data);
+                    for (key in msg[0]) {
+                        if (key != "status" && msg["status"] != 2) {
+                            staff_append_modules.push(msg[0][key].modules_file);
+                        }
+                    }
+                    for (var i = 0; i < staff_append_modules.length; i++) {
+                        location.href = staff_append_modules[0];
                     }
                 }
-                for (var i = 0; i < staff_append_modules.length; i++) {
-                    console.log(staff_append_modules[0]);
-                    location.href = staff_append_modules[0];
-                }
-            }
-        });
+            });
+        }
 
-    }
-
-
+    });
 </script>
 </html>
