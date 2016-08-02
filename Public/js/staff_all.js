@@ -34,7 +34,6 @@ document.getElementById("sousuokuang").onkeydown = function () {
 function prov_change() {
     var opt = "";
     var sel = document.getElementById("prov");
-    //console.log(arr_class);
     if (sel.value == "campus") {
         for (var i = 0; i < arr_class[0].length; i++) {
             opt = opt + '<option value="' + arr_class[0][i] + '">' + arr_class[0][i] + '</option>';
@@ -229,7 +228,6 @@ function ArrSort(page, num, content) {
             arr_staff[j].qq = "无数据";
         }
         var tr = document.createElement("tr");
-        console.log(arr_staff[j]);
         tb.appendChild(tr).innerHTML =
             "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_num[j] + "</div>" + "</td>" +
             "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].user + "</div>" + "<input type='hidden' class='user_sort' value='" + 1 + "'></td>" +
@@ -942,9 +940,9 @@ function namesort(content) {
 document.onscroll = function () {
     var top_nav=document.querySelectorAll(".top_nav div");
     var top_wid=document.querySelectorAll(".top_wid div");
-    if (scrollY > 250) {
+    var float_tt=document.querySelector(".float_top_top");
+    if (scrollY > 270) {
         document.querySelector(".float_top").style.display="block";
-        document.getElementById("trr").style.opacity=0;
         for(var i=0;i<top_nav.length;i++){
             for(var j=0;j<top_wid.length;j++){
                 if(top_nav[i].innerText==top_wid[j].innerText){
@@ -955,11 +953,10 @@ document.onscroll = function () {
         document.querySelector(".top_nav").offsetTop=0;
     } else {
         document.querySelector(".float_top").style.display="none";
-        document.getElementById("trr").style.opacity=1;
     }
 };
 document.getElementById("tb_parent").onscroll=function(){
-    document.querySelector(".top_nav").style.left=2-parseInt(document.getElementById("tb_parent").scrollLeft)+"px"
+    document.querySelector(".top_nav").style.left=-parseInt(document.getElementById("tb_parent").scrollLeft)+"px";
 };
 
 

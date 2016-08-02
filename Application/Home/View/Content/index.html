@@ -6,10 +6,11 @@
     <script type="text/javascript" src="/public/js/public.js"></script>
     <title>人事系统首页</title>
     <style>
-        *{
-            padding:0;
-            margin:0;
+        * {
+            padding: 0;
+            margin: 0;
         }
+
         .text_01 {
             width: 100%;
             min-width: 1366px;
@@ -25,7 +26,7 @@
             height: 300px;
         }
 
-        .butt_all>a{
+        .butt_all > a {
             background-color: white;
             margin: 12px;
             border-radius: 10px;
@@ -34,7 +35,7 @@
             float: left;
         }
 
-        .butt_all>a> button{
+        .butt_all > a > button {
             border-radius: 10px;
             border: 1px solid lightgray;
             background-color: white;
@@ -55,8 +56,9 @@
             left: 50%;
             margin-left: -600px;
         }
-        body{
-            width:100%;
+
+        body {
+            width: 100%;
             min-width: 1366px;
         }
     </style>
@@ -68,11 +70,6 @@
 </div>
 <div class="text_01">
     <div class="butt_all">
-        <!-- <a><button type="button" id="bt1"><img src="/public/img/index1.png" alt=""></button></a>
-        <a><button type="button" id="bt2"><img src="/public/img/index2.png" alt=""></button></a>
-        <a><button type="button" id="bt3"><img src="/public/img/index3.png" alt=""></button></a>
-        <a><button type="button" id="bt4"><img src="/public/img/index4.png" alt=""></button></a>
-        <a><button type="button" id="bt5"><img src="/public/img/index5.png" alt=""></button></a> -->
     </div>
     <div class="tongzhi"></div>
 </div>
@@ -81,7 +78,7 @@
 </body>
 <script>
     var bt_arr = [];
-    window.onload = function(){
+    window.onload = function () {
 
         $.ajax({
             url: "/Content/authority_index",
@@ -98,7 +95,7 @@
                 } else {
                     for (key in txt) {
                         if (key != "status" && txt["status"] != 2) {
-                            str += '<a><button type="button" onclick="index_button('+key+')"><img src="/public/img/index'+txt[key].id+'.png" alt=""></button></a>';
+                            str += '<a class="big_btt" name="big_btt"><button name="' + 'button' + txt[key].id + '" type="button"><img name="' + 'button' + txt[key].id + '" src="/public/img/index' + txt[key].id + '.png" alt=""></button></a>';
                             bt_arr.push(txt[key].modules_file);
                         }
                     }
@@ -109,14 +106,33 @@
         });
     };
 
-
+    document.querySelector(".butt_all").addEventListener("click", function (e) {
+        var target = e.target;
+        var pnod=target.parentNode.getAttribute("name");
+        var pnod2=target.parentNode.parentNode.getAttribute("name");
+        if(pnod=="big_btt"||pnod2=="big_btt"){
+            var btt_num = target.getAttribute("name").substr(6);
+            $.ajax({
+                url: "/Index/modules",
+                data: {"the_level": btt_num},
+                type: "post",
+                async: "false",
+                success: function (data) {
+                    var staff_append_modules = [];
+                    msg = JSON.parse(data);
+                    for (key in msg[0]) {
+                        if (key != "status" && msg["status"] != 2) {
+                            staff_append_modules.push(msg[0][key].modules_file);
+                        }
+                    }
+                    for (var i = 0; i < staff_append_modules.length; i++) {
+                        location.href = staff_append_modules[0];
+                    }
+                }
+            });
+        }
+    });
     
-    function index_button(num){
-        location.href=""+bt_arr[num];
-    }
-
-    
-
 
 </script>
 </html>
