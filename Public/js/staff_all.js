@@ -329,17 +329,21 @@ find_btt.onclick = function () {
     if (sel.value == "campus") {
         var status = "campus";
         var content = $("#city").val();
+        document.getElementById("sousuo_img_out").style.display = "block";
     } else if (sel.value == "teacher") {
         var status = "teacher";
         var content = $("#city").val();
+        document.getElementById("sousuo_img_out").style.display = "block";
     } else if (sel.value == "post") {
         var status = "post";
         var content = $("#city").val();
+        document.getElementById("sousuo_img_out").style.display = "block";
     } else if (sel.value == "time") {
         var date_star = document.getElementsByName("date_star")[0].value;
         var date_over = document.getElementsByName("date_over")[0].value;
         var dateStar_str = new Date(date_star).getTime();
         var dateOver_str = new Date(date_over).getTime();
+        document.getElementById("sousuo_img_out").style.display = "block";
 
         if (dateOver_str < dateStar_str) {
             alert("输入查询时间有误！");
@@ -352,9 +356,11 @@ find_btt.onclick = function () {
     } else if (sel.value == "name") {
         var status = "name";
         var content = $("#find").val();
+        document.getElementById("sousuo_img_out").style.display = "block";
     } else if (sel.value == "user") {
         var status = "user";
         var content = $("#find").val();
+        document.getElementById("sousuo_img_out").style.display = "block";
     }
     $("#tb tr:not(:first)").empty();
 
@@ -937,12 +943,14 @@ function namesort(content) {
 
 //*************************     布局分页     *************************
 
-document.onscroll = function () {
+
+document.getElementById("tb_parent").onscroll=function(){
     var top_nav=document.querySelectorAll(".top_nav div");
     var top_wid=document.querySelectorAll(".top_wid div");
     var float_tt=document.querySelector(".float_top_top");
-    if (scrollY > 270) {
-        document.querySelector(".float_top").style.display="block";
+    if (document.getElementById("tb_parent").scrollTop > 0) {
+        document.getElementById("tb_parent").style.top="-30px";
+        document.querySelector(".max_head").style.display="block";
         for(var i=0;i<top_nav.length;i++){
             for(var j=0;j<top_wid.length;j++){
                 if(top_nav[i].innerText==top_wid[j].innerText){
@@ -950,13 +958,11 @@ document.onscroll = function () {
                 }
             }
         }
-        document.querySelector(".top_nav").offsetTop=0;
     } else {
-        document.querySelector(".float_top").style.display="none";
+        document.querySelector(".max_head").style.display="none";
+        document.getElementById("tb_parent").style.top=0;
     }
-};
-document.getElementById("tb_parent").onscroll=function(){
-    document.querySelector(".top_nav").style.left=-parseInt(document.getElementById("tb_parent").scrollLeft)+"px";
+    document.querySelector(".top_nav").style.left=2-parseInt(document.getElementById("tb_parent").scrollLeft)+"px";
 };
 
 

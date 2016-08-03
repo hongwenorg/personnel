@@ -23,9 +23,9 @@ class StaffController extends CommonController {
 		//创建对象
 		$excel = new \PHPExcel();
 		//Excel表格式,这里简略写了8列
-		$letter = array('A','B','C','D','E','F','F','G');
+		$letter = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V');
 		//表头数组
-		$tableheader = array('序号','员工号','姓名','入职时间','单位部门','职务','联系电话','QQ');
+		$tableheader = array('序号','员工号','姓名','性别','民族','身份证号','婚姻状况','出生日期','政治面貌','籍贯','应急联系人','应急联系电话','毕业院校','专业','资格证书','单位部门','职务','入职时间', '联系电话','QQ','微信','E-mail');
 		//填充表头信息
 		for($i = 0;$i < count($tableheader);$i++) {
 			$excel->getActiveSheet()->setCellValue("$letter[$i]1","$tableheader[$i]");
@@ -35,11 +35,25 @@ class StaffController extends CommonController {
 			$data[$key][0] = ($key+1);
 			$data[$key][1] = $val["user"];
 			$data[$key][2] = $val["name"];
-			$data[$key][3] = $val["entry_date"];
-			$data[$key][4] = $val["campus"];
-			$data[$key][5] = $val["post"];
-			$data[$key][6] = $val["telephone"];
-			$data[$key][7] = $val["qq"];
+			$data[$key][3] = $val["sex"];
+			$data[$key][4] = $val["nation"];
+			$data[$key][5] = $val["card"];
+			$data[$key][6] = $val["marriage"];
+			$data[$key][7] = $val["birthday"];
+			$data[$key][8] = $val["polity"];
+			$data[$key][9] = $val["residence_booklet"];
+			$data[$key][10] = $val["contacts"];
+			$data[$key][11] = $val["urgency_telephone"];
+			$data[$key][12] = $val["school"];
+			$data[$key][13] = $val["mjor"];
+			$data[$key][14] = $val["seniority"];
+			$data[$key][15] = $val["campus"];
+			$data[$key][16] = $val["post"];
+			$data[$key][17] = $val["entry_date"];
+			$data[$key][18] = $val["telephone"];
+			$data[$key][19] = $val["qq"];
+			$data[$key][20] = $val["wechat"];
+			$data[$key][21] = $val["email"];
 		}
 		//填充表格信息
 		for ($i = 2;$i <= count($data) + 1;$i++) {
@@ -486,32 +500,76 @@ class StaffController extends CommonController {
 					<th>序号</th>
 					<th>员工号</th>
 					<th>姓名</th>
-					<th>入职时间</th>
+					<th>性别</th>
+					<th>民族</th>
+					<th>身份证号</th>
+					<th>婚姻状况</th>
+					<th>出生日期</th>
+					<th>政治面貌</th>
+					<th>籍贯</th>
+					<th>应急联系人</th>
+					<th>应急联系电话</th>
+					<th>毕业院校</th>
+					<th>专业</th>
+					<th>资格证书</th>
 					<th>单位部门</th>
 					<th>职务</th>
+					<th>入职时间</th>
 					<th>联系电话</th>
-					<th>QQ</th></tr>";
+					<th>QQ</th>
+					<th>微信</th>
+					<th>E-mail</th>
+					</tr>";
 			foreach($_SESSION['select_content'] as $key => $val){
 				$str .= "<tr class='print_tr'>
 				<td class='td_num'>" . ($key+1) . "</td>
 				<td class='td_user'>" . $val['user'] . "</td>
 				<td class='td_name'>" . $val['name'] . "</td>
-				<td class='td_date'>" . $val['entry_date'] . "</td>
+				<td class='td_sex'>" . $val['sex'] . "</td>
+				<td class='td_nation'>" . $val['nation'] . "</td>
+				<td class='td_card'>" . $val['card'] . "</td>
+				<td class='td_marriage'>" . $val['marriage'] . "</td>
+				<td class='td_birthday'>" . $val['birthday'] . "</td>
+				<td class='td_polity'>" . $val['polity'] . "</td>
+				<td class='td_residence_booklet'>" . $val['residence_booklet'] . "</td>
+				<td class='td_contacts'>" . $val['contacts'] . "</td>
+				<td class='td_urgency_telephone'>" . $val['urgency_telephone'] . "</td>
+				<td class='td_school'>" . $val['school'] . "</td>
+				<td class='td_major'>" . $val['major'] . "</td>
+				<td class='td_seniority'>" . $val['seniority'] . "</td>
 				<td class='td_campus'>" . $val['campus'] . "</td>
 				<td class='td_post'>" . $val['post'] . "</td>
+				<td class='td_entry_date'>" . $val['entry_date'] . "</td>
 				<td class='td_telephone'>" . $val['telephone'] . "</td>
 				<td class='td_qq'>" . $val['qq'] . "</td>
+				<td class='td_wechat'>" . $val['wechat'] . "</td>
+				<td class='td_email'>" . $val['email'] . "</td>
 				</tr>";
 				if(($key+1)%30==0){
 					$str .= "</table><div class='PageNext'></div><br><br><table border=1 class='tb' cellpadding='2' cellspacing='0' id='tb'><tr>
-							<th>序号</th>
-							<th>员工号</th>
-							<th>姓名</th>
-							<th>入职时间</th>
-							<th>单位部门</th>
-							<th>职务</th>
-							<th>联系电话</th>
-							<th>QQ</th></tr>";
+					<th>序号</th>
+					<th>员工号</th>
+					<th>姓名</th>
+					<th>性别</th>
+					<th>民族</th>
+					<th>身份证号</th>
+					<th>婚姻状况</th>
+					<th>出生日期</th>
+					<th>政治面貌</th>
+					<th>籍贯</th>
+					<th>应急联系人</th>
+					<th>应急联系电话</th>
+					<th>毕业院校</th>
+					<th>专业</th>
+					<th>资格证书</th>
+					<th>单位部门</th>
+					<th>职务</th>
+					<th>入职时间</th>
+					<th>联系电话</th>
+					<th>QQ</th>
+					<th>微信</th>
+					<th>E-mail</th>
+					</tr>";
 				}
 			}
 			$str .= "</table>";
