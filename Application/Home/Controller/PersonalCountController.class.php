@@ -60,6 +60,7 @@ class PersonalCountController extends Controller {
                             $data2[$key]['id'] = $value['id'];
                             $data2[$key]['name'] = $user_arr['name'];
                             $data2[$key]['post'] = $post_arr['name'];
+                            $data2[$key]['post_id'] = $post_arr['id'];
                             $data2[$key]['level'] = $value['level'];
                             $data2[$key]['target'] = $value['target'];
                             $data2[$key]['upgrade'] = $value['upgrade'];
@@ -94,6 +95,7 @@ class PersonalCountController extends Controller {
                         $data2[$key]['id'] = $value['id'];
                         $data2[$key]['name'] = $user_arr['name'];
                         $data2[$key]['post'] = $post_arr['name'];
+                        $data2[$key]['post_id'] = $post_arr['id'];
                         $data2[$key]['level'] = $value['level'];
                         $data2[$key]['target'] = $value['target'];
                         $data2[$key]['upgrade'] = $value['upgrade'];
@@ -116,6 +118,7 @@ class PersonalCountController extends Controller {
         }
         echo json_encode($data);
     }
+
 
 
     //财务系统校区录入业绩目标删除
@@ -176,7 +179,7 @@ class PersonalCountController extends Controller {
                 $target_arr = $vals['personal_target'];
                 foreach ($target_arr as $key => &$value) {
                     $name = $value['name'];
-                    $arr = $model3->where("name like '%".$name."%' and school like '%".$school_name."%' and state = 1")->find();
+                    $arr = $model3->where("name like '%".$name."%' and state = 1")->find();//and school like '%".$school_name."%'
                     if(is_array($arr)){
                         $data2 = array();
                         $data2['user_id'] = $arr['id'];
@@ -213,6 +216,99 @@ class PersonalCountController extends Controller {
             echo json_encode(array('status' => false , 'content' => $error_s));exit;//数据出错
         }else{
             echo json_encode(array('status' => true , 'content' => "录入成功"));exit;//数据出错
+        }
+    }
+
+
+    //个人信息录入页面显示数据程序
+    function Personal_target_find(){
+        if(empty($_GET['school_id'])){
+            echo json_encode(array('status' => false , 'content' => '程序出错，请联系管理员'));exit;//数据出错
+        }else{
+            $campus_id = $_GET['school_id'];
+        }
+        $model = D('oa_achievement');
+        $data = array();
+        $date = date("Y-m",time());
+        $data = $model->where(array('campus_id' => $school_id , 'checkout_date' => array('like' , '%'.$date.'%')))->select();
+        if(is_array($data)){
+            echo json_encode($data);
+        }else{
+            echo json_encode(array('status' => false , 'content' => '程序出错，请联系管理员'));exit;//数据出错
+        }
+    }
+
+    //个人信息录入接口程序
+    function Personal_target_add(){
+        if(empty($_GET['data'])){
+            echo json_encode(array('status' => false , 'content' => '请确认数据传输正确'));exit;//数据出错
+        }else{
+            $array = json_decode($_GET['data'],true);
+        }
+        if($array['curriculum_type'] == '0' && $array['not_curriculum_type'] == '0'){
+            echo json_encode(array('status' => false , 'content' => '请选择课程类型'));exit;//数据出错
+        }
+        if(($array['teaching_userid'] == '0' && $array['study_userid'] == '0') || ($array['teaching_userid'] == '' && $array['study_userid'] == '')){
+            echo json_encode(array('status' => false , 'content' => '请填写学管或者教主'));exit;//数据出错
+        }
+        $data = array();
+        $date = date('Y-m-d',time());
+        $teaching_userid = $array['teaching_userid'];
+        $study_userid = $array['study_userid'];
+        $person_all = D('person_all');
+        $oa_foo_info = D('oa_foo_info');
+        $model = D('oa_achievement');
+        $school_name = $oa_foo_info->where(array('id' => $array['school_id']))->find();
+        $teaching_user = $person_all->where(array('name' => $teaching_userid , 'school' =>  $school_name['name']))->find();
+        if(!$teaching_user){
+            echo json_encode(array('status' => false , 'content' => $teaching_userid.' | '.$school_name['name'].' 查无此人，请确认名字是否正确'));exit;//数据出错
+        }
+        $study_user = $person_all->where(array('name' => $study_userid , 'school' =>  $school_name['name']))->find();
+        if(!$study_user){
+            echo json_encode(array('status' => false , 'content' => $study_userid.' | '.$school_name['name'].' 查无此人，请确认名字是否正确'));exit;//数据出错
+        }
+        $data['campus_id'] = $array['school_id'];
+        $data['checkout_date'] = $date;
+        $data['receipt_card'] = $array['receipt_card'];
+        $data['checkout_userid'] = $array['checkout_userid'];
+        $data['teaching_userid'] = $teaching_user['id'];
+        $data['study_userid'] = $study_user['id'];
+        $data['achievement_type'] = $array['achievement_type'];
+        $data['charge_type'] = $array['charge_type'];
+        $data['student_name'] = $array['student_name'];
+        $data['grade'] = $array['grade'];
+        $data['achievement_date'] = $array['achievement_date'];
+        $data['curriculum_type'] = $array['curriculum_type'];
+        $data['curriculum_name'] = $array['curriculum_name'];
+        $data['teacher_name'] = $array['teacher_name'];
+        $data['charge_class_num'] = $array['charge_class_num'];
+        $data['charge_money'] = $array['charge_money'];
+        $data['new_signing_ratio'] = $array['new_signing_ratio'];
+        $data['old_signing_ratio'] = $array['old_signing_ratio'];
+        $data['receivables_type'] = $array['receivables_type'];
+        $data['content'] = $array['content'];
+
+        if(empty($array['id'])){
+            //添加操作（要是没有id传值）
+            $state = $model->add($data);
+            if($state){
+                $array['id'] = $state;
+                $array['checkout_date'] = $date;
+                echo json_encode(array('status' => true , 'content' => '保存成功' , 'data' => $array));exit;//数据出错
+            }else{
+                echo json_encode(array('status' => false , 'content' => '保存失败，请联系管理员'));exit;//数据出错
+            }
+        }else{
+            //修改操作（如果有id传值）
+            $id = $array['id'];
+            $state = $model->where(array("id" => $id))->save($data);
+            if($state){
+                $array['id'] = $id;
+                $array['checkout_date'] = $date;
+                echo json_encode(array('status' => true , 'content' => '修改成功' , 'data' => $array));exit;//数据出错 
+            }else{
+                echo json_encode(array('status' => false , 'content' => '修改失败，请确认数据是否修改'));exit;//数据出错
+            }
         }
     }
     

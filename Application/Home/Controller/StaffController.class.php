@@ -3,7 +3,7 @@
 *@Author:温加宝
 *@Email:wen8555955@163.com
 *@DateTime:2016/3/17
-*@Description:员工模板控制器
+*@Description:员工模板、生成Excel~打印控制器
 */
 namespace Home\Controller;
 use Think\Controller;
