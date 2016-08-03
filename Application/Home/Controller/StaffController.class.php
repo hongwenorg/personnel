@@ -89,9 +89,9 @@ class StaffController extends CommonController {
 		//创建对象
 		$excel = new \PHPExcel();
 		//Excel表格式,这里简略写了8列
-		$letter = array('A','B','C','D','E','F','F','G','H','I','J','K','L','M','N','O','P','Q');
+		$letter = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T');
 		//表头数组
-		$tableheader = array('序号','姓名','单位部门','职务','讲师级别','绩效系数','元老补助','迟到','早退','事假','病假','加班','旷工','未打卡','应出勤天数','核算出勤天数','是否满勤','详细信息');
+		$tableheader = array('序号','姓名','单位部门','职务','讲师级别','元老补助','绩效系数','迟到','早退','事假','事假核算','病假','病假核算','加班','旷工','未打卡','应出勤天数','核算出勤天数','是否满勤','详细信息');
 		//填充表头信息
 		for($i = 0;$i < count($tableheader);$i++) {
 			$excel->getActiveSheet()->setCellValue("$letter[$i]1","$tableheader[$i]");
@@ -104,23 +104,30 @@ class StaffController extends CommonController {
 			$data[$key][2] = $val["campus"];
 			$data[$key][3] = $val["post"];
 			$data[$key][4] = $val["level"];
-			$data[$key][5] = $val["factor"];
-			$data[$key][6] = $val["allowance"];
+			$data[$key][5] = $val["allowance"];
+			$data[$key][6] = 1;
 			$data[$key][7] = $val["late"];
 			$data[$key][8] = $val["early"];
 			$data[$key][9] = $val["personal_leave"];
-			$data[$key][10] = $val["sick_leave"];
-			$data[$key][11] = $val["overtime"];
-			$data[$key][12] = $val["absenteeism"];
-			$data[$key][13] = $val["noclock"];
-			$data[$key][14] = $val["over_count_day"];
-			$data[$key][15] = $val["count_yes"];
-			$data[$key][16] = $val["is_no"];
+			$data[$key][10] = $val["personal_leave_count"];
+			$data[$key][11] = $val["sick_leave"];
+			$data[$key][12] = $val["sick_leave_count"];
+			$data[$key][13] = $val["overtime"];
+			$data[$key][14] = $val["absenteeism"];
+			$data[$key][15] = $val["noclock"];
+			$data[$key][16] = $val["over_count_day"];
+			$data[$key][17] = $val["count_yes"];
+			$data[$key][18] = $val["is_no"];
 
 			$detailed_arr = $check_record->query("SELECT check_date,check_content FROM `check_record` WHERE ( `user_id` = ".$val['user_id']." ) AND ( `check` = '不合格' ) ".$val["date"]);
+			$detascy_arr = $check_record->where("user_id='".$val['user_id']."' and ( check_content like '%事假%' or check_content like '%病假%' )".$val["date"])->select();
 			$str = "";
 			foreach($detailed_arr as $detailed_val){
-				if(strstr($detailed_val['check_content'],"旷工")){
+				if(strstr($detailed_val['check_content'],"旷工") && strstr($detailed_val['check_content'],"晚一个小时")){
+					$str .= date("d",strtotime($detailed_val['check_date']))."迟到为旷工；";
+				}else if(strstr($detailed_val['check_content'],"旷工") && strstr($detailed_val['check_content'],"早一个小时")){
+					$str .= date("d",strtotime($detailed_val['check_date']))."早退为旷工；";
+				}else if(strstr($detailed_val['check_content'],"旷工") && strstr($detailed_val['check_content'],"无打卡记录")){
 					$str .= date("d",strtotime($detailed_val['check_date']))."旷工；";
 				}else if(strstr($detailed_val['check_content'],"灵活打卡异常")){
 					$str .= date("d",strtotime($detailed_val['check_date']))."灵活打卡异常；";
@@ -129,9 +136,18 @@ class StaffController extends CommonController {
 				}
 				
 			}
+
+			foreach($detascy_arr as $detascy_val){
+				if(strstr($detascy_val['check_content'],"事假")){
+					$str .= date("d",strtotime($detascy_val['check_date']))."事假；";
+				}else if(strstr($detascy_val['check_content'],"病假")){
+					$str .= date("d",strtotime($detascy_val['check_date']))."病假；";
+				}
+			}
+			$detailed = rtrim($str,'；');
 			
-			$val['detailed'] = rtrim($str,'；');
-			$data[$key][17] = $val["detailed"];
+			$val['detailed'] = $detailed;
+			$data[$key][19] = $val["detailed"];
 		}
 		//填充表格信息
 		for ($i = 2;$i <= count($data) + 1;$i++) {

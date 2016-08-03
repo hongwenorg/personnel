@@ -207,7 +207,7 @@ class PublicController extends Controller {
 
 	//定时小程序，每到月一号计算上个月考勤记录表数据处理添加,顺序执行  3
 	function check_record_fun(){
-		die;
+		//die;
 		//下面是获取上一月的数据
 		$data = $this->year_month_day();
 		$now_time = $data['now_time'];
@@ -278,8 +278,8 @@ class PublicController extends Controller {
 		
 		}
 		//echo $this->weekday('1459517797');
-		//echo "<pre>";
-		//print_r($check_arr);die;
+		echo "<pre>";
+		print_r($check_arr);die;
 		$user_rule = M('user_rule');
 		$check_record = D('check_record');
 		$rule_arr = $user_rule->select();
@@ -335,9 +335,9 @@ class PublicController extends Controller {
 								$value['check'] = "合格";
 								$value['check_content'] = "";
 								continue;
-							}else if($value['max_times']!="0" && $value['min_times']!="0" && ($value['min_day'] == $value['max_day'] || ($value['max_hour'] > $rules_arr_val['rule_maxhour'] || ($value['max_hour'] == $rules_arr_val['rule_maxhour'] && $value['max_minute']>=$rules_arr_val['rule_maxminute']))) && ($value['min_hour'] > $rules_arr_val['rule_minhour'] || ($value['min_hour'] == $rules_arr_val['rule_minhour'] && $value['min_minute']>$rules_arr_val['rule_minminute']))){
+							}else if($value['max_times']!="0" && $value['min_times']!="0" && empty($value['check_content']) && (($value['max_hour'] > $rules_arr_val['rule_maxhour'] || ($value['max_hour'] == $rules_arr_val['rule_maxhour'] || $value['min_day'] < $value['max_day'] && $value['max_minute']>=$rules_arr_val['rule_maxminute']))) && ($value['min_hour'] > $rules_arr_val['rule_minhour'] || ($value['min_hour'] == $rules_arr_val['rule_minhour'] && $value['min_minute']>$rules_arr_val['rule_minminute']))){
 								if($value['check']!='合格'){
-									if($value['min_hour'] > $rules_arr_val['rule_minhour'] && $value['min_minute'] > $rules_arr_val['rule_minminute']){
+									if($value['min_hour'] > $rules_arr_val['rule_minhour'] && $value['min_minute'] > $rules_arr_val['rule_minminute'] && $value['min_day'] == $value['max_day']){
 										$value['check'] = "不合格";
 										$value['check_content'] = "旷工，原因：打卡时间与规定时间晚一个小时以上。";
 										continue;
@@ -351,9 +351,9 @@ class PublicController extends Controller {
 									$value['check_content'] = "";
 									continue;
 								}
-							}else if($value['max_times']!="0" && $value['min_times']!="0" && ($value['min_day'] == $value['max_day'] || ($value['max_hour'] < $rules_arr_val['rule_maxhour'] || ($value['max_hour'] == $rules_arr_val['rule_maxhour'] && $value['max_minute']<$rules_arr_val['rule_maxminute'])))){
+							}else if($value['max_times']!="0" && $value['min_times']!="0" && empty($value['check_content']) && $value['min_day'] == $value['max_day'] &&(($value['max_hour'] < $rules_arr_val['rule_maxhour'] || ($value['max_hour'] == $rules_arr_val['rule_maxhour'] && $value['max_minute']<$rules_arr_val['rule_maxminute'])))){
 								if($value['check']!='合格'){
-									if(($rules_arr_val['rule_maxhour']-$value['max_hour'] == 1 && $value['max_minute'] < $rules_arr_val['rule_maxminute']) || $rules_arr_val['rule_maxhour']-$value['max_hour'] > 1){
+									if(($rules_arr_val['rule_maxhour']-$value['max_hour'] == 1 && $value['max_minute'] < $rules_arr_val['rule_maxminute']) || $rules_arr_val['rule_maxhour']-$value['max_hour'] > 1 && $value['min_day'] == $value['max_day']){
 										$value['check'] = "不合格";
 										$value['check_content'] = "旷工，原因：打卡时间与规定时间早一个小时以上。";
 										continue;
@@ -396,7 +396,8 @@ class PublicController extends Controller {
 					$check_data['check_mintime'] = $value['min_times'];
 					$check_data['check'] = $value['check'];
 					$check_data['check_content'] = $value['check_content'];
-					//print_r($check_data);
+					//echo "<pre>";
+					//print_r($check_data);exit;
 					$res = $check_record->add($check_data);
 					if(!$res){
 						$this->error("程序出错！");exit;

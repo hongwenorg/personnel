@@ -57,6 +57,7 @@ class PersonalCountController extends Controller {
                         foreach ($data_arr2 as $key => $value) {
                             $user_arr = $model3->where(array('id' => $value['user_id']))->find();
                             $post_arr = $model5->where(array('id' => $value['post_id']))->find();
+                            $data2[$key]['id'] = $value['id'];
                             $data2[$key]['name'] = $user_arr['name'];
                             $data2[$key]['post'] = $post_arr['name'];
                             $data2[$key]['level'] = $value['level'];
@@ -67,6 +68,7 @@ class PersonalCountController extends Controller {
                     }else{
                         $data_arr2 = array();
                     }
+                    $data[$k]['id'] = $val['id'];
                     $data[$k]['school_id'] = $val['campus_id'];
                     $data[$k]['school_name'] = $campus_arr['name'];
                     $data[$k]['new_target'] = $val['new_target'];
@@ -89,6 +91,7 @@ class PersonalCountController extends Controller {
                     foreach ($data_arr2 as $key => &$value) {
                         $user_arr = $model3->where(array('id' => $value['user_id']))->find();
                         $post_arr = $model5->where(array('id' => $value['post_id']))->find();
+                        $data2[$key]['id'] = $value['id'];
                         $data2[$key]['name'] = $user_arr['name'];
                         $data2[$key]['post'] = $post_arr['name'];
                         $data2[$key]['level'] = $value['level'];
@@ -99,6 +102,7 @@ class PersonalCountController extends Controller {
                 }else{
                     $data_arr2 = array();
                 }
+                $data['id'] = $val['id'];
                 $data['school_id'] = $data_arr['campus_id'];
                 $data['school_name'] = $campus_arr['name'];
                 $data['new_target'] = $data_arr['new_target'];
@@ -113,6 +117,21 @@ class PersonalCountController extends Controller {
         echo json_encode($data);
     }
 
+
+    //财务系统校区录入业绩目标删除
+    function Campus_target_del(){
+        if(empty($_GET["id"])){
+            echo json_encode(array('status' => false , 'content' => '程序出错请联系管理员'));exit;//程序出错请联系管理员
+        }
+        $model = D('oa_personaltarget');
+        $state = $model->where(array('id'=>$_GET['id']))->delete();
+        if($state){
+            echo json_encode(array('status' => true , 'content' => '删除成功'));exit;//程序出错请联系管理员
+        }else{
+            echo json_encode(array('status' => false , 'content' => '删除失败'));exit;//程序出错请联系管理员
+        }
+
+    }
     //添加业绩目标信息
     function Campus_target_add(){
         if(empty($_GET['data'])){
