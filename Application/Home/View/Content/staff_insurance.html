@@ -20,6 +20,79 @@
             left:50%;
             margin-left: -300px;
         }
+        #tb {
+            width: 100%;
+        }
+
+
+        .float_top {
+            /*position: relative;*/
+            /*top: 30px;*/
+            /*width: 94.87%;*/
+            width: 100%;
+            height: 30px;
+            margin: 0 auto;
+            overflow: hidden;
+            /*border: 1px solid green;*/
+            min-width: 1180px;
+        }
+        .max_head{
+            display: none;
+            position: relative;
+            top: 0;
+            z-index: 9999;
+        }
+
+        .float_top_top {
+            width: 90%;
+            /*margin: 0 auto;*/
+            height: 30px;
+            overflow: hidden;
+            /*border: 1px solid red;*/
+            margin: 0 auto;
+            min-width: 1166px;
+        }
+
+        .top_nav {
+            position: relative;
+            left: 2px;
+            /*border: 1px solid blue;*/
+            /*width:100%;*/
+            height: 30px;
+        }
+
+        .top_nav > div {
+            border-right: 2px solid lightgray;
+            background-color: #bbbbbb;
+            height: 30px;
+            float: left;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+        }
+        .top_size{
+            height:30px;
+            /*border:1px solid yellow;*/
+            /*width:99%;*/
+            overflow: hidden;
+            margin-right:15px;
+        }
+
+        #tb_parent {
+            min-width: 1165px;
+            height: 520px;
+            width: 90%;
+            margin-left: 5%;
+            /*overflow-x: scroll;*/
+            overflow-y: scroll;
+            border: 1px solid lightgray;
+            position:relative;
+            top:0;
+            padding:0;
+        }
+        #tb {
+            border:none;
+        }
     </style>
 </head>
 <body style="background-color: #efefef">
@@ -55,34 +128,53 @@
                 <!--时间控件-->
             </div>
             <!--*********************************************存放后台员工信息*****************************************************-->
-            <div style="width:100%">
+            <div style="width:100%" class="max_head">
+                <div class="float_top">
+                    <div class="float_top_top">
+                        <div class="top_size" style="left:2px">
+                            <div class="top_nav">
+                                <div>序号</div>
+                                <div>员工号</div>
+                                <div>姓名</div>
+                                <div>单位部门</div>
+                                <div>职务</div>
+                                <div>缴纳五险一金</div>
+                                <div>缴纳/补贴</div>
+                                <div>缴纳时间</div>
+                                <div>缴纳地点</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="tb_parent">
                 <table class="tb" cellpadding="2" cellspacing="0" id="tb">
                     <tr class="trr1">
-                        <th id="staff_num1" class="staff_num1" style="width:50px;">
+                        <th id="staff_num1" class="staff_num1 top_wid" style="width:50px;">
                             <div>序号</div>
                         </th>
-                        <th id="staff_user1" onclick="namesort('user')">
+                        <th id="staff_user1" onclick="namesort('user')" class="top_wid">
                             <div>员工号</div>
                         </th>
-                        <th id="staff_name1" onclick="namesort('name')">
+                        <th id="staff_name1" onclick="namesort('name')" class="top_wid">
                             <div>姓名</div>
                         </th>
-                        <th id="staff_export_campus1" onclick="namesort('campus')">
+                        <th id="staff_export_campus1" onclick="namesort('campus')" class="top_wid">
                             <div>单位部门</div>
                         </th>
-                        <th id="staff_export_post1" onclick="namesort('post')">
+                        <th id="staff_export_post1" onclick="namesort('post')" class="top_wid">
                             <div>职务</div>
                         </th>
-                        <th id="staff_fold_campus1" onclick="namesort('is_no')">
+                        <th id="staff_fold_campus1" onclick="namesort('is_no')" class="top_wid">
                             <div>缴纳五险一金</div>
                         </th>
-                        <th id="staff_fold_post1" onclick="namesort('condition')">
+                        <th id="staff_fold_post1" onclick="namesort('condition')" class="top_wid">
                             <div>缴纳/补贴</div>
                         </th>
-                        <th id="staff_time1" onclick="namesort('begin_time')">
+                        <th id="staff_time1" onclick="namesort('begin_time')" class="top_wid">
                             <div>缴纳时间</div>
                         </th>
-                        <th id="staff_state1" onclick="namesort('place')">
+                        <th id="staff_state1" onclick="namesort('place')" class="top_wid">
                             <div>缴纳地点</div>
                         </th>
                     </tr>

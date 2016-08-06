@@ -13,7 +13,6 @@
         }
 
         .trr1 > th {
-            width: 85px !important;
             height: 30px;
             text-align: center;
             background-color: #bbbbbb;
@@ -21,7 +20,7 @@
             line-height: 30px;
             list-style: none;
             border: none;
-            font-size: 14px;
+            font-size: 16px;
         }
 
         #tb > tr {
@@ -48,6 +47,103 @@
         }
         .zpg_head>div{
             width:33.3%;
+        }
+        #trr > th {
+            width: 0;
+            border:1px solid lightgray;
+        }
+
+        .td_sty {
+            width: 0;
+        }
+
+        #tb > tr > td {
+            width: 0;
+            height: 30px !important;
+        }
+
+        #tb > tr > td > div {
+            line-height: 30px;
+        }
+
+        #tb {
+            width: 1900px;
+        }
+
+        .top_nav {
+            width: 1900px;
+            /*border: 1px solid red;*/
+        }
+
+        .float_top {
+            /*position: relative;*/
+            /*top: 30px;*/
+            /*width: 94.87%;*/
+            width: 100%;
+            height: 30px;
+            margin: 0 auto;
+            overflow: hidden;
+            /*border: 1px solid green;*/
+            min-width: 1180px;
+        }
+        .max_head{
+            display: none;
+            position: relative;
+            top: 0;
+            z-index: 9999;
+        }
+
+        .float_top_top {
+            width: 90%;
+            /*margin: 0 auto;*/
+            height: 30px;
+            overflow: hidden;
+            /*border: 1px solid red;*/
+            margin: 0 auto;
+            min-width: 1166px;
+        }
+
+        .top_nav {
+            position: relative;
+            left: 2px;
+            /*border: 1px solid blue;*/
+            /*width:100%;*/
+            height: 30px;
+        }
+
+        .top_nav > div {
+            border-right: 2px solid lightgray;
+            background-color: #bbbbbb;
+            height: 30px;
+            float: left;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            font-size: 16px !important;
+        }
+        .top_size{
+            height:30px;
+            /*border:1px solid yellow;*/
+            /*width:99%;*/
+            overflow: hidden;
+            margin-right:15px;
+        }
+
+        #tb_parent {
+            min-width: 1165px;
+            height: 520px;
+            width: 90%;
+            margin-left: 5%;
+            overflow-x: scroll;
+            overflow-y: scroll;
+            border: 1px solid lightgray;
+            position:relative;
+            top:0;
+        }
+
+        #tb {
+            border-left: none;
+            border-right: none;
         }
 
 
@@ -90,68 +186,98 @@
                 <!--时间控件-->
             </div>
             <!--*********************************************存放后台员工信息*****************************************************-->
-            <div style="width:100%">
+            <div style="width:100%" class="max_head">
+                <div class="float_top">
+                    <div class="float_top_top">
+                        <div class="top_size" style="left:2px">
+                            <div class="top_nav">
+                                <div>序号</div>
+                                <div>姓名</div>
+                                <div>单位部门</div>
+                                <div>职务</div>
+                                <div>讲师级别</div>
+                                <div>绩效系数</div>
+                                <div>元老补助</div>
+                                <div>旷工</div>
+                                <div>是否满勤</div>
+                                <div>迟到</div>
+                                <div>早退</div>
+                                <div>事假</div>
+                                <div>事假核算天数</div>
+                                <div>病假</div>
+                                <div>病假核算天数</div>
+                                <div>加班</div>
+                                <div>未打卡</div>
+                                <div>灵活打卡异常</div>
+                                <div>应出勤天数</div>
+                                <div>核算出勤天数</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="tb_parent">
                 <table class="tb" cellpadding="2" cellspacing="0" id="tb">
                     <tr class="trr1" id="trr" style="width: 85.4%;">
-                        <th id="staff_num1" class="staff_num1" style="min-width: 30px">
+                        <th id="staff_num1" class="staff_num1 top_wid">
                             <div>序号</div>
                         </th>
-                        <th id="staff_name1" onclick="namesort('name')" style="min-width: 70px">
+                        <th id="staff_name1" class="top_wid" onclick="namesort('name')">
                             <div>姓名</div>
                         </th>
-                        <th id="staff_campus1" onclick="namesort('campus')">
+                        <th id="staff_campus1" class="top_wid" onclick="namesort('campus')">
                             <div>单位部门</div>
                         </th>
-                        <th id="staff_post1" onclick="namesort('post')">
+                        <th id="staff_post1" class="top_wid" onclick="namesort('post')">
                             <div>职务</div>
                         </th>
-                        <th id="staff_level1" style="min-width: 60px">
+                        <th id="staff_level1" class="top_wid">
                             <div>讲师级别</div>
                         </th>
-                        <th id="staff_factor1" style="min-width: 60px">
+                        <th id="staff_factor1" class="top_wid">
                             <div>绩效系数</div>
                         </th>
-                        <th id="staff_allowance1" style="min-width: 60px">
+                        <th id="staff_allowance1" class="top_wid">
                             <div>元老补助</div>
                         </th>
-                        <th id="staff_late1" style="min-width: 30px">
-                            <div>迟到</div>
-                        </th>
-                        <th id="staff_early1" style="min-width: 30px">
-                            <div>早退</div>
-                        </th>
-                        <th id="staff_personal_leave1" style="min-width: 30px">
-                            <div>事假</div>
-                        </th>
-                        <th id="staff_personal_leave_count1">
-                            <div>事假核算天数</div>
-                        </th>
-                        <th id="staff_sick_leave1" style="min-width: 30px">
-                            <div>病假</div>
-                        </th>
-                        <th id="staff_sick_leave_count1">
-                            <div>病假核算天数</div>
-                        </th>
-                        <th id="staff_overtime1">
-                            <div>加班</div>
-                        </th>
-                        <th id="staff_absenteeism1">
+                        <th id="staff_absenteeism1" class="top_wid">
                             <div>旷工</div>
                         </th>
-                        <th id="staff_noclock1">
+                        <th id="staff_is_no1" class="top_wid" onclick="namesort('is_no')">
+                            <div>是否满勤</div>
+                        </th>
+                        <th id="staff_late1" class="top_wid">
+                            <div>迟到</div>
+                        </th>
+                        <th id="staff_early1" class="top_wid">
+                            <div>早退</div>
+                        </th>
+                        <th id="staff_personal_leave1" class="top_wid">
+                            <div>事假</div>
+                        </th>
+                        <th id="staff_personal_leave_count1" class="top_wid">
+                            <div>事假核算天数</div>
+                        </th>
+                        <th id="staff_sick_leave1" class="top_wid">
+                            <div>病假</div>
+                        </th>
+                        <th id="staff_sick_leave_count1" class="top_wid">
+                            <div>病假核算天数</div>
+                        </th>
+                        <th id="staff_overtime1" class="top_wid">
+                            <div>加班</div>
+                        </th>
+                        <th id="staff_noclock1" class="top_wid">
                             <div>未打卡</div>
                         </th>
-                        <th>
+                        <th class="top_wid">
                             <div>灵活打卡异常</div>
                         </th>
-                        <th id="staff_over_count_day1">
+                        <th id="staff_over_count_day1" class="top_wid">
                             <div>应出勤天数</div>
                         </th>
-                        <th id="staff_count_yes1">
+                        <th id="staff_count_yes1" class="top_wid">
                             <div>核算出勤天数</div>
-                        </th>
-                        <th id="staff_is_no1" onclick="namesort('is_no')">
-                            <div>是否满勤</div>
                         </th>
                     </tr>
                 </table>

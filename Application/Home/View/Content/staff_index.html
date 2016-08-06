@@ -26,11 +26,11 @@
         }
 
         #tb {
-            width: 2500px;
+            width:3000px;
         }
 
         .top_nav {
-            width: 2500px;
+            width: 3000px;
             /*border: 1px solid red;*/
         }
 
@@ -76,6 +76,7 @@
             height: 30px;
             float: left;
             text-align: center;
+            font-size: 16px !important;
             line-height: 30px;
             font-weight: bold;
         }
@@ -89,7 +90,7 @@
 
         #tb_parent {
             min-width: 1165px;
-            height: 550px;
+            height: 520px;
             width: 90%;
             margin-left: 5%;
             overflow-x: scroll;
@@ -98,10 +99,8 @@
             position:relative;
             top:0;
         }
-
         #tb {
-            border-left: none;
-            border-right: none;
+            border:none;
         }
 
     </style>
@@ -164,6 +163,7 @@
                                 <div>出生日期</div>
                                 <div>政治面貌</div>
                                 <div>籍贯</div>
+                                <div>家庭住址</div>
                                 <div>应急联系人</div>
                                 <div>应急联系电话</div>
                                 <div>毕业院校</div>
@@ -213,6 +213,9 @@
                         </th>
                         <th id="staff_residence_booklet" onclick="namesort('residence_booklet')" class="top_wid">
                             <div>籍贯</div>
+                        </th>
+                        <th id="staff_residence_live" onclick="namesort('live')" class="top_wid">
+                            <div>家庭住址</div>
                         </th>
                         <th id="staff_contacts" onclick="namesort('contacts')" class="top_wid">
                             <div>应急联系人</div>

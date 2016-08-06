@@ -1,19 +1,587 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <script type="text/javascript" src="/public/js/jquery.js"></script>
-    <script src="/public/js/laydate/laydate.js"></script>
-    <script type="text/javascript" src="/public/js/public.js"></script>
-    <title>固定资产</title>
-    <link rel="stylesheet" href="/public/css/Content_staff.css" type="text/css">
+<div id="plan" style="background-color:white;padding-bottom:100px;">
     <style>
-    </style>
-</head>
-<body style="background-color: #efefef">
+        .append_plhead {
+            height: 40px;
+            background-color: #cfcfcf;
+            text-align: left;
+            line-height: 40px;
+            font-size: 18px;
+            font-weight: bold;
+            color: dimgray;
+        }
 
-<h1>5</h1>
-</body>
-<script>
-</script>
-</html>
+        .append_plan {
+            width: 95%;
+            margin-left: 2.5%;
+            border: 1px solid #cfcfcf;
+            height: 225px;
+        }
+
+        .append_plan_body > ul > li {
+            width: 320px;
+            height: 30px;
+            line-height: 40px;
+            float: left;
+            text-align: left;
+            margin-left: 50px;
+            margin-top: 10px;
+            font-weight: bold;
+            font-family: "微软雅黑";
+            color: dimgray;
+        }
+
+        .append_plan_li {
+            width: 190px;
+            float: right;
+            height: 30px;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            border-bottom: 2px solid dimgray;
+            border-radius: 10px;
+            outline: none;
+            padding-left: 10px;
+            background:none;
+        }
+
+        .append_plan_only {
+            width: 190px;
+            float: right;
+            height: 30px;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            border-bottom: 2px solid dimgray;
+            border-radius: 10px;
+            outline: none;
+            padding-left: 10px;
+            background-color: #eee;
+        }
+
+        .append_plan_sel {
+            height: 30px;
+            width: 200px;
+            float: right;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            border-bottom: 2px solid dimgray;
+            border-radius: 10px;
+            outline: none;
+            padding-left: 10px;
+            background:none;
+        }
+
+        .append_plan_foot {
+            padding-left: 155px;
+            width: 100%;
+        }
+
+        .append_plhead > input {
+            margin-top: 5px;
+            float: right;
+            width: 100px;
+            height: 30px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .tj_apply, .delet_apply {
+            margin-top: 5px;
+            float: right;
+            width: 100px;
+            height: 30px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .plan_xiugai {
+            width: 50px;
+            background-color: #00c8c8;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .foot_baocun, .tj_apply {
+            background-color: #00c8c8;
+        }
+
+        .foot_qingkong, .delet_apply {
+            background-color: #ed5565;
+        }
+
+        .hidden_input {
+            text-align: center;
+            width: 100%;
+            height: 30px;
+            font-size: 16px;
+            border: none;
+        }
+        .plan_date{
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            font-size: 18px;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: dimgray;
+        }
+        .plan_date>input{
+            width: 190px;
+            height: 22px;
+            font-size: 18px;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            border-bottom: 2px solid dimgray;
+            border-radius: 10px;
+            outline: none;
+            padding-left: 10px;
+        }
+        .append_plan{
+            background-image: url(/public/img/logo-1.jpg);
+            background-repeat: no-repeat;
+            background-size: 600px 180px;
+            background-position: 50% 40px;
+            margin-top: 30px;
+        }
+        .hidden_input{
+            background: none;
+        }
+        .procedure{
+            width:600px;
+            margin-left: 2.5%;
+            margin-top: 15px;
+            background-color: #ed5565;
+            border-top-left-radius:5px;
+            border-top-right-radius:5px;
+            height:30px;
+            color:white;
+            line-height: 30px;
+            font-weight: bold;
+            padding-left:20px;
+        }
+
+
+    </style>
+    <link rel="stylesheet" href="/public/css/Content_staff.css" type="text/css">
+    <script type="text/javascript" src="/public/js/jquery.js"></script>
+
+    <!--*********************************************存放后台员工信息*****************************************************-->
+    <form method="post" id="myform_one" onSubmit="return false;">
+        <div class="append_plan">
+            <div class="append_plhead">
+                &nbsp;&nbsp;新增办公用品
+                <input type="reset"  value="清空" class="foot_qingkong" id="foot_qingkong">
+                <input type="submit" value="保存" class="foot_baocun" id="submit_one">
+            </div>
+            <div class="append_plan_body">
+                <input type="hidden" value="" name='id' id="apply_id">
+                <ul id="appende_plan_ul">
+                    <li>物品编号
+                        <input type="text" name='' id='' class="append_plan_li">
+                    </li>
+                    <li>物品名称
+                        <input type="text" name='' id='' class="append_plan_li">
+                    </li>
+                    <li>类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别
+                        <input type="text" name='' id='' class="append_plan_li">
+                    </li>
+                    <li>品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;牌
+                        <input type="text" name='buy_brand' id='buy_brand' class="append_plan_li">
+                    </li>
+                    <li>型号/规格
+                        <input type="text" name='buy_info' id='buy_info' class="append_plan_li">
+                    </li>
+                    <li>单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位
+                        <input type="text" name='unit' class="append_plan_li" id='unit' required>
+                    </li>
+                    <li>单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价
+                        <input type="number" name='unit_price' id='price' class="append_plan_li" min="0" step="0.001" required>
+                    </li>
+                    <li>数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量
+                        <input type="number" name='count' id='count' min="0" class="append_plan_li" required>
+                    </li>
+                    <li>金&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;额
+                        <input type="number" name='money' id='money' min="0" step="0.01" class="append_plan_only" readonly>
+                    </li>
+                    <li>实际支出
+                        <input type="text" name='unit' class="append_plan_li" id='' required>
+                    </li>
+                    <li>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注 <input type="text" id='other' name='other' class="append_plan_li"></li>
+                </ul>
+            </div>
+        </div>
+    </form>
+    <div style="width:95%;margin-left:2.5%;">
+        <form method="post" id="myform_two" onSubmit="return false;">
+            <table class="tb" cellpadding="2" cellspacing="0" id="tb" style="background:none;width:100%;">
+                <tr class="trr1">
+                    <th>
+                        <div>
+                            <input type="checkbox" class="checkbox_all" id="checkbox_all">
+                            <label for="checkbox_all">全选</label>
+                        </div>
+                    </th>
+                    <th>
+                        <div>修改</div>
+                    </th>
+                    <th>
+                        <div>序号</div>
+                    </th>
+                    <th>
+                        <div>物品编号</div>
+                    </th>
+                    <th>
+                        <div>物品名称</div>
+                    </th>
+                    <th>
+                        <div>类别</div>
+                    </th>
+                    <th>
+                        <div>型号/规格</div>
+                    </th>
+                    <th>
+                        <div>单位</div>
+                    </th>
+                    <th>
+                        <div>数量</div>
+                    </th>
+                    <th>
+                        <div>单价</div>
+                    </th>
+                    <th>
+                        <div>金额</div>
+                    </th>
+                    <th>
+                        <div>实际支出</div>
+                    </th>
+                    <th>
+                        <div>备注</div>
+                    </th>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div style="width:95%;margin-left:2.5%">
+        <input type="button" value="删除" class="delet_apply" id="delet_apply"/>
+        <input type="button" value="新增" id="submit_two" class="tj_apply"/>
+    </div>
+    <script>
+        var instorage = function () {
+            (function () {
+                var arr_staff = [];
+                var CountPage, PageSize = 5;
+                var pageall = document.getElementById("pageall");
+                var copy_excel = document.getElementById("copy_excel");
+                var copy_dayin = document.getElementById("copy_dayin");
+                var tb = document.getElementById("tb");
+                var tb_content = tb.innerHTML;
+
+
+                var school_option = [];
+                var plan_option = [];
+                var purchase_option = [];
+                var finance_type_option = [];
+
+
+
+                //以下是计算金额的函数
+                $("#price").blur(function(){
+                    var money = $("#money");
+                    var price_val = $("#price").val();
+                    var count_val = $("#count").val();
+                    if(price_val!="" && count_val!=""){
+                        money.val((price_val*count_val).toFixed(2));
+                    }else{
+                        money.val("");
+                    }
+                });
+
+                $("#price").change(function(){
+                    var money = $("#money");
+                    var price_val = $("#price").val();
+                    var count_val = $("#count").val();
+                    if(price_val!="" && count_val!=""){
+                        money.val((price_val*count_val).toFixed(2));
+                    }else{
+                        money.val("");
+                    }
+                });
+
+
+                $("#count").blur(function(){
+                    var money = $("#money");
+                    var price_val = $("#price").val();
+                    var count_val = $("#count").val();
+                    if(price_val!="" && count_val!=""){
+                        money.val((price_val*count_val).toFixed(2));
+                    }else{
+                        money.val("");
+                    }
+                });
+
+
+                $("#count").change(function(){
+                    var money = $("#money");
+                    var price_val = $("#price").val();
+                    var count_val = $("#count").val();
+                    if(price_val!="" && count_val!=""){
+                        money.val((price_val*count_val).toFixed(2));
+                    }else{
+                        money.val("");
+                    }
+                });
+                //计算金额函数结束
+
+                //几个下拉菜单数据获取
+                $.ajax({
+                    url: "/Property/plan_list",
+                    type: "post",
+                    async: false,
+                    cache: "false",
+                    success: function (data) {
+                        msg = JSON.parse(data);
+
+                        for (keys in msg) {
+                            for (key in msg[keys]) {
+                                if (keys == 'school') {
+                                    school_option.push(msg['school'][key]);
+                                } else if (keys == 'plan') {
+                                    plan_option.push(msg['plan'][key]);
+                                } else if (keys == 'purchase') {
+                                    purchase_option.push(msg['purchase'][key]);
+                                } else if (keys == 'finance_type') {
+                                    finance_type_option.push(msg['finance_type'][key]);
+                                }
+                            }
+                        }
+                    }
+                });
+
+//******************************     全局变量  end    ***************************
+                /*
+                 * 循环显示内容函数
+                 * page=分页页码
+                 * num=排序正反
+                 * content=点击要排序字段
+                 * start
+                 * */
+                function ArrSort(page, num, content) {
+                    len = arr_staff.length;
+                    var arr_num = [];
+                    for (var l = 0; l < len; l++) {
+                        arr_num[l] = l + 1;
+                    }
+                    for (var j = 0; j < len; j++) {
+                        var tr = document.createElement("tr");
+                        tb.appendChild(tr).innerHTML = "<td class='td_sty'><input type='checkbox' name='check_box" + arr_staff[j].id + "' value='" + arr_staff[j].id + "' class='plan_checkbox'>" + "</div>" + "</td>" +
+                                "<td class='td_sty'>" + "<div>" + "<input type='button' value='修改' id='update_sql' up_id='" + arr_staff[j].id + "' class='plan_xiugai'>" + "</div>" + "</td>" +
+                                "<td class='td_sty'>" + "<div>" + arr_num[j] + "</div>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].project_type + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].check_name + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + "" + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].plan_name + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].class_post_plan + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].class_post_plan + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].receive_school + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].finance_type_name + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].info + "' class='hidden_input' id='' name=''>" + "</td>" +
+                                "<td class='td_sty'>" + "<input type='text' readonly='readonly' value='" + arr_staff[j].unit + "' class='hidden_input' id='' name=''>" + "</td>" ;
+
+                    }
+
+                }
+
+
+//分页处理搜索数据等  end
+
+//员工信息页面搜索按钮  start
+                onload_in();
+                function onload_in(){
+                    arr_staff = [];
+                    $("#tb tr:not(:first)").empty();
+                    var month = $("#plan_date").val();
+                    $.ajax({
+                        url: "/Property/plan_table",
+                        data: {'status_name': '待提交','month':month},
+                        type: "post",
+                        async: "false",
+                        traditional: "true",
+                        cache: "false",
+                        success: function (data) {
+                            document.getElementById("sousuo_img_out").style.display = "none";
+                            var msg = JSON.parse(data);
+                            for (key in msg) {
+                                if (key != "status" && msg["status"] != 2) {
+                                    arr_staff.push(msg[key]);
+                                }
+                            }
+                            if (msg["status"] != 2) {
+                                ArrSort(0);
+                            } else {
+                                document.getElementById("sousuo_img_out").style.display = "none";
+                            }
+
+                            //修改数据根据id获取
+                            $(".plan_xiugai").click(function(){
+                                var id = $(this).attr('up_id');
+                                $.ajax({
+                                    url: "/Property/update_list",
+                                    data: {'id': id},
+                                    type: "post",
+                                    async: "false",
+                                    traditional: "true",
+                                    cache: "false",
+                                    success: function (msg) {
+                                        if (msg == 2) {
+                                            alert("数据出错，请联系管理员！");
+                                        } else {
+                                            var data = JSON.parse(msg);
+                                            $("#apply_id").val(data.id);
+                                            $("#select_01").val(data.plan_id);
+                                            $("#select_02").val(data.class_post_id);
+                                            $("#select_03").val(data.finance_type_id);
+                                            $("#info").val(data.info);
+                                            $("#unit").val(data.unit);
+                                            $("#price").val(data.unit_price);
+                                            $("#count").val(data.count);
+                                            $("#money").val(data.money);
+                                            $("#select_04").val(data.receive_school);
+                                            $("#receive_user").val(data.receive_user);
+                                            $("#receive_card").val(data.receive_card);
+                                            $("#expect_date").val(data.expect_date);
+                                            $("#other").val(data.other);
+                                            $("#select_05").val(data.purchase_id);
+                                            $("#buy_brand").val(data.buy_brand);
+                                            $("#buy_info").val(data.buy_info);
+                                            $("#buy_transport").val(data.buy_transport);
+                                            $("#month").val(data.month);
+                                        }
+                                    }
+                                });
+                            });
+                        }
+                    });
+                }
+
+//页面搜索按钮  end
+
+                var checkbox_all = document.querySelector(".checkbox_all");
+                var check_num = 0;
+                checkbox_all.onclick = function () {
+                    check_num += 1;
+                    var plan_checkbox = document.querySelectorAll(".plan_checkbox");
+                    for (var i = 0; i < plan_checkbox.length; i++) {
+                        if (check_num % 2 != 0) {
+                            plan_checkbox[i].checked = true;
+                        } else {
+                            plan_checkbox[i].checked = false;
+                        }
+                    }
+                };
+
+
+                //计划申请页删除操作
+                $("#delet_apply").click(function () {
+                    if (confirm("是否删除所选内容")) {
+                        var data = $('#myform_two').serialize();//将表单数据以字符串形式获取
+                        $.ajax({
+                            url: "/Property/plan_del",
+                            data: {'data': data},
+                            type: "post",
+                            async: "false",
+                            traditional: "true",
+                            cache: "false",
+                            success: function (msg) {
+                                if (msg == 1) {
+                                    alert("删除成功！");
+                                    onload_in();
+                                } else if (msg == 2) {
+                                    alert("删除失败！");
+                                } else if (msg == 3) {
+                                    alert("删除失败,请选择要提交的项目！");
+                                }
+
+                            }
+
+                        });
+                    }
+                });
+
+
+                //计划申请页提交神请操作
+                $("#submit_two").click(function () {
+                    var data = $('#myform_two').serialize();//将表单数据以字符串形式获取
+                    $.ajax({
+                        url: "/Property/plan_add",
+                        data: {'data': data},
+                        type: "post",
+                        async: "false",
+                        traditional: "true",
+                        cache: "false",
+                        success: function (msg) {
+                            if (msg == 1) {
+                                alert("提交成功！");
+                                onload_in();
+                            } else if (msg == 2) {
+                                alert("提交失败！");
+                            } else if (msg == 3) {
+                                alert("提交失败,请选择要提交的项目！");
+                            }
+
+                        }
+
+                    });
+                });
+
+
+                //计划申请页保存或者修改操作
+                $("#submit_one").click(function(){
+                    var data = $('#myform_one').serialize();//将表单数据以字符串形式获取
+                    $.ajax({
+                        url: "/Property/plan_pro",
+                        data: {'data': data,'status_name': '待提交'},
+                        type: "post",
+                        async: "false",
+                        traditional: "true",
+                        cache: "false",
+                        success: function (msg) {
+                            if (msg == 1) {
+                                alert("保存成功！");
+                                document.getElementById("foot_qingkong").click();
+//                                $("#foot_qingkong").trigger("click");
+                                onload_in();
+                            } else if (msg == 2) {
+                                alert("修改成功！");
+                                $("#foot_qingkong").trigger("click");
+                                onload_in();
+                            } else if (msg == 3) {
+                                alert("保存失败,请填写完整数据！");
+                            }
+
+                        }
+
+                    });
+                });
+
+
+            })()
+        };
+
+
+    </script>
+</div>
+<!--<script type="text/javascript" src="/public/js/plan.js" charset="utf-8"></script>-->

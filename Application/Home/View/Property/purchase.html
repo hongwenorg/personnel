@@ -47,10 +47,12 @@
             width: 100%;
             height: 30px;
             margin-top: -2px;
+            position:relative;
+            top:0;
+            z-index: 999;
         }
 
         .purchase_div > ul > li {
-            float: left;
             text-align: center;
             line-height: 30px;
             height: 30px;
@@ -61,10 +63,12 @@
 
         .purchase_div > ul > li:hover {
             color: #474848;
+            background-color: #bbbbbb;
         }
 
         .purchase_div > ul {
             width: 100%;
+            opacity: 0.7;
         }
 
         .purchase_body {
@@ -104,14 +108,15 @@
 <script>
     var check_append = [];
     var mouse_modules = [];
+    var modules_name=[];
     //页面加载事件
-    window.onload = function () {
+//    window.onload = function () {
         var check_append = [];
         $.ajax({
             url: "/Index/modules",
             data: {"the_level": 5},
             type: "post",
-            async: "false",
+            async: "true",
             success: function (data) {
                 var check_append_modules = [];
                     msg = JSON.parse(data);
@@ -124,6 +129,7 @@
                 }
 
                 for (var i = 0; i < check_append_modules.length; i++) {
+
                     var append_div = document.createElement("div");
                     //给导航条添加 鼠标移入事件
                     document.getElementById("tab_click").appendChild(append_div).innerHTML = "<div class='mouse_modules' onmouseover='id_over(" + check_append_modules[i].id + ")'>" + check_append_modules[i].modules_name + "</div>";
@@ -135,15 +141,48 @@
                 for (var aa = 0; aa < tab_child.length; aa++) {
                     tab_child[aa].parentNode.style.width = 100 / tab_child.length + "%";
                 }
+//                当鼠标移入导航 事件
+                document.getElementById("tab_click").addEventListener("mouseover", function (e) {
+                    var mouse_modules02 = document.querySelectorAll(".mouse_modules");
+                    for (var i = 0; i < mouse_modules02.length; i++) {
+                        mouse_modules02[i].style.background = "#bbbbbb";
+                        mouse_modules02[i].style.color = "white";
+                        mouse_modules02[i].style.fontWeight = "100";
+                    }
+                    //鼠标移入样式
+//                    鼠标移入显示的 下拉框 的宽度等于  鼠标移入的元素的宽度
+                    document.getElementById("purchase_div").style.width=100 / tab_child.length + "%";
+                    var  target = e.target;
+                    target.style.backgroundColor = "#3cb2b6";
+                    target.style.fontWeight = "600";
+                    target.style.color = "#474848";
+                    for (var b = 0; b < check_append_modules.length; b++) {
+//                        把所有 大模块的名字放到一个数组里
+                        modules_name.push(check_append_modules[b].modules_name);
+//                        判断大模块名字 在数组中的第几位
+//                        如果在第一位，下拉框的left值就等于0
+                        if(modules_name.indexOf(target.innerText)===0){
+                            document.getElementById("purchase_div").style.left=0;
+//                        如果在第二位，下拉框的left值就等于 一个大模块的宽度
+                        }if(modules_name.indexOf(target.innerText)===1){
+                            document.getElementById("purchase_div").style.left=100 / tab_child.length + "%";
+//                            如果在第二位，就乘以2
+                        }if(modules_name.indexOf(target.innerText)===2){
+                            document.getElementById("purchase_div").style.left=100 / tab_child.length*2 + "%";
+                        }if(modules_name.indexOf(target.innerText)===3){
+                            document.getElementById("purchase_div").style.left=100 / tab_child.length*3 + "%";
+                        }if(modules_name.indexOf(target.innerText)===4){
+                            document.getElementById("purchase_div").style.left=100 / tab_child.length*4 + "%";
+                        }
+                    }
+                });
             }
         });
-    };
-    //鼠标移入  创建  ul li
+    var append_ul;
     function id_over(id) {
     //创建ul标签
-        var append_ul = document.createElement("ul");
+            append_ul = document.createElement("ul");
             append_ul.style.width = "100%";
-            append_ul.style.height = "30px";
             append_ul.style.background = "#3cb2b6";
             append_ul.id = "append_ulall";
             append_ul.class = "append_ulall";
@@ -159,25 +198,19 @@
         }
         var append_liall = document.querySelectorAll("#append_ulall li");
         for (var j = 0; j < append_liall.length; j++) {
-            append_liall[j].style.width = 100 / append_liall.length + "%";
+            append_liall[j].style.width = "100%";
+            append_liall[j].style.height = "30px";
+            append_liall[j].style.background = "#bbbbb";
         }
     }
-    document.getElementById("tab_click").addEventListener("mouseover", function (e) {
-        var mouse_modules02 = document.querySelectorAll(".mouse_modules");
-        for (var i = 0; i < mouse_modules02.length; i++) {
-            mouse_modules02[i].style.background = "#bbbbbb";
-            mouse_modules02[i].style.color = "white";
-            mouse_modules02[i].style.fontWeight = "100";
-        }
-     //鼠标移入样式
-        var  target = e.target;
-             target.style.backgroundColor = "#3cb2b6";
-             target.style.fontWeight = "600";
-             target.style.color = "#474848";
-    });
+//    点击页面，隐藏下拉栏
+    document.getElementById("container").onclick=function(){
+        document.querySelector("#purchase_div ul").style.display="none";
+    };
+
 
     //点击  导航  显示内容
-    document.getElementById("purchase_div").addEventListener("click", function (e) {
+    document.getElementById("purchase_div").addEventListener("click", function (e){
         var target = e.target;
         //获取所有 ul下的li 标签
              var append_allli = document.querySelectorAll("#append_ulall li");
@@ -198,8 +231,8 @@
                          purchase_link.setAttribute("rel", "import");
                      var filename = modules_files.substr(modules_files.lastIndexOf("/") + 1);
                          purchase_link.href = filename + ".html";
+                alert(filename);
                          document.getElementById("append_link").appendChild(purchase_link);
-
                 //为link 添加一个加载事件
                 purchase_link.onload = function () {
                      //将引入的页面内容放到 id 为 purchase_body 的标签中

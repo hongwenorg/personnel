@@ -240,7 +240,7 @@ function ArrSort(page, num, content) {
                 "<td class='td_sty'>" + "<div id='diaoru_bumen' name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].fold_campus + "</div>" + "<input type='hidden' class='fold_campus_sort' value='" + 1 + "'></td>" +
                 "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].fold_post + "</div>" + "<input type='hidden' class='fold_post_sort' value='" + 1 + "'></td>" +
                 "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].time + "</div>" + "<input type='hidden' class='time_sort' value='" + 1 + "'></td>" + 
-                "<td class='td_sty' id='td_styd'>" + "<div id='shiyou_inner' name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].state + "</div>" + "<input type='hidden' class='state_sort' value='" + 1 + "'></td>";
+                "<td class='td_sty' id='td_styd'>" + "<div id='shiyou_inner' name='" + arr_staff[j].user + "'>" + arr_staff[j].state + "</div>" + "<input type='hidden' class='state_sort' value='" + 1 + "'></td>";
         pageall.style.display = "block";
         pagemin.style.display = "block";
         pagemax.style.display = "block";
@@ -374,6 +374,43 @@ find_btt.onclick = function () {
                 alert("根据查询，无数据~！");
             }
         }
+    }
+};
+document.getElementById("tb_parent").onscroll=function(){
+    var top_nav=document.querySelectorAll(".top_nav div");
+    var top_wid=document.querySelectorAll(".top_wid div");
+    var float_tt=document.querySelector(".float_top_top");
+    if (document.getElementById("tb_parent").scrollTop > 0) {
+        document.getElementById("tb_parent").style.top="-30px";
+        document.getElementById("page_all").style.position="relative";
+        document.getElementById("page_min").style.position="relative";
+        document.getElementById("page_max").style.position="relative";
+        document.getElementById("pageall").style.position="relative";
+        document.getElementById("copy_excel").style.position="relative";
+        document.getElementById("copy_dayin").style.position="relative";
+        document.getElementById("page_all").style.top="-30px";
+        document.getElementById("page_min").style.top=0;
+        document.getElementById("page_max").style.top=0;
+        document.getElementById("pageall").style.top=0;
+        document.getElementById("copy_excel").style.top="-30px";
+        document.getElementById("copy_dayin").style.top="-30px";
+        document.querySelector(".max_head").style.display="block";
+        for(var i=0;i<top_nav.length;i++){
+            for(var j=0;j<top_wid.length;j++){
+                if(top_nav[i].innerText==top_wid[j].innerText){
+                    top_nav[i].style.width=top_wid[j].clientWidth+"px";
+                }
+            }
+        }
+    } else {
+        document.querySelector(".max_head").style.display="none";
+        document.getElementById("tb_parent").style.top=0;
+        document.getElementById("page_all").style.top=0;
+        document.getElementById("page_min").style.top="30px";
+        document.getElementById("page_max").style.top="30px";
+        document.getElementById("pageall").style.top="30px";
+        document.getElementById("copy_excel").style.top=0;
+        document.getElementById("copy_dayin").style.top=0;
     }
 };
 //页面搜索按钮  end

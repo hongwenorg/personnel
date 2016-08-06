@@ -239,6 +239,7 @@ function ArrSort(page, num, content) {
             "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].birthday + "</div>" + "<input type='hidden' class='birthday_sort' value='" + 1 + "'></td>" +
             "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].polity + "</div>" + "<input type='hidden' class='polity_sort' value='" + 1 + "'></td>" +
             "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].residence_booklet + "</div>" + "<input type='hidden' class='residence_booklet_sort' value='" + 1 + "'></td>" +
+            "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].live + "</div>" + "<input type='hidden' class='residence_live' value='" + 1 + "'></td>" +
             "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].contacts + "</div>" + "<input type='hidden' class='contacts_sort' value='" + 1 + "'></td>" +
             "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].urgency_telephone + "</div>" + "<input type='hidden' class='urgency_telephone_sort' value='" + 1 + "'></td>" +
             "<td class='td_sty'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].school + "</div>" + "<input type='hidden' class='school_sort' value='" + 1 + "'></td>" +
@@ -256,6 +257,7 @@ function ArrSort(page, num, content) {
         pagemax.style.display = "block";
         copy_excel.style.display = "block";
         copy_dayin.style.display = "block";
+        console.log(arr_staff[j]);
     }
 
 
@@ -941,7 +943,7 @@ function namesort(content) {
 }();
 
 
-//*************************     布局分页     *************************
+//*************************     滚动条事件     *************************
 
 
 document.getElementById("tb_parent").onscroll=function(){
@@ -950,6 +952,18 @@ document.getElementById("tb_parent").onscroll=function(){
     var float_tt=document.querySelector(".float_top_top");
     if (document.getElementById("tb_parent").scrollTop > 0) {
         document.getElementById("tb_parent").style.top="-30px";
+        document.getElementById("page_all").style.position="relative";
+        document.getElementById("page_min").style.position="relative";
+        document.getElementById("page_max").style.position="relative";
+        document.getElementById("pageall").style.position="relative";
+        document.getElementById("copy_excel").style.position="relative";
+        document.getElementById("copy_dayin").style.position="relative";
+        document.getElementById("page_all").style.top="-30px";
+        document.getElementById("page_min").style.top=0;
+        document.getElementById("page_max").style.top=0;
+        document.getElementById("pageall").style.top=0;
+        document.getElementById("copy_excel").style.top="-30px";
+        document.getElementById("copy_dayin").style.top="-30px";
         document.querySelector(".max_head").style.display="block";
         for(var i=0;i<top_nav.length;i++){
             for(var j=0;j<top_wid.length;j++){
@@ -961,6 +975,12 @@ document.getElementById("tb_parent").onscroll=function(){
     } else {
         document.querySelector(".max_head").style.display="none";
         document.getElementById("tb_parent").style.top=0;
+        document.getElementById("page_all").style.top=0;
+        document.getElementById("page_min").style.top="30px";
+        document.getElementById("page_max").style.top="30px";
+        document.getElementById("pageall").style.top="30px";
+        document.getElementById("copy_excel").style.top=0;
+        document.getElementById("copy_dayin").style.top=0;
     }
     document.querySelector(".top_nav").style.left=2-parseInt(document.getElementById("tb_parent").scrollLeft)+"px";
 };
