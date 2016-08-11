@@ -8,11 +8,84 @@
     <title>员工调动</title>
     <link rel="stylesheet" href="/public/css/Content_staff.css" type="text/css">
     <style>
-        .trr>li{
-            width:11.111%;
-        }
         #show_ul{
             left:280px;
+        }
+
+        #tb {
+            width: 100%;
+        }
+
+
+        .float_top {
+            /*position: relative;*/
+            /*top: 30px;*/
+            /*width: 94.87%;*/
+            width: 100%;
+            height: 30px;
+            margin: 0 auto;
+            overflow: hidden;
+            /*border: 1px solid green;*/
+            min-width: 1180px;
+        }
+        .max_head{
+            display: none;
+            position: relative;
+            top: 0;
+            z-index: 9999;
+        }
+
+        .float_top_top {
+            width: 90%;
+            /*margin: 0 auto;*/
+            height: 30px;
+            overflow: hidden;
+            /*border: 1px solid red;*/
+            margin: 0 auto;
+            min-width: 1166px;
+        }
+
+        .top_nav {
+            position: relative;
+            left: 2px;
+            /*border: 1px solid blue;*/
+            /*width:100%;*/
+            height: 30px;
+        }
+
+        .top_nav > div {
+            border-right: 2px solid lightgray;
+            background-color: #bbbbbb;
+            height: 30px;
+            float: left;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+        }
+        .top_size{
+            height:30px;
+            /*border:1px solid yellow;*/
+            /*width:99%;*/
+            overflow: hidden;
+            margin-right:15px;
+        }
+
+        #tb_parent {
+            min-width: 1165px;
+            height: 520px;
+            width: 90%;
+            margin-left: 5%;
+            /*overflow-x: scroll;*/
+            overflow-y: scroll;
+            border: 1px solid lightgray;
+            position:relative;
+            top:0;
+            padding:0;
+        }
+
+        #tb {
+            border-left: none;
+            border-right: none;
         }
     </style>
 </head>
@@ -55,34 +128,54 @@
                 <!--时间控件-->
             </div>
             <!--*********************************************存放后台员工信息*****************************************************-->
-            <div style="width:100%">
+
+            <div style="width:100%" class="max_head">
+                <div class="float_top">
+                    <div class="float_top_top">
+                        <div class="top_size" style="left:2px">
+                            <div class="top_nav">
+                                <div>序号</div>
+                                <div>员工号</div>
+                                <div>姓名</div>
+                                <div>调出单位部门</div>
+                                <div>调出前职务</div>
+                                <div>调入单位部门</div>
+                                <div>调入后职务</div>
+                                <div>调动时间</div>
+                                <div>调动事由</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="tb_parent">
                 <table class="tb" cellpadding="2" cellspacing="0" id="tb">
                     <tr class="trr1">
-                        <th id="staff_num1" class="staff_num1" style="width:50px;">
+                        <th id="staff_num1" class="staff_num1 top_wid">
                             <div>序号</div>
                         </th>
-                        <th id="staff_user1" onclick="namesort('user')">
+                        <th id="staff_user1" onclick="namesort('user')" class="top_wid">
                             <div>员工号</div>
                         </th>
-                        <th id="staff_name1" onclick="namesort('name')">
+                        <th id="staff_name1" onclick="namesort('name')" class="top_wid">
                             <div>姓名</div>
                         </th>
-                        <th id="staff_export_campus1" onclick="namesort('export_campus')">
+                        <th id="staff_export_campus1" onclick="namesort('export_campus')" class="top_wid">
                             <div>调出单位部门</div>
                         </th>
-                        <th id="staff_export_post1" onclick="namesort('export_post')">
+                        <th id="staff_export_post1" onclick="namesort('export_post')" class="top_wid">
                             <div>调出前职务</div>
                         </th>
-                        <th id="staff_fold_campus1" onclick="namesort('fold_campus')">
+                        <th id="staff_fold_campus1" onclick="namesort('fold_campus')" class="top_wid">
                             <div>调入单位部门</div>
                         </th>
-                        <th id="staff_fold_post1" onclick="namesort('fold_post')">
+                        <th id="staff_fold_post1" onclick="namesort('fold_post')" class="top_wid">
                             <div>调入后职务</div>
                         </th>
-                        <th id="staff_time1" onclick="namesort('time')">
+                        <th id="staff_time1" onclick="namesort('time')" class="top_wid">
                             <div>调动时间</div>
                         </th>
-                        <th id="staff_state1" onclick="namesort('state')">
+                        <th id="staff_state1" onclick="namesort('state')" class="top_wid">
                             <div>调动事由</div>
                         </th>
                     </tr>

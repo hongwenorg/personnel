@@ -235,6 +235,8 @@ function ArrSort(page, num, content) {
             "<td class='td_sty td_a5' num='5'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].level + "</div>" + "<input type='hidden' class='level_sort' value='" + 1 + "'></td>" +
             "<td class='td_sty td_a6' num='6'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].factor + "</div>" + "<input type='hidden' class='factor_sort' value='" + 1 + "'></td>" +
             "<td class='td_sty td_a7' num='7'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].allowance + "</div>" + "<input type='hidden' class='allowance_sort' value='" + 1 + "'></td>" +
+            "<td class='td_sty td_a15' num='15'>" + "<div name='" + arr_staff[j].user + "' class='div_inner check_no' style='width:100%;height:100%'>" + arr_staff[j].absenteeism + "</div>" + "<input type='hidden' class='absenteeism_sort' value='" + 1 + "'></td>" +
+            "<td class='td_sty td_a20' num='20'>" + "<div name='" + arr_staff[j].user + "' class='div_inner check_no'>" + arr_staff[j].is_no + "</div>" + "<input type='hidden' class='is_no_sort' value='" + 1 + "'></td>"+
             "<td class='td_sty td_a8' num='8'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].late + "</div>" + "<input type='hidden' class='late_sort' value='" + 1 + "'></td>" +
             "<td class='td_sty td_a9' num='9'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].early + "</div>" + "<input type='hidden' class='early_sort' value='" + 1 + "'></td>" +
             "<td class='td_sty td_a10' num='10'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].personal_leave + "</div>" + "<input type='hidden' class='personal_leave_sort' value='" + 1 + "'></td>" +
@@ -242,12 +244,10 @@ function ArrSort(page, num, content) {
             "<td class='td_sty td_a12' num='12'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].sick_leave + "</div>" + "<input type='hidden' class='sick_leave_sort' value='" + 1 + "'></td>" +
             "<td class='td_sty td_a13' num='13'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].sick_leave_count + "</div>" + "<input type='hidden' class='sick_leave_count_sort' value='" + 1 + "'></td>" +
             "<td class='td_sty td_a14' num='14'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].overtime + "</div>" + "<input type='hidden' class='overtime_sort' value='" + 1 + "'></td>" +
-            "<td class='td_sty td_a15' num='15'>" + "<div name='" + arr_staff[j].user + "' class='div_inner check_no' style='width:100%;height:100%'>" + arr_staff[j].absenteeism + "</div>" + "<input type='hidden' class='absenteeism_sort' value='" + 1 + "'></td>" +
             "<td class='td_sty td_a16' num='16'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].noclock + "</div>" + "<input type='hidden' class='noclock_sort' value='" + 1 + "'></td>" +
             "<td class='td_sty td_a17' num='17'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].errors + "</div>" + "<input type='hidden' class='errors_sort' value='" + 1 + "'></td>" +
             "<td class='td_sty td_a18' num='18'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].over_count_day + "</div>" + "<input type='hidden' class='over_count_day_sort' value='" + 1 + "'></td>" +
-            "<td class='td_sty td_a19' num='19'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].count_yes + "</div>" + "<input type='hidden' class='count_yes_sort' value='" + 1 + "'></td>" +
-            "<td class='td_sty td_a20' num='20'>" + "<div name='" + arr_staff[j].user + "' class='div_inner check_no'>" + arr_staff[j].is_no + "</div>" + "<input type='hidden' class='is_no_sort' value='" + 1 + "'></td>";
+            "<td class='td_sty td_a19' num='19'>" + "<div name='" + arr_staff[j].user + "' class='div_inner'>" + arr_staff[j].count_yes + "</div>" + "<input type='hidden' class='count_yes_sort' value='" + 1 + "'></td>";
         pageall.style.display = "block";
         pageall.style.display = "block";
         pagemin.style.display = "block";
@@ -528,7 +528,46 @@ document.getElementById("tb").addEventListener("click", function (e) {
             }
         }
     }
-})
+});
+
+document.getElementById("tb_parent").onscroll=function(){
+    var top_nav=document.querySelectorAll(".top_nav div");
+    var top_wid=document.querySelectorAll(".top_wid div");
+    var float_tt=document.querySelector(".float_top_top");
+    if (document.getElementById("tb_parent").scrollTop > 0) {
+        document.getElementById("tb_parent").style.top="-30px";
+        document.getElementById("page_all").style.position="relative";
+        document.getElementById("page_min").style.position="relative";
+        document.getElementById("page_max").style.position="relative";
+        document.getElementById("pageall").style.position="relative";
+        document.getElementById("copy_excel").style.position="relative";
+        document.getElementById("copy_dayin").style.position="relative";
+        document.getElementById("page_all").style.top="-30px";
+        document.getElementById("page_min").style.top=0;
+        document.getElementById("page_max").style.top=0;
+        document.getElementById("pageall").style.top=0;
+        document.getElementById("copy_excel").style.top="-30px";
+        document.getElementById("copy_dayin").style.top="-30px";
+        document.querySelector(".max_head").style.display="block";
+        for(var i=0;i<top_nav.length;i++){
+            for(var j=0;j<top_wid.length;j++){
+                if(top_nav[i].innerText==top_wid[j].innerText){
+                    top_nav[i].style.width=top_wid[j].clientWidth+"px";
+                }
+            }
+        }
+    } else {
+        document.querySelector(".max_head").style.display="none";
+        document.getElementById("tb_parent").style.top=0;
+        document.getElementById("page_all").style.top=0;
+        document.getElementById("page_min").style.top="30px";
+        document.getElementById("page_max").style.top="30px";
+        document.getElementById("pageall").style.top="30px";
+        document.getElementById("copy_excel").style.top=0;
+        document.getElementById("copy_dayin").style.top=0;
+    }
+    document.querySelector(".top_nav").style.left=2-parseInt(document.getElementById("tb_parent").scrollLeft)+"px";
+};
 
 //jQuery的makeArray
 function makeArray(array) {
@@ -590,15 +629,3 @@ function namesort(content) {
 
 
 var tab = document.getElementById("tab_click");
-
-document.onscroll = function () {
-    if (scrollY > 200) {
-        $("#trr").addClass("setcss_check1");
-        $("#trr th").addClass("setcss_check");
-        $("#trr th div").addClass("setcss_border");
-    } else {
-        $("#trr").removeClass("setcss_check1");
-        $("#trr th").removeClass("setcss_check");
-        $("#trr th div").removeClass("setcss_border");
-    }
-}
