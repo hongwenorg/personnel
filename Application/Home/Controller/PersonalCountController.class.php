@@ -116,6 +116,15 @@ class PersonalCountController extends Controller {
                 $data = array();
             }
         }
+        if(empty($data)){
+            $campus_arr = $model4->where(array('pid' => 15 , 'is_del' => 0))->select();
+            foreach($campus_arr as $val){
+                $dats['campus_id'] = $val['id'];
+                $dats['date'] = date("Y-m",time());
+                $model1->add($dats);
+            }
+            $this->Campus_target_find();
+        }
         echo json_encode($data);
     }
 
@@ -145,6 +154,7 @@ class PersonalCountController extends Controller {
         if(!is_array($data_arr)){
             echo json_encode(array('status' => false , 'content' => '数据出错'));exit;//数据出错
         }
+        //echo json_encode($data_arr);exit;
         $model1 = D('oa_campustarget');
         $model2 = D('oa_personaltarget');
         $model3 = D('person_all');
@@ -179,7 +189,7 @@ class PersonalCountController extends Controller {
                 $target_arr = $vals['personal_target'];
                 foreach ($target_arr as $key => &$value) {
                     $name = $value['name'];
-                    $arr = $model3->where("name like '%".$name."%' and state = 1")->find();//and school like '%".$school_name."%'
+                    $arr = $model3->where("name like '%".$name."%' and state = 1 and school like '%".$school_name."%'")->find();//
                     if(is_array($arr)){
                         $data2 = array();
                         $data2['user_id'] = $arr['id'];
@@ -220,25 +230,379 @@ class PersonalCountController extends Controller {
     }
 
 
-    //个人信息录入页面显示数据程序
+    //升降级业绩统计表
+    function level_count(){
+        if(empty($_GET['data'])){
+            echo json_encode(array('status' => false , 'content' => '程序出错，请联系管理员'));exit;//数据出错
+        }else{
+            $array = json_decode($_GET['data'],true);
+        }
+        // echo json_encode($array);exit;
+        $where = array();
+        // $array['begin_date'] = '2016-07';
+        // $array['end_date'] = '2016-08';
+        // $array['post_id'] = 18;
+        // $array['name'] = '温加宝';
+        // $array['school_id'] = 2;
+        if(empty($array['post_id'])){
+            echo json_encode(array('status' => false , 'content' => '程序出错，请确认职务'));exit;//数据出错
+        }else{
+            $oa_position = D('oa_position');
+            $post_id = $array['post_id'];
+            $post_arr = array();
+            $post_arr = $oa_position->where(array('id' => $post_id))->find();
+            $where['post_id'] = $post_id;
+        }
+        if(!empty($array['begin_date']) && !empty($array['end_date'])){
+            $begin_date = $array['begin_date'];
+            $end_date = $array['end_date'];
+            $where['date'] = array('between' , $begin_date.','.$end_date);
+        }else{
+            echo json_encode(array('status' => false , 'content' => '程序出错，请确认开始、结束时间正确'));exit;//数据出错
+        }
+
+        $person_all = D('person_all');
+        $oa_foo_info = D('oa_foo_info');
+        if(!empty($array['school_id'])){
+            $school_id = $array['school_id'];
+            $school_arr = array();
+            $school_arr = $oa_foo_info->where(array('id' => $school_id))->find();
+            $where['campus_id'] = $school_id;
+        }
+
+        if(!empty($array['name'])){
+            $name = $array['name'];
+            $user_arr = array();
+            $person_arr = $person_all->where(array('name' => $name , 'position' => $post_arr['name'] , 'school' => $school_arr['name']))->find();//
+            if(!$person_arr){
+                echo json_encode(array('status' => false , 'content' => '查无此人，请确认校区、职务、名称是否一致'));exit;//数据出错
+            }
+            $where['user_id'] = $person_arr['id'];
+        }
+        $oa_personaltarget = D('oa_personaltarget');
+        $oa_achievement = D('oa_achievement');
+        $target_arr = array();
+        $target_arr = $oa_personaltarget->where($where)->order('level desc')->select();
+        $date_time_arr = $this->year_month_day(strtotime($end_date));
+        $month_count = $date_time_arr['month_day'];
+        $day_count = $date_time_arr['day_count'];
+        $i = 1;
+        if(!$target_arr){
+            echo json_encode($target_arr);exit;
+        }else{
+            foreach($target_arr as &$value){
+                $value['num'] = $i;
+                $person_arrs = $person_all->where(array('id' => $value['user_id']))->find();
+                $value['name'] = $person_arrs['name'];
+                $campus_arrs = $oa_foo_info->where(array('id' => $value['campus_id']))->find();
+                $value['school_name'] = $campus_arrs['name'];
+                $value['upgrade_num'] = $value['upgrade']*$value['target'];
+                $value['relegation_num'] = $value['relegation']*$value['target'];
+                if($value['post_id'] == "18"){
+                    $type = '续签';
+                    $oa_achievement_num = $oa_achievement->where(array('checkout_date' => array('between' , $begin_date.'-01,'.$end_date."-$day_count") , 'achievement_type' => $type , 'status' => 2 , 'not_curriculum_type' => "" , 'study_userid' => $value['user_id']))->sum('charge_money');
+                    $oa_achievement_num1 = $oa_achievement->where(array('checkout_date' => array('between' , $begin_date.','.$end_date) , 'achievement_type' => '转介绍' , 'status' => 2 , 'not_curriculum_type' => "" , 'study_userid' => $value['user_id']))->sum('charge_money');
+                }else{
+                    $type = '新签';
+                    $oa_achievement_num = $oa_achievement->where(array('checkout_date' => array('between' , $begin_date.'-01,'.$end_date."-$day_count") , 'achievement_type' => $type , 'status' => 2 , 'not_curriculum_type' => "" , 'teaching_userid' => $value['user_id']))->sum('charge_money');
+                    $oa_achievement_num1 = $oa_achievement->where(array('checkout_date' => array('between' , $begin_date.','.$end_date) , 'achievement_type' => '转介绍' , 'status' => 2 , 'not_curriculum_type' => "" , 'teaching_userid' => $value['user_id']))->sum('charge_money');
+                }
+                $money_num = sprintf("%.2f", sprintf("%.2f", $oa_achievement_num)+sprintf("%.2f", ($oa_achievement_num1/2)));
+
+                $value['money_num'] = $money_num;
+                if($value['money_num'] >= $value['upgrade_num']){
+                    $value['upgrade_difference'] = 0;
+                }else{
+                    $value['upgrade_difference'] = $value['upgrade_num']-$value['money_num'];
+                }
+                if($value['money_num'] >= $value['relegation_num']){
+                    $value['relegation_difference'] = 0;
+                }else{
+                    $value['relegation_difference'] = $value['relegation_num']-$value['money_num'];
+                }
+                $value['upgrade_num_num'] = sprintf("%.2f", $value['money_num']/$value['upgrade_num']);
+                $value['relegation_num_num'] = sprintf("%.2f", $value['money_num']/$value['relegation_num']);
+
+                $i++;
+            }
+            // echo $oa_personaltarget->getLastsql();
+            // echo "<pre>";
+            // print_r($target_arr);die;
+            echo json_encode($target_arr);
+        }
+    }
+
+
+
+    //统计表接口
+    function target_count(){
+        if(empty($_GET['data'])){
+            echo json_encode(array('status' => false , 'content' => '程序出错，请联系管理员'));exit;//数据出错
+        }else{
+            $array = json_decode($_GET['data'],true);
+        }
+        if(empty($array['type'])){
+            echo json_encode(array('status' => false , 'content' => '程序出错，请选择类型'));exit;//数据出错
+        }else{
+            $type = $array['type'];
+        }
+        // $array['date'] = '2016-08';
+        // $type = '新签';
+        if(empty($array['date'])){
+            $date = date('Y-m',time());
+            $year_day = Intval(date('Y',time()));
+            $month_count = date('m',time());
+            $day_count = Intval(date('d',time()));
+
+        }else{
+            if($array['date'] == date("Y-m",time())){
+                $date = date('Y-m',time());
+                $year_day = Intval(date('Y',time()));
+                $month_count = date('m',time());
+                $day_count = Intval(date('d',time()));
+            }else{
+                $date = $array['date'];
+                $date_time_arr = $this->year_month_day(strtotime($date));
+                $month_count = $date_time_arr['month_day'];
+                $day_count = $date_time_arr['day_count'];
+            }
+        }
+        $oa_foo_info = D('oa_foo_info');
+        $oa_campustarget = D('oa_campustarget');
+        $oa_achievement = D('oa_achievement');
+        $campus_arr = array();
+        $data = array();
+        $campus_arr = $oa_foo_info->where(array('pid' => 15 , 'is_del' => 0))->select();
+        $campus_arr[] = array('id' => 100000 , 'name' => '集团总业绩');
+        $top = array(
+            'target' =>  array('name' => $type.'总目标' , 'count' => array()) , 
+            'achievement' => array('name' => $type.'总业绩(常规)' , 'count' => array()) , 
+            'refund' => array('name' => '常规课程退费' , 'count' => array()) , 
+            'complete' => array('name' => $type.'完成率(常规)' , 'count' => array()) , 
+            'not_refund' => array('name' => '非常规课程退费' , 'count' => array()) , 
+            'special' => array('name' => '特训营业绩' , 'count' => array()) , 
+            'cooperation' => array('name' => '合作项目业绩' , 'count' => array()) , 
+            'achievement_count' => array('name' => '月'.$type.'总业绩' , 'count' => array()));
+
+        $oa_campustarget_arr = $oa_campustarget->where(array('date' => $date))->select();
+        if($oa_campustarget_arr){
+            foreach($top as &$value){
+                foreach($campus_arr as $k=> $val){
+                    $school_name = $val['name'];
+                    $value['count'][$k]['school_name'] = $val['name'];
+                    if($value['name'] == $type.'总目标'){
+                        if($val['id'] == '100000'){
+                            $count_num = '';
+                            if($type == '新签'){
+                                $count_num = $oa_campustarget->where(array('date' => $date))->sum('new_target');
+                                $value['count'][$k]['count_num'] = $count_num;
+                            }else if($type == '续签'){
+                                $count_num = $oa_campustarget->where(array('date' => $date))->sum('old_target');
+                                $value['count'][$k]['count_num'] = $count_num;
+                            }else{
+                                $count_num = $oa_campustarget->where(array('date' => $date))->sum('count_target');
+                                $value['count'][$k]['count_num'] = $count_num;
+                            }
+                        }else{
+                            foreach($oa_campustarget_arr as $oa_campustarget_val){
+                                $count_num = '';
+                                if($oa_campustarget_val['campus_id'] == $val['id']){
+                                    if($type == '新签'){
+                                        $count_num = $oa_campustarget_val['new_target'];
+                                        $value['count'][$k]['count_num'] = $count_num;
+                                    }else if($type == '续签'){
+                                        $count_num = $oa_campustarget_val['old_target'];
+                                        $value['count'][$k]['count_num'] = $count_num;
+                                    }else{
+                                        $count_num = $oa_campustarget_val['count_target'];
+                                        $value['count'][$k]['count_num'] = $count_num;
+                                    }
+                                    
+                                }
+                            }
+                        }
+                    }else if($value['name'] == $type.'总业绩(常规)'){
+                        if($val['id'] == '100000'){
+                            $oa_achievement_num = $oa_achievement->where(array('checkout_date' => array('like' , $date.'%') , 'achievement_type' => $type , 'status' => 2 , 'not_curriculum_type' => ""))->sum('charge_money');
+                            $oa_achievement_num1 = $oa_achievement->where(array('checkout_date' => array('like' , $date.'%') , 'achievement_type' => '转介绍' , 'status' => 2 , 'not_curriculum_type' => ""))->sum('charge_money');
+                            if($type == '新签'){
+                                $money_num = sprintf("%.2f", sprintf("%.2f", $oa_achievement_num)+sprintf("%.2f", ($oa_achievement_num1/2)));
+                                $value['count'][$k]['count_num'] = $money_num;
+                            }else if($type == '续签'){
+                                $money_num = sprintf("%.2f", sprintf("%.2f", $oa_achievement_num)+sprintf("%.2f", ($oa_achievement_num1/2)));
+                                $value['count'][$k]['count_num'] = $money_num;
+                            }else{
+                                $oa_achievement_num = $oa_achievement->where(array('checkout_date' => array('like' , $date.'%') , 'status' => 2))->sum('charge_money');
+                                $money_num = sprintf("%.2f", sprintf("%.2f", $oa_achievement_num)+sprintf("%.2f", $oa_achievement_num1));
+                                $value['count'][$k]['count_num'] = $money_num;
+                            }
+                        }else{
+                            $oa_achievement_num = $oa_achievement->where(array('checkout_date' => array('like' , $date.'%') , 'achievement_type' => $type , 'campus_id' => $val['id'] , 'status' => 2 , 'not_curriculum_type' => ""))->sum('charge_money');
+                            $oa_achievement_num1 = $oa_achievement->where(array('checkout_date' => array('like' , $date.'%') , 'achievement_type' => '转介绍' , 'campus_id' => $val['id'] , 'status' => 2 , 'not_curriculum_type' => ""))->sum('charge_money');
+                            $money_num = '';
+                            if($type == '新签'){
+                                $money_num = sprintf("%.2f", sprintf("%.2f", $oa_achievement_num)+sprintf("%.2f", ($oa_achievement_num1/2)));
+                                $value['count'][$k]['count_num'] = $money_num;
+                            }else if($type == '续签'){
+                                $money_num = sprintf("%.2f", sprintf("%.2f", $oa_achievement_num)+sprintf("%.2f", ($oa_achievement_num1/2)));
+                                $value['count'][$k]['count_num'] = $money_num;
+                            }else{
+                                $oa_achievement_num = $oa_achievement->where(array('checkout_date' => array('like' , $date.'%') , 'campus_id' => $val['id'] , 'status' => 2))->sum('charge_money');
+                                $money_num = sprintf("%.2f", sprintf("%.2f", $oa_achievement_num)+sprintf("%.2f", $oa_achievement_num1));
+                                $value['count'][$k]['count_num'] = $money_num;
+                            }
+                        }
+                    }else if($value['name'] == $type.'完成率(常规)'){
+                        $value['count'][$k]['count_num'] = sprintf("%.3f", $top['achievement']['count'][$k]['count_num']/$top['target']['count'][$k]['count_num']);
+                    }else if($value['name'] == '特训营业绩'){
+                        if($val['id'] == '100000'){
+                            $special_num = $oa_achievement->where(array('checkout_date' => array('like' , $date.'%') , 'not_curriculum_type' => '特训营' , 'status' => 2))->sum('charge_money');
+                        }else{
+                            $special_num = $oa_achievement->where(array('checkout_date' => array('like' , $date.'%') , 'not_curriculum_type' => '特训营' , 'campus_id' => $val['id'] , 'status' => 2))->sum('charge_money');
+                        }
+                        $value['count'][$k]['count_num'] = sprintf("%.2f", $special_num);
+                    }else if($value['name'] == '合作项目业绩'){
+                        if($val['id'] == '100000'){
+                            $cooperation_num = $oa_achievement->where(array('checkout_date' => array('like' , $date.'%') , 'not_curriculum_type' => '合作项目' , 'status' => 2))->sum('charge_money');
+                        }else{
+                            $cooperation_num = $oa_achievement->where(array('checkout_date' => array('like' , $date.'%') , 'not_curriculum_type' => '合作项目' , 'campus_id' => $val['id'] , 'status' => 2))->sum('charge_money');
+                        }
+                        $value['count'][$k]['count_num'] = sprintf("%.2f", $cooperation_num);
+                    }else if($value['name'] == '月'.$type.'总业绩'){
+                        if($val['id'] == '100000'){
+                             $achievement_num = $oa_achievement->where(array('checkout_date' => array('like' , $date.'%') , 'status' => 2))->sum('charge_money');
+                        }else{
+                            $achievement_num = $oa_achievement->where(array('checkout_date' => array('like' , $date.'%') , 'campus_id' => $val['id'] , 'status' => 2))->sum('charge_money');
+                            // echo $oa_achievement->getLastsql();
+                            // echo "<br>";
+                        }
+                        if($achievement_num){
+                            $value['count'][$k]['count_num'] = sprintf("%.2f", $achievement_num);
+                        }else{
+                            $value['count'][$k]['count_num'] = sprintf("%.2f", 0);
+                        }
+                    
+                    }
+                    
+                }
+            }
+            for($i = 1; $i <= $day_count; $i++){
+                if($i<10){
+                    $day_num = '0'.$i;
+                }else{
+                    $day_num = $i;
+                }
+                $bottom[$i]['name'] = $i.'日'.$type.'总业绩';
+                foreach($campus_arr as $key => $val){
+                    $school_name = $val['name'];
+                    $bottom[$i][$key]['school_name'] = $val['name'];
+                    if($val['id'] == '100000'){
+                        $num_day_count = $oa_achievement->where(array('checkout_date' => $year_day.'-'.$month_count.'-'.$day_num , 'status' => 2))->sum('charge_money');
+                    }else{
+                        $num_day_count = $oa_achievement->where(array('checkout_date' => $year_day.'-'.$month_count.'-'.$day_num , 'campus_id' => $val['id'] , 'status' => 2))->sum('charge_money');
+                    }
+                    $bottom[$i][$key]['num_day_count'] = sprintf("%.2f", $num_day_count);
+                }
+            }
+
+            $data['top'] = $top;
+            $data['bottom'] = $bottom;
+            $data['status'] = true;
+        }else{
+            $data['status'] = false;
+        }
+        // echo "<pre>";
+        // print_r($data);
+        $array['target_data_arr'] = $data;
+        $array['target_type'] = $type;
+        $array['campus_arr'] = $campus_arr;
+        $_SESSION['target_array'] = $array;
+        echo json_encode($data);
+    }
+
+
+    //每到月一号计算上个月年，月，日，总共多少天
+    function year_month_day($time){
+        //下面是获取指定月的数据
+        //获取月份当前
+        $data = array();
+        $year_day = Intval(date("Y",$time));
+        $month_day = Intval(date("m",$time));
+        $data['year_day'] = $year_day;
+        $data['month_day'] = $month_day;
+        //计算月一共有多少天
+        $data['day_count']=date('j',mktime(0,0,1,($month_day==12?1:$month_day+1),1,($month_day==12?$year_day+1:$year_day))-24*3600);
+        //var_dump($data);
+        return $data;
+    }
+
+
+    //个人业绩状态修改
+    function Personal_target_save(){
+        if(empty($_GET['data'])){
+            echo json_encode(array('status' => false , 'content' => '程序出错，请联系管理员'));exit;//数据出错
+        }else{
+            $array = json_decode($_GET['data'],true);
+        }
+        //echo json_encode($array);exit;
+        $model = D('oa_achievement');
+        if(empty($array['id'])){
+            foreach($array as $val){
+                $state = $model->where(array('id' => $val['id']))->save(array("status" => $val['status']));
+                if(!$state){
+                    echo json_encode(array('status' => false , 'content' => '程序出错，请联系管理员'));exit;//数据出错
+                }
+            }
+        }else{
+            $state = $model->where(array('id' => $array['id']))->save(array("status" => $array['status']));
+            if(!$state){
+                echo json_encode(array('status' => false , 'content' => '程序出错，请联系管理员'));exit;//数据出错
+            }
+        }
+        echo json_encode(array('status' => true , 'content' => '成功'));exit;//
+    }
+
+
+    //个人业绩录入页面显示数据程序
     function Personal_target_find(){
         if(empty($_GET['school_id'])){
             echo json_encode(array('status' => false , 'content' => '程序出错，请联系管理员'));exit;//数据出错
         }else{
             $campus_id = $_GET['school_id'];
         }
-        $model = D('oa_achievement');
-        $data = array();
-        $date = date("Y-m",time());
-        $data = $model->where(array('campus_id' => $school_id , 'checkout_date' => array('like' , '%'.$date.'%')))->select();
-        if(is_array($data)){
-            echo json_encode($data);
-        }else{
+        if(empty($_GET['status'])){
             echo json_encode(array('status' => false , 'content' => '程序出错，请联系管理员'));exit;//数据出错
+        }else{
+            $status = $_GET['status'];
         }
+        $model = D('oa_achievement');
+        $person_all = D('person_all');
+        $oa_foo_info = D('oa_foo_info');
+        $data = array();
+        $user_arr = array();
+        $school_name = array();
+        $date = date("Y-m",time());
+        $school_name = $oa_foo_info->where(array('id' => $campus_id))->find();
+        $data = $model->where(array('campus_id' => $campus_id , 'checkout_date' => array('like' , '%'.$date.'%') , 'status' => $status))->order('id desc')->select();
+        $user_arr = $person_all->where(array('school' => $school_name['name']))->select();//
+        foreach($data as &$value){
+            foreach($user_arr as $val){
+                if($value['checkout_userid'] == $val['id']){
+                    $value['checkout_username'] = $val['name'];
+                }
+                if($value['teaching_userid'] == $val['id']){
+                    $value['teaching_userid'] = $val['name'];
+                }
+                if($value['study_userid'] == $val['id']){
+                    $value['study_userid'] = $val['name'];
+                }
+            }
+            
+        }
+        echo json_encode($data);exit;
     }
 
-    //个人信息录入接口程序
+    //个人业绩录入接口程序
     function Personal_target_add(){
         if(empty($_GET['data'])){
             echo json_encode(array('status' => false , 'content' => '请确认数据传输正确'));exit;//数据出错
@@ -248,9 +612,6 @@ class PersonalCountController extends Controller {
         if($array['curriculum_type'] == '0' && $array['not_curriculum_type'] == '0'){
             echo json_encode(array('status' => false , 'content' => '请选择课程类型'));exit;//数据出错
         }
-        if(($array['teaching_userid'] == '0' && $array['study_userid'] == '0') || ($array['teaching_userid'] == '' && $array['study_userid'] == '')){
-            echo json_encode(array('status' => false , 'content' => '请填写学管或者教主'));exit;//数据出错
-        }
         $data = array();
         $date = date('Y-m-d',time());
         $teaching_userid = $array['teaching_userid'];
@@ -259,14 +620,24 @@ class PersonalCountController extends Controller {
         $oa_foo_info = D('oa_foo_info');
         $model = D('oa_achievement');
         $school_name = $oa_foo_info->where(array('id' => $array['school_id']))->find();
-        $teaching_user = $person_all->where(array('name' => $teaching_userid , 'school' =>  $school_name['name']))->find();
-        if(!$teaching_user){
-            echo json_encode(array('status' => false , 'content' => $teaching_userid.' | '.$school_name['name'].' 查无此人，请确认名字是否正确'));exit;//数据出错
+
+        if($array['teaching_userid'] == '' && $array['study_userid'] == ''){
+            echo json_encode(array('status' => false , 'content' => '请填写学管或者教主'));exit;//数据出错
+        }else{
+            if($array['teaching_userid']!=""){
+                $teaching_user = $person_all->where(array('name' => $teaching_userid , 'school' =>  $school_name['name']))->find();//
+                if(!$teaching_user){
+                    echo json_encode(array('status' => false , 'content' => $teaching_userid.' | '.$school_name['name'].' 查无此人，请确认名字是否正确'));exit;//数据出错
+                }
+            }
+            if($array['study_userid']!=""){
+                $study_user = $person_all->where(array('name' => $study_userid , 'school' =>  $school_name['name']))->find();//
+                if(!$study_user){
+                    echo json_encode(array('status' => false , 'content' => $study_userid.' | '.$school_name['name'].' 查无此人，请确认名字是否正确'));exit;//数据出错
+                }
+            }
         }
-        $study_user = $person_all->where(array('name' => $study_userid , 'school' =>  $school_name['name']))->find();
-        if(!$study_user){
-            echo json_encode(array('status' => false , 'content' => $study_userid.' | '.$school_name['name'].' 查无此人，请确认名字是否正确'));exit;//数据出错
-        }
+        
         $data['campus_id'] = $array['school_id'];
         $data['checkout_date'] = $date;
         $data['receipt_card'] = $array['receipt_card'];
@@ -279,6 +650,7 @@ class PersonalCountController extends Controller {
         $data['grade'] = $array['grade'];
         $data['achievement_date'] = $array['achievement_date'];
         $data['curriculum_type'] = $array['curriculum_type'];
+        $data['not_curriculum_type'] = $array['not_curriculum_type'];
         $data['curriculum_name'] = $array['curriculum_name'];
         $data['teacher_name'] = $array['teacher_name'];
         $data['charge_class_num'] = $array['charge_class_num'];
@@ -294,6 +666,7 @@ class PersonalCountController extends Controller {
             if($state){
                 $array['id'] = $state;
                 $array['checkout_date'] = $date;
+                $array['status'] = 1;
                 echo json_encode(array('status' => true , 'content' => '保存成功' , 'data' => $array));exit;//数据出错
             }else{
                 echo json_encode(array('status' => false , 'content' => '保存失败，请联系管理员'));exit;//数据出错
@@ -305,11 +678,75 @@ class PersonalCountController extends Controller {
             if($state){
                 $array['id'] = $id;
                 $array['checkout_date'] = $date;
+                $array['status'] = 1;
                 echo json_encode(array('status' => true , 'content' => '修改成功' , 'data' => $array));exit;//数据出错 
             }else{
                 echo json_encode(array('status' => false , 'content' => '修改失败，请确认数据是否修改'));exit;//数据出错
             }
         }
+    }
+
+
+    //统计表excel生成函数
+    function target_excel(){
+        if(empty($_SESSION['target_array'])){
+            $this->error("生成页面错误，请联系管理员！");exit;
+        }
+        $content_arr = array();
+
+        $content_arr = $_SESSION['target_array']['target_data_arr'];
+        $campus_arr = $_SESSION['target_array']['campus_arr'];
+        $target_type = $_SESSION['target_array']['target_type'];
+        import("Vendor.PHPExcel");
+        //创建对象
+        $excel = new \PHPExcel();
+        //Excel表格式,这里简略写了8列
+        $letter = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U');
+        //表头数组
+        $tableheader[] = '单位（元）';
+        foreach($campus_arr as $value){
+            $tableheader[] = $value['name'];
+        }
+        //填充表头信息
+        for($i = 0;$i < count($tableheader);$i++) {
+            $excel->getActiveSheet()->setCellValue("$letter[$i]1","$tableheader[$i]");
+        }
+        //表格数组
+        $i = 0;
+        foreach($content_arr['top'] as $key => $val){
+            $data[$i][0] = $val['name'];
+            foreach($val['count'] as $k => $v){
+                $data[$i][$k+1] = $v["count_num"];
+            }
+            $i++;
+        }
+        foreach($content_arr['bottom'] as $key => $val){
+            $data[$i][0] = $val['name'];
+            foreach($val as $k => $v){
+                $data[$i][$k+1] = $v['num_day_count'];
+            }
+            $i++;
+        }
+        //填充表格信息
+        for ($i = 2;$i <= count($data) + 1;$i++) {
+            $j = 0;
+            foreach ($data[$i - 2] as $key=>$value) {
+                $excel->getActiveSheet()->setCellValue("$letter[$j]$i","$value");
+                $j++;
+            }
+        }
+        //创建Excel输入对象
+        $write = new \PHPExcel_Writer_Excel5($excel);
+        header("Pragma: public");
+        header("Expires: 0");
+        header("Cache-Control:must-revalidate, post-check=0, pre-check=0");
+        header("Content-Type:application/force-download");
+        header("Content-Type:application/vnd.ms-execl");
+        header("Content-Type:application/octet-stream");
+        header("Content-Type:application/download");;
+        header('Content-Disposition:attachment;filename="'.$target_type.'统计表.xls"');
+        header("Content-Transfer-Encoding:binary");
+        $write->save('php://output');
     }
     
 
