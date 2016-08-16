@@ -575,15 +575,22 @@ class PersonalCountController extends Controller {
         }else{
             $status = $_GET['status'];
         }
+        if(empty($_GET['begin_date']) && empty($_GET['end_date'])){
+            $date = date("Y-m",time());
+            $where_arr = array('campus_id' => $campus_id , 'checkout_date' => array('like' , '%'.$date.'%') , 'status' => $status);
+        }else{
+            $begin_date = $_GET['begin_date'];
+            $end_date = $_GET['end_date'];
+            $where_arr = array('campus_id' => $campus_id , 'checkout_date' => array('between' , $begin_date.','.$end_date) , 'status' => $status);
+        }
         $model = D('oa_achievement');
         $person_all = D('person_all');
         $oa_foo_info = D('oa_foo_info');
         $data = array();
         $user_arr = array();
         $school_name = array();
-        $date = date("Y-m",time());
         $school_name = $oa_foo_info->where(array('id' => $campus_id))->find();
-        $data = $model->where(array('campus_id' => $campus_id , 'checkout_date' => array('like' , '%'.$date.'%') , 'status' => $status))->order('id desc')->select();
+        $data = $model->where($where_arr)->order('id desc')->select();
         $user_arr = $person_all->where(array('school' => $school_name['name']))->select();//
         foreach($data as &$value){
             foreach($user_arr as $val){
