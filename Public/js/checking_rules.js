@@ -195,6 +195,9 @@ function rule_save() {
             var json_text = JSON.parse(msg);
             for (key in json_text) {
                 select_time.push(json_text[key]);
+                select_time.sort(function (a, b) {
+                    return a["rule_mintime"].localeCompare(b["rule_mintime"]);
+                });
             }
             for (var i = 0; i < select_time.length; i++) {
                 html_time += "<option value='" + select_time[i].id + "'>" + select_time[i].rule_mintime + "~" + select_time[i].rule_maxtime + "</option>";
