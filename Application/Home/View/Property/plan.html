@@ -160,7 +160,7 @@
             background: none;
         }
         .procedure{
-            width:600px;
+            width:660px;
             margin-left: 2.5%;
             margin-top: 15px;
             background-color: #ed5565;
@@ -668,12 +668,10 @@
                         cache: "false",
                         success: function (msg) {
                             if (msg == 1) {
-                                alert("保存成功！");
                                 document.getElementById("foot_qingkong").click();
 //                                $("#foot_qingkong").trigger("click");
                                 onload_in();
                             } else if (msg == 2) {
-                                alert("修改成功！");
                                 $("#foot_qingkong").trigger("click");
                                 onload_in();
                             } else if (msg == 3) {
