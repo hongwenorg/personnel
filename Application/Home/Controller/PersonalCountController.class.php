@@ -565,35 +565,69 @@ class PersonalCountController extends Controller {
 
     //个人业绩录入页面显示数据程序
     function Personal_target_find(){
-        if(empty($_GET['school_id'])){
-            echo json_encode(array('status' => false , 'content' => '程序出错，请联系管理员'));exit;//数据出错
-        }else{
-            $campus_id = $_GET['school_id'];
-        }
+        // echo "<pre>";
+        // print_r($_GET);die;
         if(empty($_GET['status'])){
             echo json_encode(array('status' => false , 'content' => '程序出错，请联系管理员'));exit;//数据出错
         }else{
             $status = $_GET['status'];
         }
-        if(empty($_GET['begin_date']) && empty($_GET['end_date'])){
-            $date = date("Y-m",time());
-            $where_arr = array('campus_id' => $campus_id , 'checkout_date' => array('like' , '%'.$date.'%') , 'status' => $status);
-        }else{
-            $begin_date = $_GET['begin_date'];
-            $end_date = $_GET['end_date'];
-            $where_arr = array('campus_id' => $campus_id , 'checkout_date' => array('between' , $begin_date.','.$end_date) , 'status' => $status);
-        }
-        $model = D('oa_achievement');
-        $person_all = D('person_all');
         $oa_foo_info = D('oa_foo_info');
+        if(empty($_GET['school_id'])){
+            if(empty($_GET['begin_date']) && empty($_GET['end_date'])){
+                $date = date("Y-m",time());
+                $where_arr = array('checkout_date' => array('like' , '%'.$date.'%') , 'status' => $status);
+            }else{
+                $begin_date = $_GET['begin_date'];
+                $end_date = $_GET['end_date'];
+                $where_arr = array('checkout_date' => array('between' , $begin_date.','.$end_date) , 'status' => $status);
+            }
+            $where_user = array();
+        }else{
+            $school_name = array();
+            $campus_id = $_GET['school_id'];
+            if(empty($_GET['begin_date']) && empty($_GET['end_date'])){
+                $date = date("Y-m",time());
+                $where_arr = array('campus_id' => $campus_id , 'checkout_date' => array('like' , '%'.$date.'%') , 'status' => $status);
+            }else{
+                $begin_date = $_GET['begin_date'];
+                $end_date = $_GET['end_date'];
+                $where_arr = array('campus_id' => $campus_id , 'checkout_date' => array('between' , $begin_date.','.$end_date) , 'status' => $status);
+            }
+            $where_school = array('id' => $campus_id);
+            $school_name = $oa_foo_info->where($where_school)->find();
+            $where_user = array('school' => $school_name['name']);
+        }
+        $person_all = D('person_all');
+        if(!empty($_GET['post'])){
+            $post = $_GET['post'];
+            $where_user['position'] = $_GET['post'];
+                if($post == '教学主任'){
+                    $where_arr['teaching_userid'] = array('NEQ','');
+                   if(!empty($_GET['name'])){
+                        $where_user['name'] = $_GET['name'];
+                        $user_arr = $person_all->where($where_user)->find();
+                        $where_arr['teaching_userid'] = $user_arr['id'];
+                    }
+                }else if($post == '学习管理师'){ 
+                    $where_arr['study_userid'] = array('NEQ','');
+                    if(!empty($_GET['name'])){
+                        $where_user['name'] = $_GET['name'];
+                        $user_arr = $person_all->where($where_user)->find();
+                        $where_arr['study_userid'] = $user_arr['id'];
+                    }
+            }
+        }
+        
+        $model = D('oa_achievement');
         $data = array();
-        $user_arr = array();
-        $school_name = array();
-        $school_name = $oa_foo_info->where(array('id' => $campus_id))->find();
+        $user_arrs = array();
         $data = $model->where($where_arr)->order('id desc')->select();
-        $user_arr = $person_all->where(array('school' => $school_name['name']))->select();//
+        //echo $model->getLastsql();
+        //print_r($where_arr);
+        $user_arrs = $person_all->where($where_user)->select();//
         foreach($data as &$value){
-            foreach($user_arr as $val){
+            foreach($user_arrs as $val){
                 if($value['checkout_userid'] == $val['id']){
                     $value['checkout_username'] = $val['name'];
                 }
@@ -606,6 +640,7 @@ class PersonalCountController extends Controller {
             }
             
         }
+        // print_R($data);
         echo json_encode($data);exit;
     }
 
