@@ -55,6 +55,42 @@ class ContentController extends CommonController {
 		$post = D("campus_class_post");
 		$arr = array();
 		$class_arr = array();
+		$arr1 = $post->where("type!=3 and is_group!=1")->select();
+		$arr2 = $post->where("type=3 and is_group!=1")->select();
+		$arr3 = $post->where("type!=1 and is_group!=1")->select();
+		foreach($arr1 as $key => $val){
+			if($val['type']==1){
+				$class_arr['campus'][$val['id']]=$val['class'];
+			}elseif($val['type']==2){
+				$group_arr = array();
+				$group_arr['class'] = $val['class'];
+				foreach($arr2 as $key2 => $val2){
+					if($val2['up_id'] == $val['id']){
+						$group_arr['group_val'][$val['id']] = $val2['class'];
+					}
+				}
+				$class_arr['class'][$val['id']] = $group_arr;
+			}
+		}
+		foreach($arr3 as $val){
+			if($val['up_id']==2){
+				$class_arr['school_post'][$val['id']]=$val['class'];
+			}else{
+				$class_arr['campus_post'][$val['id']]=$val['class'];
+			}
+		}
+
+			
+		//echo "<pre>";
+		//print_r($class_arr);
+		echo json_encode($class_arr);
+	}
+
+	/*//单位部门职务等信息
+	function post(){
+		$post = D("campus_class_post");
+		$arr = array();
+		$class_arr = array();
 		$arr1 = $post->where("type!=3")->select();
 		$arr2 = $post->where("type=3")->select();
 		$arr3 = $post->where("type!=1")->select();
@@ -86,7 +122,7 @@ class ContentController extends CommonController {
 		//echo "<pre>";
 		//print_r($class_arr);
 		echo json_encode($class_arr);
-	}
+	}*/
 
 	//员工档案管理信息
 	function page_con(){

@@ -333,12 +333,18 @@ $(".rest_tianjia").click(function () {
             }
             var option_text="";
             var select_=document.createElement("select");
-            for (var i = 0; i < arr_post[2].length; i++) {
-                 option_text+="<option>"+arr_post[2][i]+"</option>";
+            for (var key in arr_post[2]) {
+                option_text+="<option>"+arr_post[2][key]+"</option>";
             }
-            for (var i = 0; i < arr_post[3].length; i++) {
-                 option_text+="<option>"+arr_post[3][i]+"</option>";
+            for (var key in arr_post[3]) {
+                option_text+="<option>"+arr_post[3][key]+"</option>";
             }
+            // for (var i = 0; i < arr_post[2].length; i++) {
+            //      option_text+="<option>"+arr_post[2][i]+"</option>";
+            // }
+            // for (var i = 0; i < arr_post[3].length; i++) {
+            //      option_text+="<option>"+arr_post[3][i]+"</option>";
+            // }
             var tr_html = "<tr class='tr_content_min'>"+
                 "<td>"+"<input type='text' placeholder='输入名称' class='append_mc' id='append_mc'>"+"</td>" +
                 "<td>"+"<select class='append_sel' id='append_sel'>"+"<option>"+"请选择"+"</option>"+option_text+"</select>"+"</td>" +
