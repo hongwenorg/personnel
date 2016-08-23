@@ -43,7 +43,7 @@
                     <p id="staff_rules_name"></p>
                     <input type="button" class="staff_rules_close" value="×" style="" onclick="staff_rules_close()">
                 </div>
-                <table class="staff_rules_table" cellpadding="2" cellspacing="0" id="staff_rules_table">
+                <table class="staff_rules_table" cellpadding="2" cellspacing="0" id="staff_rules_table" style="height:84px">
                     <tr class="staff_rules_tr">
                         <td>
                             <select name="" id="time_rule0" class="select_time_rules">
@@ -78,46 +78,15 @@
                             <div class="rules_disable" num='2' onclick="disabled_rules_time(2)" id="rules_disable2">禁用</div>
                         </td>
                     </tr>
-                    <tr class="staff_rules_tr">
-                        <td>
-                            <select name="" id="time_rule3" class="select_time_rules">
-                                <option value="0" class="select_time_child">请选择时间规则</option>
-                            </select>
-                        </td>
-                        <td>
-                            <div class="rules_reset" onclick="remove_rules_time(3)">重置</div>
-                        </td>
-                        <td>
-                            <div class="rules_disable" num='3' onclick="disabled_rules_time(3)" id="rules_disable3">禁用</div>
-                        </td>
-                    </tr>
-                    <tr class="staff_rules_tr">
-                        <td>
-                            <select name="" id="time_rule4" class="select_time_rules">
-                                <option value="0" class="select_time_child">请选择时间规则</option>
-                            </select>
-                        </td>
-                        <td>
-                            <div class="rules_reset" onclick="remove_rules_time(4)">重置</div>
-                        </td>
-                        <td>
-                            <div class="rules_disable" num='4' onclick="disabled_rules_time(4)" id="rules_disable4">禁用</div>
-                        </td>
-                    </tr>
-                    <tr class="staff_rules_tr">
-                        <td>
-                            <select name="" id="time_rule5" class="select_time_rules">
-                                <option value="0" class="select_time_child">请选择时间规则</option>
-                            </select>
-                        </td>
-                        <td>
-                            <div class="rules_reset" onclick="remove_rules_time(5)">重置</div>
-                        </td>
-                        <td>
-                            <div class="rules_disable" num='5' onclick="disabled_rules_time(5)" id="rules_disable5">禁用</div>
-                        </td>
-                    </tr>
                 </table>
+                <div>制定休息时间</div>
+                <div class="week_check"><input type="checkbox">星期一</div>
+                <div class="week_check"><input type="checkbox">星期二</div>
+                <div class="week_check"><input type="checkbox">星期三</div>
+                <div class="week_check"><input type="checkbox">星期四</div>
+                <div class="week_check"><input type="checkbox">星期五</div>
+                <div class="week_check"><input type="checkbox">星期六</div>
+                <div class="week_check"><input type="checkbox">星期日</div>
                 <input type="button" value="确定" class="staff_rules_btt1" id="staff_rules_btt1"><input type="button" value="取消" class="staff_rules_btt2" onclick="staff_rules_close()">
             </div>
             <input type='hidden' id="id_card"/>
