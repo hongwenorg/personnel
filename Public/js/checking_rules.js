@@ -53,8 +53,9 @@ window.onload = function () {
                     text_arr.push(json_text[key]);
                 }
             }
+            console.log(text_arr);
             for (var i = 0; i < text_arr.length; i++) {
-                str += "<div class='check_out'><div class='closed' onclick='toggle(this)' id='group_send_open'><div id='group_send' onclick= content_click(" + i + ",'" + text_arr[i].class + "') >" + text_arr[i].class + "</div></div><table name='"+text_arr[i].class+"' class='hide' status='hide' cellpadding='2' cellspacing='0' id='tb" + i + "'></table></div>";
+                str += "<div class='check_out'><div class='closed' onclick='toggle(this)' id='group_send_open'><div id='group_send' onclick= content_click(" + i + ",'" + text_arr[i].class + "') >" + text_arr[i].class + "</div></div><table name='"+text_arr[i].class+"' class='hide' status='hide' cellpadding='2' cellspacing='0' id='tb" + i + "'><input type='hidden' value='" + text_arr[i].id + " id='id"+i+"'></table></div>";
             }
             $("#campus_content").html(str);
         }
@@ -123,6 +124,7 @@ function toggle(open_click) {
     if (open_click.className == "open") {
         open_click.className = "closed";
         tabes.className = "hide";
+        $('#id_val').val('');
     } else {
         var openddiv = $("div.check_tree .open")[0];
         if (openddiv) {
@@ -171,7 +173,7 @@ function content_click(num, content) {
                         "<td class='td_sty td_width'>" + "<input type='time' readonly='readonly' class='input_time_' value='" + group_all[j].rule_min4 + "'>" + "~" + "<input type='time' class='input_time_' readonly='readonly' value='" + group_all[j].rule_max4 + "'>" + "</td>" +
                         "<td class='td_sty rules_button'>" + "<div class='group_none' onclick='rule_up_click(this)'>" + group_all[j].name + "1" + "</div>" + "</td></tr>";
                 }
-                $("#tb" + num).html(html_str);
+                $("#tb" + num).html(html_str+"<input type='hidden' value='"+$('#id'+num).val()+" id='id_val'>");
                 var formulate_time=document.querySelectorAll(".formulate_time");
                 for(var i=0;i<formulate_time.length;i++){
                     var formulate_time_parent=formulate_time[i].parentNode.parentNode.parentNode.parentNode;
@@ -334,10 +336,10 @@ $(".rest_tianjia").click(function () {
             var option_text="";
             var select_=document.createElement("select");
             for (var key in arr_post[2]) {
-                option_text+="<option>"+arr_post[2][key]+"</option>";
+                option_text+="<option value='"+key+"'>"+arr_post[2][key]+"</option>";
             }
             for (var key in arr_post[3]) {
-                option_text+="<option>"+arr_post[3][key]+"</option>";
+                option_text+="<option value='"+key+"'>"+arr_post[3][key]+"</option>";
             }
             // for (var i = 0; i < arr_post[2].length; i++) {
             //      option_text+="<option>"+arr_post[2][i]+"</option>";
@@ -360,7 +362,6 @@ $(".rest_tianjia").click(function () {
                 "<input type='button' onclick=rest_tr() value='取消' class='rule_reset remove_time' />"+"</td>"+"</tr>";
             $(".rest_tr").before(tr_html);
             $(".rest_tianjia").css("display", "none");
-
         }
         var checked_input=document.querySelectorAll(".checked_input");
         for(var i=0;i<checked_input.length;i++){
@@ -432,33 +433,37 @@ function tj_restTime_(obj){
         alert("请选择职务");
         return;
     }
-        for(var i=0;i<checked_input.length;i++){
-            if(checked_input[i].checked==true){
-               checked_value+=checked_input[i].value;
-            }
-            if(checked_input[0].checked==false&&
-                checked_input[1].checked==false&&
-                checked_input[2].checked==false&&
-                checked_input[3].checked==false&&
-                checked_input[4].checked==false&&
-                checked_input[5].checked==false&&
-                checked_input[6].checked==false){
-                alert("至少制定一个休息日")
-                return;
+    for(var i=0;i<checked_input.length;i++){
+        if(checked_input[i].checked==true){
+           checked_value+=checked_input[i].value+",";
+        }
+        if(checked_input[0].checked==false&&
+            checked_input[1].checked==false&&
+            checked_input[2].checked==false&&
+            checked_input[3].checked==false&&
+            checked_input[4].checked==false&&
+            checked_input[5].checked==false&&
+            checked_input[6].checked==false){
+            alert("至少制定一个休息日")
+            return;
+        }
+    }
+    var campus_id = '';
+    if($('#id_val').val()){
+        campus_id = $('#id_val').val();
+    }
+    $.ajax({
+        url: "/Checking/rule_week",
+        data: {'name':append_mc , 'post':append_sel , 'week':checked_value , 'campus_id':campus_id},
+        type: "post",
+        async: "false",
+        cache: "false",
+        success: function (msg) {
+            if (msg == 1) {
+                alert('成功');
             }
         }
-    //$.ajax({
-    //    url: "",
-    //    data: {},
-    //    type: "post",
-    //    async: "false",
-    //    cache: "false",
-    //    success: function (msg) {
-    //        if (msg == 1) {
-    //
-    //        }
-    //    }
-    //})
+    })
 }
 
 
