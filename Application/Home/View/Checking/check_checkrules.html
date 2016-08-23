@@ -34,8 +34,8 @@
     </div>
     <div id="container" style="width:94.9%;">
         <div class="append_time_rules" onclick="rule_ajax()">制定员工打卡时间规则</div>
-
-        <div id="content1" class="check_tree">
+        <div class="append_time_rules" onclick="rest_time()">制定员工休息时间</div>
+        <div id="content1" style="top:60px" class="check_tree">
             <div id='campus_content'></div>
             <form  action="/Checking/check_rule_pro" method="post" id="rules_form">
             <div class="staff_rules" id="staff_rules">
@@ -145,6 +145,51 @@
                         </table>
                 </div>
                 <input type="button" value="确定" class="staff_rules_btt1" onclick="staff_rules_clo()" style="margin-bottom:20px"><input type="button" value="取消" class="staff_rules_btt2" style="margin-bottom:20px" onclick="staff_rules_clo()">
+            </div>
+
+            <div class="restTime_rules" id="restTime_rules">
+                <div class="staff_rules_head" style="text-align:center;line-height: 50px;color:#00c8c8;font-weight: bold" id="">
+                    制定员工休息时间
+                    <input type="button" class="append_rules_close" value="×" style="" onclick="close_rest(1)">
+                </div>
+                <div class="append_time_forrules append_time_rest">
+                    <table class="rule_all_table" id="t1" border=1 style="  overflow-y: scroll;">
+                        <tr>
+                            <th>名称</th>
+                            <th>职务</th>
+                            <th>休息时间</th>
+                            <th>操作</th>
+                        </tr>
+                        <tr class='rest_tr'>
+                            <td colspan='3' style="border:none;">
+                                <input type='button' value='添加' class='rest_tianjia' style="float:left; background-color:#00c8c8;border:none;border-radius: 5px;color:white;width:100px;height:30px" >
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <input type="button" value="确定" class="staff_rules_btt1" onclick="close_rest(1)" style="margin-bottom:20px;margin-left: 300px"><input type="button" value="取消" class="staff_rules_btt2" style="margin-bottom:20px" onclick="close_rest(1)">
+            </div>
+            <div class="restTime_rules" id="restTime_rules2">
+                <div class="staff_rules_head" style="text-align:center;line-height: 50px;color:#00c8c8;font-weight: bold" id=" ">
+                    <div class="rest_font">制定员工休息时间</div>
+                    <input type="button" class="append_rules_close" value="×" style="" onclick="close_rest(2)">
+                </div>
+                <div class="append_time_forrules append_time_rest">
+                    <table class="rule_all_table" id="t2" border=1 style="  overflow-y: scroll;">
+                        <tr>
+                            <th>名称</th>
+                            <th>职务</th>
+                            <th>休息时间</th>
+                            <th>操作</th>
+                        </tr>
+                        <tr class='rest_tr'>
+                            <td colspan='3' style="border:none;">
+                                <input type='button' value='添加' class='rest_tianjia' style="float:left; background-color:#00c8c8;border:none;border-radius: 5px;color:white;width:100px;height:30px" >
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <input type="button" value="确定" class="staff_rules_btt1" onclick="close_rest(2)" style="margin-bottom:20px;margin-left: 300px"><input type="button" value="取消" class="staff_rules_btt2" style="margin-bottom:20px" onclick="close_rest(2)">
             </div>
         </div>
     </div>
