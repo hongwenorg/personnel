@@ -803,7 +803,7 @@ document.getElementById("staff_gangwei").onclick = function () {
                 export_post.prepend(export_post_str);
             } else {
                 for (var key in arr_class[3]) {
-                    if (export_post_opt.indexOf(arr_class[3][i]) != -1) {
+                    if (export_post_opt.indexOf(arr_class[3][key]) != -1) {
                         export_post_str += '<option selected value="' + arr_class[3][key] + '">' + arr_class[3][key]  + '</option>';
                     } else {
                         export_post_str += '<option value="' + arr_class[3][key] + '">' + arr_class[3][key] + '</option>';
@@ -827,8 +827,8 @@ function fold_campus_save() {
     if ($('#fold_campus').val() == '集团') {
         fold_post.html("");
         var fold_post_str = "<option value='请选择'>请选择</option>";
-        for (var i = 0; i < arr_class[2].length; i++) {
-            fold_post_str += '<option value="' + arr_class[2][i] + '">' + arr_class[2][i] + '</option>';
+        for (var key in arr_class[2]) {
+            fold_post_str += '<option value="' + arr_class[2][key] + '">' + arr_class[2][key] + '</option>';
         }
         fold_post.prepend(fold_post_str);
     } else if ($('#fold_campus').val() == '请选择') {
@@ -836,8 +836,8 @@ function fold_campus_save() {
     } else {
         var fold_post_str = "<option value='请选择'>请选择</option>";
         fold_post.html("");
-        for (var i = 0; i < arr_class[3].length; i++) {
-            fold_post_str += '<option value="' + arr_class[3][i] + '">' + arr_class[3][i] + '</option>';
+        for (var key in arr_class[3]) {
+            fold_post_str += '<option value="' + arr_class[3][key]+ '">' +arr_class[3][key] + '</option>';
         }
         fold_post.prepend(fold_post_str);
     }

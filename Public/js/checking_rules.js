@@ -55,7 +55,7 @@ window.onload = function () {
             }
             console.log(text_arr);
             for (var i = 0; i < text_arr.length; i++) {
-                str += "<div class='check_out'><div class='closed' onclick='toggle(this)' id='group_send_open'><div id='group_send' onclick= content_click(" + i + ",'" + text_arr[i].class + "') >" + text_arr[i].class + "</div></div><table name='"+text_arr[i].class+"' class='hide' status='hide' cellpadding='2' cellspacing='0' id='tb" + i + "'><input type='hidden' value='" + text_arr[i].id + " id='id"+i+"'></table></div>";
+                str += "<div class='check_out'><div class='closed' onclick='toggle(this)' id='group_send_open'><input type='hidden' value='" + text_arr[i].id + "' id='id"+i+"'><div id='group_send' onclick= content_click(" + i + ",'" + text_arr[i].class + "') >" + text_arr[i].class + "</div></div><table name='"+text_arr[i].class+"' class='hide' status='hide' cellpadding='2' cellspacing='0' id='tb" + i + "'></table></div>";
             }
             $("#campus_content").html(str);
         }
@@ -124,7 +124,6 @@ function toggle(open_click) {
     if (open_click.className == "open") {
         open_click.className = "closed";
         tabes.className = "hide";
-        $('#id_val').val('');
     } else {
         var openddiv = $("div.check_tree .open")[0];
         if (openddiv) {
@@ -160,7 +159,7 @@ function content_click(num, content) {
                         }
                     }
                 }
-                html_str="<tr>"+"<td>"+"<input type='button' class='formulate_time'>"+"</td>"+"</tr>"
+                html_str="<input type='hidden' value='"+$('#id'+num).val()+"' id='id_val'><tr><td><input type='button' class='formulate_time'></td></tr>";
                 for (var j = 0; j < group_all.length; j++) {
                     var tr = document.createElement("tr");
                     staff_name.push(group_all[j].name);
@@ -173,12 +172,13 @@ function content_click(num, content) {
                         "<td class='td_sty td_width'>" + "<input type='time' readonly='readonly' class='input_time_' value='" + group_all[j].rule_min4 + "'>" + "~" + "<input type='time' class='input_time_' readonly='readonly' value='" + group_all[j].rule_max4 + "'>" + "</td>" +
                         "<td class='td_sty rules_button'>" + "<div class='group_none' onclick='rule_up_click(this)'>" + group_all[j].name + "1" + "</div>" + "</td></tr>";
                 }
-                $("#tb" + num).html(html_str+"<input type='hidden' value='"+$('#id'+num).val()+" id='id_val'>");
+                $("#tb" + num).html(html_str);
                 var formulate_time=document.querySelectorAll(".formulate_time");
                 for(var i=0;i<formulate_time.length;i++){
                     var formulate_time_parent=formulate_time[i].parentNode.parentNode.parentNode.parentNode;
                     formulate_time[i].value="制定 "+formulate_time_parent.getAttribute("name")+" 员工休息时间" ;
                     formulate_time[i].addEventListener("click",function(e){
+                            document.getElementById("deposit_value").value=document.getElementById("id_val").value;
                         document.getElementById("staff_rules_out").style.display="block";
                         var target= e.target;
                         document.querySelector(".rest_font").innerText=target.value;
@@ -191,9 +191,35 @@ function content_click(num, content) {
         group_all = [];
         rule_save();
 
+    }else{
+
+        $("#id_val").remove();
     }
 
 }
+
+
+
+//var formulate_time02=document.querySelectorAll(".formulate_time");
+//for(var i=0;i<formulate_time02.length;i++) {
+//    formulate_time02[i].addEventListener("click", function (e) {
+//        alert(1)
+//        document.getElementById("deposit_value").style.display="none";
+//
+//        //$.ajax({
+//        //    url: "/Content/rule_week_select",
+//        //    data:{'campus_id':$('#id_val').val()}
+//        //    type: "post",
+//        //    async: "false",
+//        //    cache: "false",
+//        //    success: function (data) {
+//        //
+//        //    }
+//        //}
+//
+//    }, false)
+//}
+
 
 function rule_save() {
     //获取时间数据   放到select列表下
