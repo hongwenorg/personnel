@@ -157,6 +157,7 @@
     margin-top:20px;
     cursor: pointer;
     background-color:white;
+    float:left;
 }
 .append_staff_rules{
     background-color:white;
@@ -242,6 +243,57 @@
 }
 .td_width{
     min-width:160px;
+}
+.restTime_rules{
+    background-color: white;
+    width:1200px;
+    height:500px;
+    position:fixed;
+    left:50%;
+    margin-left: -600px;
+    top:200px;
+    z-index: 9999999;
+}
+.append_time_rest{
+    overflow-y: scroll;
+    height:380px;
+}
+.restTime_rules>.append_time_forrules>table{
+    width:1170px !important;
+}
+.option_post{
+    outline: none;
+}
+.append_mc{
+    border:none;
+    border-bottom:1px solid gray;
+    border-radius: 10px;
+    padding-left: 10px;
+}
+.append_sel{
+    border:none;
+    border-bottom:1px solid gray;
+    border-radius: 10px;
+    outline: none;
+}
+.restTime_rules{
+    display:none;
+}
+.formulate_time{
+    background-color: #00c8c8;
+    /*width:150px;*/
+    height:40px;
+    border:none;
+    border-radius:20px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.tr_content>td{
+    border-top:1px solid lightgrey;
+}
+.rest_font{
+    width:1150px;
+    float:left;
 }
 
 
