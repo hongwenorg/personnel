@@ -35,15 +35,15 @@ function prov_change() {
     var opt = "";
     var sel = document.getElementById("prov");
     if (sel.value == "campus") {
-        for (var i = 0; i < arr_class[0].length; i++) {
-            opt = opt + '<option value="' + arr_class[0][i] + '">' + arr_class[0][i] + '</option>';
+        for (var key in arr_class[0]) {
+            opt = opt + '<option value="' + arr_class[0][key] + '">' + arr_class[0][key]+ '</option>';
         }
     } else if (sel.value == "post") {
-        for (var i = 0; i < arr_class[2].length; i++) {
-            opt = opt + '<option value="' + arr_class[2][i] + '">' + arr_class[2][i] + '</option>';
+        for (var key in arr_class[2]) {
+            opt = opt + '<option value="' + arr_class[2][key] + '">' + arr_class[2][key] + '</option>';
         }
-        for (var i = 0; i < arr_class[3].length; i++) {
-            opt = opt + '<option value="' + arr_class[3][i] + '">' + arr_class[3][i] + '</option>';
+        for (var key in arr_class[3]) {
+            opt = opt + '<option value="' + arr_class[3][key] + '">' + arr_class[3][key] + '</option>';
         }
     }
     document.getElementById("city").innerHTML = opt;
@@ -646,19 +646,19 @@ $("#staff_rz").click(function () {
             var post = data_arr.post;
             var str = "<option value='请选择'>请选择</option>";
             var opt = "<option value='请选择'>请选择</option>";
-            for (var i = 0; i < arr_class[0].length; i++) {
-                if (campus.indexOf(arr_class[0][i]) != -1) {
-                    str += '<option selected value="' + arr_class[0][i] + '">' + arr_class[0][i] + '</option>';
+            for (var key in arr_class[0]) {
+                if (campus.indexOf(arr_class[0][key]) != -1) {
+                    str += '<option selected value="' + arr_class[0][key] + '">' + arr_class[0][key] + '</option>';
                 } else {
-                    str += '<option value="' + arr_class[0][i] + '">' + arr_class[0][i] + '</option>';
+                    str += '<option value="' + arr_class[0][key] + '">' + arr_class[0][key] + '</option>';
                 }
             }
             campus_post.prepend(str);
-            for (var i = 0; i < arr_class[2].length; i++) {
-                if (post.indexOf(arr_class[2][i]) != -1) {
-                    opt += '<option selected value="' + arr_class[2][i] + '">' + arr_class[2][i] + '</option>';
+            for (var key in arr_class[2]) {
+                if (post.indexOf(arr_class[2][key]) != -1) {
+                    opt += '<option selected value="' + arr_class[2][key] + '">' + arr_class[2][key] + '</option>';
                 } else {
-                    opt += '<option value="' + arr_class[2][i] + '">' + arr_class[2][i] + '</option>';
+                    opt += '<option value="' + arr_class[2][key] + '">' + arr_class[2][key] + '</option>';
                 }
             }
             post_post.prepend(opt);
@@ -783,37 +783,37 @@ document.getElementById("staff_gangwei").onclick = function () {
             $("#staff_state").val(data_arr.state);
             var export_campus_opt = data_arr.campus;
             var export_post_opt = data_arr.post;
-            for (var i = 0; i < arr_class[0].length; i++) {
-                if (export_campus_opt.indexOf(arr_class[0][i]) != -1) {
-                    export_campus_str += '<option selected value="' + arr_class[0][i] + '">' + arr_class[0][i] + '</option>';
+            for (var key in arr_class[0]) {
+                if (export_campus_opt.indexOf(arr_class[0][key]) != -1) {
+                    export_campus_str += '<option selected value="' + arr_class[0][key] + '">' + arr_class[0][key] + '</option>';
                 } else {
-                    export_campus_str += '<option value="' + arr_class[0][i] + '">' + arr_class[0][i] + '</option>';
+                    export_campus_str += '<option value="' + arr_class[0][key] + '">' + arr_class[0][key] + '</option>';
                 }
             }
             export_campus.prepend(export_campus_str);
 
             if ($('#export_campus').val() == '集团') {
-                for (var i = 0; i < arr_class[2].length; i++) {
-                    if (export_post_opt.indexOf(arr_class[2][i]) != -1) {
-                        export_post_str += '<option selected value="' + arr_class[2][i] + '">' + arr_class[2][i] + '</option>';
+                for (var key in arr_class[2]) {
+                    if (export_post_opt.indexOf(arr_class[2][key]) != -1) {
+                        export_post_str += '<option selected value="' + arr_class[2][key] + '">' + arr_class[2][key]+ '</option>';
                     } else {
-                        export_post_str += '<option value="' + arr_class[2][i] + '">' + arr_class[2][i] + '</option>';
+                        export_post_str += '<option value="' + arr_class[2][key]+ '">' + arr_class[2][key]+ '</option>';
                     }
                 }
                 export_post.prepend(export_post_str);
             } else {
-                for (var i = 0; i < arr_class[3].length; i++) {
+                for (var key in arr_class[3]) {
                     if (export_post_opt.indexOf(arr_class[3][i]) != -1) {
-                        export_post_str += '<option selected value="' + arr_class[3][i] + '">' + arr_class[3][i] + '</option>';
+                        export_post_str += '<option selected value="' + arr_class[3][key] + '">' + arr_class[3][key]  + '</option>';
                     } else {
-                        export_post_str += '<option value="' + arr_class[3][i] + '">' + arr_class[3][i] + '</option>';
+                        export_post_str += '<option value="' + arr_class[3][key] + '">' + arr_class[3][key] + '</option>';
                     }
                 }
                 export_post.prepend(export_post_str);
             }
 
-            for (var i = 0; i < arr_class[0].length; i++) {
-                fold_campus_str += '<option value="' + arr_class[0][i] + '">' + arr_class[0][i] + '</option>';
+            for (var key in arr_class[0]) {
+                fold_campus_str += '<option value="' + arr_class[0][key] + '">' + arr_class[0][key] + '</option>';
             }
             fold_campus.prepend(fold_campus_str);
         }

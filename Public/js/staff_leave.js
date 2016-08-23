@@ -59,12 +59,12 @@ function prov_change() {
     if (sel.value == "place") {
         opt = opt + '<option value="无">无</option><option value="一般">一般</option><option value="高">高</option>';
     }if (sel.value == "campus") {
-        for (var i = 0; i < arr_class[0].length; i++) {
-            opt = opt + '<option value="' + arr_class[0][i] + '">' + arr_class[0][i] + '</option>';
+        for (var key in arr_class[0]) {
+            opt = opt + '<option value="' + arr_class[0][key] + '">' + arr_class[0][key]+ '</option>';
         }
     } else if (sel.value == "post") {
-        for (var i = 0; i < arr_class[2].length; i++) {
-            opt = opt + '<option value="' + arr_class[2][i] + '">' + arr_class[2][i] + '</option>';
+        for (var key in arr_class[2]) {
+            opt = opt + '<option value="' + arr_class[2][key] + '">' + arr_class[2][key]+ '</option>';
         }
     }
     document.getElementById("city").innerHTML = opt;

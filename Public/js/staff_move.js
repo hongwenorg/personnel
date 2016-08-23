@@ -57,12 +57,12 @@ function prov_change() {
     var opt = "";
     var sel = document.getElementById("prov");
     if (sel.value == "export_campus" || sel.value == "fold_campus") {
-        for (var i = 0; i < arr_class[0].length; i++) {
-            opt = opt + '<option value="' + arr_class[0][i] + '">' + arr_class[0][i] + '</option>';
+        for (var key in arr_class[0]) {
+            opt = opt + '<option value="' + arr_class[0][key] + '">' + arr_class[0][key]+ '</option>';
         }
     } else if (sel.value == "export_post" || sel.value == "fold_post") {
-        for (var i = 0; i < arr_class[2].length; i++) {
-            opt = opt + '<option value="' + arr_class[2][i] + '">' + arr_class[2][i] + '</option>';
+        for (var key in arr_class[2]) {
+            opt = opt + '<option value="' + arr_class[2][key] + '">' + arr_class[2][key]+ '</option>';
         }
     }
     document.getElementById("city").innerHTML = opt;

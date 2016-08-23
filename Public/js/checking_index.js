@@ -56,8 +56,8 @@ function prov_change() {
     var opt = "";
     var sel = document.getElementById("prov");
     if (sel.value == "campus") {
-        for (var i = 0; i < arr_class[0].length; i++) {
-            opt = opt + '<option value="' + arr_class[0][i] + '">' + arr_class[0][i] + '</option>';
+        for (var key in arr_class[0]) {
+            opt = opt + '<option value="' + arr_class[0][key] + '">' + arr_class[0][key]+ '</option>';
         }
     } 
     document.getElementById("city").innerHTML = opt;
