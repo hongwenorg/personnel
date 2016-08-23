@@ -177,6 +177,7 @@ function content_click(num, content) {
                     var formulate_time_parent=formulate_time[i].parentNode.parentNode.parentNode.parentNode;
                     formulate_time[i].value="制定 "+formulate_time_parent.getAttribute("name")+" 员工休息时间" ;
                     formulate_time[i].addEventListener("click",function(e){
+                        document.getElementById("staff_rules_out").style.display="block";
                         var target= e.target;
                         document.querySelector(".rest_font").innerText=target.value;
                         document.getElementById("restTime_rules2").style.display="block";
