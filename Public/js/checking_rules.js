@@ -178,16 +178,28 @@ function content_click(num, content) {
                     var formulate_time_parent=formulate_time[i].parentNode.parentNode.parentNode.parentNode;
                     formulate_time[i].value="制定 "+formulate_time_parent.getAttribute("name")+" 员工休息时间" ;
                     formulate_time[i].addEventListener("click",function(e){
-                            document.getElementById("deposit_value").value=document.getElementById("id_val").value;
+                        alert(document.getElementById("id_val").value);
+                        var deposit_value=document.getElementById("id_val").value;
+                        alert(deposit_value);
                         document.getElementById("staff_rules_out").style.display="block";
                         var target= e.target;
                         document.querySelector(".rest_font").innerText=target.value;
                         document.getElementById("restTime_rules2").style.display="block";
+                        //$.ajax({
+                        //    url: "/Content/rule_week_select",
+                        //    data:{'campus_id':deposit_value},
+                        //    type: "post",
+                        //    async: "false",
+                        //    cache: "false",
+                        //    success: function (data) {
+                        //
+                        //    }
+                        //})
                     },false)
                 }
 
             }
-        })
+        });
         group_all = [];
         rule_save();
 
@@ -202,10 +214,10 @@ function content_click(num, content) {
 
 //var formulate_time02=document.querySelectorAll(".formulate_time");
 //for(var i=0;i<formulate_time02.length;i++) {
-//    formulate_time02[i].addEventListener("click", function (e) {
-//        alert(1)
-//        document.getElementById("deposit_value").style.display="none";
+//    formulate_time02[i].onclick = function () {
 //
+//        document.getElementById("deposit_value").style.display = "none";
+//    };
 //        //$.ajax({
 //        //    url: "/Content/rule_week_select",
 //        //    data:{'campus_id':$('#id_val').val()}
@@ -216,8 +228,6 @@ function content_click(num, content) {
 //        //
 //        //    }
 //        //}
-//
-//    }, false)
 //}
 
 
@@ -243,7 +253,6 @@ function rule_save() {
                 html_time += "<option value='" + select_time[i].id + "'>" + select_time[i].rule_mintime + "~" + select_time[i].rule_maxtime + "</option>";
             }
             $(".select_time_child").after(html_time);
-
         }
     })
 }
@@ -275,7 +284,7 @@ function rule_ajax() {
             $(".last_tr").before(html_str);
 
         }
-    })
+    });
     $(".append_staff_rules").css("display", "block");
     document.getElementById("staff_rules_out").style.display = "block";
     rule_save();
@@ -367,12 +376,6 @@ $(".rest_tianjia").click(function () {
             for (var key in arr_post[3]) {
                 option_text+="<option value='"+key+"'>"+arr_post[3][key]+"</option>";
             }
-            // for (var i = 0; i < arr_post[2].length; i++) {
-            //      option_text+="<option>"+arr_post[2][i]+"</option>";
-            // }
-            // for (var i = 0; i < arr_post[3].length; i++) {
-            //      option_text+="<option>"+arr_post[3][i]+"</option>";
-            // }
             var tr_html = "<tr class='tr_content_min'>"+
                 "<td>"+"<input type='text' placeholder='输入名称' class='append_mc' id='append_mc'>"+"</td>" +
                 "<td>"+"<select class='append_sel' id='append_sel'>"+"<option>"+"请选择"+"</option>"+option_text+"</select>"+"</td>" +
@@ -402,7 +405,7 @@ $(".rest_tianjia").click(function () {
             }
         }
     };
-})
+});
 
 
 
@@ -445,20 +448,19 @@ function rule_submit_pro(bu_this) {
 
 //制定休息日，提交ajax
 function tj_restTime_(obj){
-    var append_mc=document.getElementById("append_mc").value;
-    var append_sel=document.getElementById("append_sel").value
+
+    var append_mc=obj.parentNode.parentNode.childNodes[0].childNodes[0].value;
+        if(append_mc==""){
+            alert("请填写名称");
+            return;
+        }
+    var append_sel=obj.parentNode.parentNode.childNodes[1].childNodes[0].value;
+        if(append_sel=="请选择"){
+            alert("请选择职务");
+            return;
+        }
     var checked_input=document.querySelectorAll(".checked_input");
     var checked_value="";
-
-    //console.log(obj.parentNode.parentNode.parentNode.parentNode)
-    if(append_mc==""){
-        alert("请填写名称");
-        return;
-    }
-    if(append_sel=="请选择"){
-        alert("请选择职务");
-        return;
-    }
     for(var i=0;i<checked_input.length;i++){
         if(checked_input[i].checked==true){
            checked_value+=checked_input[i].value+",";
@@ -469,8 +471,15 @@ function tj_restTime_(obj){
             checked_input[3].checked==false&&
             checked_input[4].checked==false&&
             checked_input[5].checked==false&&
-            checked_input[6].checked==false){
-            alert("至少制定一个休息日")
+            checked_input[6].checked==false&&
+            checked_input[7].checked==false&&
+            checked_input[8].checked==false&&
+            checked_input[9].checked==false&&
+            checked_input[10].checked==false&&
+            checked_input[11].checked==false&&
+            checked_input[12].checked==false&&
+            checked_input[13].checked==false){
+            alert("至少制定一个休息日");
             return;
         }
     }
