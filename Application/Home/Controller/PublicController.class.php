@@ -244,7 +244,7 @@ class PublicController extends Controller {
 			$time_str_sss = strtotime(date("Y-m-d 15:00:00",$mintime));
 			$where_data = "rule_id!='0' and rule_id!='' and status!=0 and id!=1";
 			$wheres = "user_basic.rule_id!='0' and user_basic.rule_id!='' and user_basic.status!=0 and user_basic.id!=1 and (checking.atten_time_str between '$mintime' and '$maxtime')";
-			$user_data_no = $user_basic->query("select user_id,atten_uid,name,campus,post,rule_id from user_basic where ".$where_data." and id not in (SELECT user_basic.id FROM `user_basic` INNER JOIN checking ON user_basic.atten_uid = checking.atten_uid WHERE ( ".$wheres." ) ) GROUP BY name");
+			$user_data_no = $user_basic->query("select user_id,atten_uid,name,campus,post,rule_id,week from user_basic where ".$where_data." and id not in (SELECT user_basic.id FROM `user_basic` INNER JOIN checking ON user_basic.atten_uid = checking.atten_uid WHERE ( ".$wheres." ) ) GROUP BY name");
 			foreach($user_data_no as &$user_data_val){
 				$user_data_val['min_times'] = 0;
 				$user_data_val['max_times'] = 0;
@@ -252,7 +252,7 @@ class PublicController extends Controller {
 				$user_data_val['check'] = '不合格';
 				$user_data_val['check_content'] = '旷工，因为无打卡记录所以记为无故旷工';
 			}
-			$user_data = $user_basic->join('checking ON user_basic.atten_uid = checking.atten_uid')->field('user_basic.user_id,checking.atten_uid,user_basic.name,user_basic.campus,user_basic.post,user_basic.rule_id,MAX(checking.atten_time_str) as max_time,MIN(checking.atten_time_str) as min_time,checking.atten_date')->where($wheres)->group("checking.name")->select();
+			$user_data = $user_basic->join('checking ON user_basic.atten_uid = checking.atten_uid')->field('user_basic.user_id,checking.atten_uid,user_basic.name,user_basic.campus,user_basic.post,user_basic.rule_id,MAX(checking.atten_time_str) as max_time,MIN(checking.atten_time_str) as min_time,checking.atten_date,user_basic.week')->where($wheres)->group("checking.name")->select();
 			//echo $user_basic->getLastsql();die;
 			foreach($user_data as &$user_data_val){
 				if($user_data_val['min_time']<$maxtime && $user_data_val['min_time']>=$time_str){
@@ -283,6 +283,31 @@ class PublicController extends Controller {
 		$user_rule = M('user_rule');
 		$check_record = D('check_record');
 		$rule_arr = $user_rule->select();
+		$check_rules_name = D('check_rules_name');
+		$rules_week_arr = $check_rules_name->join("check_rules_week ON check_rules_name.id = check_rules_week.rule_name_id")->field('check_rules_name.id,check_rules_name.rules_name,check_rules_name.post_id,check_rules_name.campus_id,check_rules_name.level,check_rules_week.week_num')->select();
+		$campus_class_post = D('campus_class_post');
+		$campus_post_arr = $campus_class_post->select();
+
+		$rules_week_str = $check_rules_name->join("campus_class_post ON check_rules_name.campus_id = campus_class_post.id")->where("campus_id!=''")->group("campus_id")->select();
+
+		foreach ($rules_week_str as $key => $value) {
+			$week_campus_str .= $value['class'];
+		}
+
+		foreach ($rules_week_arr as $key => &$value) {
+			$value['week_num'] = explode(",",$value['week_num']);
+			foreach($campus_post_arr as $campus_post_val){
+				if($campus_post_val['id'] == $value['post_id']){
+					$value['post_name'] = $campus_post_val['class'];
+				}else if($campus_post_val['id'] == $value['campus_id']){
+					$value['campus_name'] = $campus_post_val['class'];
+				}
+			}
+		}
+		// echo $week_campus_str;
+		//print_r($rules_week_str);
+		// die;
+		
 		//如果有值则添加考勤记录合格表
 		if(!empty($check_arr)){
 			foreach($check_arr as $check_key => &$check_val){
@@ -376,18 +401,56 @@ class PublicController extends Controller {
 					}
 
 					$week_day_day = $this->weekday(strtotime($value['atten_date']));
-					if($week_day_day == '1' && strstr($value['post'],"讲师")){
-						$value['min_times'] = 0;
-						$value['max_times'] = 0;
-						$value['check'] = '休息';
-						$value['check_content'] = '休息，周一休息';
+					if($value['week'] != '' || $value['week'] != null){
+						$week_arr = explode(",",$value['week']);
+						foreach($week_arr as $week_arr_val){
+							if($week_arr_val == $week_day_day){
+								$value['min_times'] = 0;
+								$value['max_times'] = 0;
+								$value['check'] = '休息';
+								$value['check_content'] = '正常休息';
+							}
+						}
+					}else{
+						foreach($rules_week_arr as $rules_week_val){
+							if(strstr($week_campus_str,$value['campus'])){
+								if($rules_week_val['level'] == '2' && strstr($value['post'],$rules_week_val['post_name']) && $value['campus'] == $rules_week_val['campus_name']){
+									foreach($rules_week_val['week_num'] as $week_arr_val){
+										if($week_arr_val == $week_day_day){
+											$value['min_times'] = 0;
+											$value['max_times'] = 0;
+											$value['check'] = '休息';
+											$value['check_content'] = '正常休息';
+										}
+									}
+								}
+							}else{
+								if($rules_week_val['level'] == '1' && $value['post'] == $rules_week_val['post_name']){
+									foreach($rules_week_val['week_num'] as $week_arr_val){
+										if($week_arr_val == $week_day_day){
+											$value['min_times'] = 0;
+											$value['max_times'] = 0;
+											$value['check'] = '休息';
+											$value['check_content'] = '正常休息';
+										}
+									}
+								}
+							}
+						}
 					}
-					if($week_day_day == '2' && strstr($value['post'],"讲师")){
-						$value['min_times'] = 0;
-						$value['max_times'] = 0;
-						$value['check'] = '休息';
-						$value['check_content'] = '休息，周二休息';
-					}
+
+					// if($week_day_day == '1' && strstr($value['post'],"讲师")){
+					// 	$value['min_times'] = 0;
+					// 	$value['max_times'] = 0;
+					// 	$value['check'] = '休息';
+					// 	$value['check_content'] = '休息，周一休息';
+					// }
+					// if($week_day_day == '2' && strstr($value['post'],"讲师")){
+					// 	$value['min_times'] = 0;
+					// 	$value['max_times'] = 0;
+					// 	$value['check'] = '休息';
+					// 	$value['check_content'] = '休息，周二休息';
+					// }
 					$check_data['user_id'] = $value['user_id'];
 					$check_data['atten_uid'] = $value['atten_uid'];
 					$check_data['check_date'] = $value['atten_date'];
