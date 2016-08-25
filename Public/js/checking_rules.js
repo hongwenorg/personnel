@@ -639,10 +639,10 @@ $("#staff_rules_btt1").click(function () {
         }
         //console.log(num_arr);return;
         var data_json = JSON.stringify(data);
-        //console.log(data_json);return;
+        console.log(data_json);return;
         $.ajax({
             url: "/Checking/check_rule_pro",
-            data: {'data': data_json, 'user_id': user_card},
+            data: {'data': data_json, 'user_id': user_card, 'week':week},
             type: "post",
             async: "false",
             traditional: "true",

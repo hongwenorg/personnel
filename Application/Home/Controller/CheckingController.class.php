@@ -66,7 +66,7 @@ class CheckingController extends CommonController {
 		$basic_arr = $user_basic->join('user_basic ON users.id = user_basic.user_id')->field('user_basic.id,user_basic.user_id,users.user,user_basic.name,user_basic.sex,user_basic.campus,user_basic.post,user_basic.rule_id,user_basic.week')->where($basic_where)->order('user_basic.post')->select();
 		$rule_arr = $user_rule->where($rule_where)->select();
 		foreach($basic_arr as &$value){
-			
+
 			if(!empty($value['week'])){
 				$week = explode(",",$value['week']);
 				$value['week'] = $week;
@@ -204,6 +204,9 @@ class CheckingController extends CommonController {
 		}
 		foreach($data as &$val){
 			$val = rtrim($val,",");
+		}
+		if(!empty($_POST['week'])){
+			$data['week'] = $_POST['week'];
 		}
 		$user_basic->where(array("id"=>$_POST['user_id']))->save($data);
 		echo 1;exit;//状态码1：保存成功
