@@ -401,7 +401,7 @@ class CheckingController extends CommonController {
 		if(empty($_POST['campus_id'])){
 			$data = $check_rules_name->join('check_rules_week ON check_rules_name.id = check_rules_week.rule_name_id')->where(array('check_rules_name.level' => 1))->select();
 		}else{
-			$data = $check_rules_name->join('check_rules_week ON check_rules_name.id = check_rules_week.rule_name_id')->where(array('level' => 1 , 'campus_id' => $_POST['campus_id']))->select();
+			$data = $check_rules_name->join('check_rules_week ON check_rules_name.id = check_rules_week.rule_name_id')->where(array('campus_id' => $_POST['campus_id']))->select();
 		}
 		echo json_encode($data);
 	}

@@ -178,23 +178,34 @@ function content_click(num, content) {
                     var formulate_time_parent=formulate_time[i].parentNode.parentNode.parentNode.parentNode;
                     formulate_time[i].value="制定 "+formulate_time_parent.getAttribute("name")+" 员工休息时间" ;
                     formulate_time[i].addEventListener("click",function(e){
-                        alert(document.getElementById("id_val").value);
                         var deposit_value=document.getElementById("id_val").value;
-                        alert(deposit_value);
                         document.getElementById("staff_rules_out").style.display="block";
                         var target= e.target;
                         document.querySelector(".rest_font").innerText=target.value;
                         document.getElementById("restTime_rules2").style.display="block";
-                        //$.ajax({
-                        //    url: "/Content/rule_week_select",
-                        //    data:{'campus_id':deposit_value},
-                        //    type: "post",
-                        //    async: "false",
-                        //    cache: "false",
-                        //    success: function (data) {
-                        //
-                        //    }
-                        //})
+                        var rest_day=[];
+                        $.ajax({
+                            url: "/Checking/rule_week_select",
+                            data:{'campus_id':deposit_value},
+                            type: "post",
+                            async: "false",
+                            cache: "false",
+                            success: function (data) {
+                                var rest_date = JSON.parse(data);
+                                for(key in rest_date){
+                                    rest_day.push(rest_date[key]);
+                                    console.log(rest_day);
+                                }
+                                for(var i=0;i<rest_day.length;i++){
+                                    var creat_trr=document.createElement("tr");
+                                    creat_trr.innerHTML="<td>"+rest_day[i].rules_name+"</td>"+
+                                        "<td>"+rest_day[i].rules_name+"</td>"+
+                                        "<td>"+rest_day[i].week_num+"</td>"+
+                                        "<td>"+"<input type='button'>"+"<input type='button'>"+"</td>";
+                                    document.getElementById("t2").appendChild(creat_trr);
+                                }
+                            }
+                        })
                     },false)
                 }
 
@@ -386,7 +397,7 @@ $(".rest_tianjia").click(function () {
                 "<input type='checkbox' name='' class='checked_input' value='4'>" +"星期四、"+
                 "<input type='checkbox' name='' class='checked_input' value='5'>" +"星期五、"+
                 "<input type='checkbox' name='' class='checked_input' value='6'>" +"星期六、"+
-                "</td>" +
+                "</td>" +"<input type='button' class=''>"+
                 "<td>"+"<input type='button' value='提交' class=' xiugai_time tj_restTime' onclick=tj_restTime_(this)  />" +
                 "<input type='button' onclick=rest_tr() value='取消' class='rule_reset remove_time' />"+"</td>"+"</tr>";
             $(".rest_tr").before(tr_html);
@@ -399,7 +410,7 @@ $(".rest_tianjia").click(function () {
                 if(this.checked==true){
                     this.checked==false;
                 }
-                if(this.checked==false){
+                if(this.checked==false){                       
                     this.checked==true;
                 }
             }
