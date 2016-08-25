@@ -63,7 +63,7 @@ class CheckingController extends CommonController {
 		$user_rule = D("user_rule");
 		$basic_where = "users.id!=1 and users.status!=0 and user_basic.status!=0 and user_basic.campus like '%$content%'";
 		$rule_where = "";
-		$basic_arr = $user_basic->join('user_basic ON users.id = user_basic.user_id')->field('user_basic.id,user_basic.user_id,users.user,user_basic.name,user_basic.sex,user_basic.campus,user_basic.post,user_basic.rule_id')->where($basic_where)->order('user_basic.post')->select();
+		$basic_arr = $user_basic->join('user_basic ON users.id = user_basic.user_id')->field('user_basic.id,user_basic.user_id,users.user,user_basic.name,user_basic.sex,user_basic.campus,user_basic.post,user_basic.rule_id,user_basic.week')->where($basic_where)->order('user_basic.post')->select();
 		$rule_arr = $user_rule->where($rule_where)->select();
 		foreach($basic_arr as &$value){
 			foreach($value as $key => $val){
@@ -401,7 +401,7 @@ class CheckingController extends CommonController {
 		if(empty($_POST['campus_id'])){
 			$data = $check_rules_name->join('check_rules_week ON check_rules_name.id = check_rules_week.rule_name_id')->where(array('check_rules_name.level' => 1))->select();
 		}else{
-			$data = $check_rules_name->join('check_rules_week ON check_rules_name.id = check_rules_week.rule_name_id')->where(array('level' => 1 , 'campus_id' => $_POST['campus_id']))->select();
+			$data = $check_rules_name->join('check_rules_week ON check_rules_name.id = check_rules_week.rule_name_id')->where(array('campus_id' => $_POST['campus_id']))->select();
 		}
 		echo json_encode($data);
 	}
