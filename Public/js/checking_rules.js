@@ -205,7 +205,7 @@ function content_click(num, content) {
                                     for(var i=0;i<rest_day.length;i++){
                                         var creat_trr=document.createElement("tr");
                                         var arr_week=rest_day[i].week_num.split(" ");
-                                        console.log(arr_week);
+                                         console.log(arr_week);
                                         creat_trr.innerHTML=  "<td>"+"<input type='text' readonly='true' value='"+rest_day[i].rules_name+"'>"+"</td>"+
                                             "<td>"+"<input type='text' readonly='true' value='"+rest_day[i].rules_name+"'>"+"</td>"+
                                             "<td>"+
