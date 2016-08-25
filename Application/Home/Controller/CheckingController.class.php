@@ -108,7 +108,7 @@ class CheckingController extends CommonController {
 		}
 	}
 
-
+          
 
 	//考勤规则查询
 	function check_rule_find(){
