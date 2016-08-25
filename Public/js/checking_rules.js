@@ -83,13 +83,12 @@ window.onload = function () {
             var click_div = document.getElementById("tab_click");
             var tab_child = document.querySelectorAll('.click_modules');
             click_div.style.width = "95%";
-            var tab_child = document.querySelectorAll('.click_modules');
             for (var aa = 0; aa < tab_child.length; aa++) {
                 tab_child[aa].parentNode.style.width = 100 / tab_child.length + "%";
                 if (tab_child[aa].innerText == "考勤规则") {
                     tab_child[aa].style.background = "white";
                     tab_child[aa].style.color = "black";
-                };
+                }
                 if(aa==0){
                     tab_child[aa].style.borderTopLeftRadius = "10px";
                 }else if(aa==tab_child.length-1){
@@ -170,42 +169,68 @@ function content_click(num, content) {
                         "<td class='td_sty td_width'>" + "<input type='time' readonly='readonly' class='input_time_' value='" + group_all[j].rule_min1 + "'>" + "~" + "<input type='time' class='input_time_' readonly='readonly' value='" + group_all[j].rule_max1 + "'>" + "</td>" +
                         "<td class='td_sty td_width'>" + "<input type='time' readonly='readonly' class='input_time_' value='" + group_all[j].rule_min2 + "'>" + "~" + "<input type='time' class='input_time_' readonly='readonly' value='" + group_all[j].rule_max2 + "'>" + "</td>" +
                         "<td class='td_sty td_width'>" + "<input type='time'  readonly='readonly' class='input_time_' value='" + group_all[j].rule_min3 + "'>" + "~" + "<input type='time' class='input_time_' readonly='readonly' value='" + group_all[j].rule_max3 + "'>" + "</td>" +
-                        "<td class='td_sty td_width'>" + "<input type='time' readonly='readonly' class='input_time_' value='" + group_all[j].rule_min4 + "'>" + "~" + "<input type='time' class='input_time_' readonly='readonly' value='" + group_all[j].rule_max4 + "'>" + "</td>" +
+                        "<td class='td_sty td_width'>" + group_all[j].week + "</td>" +
                         "<td class='td_sty rules_button'>" + "<div class='group_none' onclick='rule_up_click(this)'>" + group_all[j].name + "1" + "</div>" + "</td></tr>";
                 }
                 $("#tb" + num).html(html_str);
                 var formulate_time=document.querySelectorAll(".formulate_time");
                 for(var i=0;i<formulate_time.length;i++){
-                    var formulate_time_parent=formulate_time[i].parentNode.parentNode.parentNode.parentNode;
-                    formulate_time[i].value="制定 "+formulate_time_parent.getAttribute("name")+" 员工休息时间" ;
+                    if(formulate_time[i].getAttribute("id")!="get_id"){
+                        var formulate_time_parent=formulate_time[i].parentNode.parentNode.parentNode.parentNode;
+                        formulate_time[i].value="制定 "+formulate_time_parent.getAttribute("name")+" 员工休息时间" ;
+                    }
                     formulate_time[i].addEventListener("click",function(e){
-                        var deposit_value=document.getElementById("id_val").value;
-                        document.getElementById("staff_rules_out").style.display="block";
                         var target= e.target;
-                        document.querySelector(".rest_font").innerText=target.value;
-                        document.getElementById("restTime_rules2").style.display="block";
-                        var rest_day=[];
-                        $.ajax({
-                            url: "/Checking/rule_week_select",
-                            data:{'campus_id':deposit_value},
-                            type: "post",
-                            async: "false",
-                            cache: "false",
-                            success: function (data) {
-                                var rest_date = JSON.parse(data);
-                                for(key in rest_date){
-                                    rest_day.push(rest_date[key]);
+                        if(target.getAttribute("id")!="get_id"){
+                            //document.getElementById("t2").innerHTML="";
+                            $("#t2 tr:not(:first)").css("display","none");
+                            var deposit_value=document.getElementById("id_val").value;
+                            alert(deposit_value);
+                            document.getElementById("staff_rules_out").style.display="block";
+                            document.querySelector(".rest_font").innerText=target.value;
+                            document.getElementById("restTime_rules2").style.display="block";
+                            var rest_day=[];
+                            $.ajax({
+                                url: "/Checking/rule_week_select",
+                                data:{'campus_id':deposit_value},
+                                type: "post",
+                                async: "false",
+                                cache: "false",
+                                success: function (data) {
+                                    var rest_date = JSON.parse(data);
+                                    for(key in rest_date){
+                                        rest_day.push(rest_date[key]);
+                                    }
+                                    console.log(rest_day);
+                                    for(var i=0;i<rest_day.length;i++){
+                                        var creat_trr=document.createElement("tr");
+                                        var arr_week=rest_day[i].week_num.split(" ");
+                                        console.log(arr_week);
+                                        creat_trr.innerHTML=  "<td>"+"<input type='text' readonly='true' value='"+rest_day[i].rules_name+"'>"+"</td>"+
+                                            "<td>"+"<input type='text' readonly='true' value='"+rest_day[i].rules_name+"'>"+"</td>"+
+                                            "<td>"+
+                                            "<input type='checkbox' value='星期日' class='pd_week '>"+"星期日"+" "+" "+
+                                            "<input type='checkbox' value='星期一' class='pd_week'>"+"星期一"+" "+" "+
+                                            "<input type='checkbox' value='星期二' class='pd_week'>"+"星期二"+" "+" "+
+                                            "<input type='checkbox' value='星期三' class='pd_week'>"+"星期三"+" "+" "+
+                                            "<input type='checkbox' value='星期四' class='pd_week'>"+"星期四"+" "+" "+
+                                            "<input type='checkbox' value='星期五' class='pd_week'>"+"星期五"+" "+" "+
+                                            "<input type='checkbox' value='星期六' class='pd_week'>"+"星期六"+" "+" "+
+                                            "</td>"+
+                                            "<td>"+"<input type='button' value='修改' onclick='xg_tj(this)'>"+"<input type='button' value='删除'>"+"</td>";
+                                        document.getElementById("t2").appendChild(creat_trr);
+                                        var week_all=document.querySelectorAll(".pd_week");
+                                        for(var j=0;j<week_all.length;j++){
+                                            if(week_all[j].value==rest_day[i].week_num){
+                                                week_all[j].checked=true;
+                                            }
+                                        }
+
+                                    }
                                 }
-                                for(var i=0;i<rest_day.length;i++){
-                                    var creat_trr=document.createElement("tr");
-                                    creat_trr.innerHTML="<td>"+rest_day[i].rules_name+"</td>"+
-                                        "<td>"+rest_day[i].rules_name+"</td>"+
-                                        "<td>"+rest_day[i].week_num+"</td>"+
-                                        "<td>"+"<input type='button'>"+"<input type='button'>"+"</td>";
-                                    document.getElementById("t2").appendChild(creat_trr);
-                                }
-                            }
-                        })
+                            })
+                        }
+
                     },false)
                 }
 
@@ -220,6 +245,30 @@ function content_click(num, content) {
     }
 
 }
+var xg_tj=function(obj){
+    var xginput_01=obj.parentNode.parentNode.childNodes[0].childNodes[0];
+    var xginput_02=obj.parentNode.parentNode.childNodes[1].childNodes[0];
+    if(obj.value=="修改"){
+        obj.value="提交";
+        xginput_01.readOnly = false;
+        xginput_02.readOnly = false;
+    }else if(obj.value == "提交"){
+        tj_restTime_(obj);
+        $.ajax({
+            url: "",
+            data:{},
+            type: "post",
+            async: "false",
+            cache: "false",
+            success: function (data) {
+
+            }
+        });
+        obj.value = "修改";
+        xginput_01.readOnly = false;
+        xginput_02.readOnly = false;
+    }
+};
 
 
 
@@ -599,6 +648,23 @@ function disabled_rules_time(num) {
     }
 }
 //点击确定按扭 提交规定的时间规则 数据
+
+
+
+var week_check=document.querySelectorAll(".week_num");
+for(var j=0;j<week_check.length;j++){
+    week_check[j].checked=false;
+    week_check[j].onclick=function(){
+        if(this.checked==false){
+            this.checked==true;
+            alert(this.checked);
+        }
+        if(this.checked==true){
+            this.checked==false;
+            alert(this.checked);
+        }
+    }
+}
 $("#staff_rules_btt1").click(function () {
     //所有信息无误走提交
     if (confirm("是否保存员工信息")) {
@@ -617,9 +683,14 @@ $("#staff_rules_btt1").click(function () {
                 data.push(arr);
             }
         }
+        var week="";
+        for(var j=0;j<week_check.length;j++){
+            if(week_check[j].checked==true){
+                week+=week_check[j].value+",";
+            }
+        }
         //console.log(num_arr);return;
         var data_json = JSON.stringify(data);
-        console.log(data_json);return;
         $.ajax({
             url: "/Checking/check_rule_pro",
             data: {'data': data_json, 'user_id': user_card, 'week':week},
