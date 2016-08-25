@@ -91,7 +91,7 @@
     width:475px;
     background-color:#00c8c8 ;
     border:none;
-    margin:15px 0 0 15px;
+    margin:10px 0 0 15px;
     border-radius: 5px;
     height:35px;
     color:white;
@@ -296,7 +296,7 @@
     float:left;
 }
 .week_check{
-    width:200px;
+    width:150px;
     text-align: center;
     float:left;
 }
