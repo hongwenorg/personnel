@@ -66,6 +66,13 @@ class CheckingController extends CommonController {
 		$basic_arr = $user_basic->join('user_basic ON users.id = user_basic.user_id')->field('user_basic.id,user_basic.user_id,users.user,user_basic.name,user_basic.sex,user_basic.campus,user_basic.post,user_basic.rule_id,user_basic.week')->where($basic_where)->order('user_basic.post')->select();
 		$rule_arr = $user_rule->where($rule_where)->select();
 		foreach($basic_arr as &$value){
+			
+			if(!empty($value['week'])){
+				$week = explode(",",$value['week']);
+				$value['week'] = $week;
+			}else{
+				$value['week'] = "";
+			}
 			foreach($value as $key => $val){
 				if($key == 'rule_id'){
 					$rule_id_arr = explode(',',$val);
@@ -118,11 +125,17 @@ class CheckingController extends CommonController {
 		$user_rule = D("user_rule");
 		$basic_where = "id=$basic_id and status!=0";
 		$rule_where = "";
-		$basic_arr = $user_basic->field('rule_id,rule_disable_id')->where($basic_where)->find();
+		$basic_arr = $user_basic->field('rule_id,rule_disable_id,week')->where($basic_where)->find();
 		$rule_arr = $user_rule->where($rule_where)->select();
 		$rules_arr = array();
 		foreach($basic_arr as $key => $val){
 			$rule_id_arr = explode(',',$val);
+			if(!empty($val['week'])){
+				$week = explode(",",$val['week']);
+				$rules_arr['week'] = $week;
+			}else{
+				$rules_arr['week'] = "";
+			}
 			foreach($rule_id_arr as $id_val){
 				foreach($rule_arr as $rule_arr_val){
 					if($id_val == $rule_arr_val['id'] && $key!='rule_disable_id'){
@@ -394,14 +407,40 @@ class CheckingController extends CommonController {
 	}
 
 
+	//星期函数
+	function one_week(){
+		$array = array(1 => '星期一',2 => '星期二',3 => '星期三',4 => '星期四',5 => '星期五',6 => '星期六',7 => '星期日');
+		return $array;
+	}
+
+
 	//休息日默认显示数据
 	function rule_week_select(){
 		$check_rules_name = D('check_rules_name');
 		$data = array();
+		$week_num_str = "";
+		$campus_class_post = D('campus_class_post');
+		$campus_post_arr = $campus_class_post->select();
 		if(empty($_POST['campus_id'])){
 			$data = $check_rules_name->join('check_rules_week ON check_rules_name.id = check_rules_week.rule_name_id')->where(array('check_rules_name.level' => 1))->select();
 		}else{
 			$data = $check_rules_name->join('check_rules_week ON check_rules_name.id = check_rules_week.rule_name_id')->where(array('campus_id' => $_POST['campus_id']))->select();
+		}
+		$week_arr = $this->one_week();
+		foreach ($data as $key => &$value) {
+			$week_num_arr = explode(",",$value['week_num']);
+			$week_num_str = "";
+			foreach($week_num_arr as $val){
+				$week_num_str .= $week_arr[$val]." ";
+			}
+			$value['week_num'] = rtrim($week_num_str," ");
+			foreach($campus_post_arr as $campus_post_val){
+				if($campus_post_val['id'] == $value['post_id']){
+					$value['post_name'] = $campus_post_val['class'];
+				}else if($campus_post_val['id'] == $value['campus_id']){
+					$value['campus_name'] = $campus_post_val['class'];
+				}
+			}
 		}
 		echo json_encode($data);
 	}

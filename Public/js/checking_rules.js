@@ -151,6 +151,7 @@ function content_click(num, content) {
             async: 'false',
             success: function (msg) {
                 var json_text = JSON.parse(msg);
+                console.log(json_text);
                 for (key in json_text) {
                     if (key != "status" && json_text["status"] != 2) {
                         group_all.push(json_text[key]);
