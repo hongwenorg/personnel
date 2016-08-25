@@ -194,7 +194,6 @@ function content_click(num, content) {
                                 var rest_date = JSON.parse(data);
                                 for(key in rest_date){
                                     rest_day.push(rest_date[key]);
-                                    console.log(rest_day);
                                 }
                                 for(var i=0;i<rest_day.length;i++){
                                     var creat_trr=document.createElement("tr");
@@ -221,25 +220,6 @@ function content_click(num, content) {
 
 }
 
-
-
-//var formulate_time02=document.querySelectorAll(".formulate_time");
-//for(var i=0;i<formulate_time02.length;i++) {
-//    formulate_time02[i].onclick = function () {
-//
-//        document.getElementById("deposit_value").style.display = "none";
-//    };
-//        //$.ajax({
-//        //    url: "/Content/rule_week_select",
-//        //    data:{'campus_id':$('#id_val').val()}
-//        //    type: "post",
-//        //    async: "false",
-//        //    cache: "false",
-//        //    success: function (data) {
-//        //
-//        //    }
-//        //}
-//}
 
 
 function rule_save() {
