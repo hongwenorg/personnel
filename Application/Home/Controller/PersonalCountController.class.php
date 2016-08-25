@@ -599,24 +599,53 @@ class PersonalCountController extends Controller {
             $where_user = array('school' => $school_name['name']);
         }
         $person_all = D('person_all');
-        if(!empty($_GET['post'])){
-            $post = $_GET['post'];
-            $where_user['position'] = $_GET['post'];
-                if($post == '教学主任'){
-                    $where_arr['teaching_userid'] = array('NEQ','');
-                   if(!empty($_GET['name'])){
-                        $where_user['name'] = $_GET['name'];
-                        $user_arr = $person_all->where($where_user)->find();
-                        $where_arr['teaching_userid'] = $user_arr['id'];
-                    }
-                }else if($post == '学习管理师'){ 
-                    $where_arr['study_userid'] = array('NEQ','');
-                    if(!empty($_GET['name'])){
-                        $where_user['name'] = $_GET['name'];
-                        $user_arr = $person_all->where($where_user)->find();
-                        $where_arr['study_userid'] = $user_arr['id'];
-                    }
-            }
+        
+        if(!empty($_GET['receipt_card'])){
+            $where_arr['receipt_card'] = $_GET['receipt_card'];
+        }
+
+        if(!empty($_GET['teaching_userid'])){
+            $where_user['name'] = $_GET['teaching_userid'];
+            $user_arr = $person_all->where($where_user)->find();
+            $where_arr['teaching_userid'] = $user_arr['id'];
+        }else{
+            $where_arr['teaching_userid'] = array('NEQ','');
+        }
+
+        if(!empty($_GET['study_userid'])){
+            $where_user['name'] = $_GET['teaching_userid'];
+            $user_arr = $person_all->where($where_user)->find();
+            $where_arr['study_userid'] = $user_arr['id'];
+        }else{
+            $where_arr['study_userid'] = array('NEQ','');
+        }
+
+        if(!empty($_GET['achievement_type'])){
+            $where_arr['achievement_type'] = $_GET['achievement_type'];
+        }
+
+        if(!empty($_GET['charge_type'])){
+            $where_arr['charge_type'] = $_GET['charge_type'];
+        }
+
+        if(!empty($_GET['student_name'])){
+            $where_arr['student_name'] = $_GET['student_name'];
+        }
+
+        if(!empty($_GET['achievement_date'])){
+            $where_arr['achievement_date'] = $_GET['achievement_date'];
+        }
+
+        if(!empty($_GET['curriculum_name'])){
+            $where_arr['curriculum_name'] = $_GET['curriculum_name'];
+        }
+
+        if(!empty($_GET['teacher_name'])){
+            $where_arr['teacher_name'] = $_GET['teacher_name'];
+        }
+
+        if(!empty($_GET['receivables_type'])){
+            $where_arr['receivables_type'] = $_GET['receivables_type'];
         }
         
         $model = D('oa_achievement');

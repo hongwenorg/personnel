@@ -219,7 +219,7 @@ function content_click(num, content) {
                                             }else{
                                                 num = key;
                                             }
-                                            html_str += "<input type='checkbox' id='box"+num+"' value='"+num+"'>"+json_arr[key]+" ";
+                                            html_str += "<input type='checkbox' id='box"+i+num+"' value='"+i+num+"'>"+json_arr[key]+" ";
                                         }
                                         html_str += "</td>"+"<td>"+"<input type='button' value='修改' onclick='xg_tj(this)'>"+"<input type='button' value='删除'>"+"</td>";
                                         creat_trr.innerHTML = html_str;
@@ -233,7 +233,7 @@ function content_click(num, content) {
                                                     num = key;
                                                 }
                                                 if(json_arr[key] == arr_week[k]){
-                                                    $("#box"+num).attr("checked","checked");
+                                                    $("#box"+i+num).attr("checked","checked");
                                                 }
                                             }
                                         }
