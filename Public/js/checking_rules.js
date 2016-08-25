@@ -190,6 +190,10 @@ function content_click(num, content) {
                             document.querySelector(".rest_font").innerText=target.value;
                             document.getElementById("restTime_rules2").style.display="block";
                             var rest_day=[];
+                            var html_str = "";
+                            var json_str = '{"0":"星期日","1":"星期一","2":"星期二","3":"星期三","4":"星期四","5":"星期五","6":"星期六"}';
+                            var json_arr = JSON.parse(json_str);
+                            var num = '';
                             $.ajax({
                                 url: "/Checking/rule_week_select",
                                 data:{'campus_id':deposit_value},
@@ -207,22 +211,33 @@ function content_click(num, content) {
                                         var arr_week=rest_day[i].week_num.split(" ");
                                          console.log(arr_week);
                                         creat_trr.innerHTML=  "<td>"+"<input type='text' readonly='true' value='"+rest_day[i].rules_name+"'>"+"</td>"+
+
+                                        console.log(arr_week);
+                                        html_str = "<td>"+"<input type='text' readonly='true' value='"+rest_day[i].rules_name+"'>"+"</td>"+
                                             "<td>"+"<input type='text' readonly='true' value='"+rest_day[i].rules_name+"'>"+"</td>"+
-                                            "<td>"+
-                                            "<input type='checkbox' value='星期日' class='pd_week '>"+"星期日"+" "+" "+
-                                            "<input type='checkbox' value='星期一' class='pd_week'>"+"星期一"+" "+" "+
-                                            "<input type='checkbox' value='星期二' class='pd_week'>"+"星期二"+" "+" "+
-                                            "<input type='checkbox' value='星期三' class='pd_week'>"+"星期三"+" "+" "+
-                                            "<input type='checkbox' value='星期四' class='pd_week'>"+"星期四"+" "+" "+
-                                            "<input type='checkbox' value='星期五' class='pd_week'>"+"星期五"+" "+" "+
-                                            "<input type='checkbox' value='星期六' class='pd_week'>"+"星期六"+" "+" "+
-                                            "</td>"+
-                                            "<td>"+"<input type='button' value='修改' onclick='xg_tj(this)'>"+"<input type='button' value='删除'>"+"</td>";
+                                            "<td>";
+                                        for(var key in json_arr){
+                                            if(key == '0'){
+                                                num = 7;
+                                            }else{
+                                                num = key;
+                                            }
+                                            html_str += "<input type='checkbox' id='box"+num+"' value='"+num+"'>"+json_arr[key]+" ";
+                                        }
+                                        html_str += "</td>"+"<td>"+"<input type='button' value='修改' onclick='xg_tj(this)'>"+"<input type='button' value='删除'>"+"</td>";
+                                        creat_trr.innerHTML = html_str;
                                         document.getElementById("t2").appendChild(creat_trr);
-                                        var week_all=document.querySelectorAll(".pd_week");
-                                        for(var j=0;j<week_all.length;j++){
-                                            if(week_all[j].value==rest_day[i].week_num){
-                                                week_all[j].checked=true;
+                                        
+                                        for(var key in json_arr){
+                                            for(var k in arr_week){
+                                                if(key == '0'){
+                                                    num = 7;
+                                                }else{
+                                                    num = key;
+                                                }
+                                                if(json_arr[key] == arr_week[k]){
+                                                    $("#box"+num).attr("checked","checked");
+                                                }
                                             }
                                         }
 
