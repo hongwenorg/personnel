@@ -209,13 +209,9 @@ function content_click(num, content) {
                                     for(var i=0;i<rest_day.length;i++){
                                         var creat_trr=document.createElement("tr");
                                         var arr_week=rest_day[i].week_num.split(" ");
-                                         console.log(arr_week);
-                                        creat_trr.innerHTML=  "<td>"+"<input type='text' readonly='true' value='"+rest_day[i].rules_name+"'>"+"</td>"+
-
                                         console.log(arr_week);
                                         html_str = "<td>"+"<input type='text' readonly='true' value='"+rest_day[i].rules_name+"'>"+"</td>"+
-                                            "<td>"+"<input type='text' readonly='true' value='"+rest_day[i].rules_name+"'>"+"</td>"+
-                                            "<td>";
+                                            "<td>"+"<input type='text' readonly='true' value='"+rest_day[i].rules_name+"'>"+"</td>"+ "<td>";
                                         for(var key in json_arr){
                                             if(key == '0'){
                                                 num = 7;
