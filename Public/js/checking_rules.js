@@ -400,9 +400,11 @@ var xg_tj=function(obj,num){
         });
         if(msg == 1){
             formulate_time_02();
+            rest_tr();
         }
         if(msg == 3){
             formulate_time();
+            rest_tr();
         }
     }
 };
@@ -681,9 +683,11 @@ function tj_restTime_(obj,num){
     });
     if(msg == 1){
         formulate_time_02();
+        rest_tr();
     }
     if(msg == 3){
         formulate_time();
+        rest_tr();
     }
 }
 
