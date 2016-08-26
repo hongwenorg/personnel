@@ -598,52 +598,67 @@ class PersonalCountController extends Controller {
             $school_name = $oa_foo_info->where($where_school)->find();
             $where_user = array('school' => $school_name['name']);
         }
+
         $person_all = D('person_all');
-        
+
+        //收据编号
         if(!empty($_GET['receipt_card'])){
             $where_arr['receipt_card'] = $_GET['receipt_card'];
         }
 
+        //教学主任
         if(!empty($_GET['teaching_userid'])){
-            $where_user['name'] = $_GET['teaching_userid'];
-            $user_arr = $person_all->where($where_user)->find();
-            $where_arr['teaching_userid'] = $user_arr['id'];
-        }else{
-            $where_arr['teaching_userid'] = array('NEQ','');
+            if($_GET['study_userid'] == 'All'){
+                $where_arr['teaching_userid'] = array('NEQ','');
+            }else{
+                $where_user['name'] = $_GET['teaching_userid'];
+                $user_arr = $person_all->where($where_user)->find();
+                $where_arr['teaching_userid'] = $user_arr['id'];
+            }
         }
 
+        //学习管理师
         if(!empty($_GET['study_userid'])){
-            $where_user['name'] = $_GET['teaching_userid'];
-            $user_arr = $person_all->where($where_user)->find();
-            $where_arr['study_userid'] = $user_arr['id'];
-        }else{
-            $where_arr['study_userid'] = array('NEQ','');
+            if($_GET['study_userid'] == 'All'){
+                $where_arr['study_userid'] = array('NEQ','');
+            }else{
+                $where_user['name'] = $_GET['teaching_userid'];
+                $user_arr = $person_all->where($where_user)->find();
+                $where_arr['study_userid'] = $user_arr['id'];
+            }
         }
 
+        //业绩类型
         if(!empty($_GET['achievement_type'])){
             $where_arr['achievement_type'] = $_GET['achievement_type'];
         }
 
+        //收费类型
         if(!empty($_GET['charge_type'])){
             $where_arr['charge_type'] = $_GET['charge_type'];
         }
 
+        //学员姓名
         if(!empty($_GET['student_name'])){
             $where_arr['student_name'] = $_GET['student_name'];
         }
 
+        //收费日期
         if(!empty($_GET['achievement_date'])){
             $where_arr['achievement_date'] = $_GET['achievement_date'];
         }
 
+        //课程名称
         if(!empty($_GET['curriculum_name'])){
             $where_arr['curriculum_name'] = $_GET['curriculum_name'];
         }
 
+        //讲师姓名
         if(!empty($_GET['teacher_name'])){
             $where_arr['teacher_name'] = $_GET['teacher_name'];
         }
 
+        //收费类型
         if(!empty($_GET['receivables_type'])){
             $where_arr['receivables_type'] = $_GET['receivables_type'];
         }
@@ -652,6 +667,9 @@ class PersonalCountController extends Controller {
         $data = array();
         $user_arrs = array();
         $data = $model->where($where_arr)->order('id desc')->select();
+
+        // echo "<pre>";
+        // print_r($where_arr);exit;
         //echo $model->getLastsql();
         //print_r($where_arr);
         $user_arrs = $person_all->where($where_user)->select();//

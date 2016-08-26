@@ -325,5 +325,12 @@
 .rm_tr{
     background-color: #00c8c8;
 }
+.select_kuang{
+    width:150px;
+    border:none;
+    border-bottom:1px solid dimgray;
+    outline: none;
+    border-radius: 10px;
+}
 
 
