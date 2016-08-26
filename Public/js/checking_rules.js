@@ -192,7 +192,7 @@ function content_click(num, content) {
     }
 
 }
- function formulate_time(obj){
+function formulate_time(obj){
     if(obj.getAttribute("id")!="get_id"){
         //$("#t2 tr:not(:first)").css("display","none");
         document.getElementById("t2").innerHTML="";
@@ -222,7 +222,6 @@ function content_click(num, content) {
             async: "false",
             cache: "false",
             success:function(data){
-                document.getElementById("t2").innerHTML="";
                 ajax_rest(data,"t1");
             }
         })
@@ -230,13 +229,15 @@ function content_click(num, content) {
 
 }
 
- function ajax_rest(data,obj){
+function ajax_rest(data,obj){
      var rest_day=[];
      var html_str = "";
      var json_str = '{"0":"星期日","1":"星期一","2":"星期二","3":"星期三","4":"星期四","5":"星期五","6":"星期六"}';
      var json_arr = JSON.parse(json_str);
      var num = '';
      var rest_date = JSON.parse(data);
+     document.getElementById("t1").innerHTML="";
+     document.getElementById("t2").innerHTML="";
      for(key in rest_date){
          rest_day.push(rest_date[key]);
      }
@@ -246,7 +247,7 @@ function content_click(num, content) {
         var arr_week=rest_day[i].week_num.split(" ");
         console.log(arr_week);
         html_str = "<td>"+"<input type='text' readonly='true' class='read_input' value='"+rest_day[i].rules_name+"'>"+"</td>"+
-            "<td>"+"<input type='text' readonly='true' class='read_input' value='"+rest_day[i].rules_name+"'>"+"</td>"+
+            "<td>"+"<input type='text' readonly='true' class='read_input' value='"+rest_day[i].post_name+"'>"+"</td>"+
             "<td>";
         for(var key in json_arr){
             if(key == '0'){

@@ -65,11 +65,15 @@ class CheckingController extends CommonController {
 		$rule_where = "";
 		$basic_arr = $user_basic->join('user_basic ON users.id = user_basic.user_id')->field('user_basic.id,user_basic.user_id,users.user,user_basic.name,user_basic.sex,user_basic.campus,user_basic.post,user_basic.rule_id,user_basic.week')->where($basic_where)->order('user_basic.post')->select();
 		$rule_arr = $user_rule->where($rule_where)->select();
+		$week_arr = $this->one_week();
 		foreach($basic_arr as &$value){
-
 			if(!empty($value['week'])){
-				$week = explode(",",$value['week']);
-				$value['week'] = $week;
+				$week_num_arr = explode(",",$value['week']);
+				$week_num_str = "";
+				foreach($week_num_arr as $val){
+					$week_num_str .= $week_arr[$val]." ";
+				}
+				$value['week'] = rtrim($week_num_str," ");
 			}else{
 				$value['week'] = "";
 			}
@@ -373,6 +377,29 @@ class CheckingController extends CommonController {
 	}
 
 
+	//休息日规则的删除
+	function rule_week_delete(){
+		if(!empty($_POST['id'])){
+			$rule_name_id = $_POST['id'];
+		}else{
+			echo 2;exit;
+		}
+		$check_rules_name = D('check_rules_name');
+		$check_rules_week = D('check_rules_week');
+		$rule_result1 = $check_rules_name->where(array("id" => $rule_name_id))->delete();
+		if($rule_result1){
+			$rule_result2 = $check_rules_week->where(array("rule_name_id" => $rule_name_id))->delete();
+			if($rule_result2){
+				echo 1;exit;
+			}else{
+				echo 2;exit;
+			}
+		}else{
+			echo 2;exit;
+		}
+	}
+
+
 	//休息日提交数据
 	function rule_week(){
 		if(empty($_POST['name'])){
@@ -405,6 +432,44 @@ class CheckingController extends CommonController {
 		if(!$result){
 			echo 2;exit;
 		}
+		echo 1;exit;
+
+	}
+
+
+	//休息日修改数据
+	function rule_week_save(){
+		if(empty($_POST['id'])) {
+			echo 2;exit;
+		}
+		if(empty($_POST['name'])){
+			echo 2;exit;
+		}
+		if(empty($_POST['post'])){
+			echo 2;exit;
+		}
+		if(empty($_POST['week'])){
+			echo 2;exit;
+		}
+		$rule_name_id = $_POST['id'];
+		$check_rules_name = D('check_rules_name');
+		$check_rules_week = D('check_rules_week');
+		$data1 = array();
+		$data2 = array();
+		$data1['rules_name'] = $_POST['name'];
+		$data1['post_id'] = $_POST['post'];
+		if(!empty($_POST['campus_id'])){
+			$data1['campus_id'] = $_POST['campus_id'];
+			$data1['level'] = 2;
+		}
+		$name_id = $check_rules_name->where(array("id" => $rule_name_id))->save($data1);
+		if(!$name_id){
+			echo 2;exit;
+		}
+		$data2['rule_name_id'] = $name_id;
+		$data2['week_num'] = rtrim($_POST['week'],',');
+		$data2['month'] = date('Y-m',time());
+		$result = $check_rules_week->where(array("rule_name_id" => $rule_name_id))->save($data2);
 		echo 1;exit;
 
 	}
