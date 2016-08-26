@@ -413,18 +413,21 @@ class CheckingController extends CommonController {
 		}
 		$check_rules_name = D('check_rules_name');
 		$check_rules_week = D('check_rules_week');
-		if($check_rules_name->where(array("post_id" => $_POST['post']))->find()){
-			echo 2;exit;
-		}
 		$data1 = array();
 		$data2 = array();
 		$data1['rules_name'] = $_POST['name'];
 		$data1['post_id'] = $_POST['post'];
 		if(!empty($_POST['campus_id'])){
+			if($check_rules_name->where(array("post_id" => $_POST['post'] , 'campus_id' => $_POST['campus_id']))->find()){
+				echo 2;exit;
+			}
 			$data1['campus_id'] = $_POST['campus_id'];
 			$data1['level'] = 2;
 			$selft = 3;
 		}else{
+			if($check_rules_name->where(array("post_id" => $_POST['post'] , 'campus_id' => ""))->find()){
+				echo 2;exit;
+			}
 			$selft = 1;
 		}
 		$name_id = $check_rules_name->add($data1);
@@ -460,7 +463,7 @@ class CheckingController extends CommonController {
 		$rule_name_id = $_POST['id'];
 		$check_rules_name = D('check_rules_name');
 		$check_rules_week = D('check_rules_week');
-		if($check_rules_name->where(array("post_id" => $_POST['post']))->find()){
+		if($check_rules_name->where(array("post_id" => $_POST['post'] , 'id' => array('NEQ',$_POST['id'])))->find()){
 			echo 2;exit;
 		}
 		$data1 = array();
