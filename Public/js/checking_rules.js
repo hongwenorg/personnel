@@ -207,6 +207,7 @@ function content_click(num, content) {
             async: "false",
             cache: "false",
             success:function(data){
+                document.getElementById("t1").innerHTML="";
                 ajax_rest(data,"t2");
             }
         })
@@ -230,10 +231,10 @@ function content_click(num, content) {
 
 }
 
- function ajax_rest(data,obj){
-     var rest_day=[];
-     var html_str = "";
-     var json_str = '{"0":"星期日","1":"星期一","2":"星期二","3":"星期三","4":"星期四","5":"星期五","6":"星期六"}';
+var json_str = '{"0":"星期日","1":"星期一","2":"星期二","3":"星期三","4":"星期四","5":"星期五","6":"星期六"}';
+function ajax_rest(data,obj){
+    var rest_day=[];
+    var html_str = "";
      var json_arr = JSON.parse(json_str);
      var num = '';
      var rest_date = JSON.parse(data);
@@ -274,7 +275,7 @@ function content_click(num, content) {
         }
 
     }
-};
+}
 
 
 
