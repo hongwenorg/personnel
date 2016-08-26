@@ -425,7 +425,7 @@ class CheckingController extends CommonController {
 			$data1['level'] = 2;
 			$selft = 3;
 		}else{
-			if($check_rules_name->where(array("post_id" => $_POST['post'] , 'campus_id' => ""))->find()){
+			if($check_rules_name->where(array("post_id" => $_POST['post'] , 'level' => "1"))->find()){
 				echo 2;exit;
 			}
 			$selft = 1;
