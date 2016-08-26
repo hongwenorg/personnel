@@ -608,7 +608,7 @@ class PersonalCountController extends Controller {
 
         //教学主任
         if(!empty($_GET['teaching_userid'])){
-            if($_GET['study_userid'] == 'All'){
+            if($_GET['teaching_userid'] == 'All'){
                 $where_arr['teaching_userid'] = array('NEQ','');
             }else{
                 $where_user['name'] = $_GET['teaching_userid'];
