@@ -159,7 +159,7 @@ function content_click(num, content) {
                         }
                     }
                 }
-                html_str="<input type='hidden' value='"+$('#id'+num).val()+"' id='id_val'><tr><td><input type='button' class='formulate_time'></td></tr>";
+                html_str="<input type='hidden' value='"+$('#id'+num).val()+"' id='id_val'><tr><td><input type='button' onclick='formulate_time(this)' class='formulate_time'></td></tr>";
                 for (var j = 0; j < group_all.length; j++) {
                     var tr = document.createElement("tr");
                     staff_name.push(group_all[j].name);
@@ -179,71 +179,6 @@ function content_click(num, content) {
                         var formulate_time_parent=formulate_time[i].parentNode.parentNode.parentNode.parentNode;
                         formulate_time[i].value="制定 "+formulate_time_parent.getAttribute("name")+" 员工休息时间" ;
                     }
-                    formulate_time[i].addEventListener("click",function(e){
-                        var target= e.target;
-                        if(target.getAttribute("id")!="get_id"){
-                            //document.getElementById("t2").innerHTML="";
-                            $("#t2 tr:not(:first)").css("display","none");
-                            var deposit_value=document.getElementById("id_val").value;
-                            alert(deposit_value);
-                            document.getElementById("staff_rules_out").style.display="block";
-                            document.querySelector(".rest_font").innerText=target.value;
-                            document.getElementById("restTime_rules2").style.display="block";
-                            var rest_day=[];
-                            var html_str = "";
-                            var json_str = '{"0":"星期日","1":"星期一","2":"星期二","3":"星期三","4":"星期四","5":"星期五","6":"星期六"}';
-                            var json_arr = JSON.parse(json_str);
-                            var num = '';
-                            $.ajax({
-                                url: "/Checking/rule_week_select",
-                                data:{'campus_id':deposit_value},
-                                type: "post",
-                                async: "false",
-                                cache: "false",
-                                success: function (data) {
-                                    var rest_date = JSON.parse(data);
-                                    for(key in rest_date){
-                                        rest_day.push(rest_date[key]);
-                                    }
-                                    console.log(rest_day);
-                                    for(var i=0;i<rest_day.length;i++){
-                                        var creat_trr=document.createElement("tr");
-                                        var arr_week=rest_day[i].week_num.split(" ");
-                                        console.log(arr_week);
-                                        html_str = "<td>"+"<input type='text' readonly='true' value='"+rest_day[i].rules_name+"'>"+"</td>"+
-                                            "<td>"+"<input type='text' readonly='true' value='"+rest_day[i].rules_name+"'>"+"</td>"+
-                                            "<td>";
-                                        for(var key in json_arr){
-                                            if(key == '0'){
-                                                num = 7;
-                                            }else{
-                                                num = key;
-                                            }
-                                            html_str += "<input type='checkbox' id='box"+i+num+"' value='"+i+num+"'>"+json_arr[key]+" ";
-                                        }
-                                        html_str += "</td>"+"<td>"+"<input type='button' value='修改' onclick='xg_tj(this)'>"+"<input type='button' value='删除'>"+"</td>";
-                                        creat_trr.innerHTML = html_str;
-                                        document.getElementById("t2").appendChild(creat_trr);
-                                        
-                                        for(var key in json_arr){
-                                            for(var k in arr_week){
-                                                if(key == '0'){
-                                                    num = 7;
-                                                }else{
-                                                    num = key;
-                                                }
-                                                if(json_arr[key] == arr_week[k]){
-                                                    $("#box"+i+num).attr("checked","checked");
-                                                }
-                                            }
-                                        }
-
-                                    }
-                                }
-                            })
-                        }
-
-                    },false)
                 }
 
             }
@@ -257,15 +192,138 @@ function content_click(num, content) {
     }
 
 }
+ function formulate_time(obj){
+    if(obj.getAttribute("id")!="get_id"){
+        //$("#t2 tr:not(:first)").css("display","none");
+        document.getElementById("t2").innerHTML="";
+        var deposit_value=document.getElementById("id_val").value;
+        document.getElementById("staff_rules_out").style.display="block";
+        //document.querySelector(".rest_font").innerText=obj.value;
+        document.getElementById("restTime_rules2").style.display="block";
+        $.ajax({
+            url: "/Checking/rule_week_select",
+            data:{'campus_id':deposit_value},
+            type: "post",
+            async: "false",
+            cache: "false",
+            success:function(data){
+                ajax_rest(data,"t2");
+            }
+        })
+    }
+     if(obj.getAttribute("id")=="get_id"){
+        document.getElementById("t1").innerHTML="";
+        document.getElementById("restTime_rules").style.display="block";
+        document.getElementById("staff_rules_out").style.display = "block";
+        $.ajax({
+            url: "/Checking/rule_week_select",
+            data:{},
+            type: "post",
+            async: "false",
+            cache: "false",
+            success:function(data){
+                document.getElementById("t2").innerHTML="";
+                ajax_rest(data,"t1");
+            }
+        })
+    }
+
+}
+
+ function ajax_rest(data,obj){
+     var rest_day=[];
+     var html_str = "";
+     var json_str = '{"0":"星期日","1":"星期一","2":"星期二","3":"星期三","4":"星期四","5":"星期五","6":"星期六"}';
+     var json_arr = JSON.parse(json_str);
+     var num = '';
+     var rest_date = JSON.parse(data);
+     for(key in rest_date){
+         rest_day.push(rest_date[key]);
+     }
+     console.log(rest_day);
+    for(var i=0;i<rest_day.length;i++){
+        var creat_trr=document.createElement("tr");
+        var arr_week=rest_day[i].week_num.split(" ");
+        console.log(arr_week);
+        html_str = "<td>"+"<input type='text' readonly='true' class='read_input' value='"+rest_day[i].rules_name+"'>"+"</td>"+
+            "<td>"+"<input type='text' readonly='true' class='read_input' value='"+rest_day[i].rules_name+"'>"+"</td>"+
+            "<td>";
+        for(var key in json_arr){
+            if(key == '0'){
+                num = 7;
+            }else{
+                num = key;
+            }
+            html_str += "<input type='checkbox' disabled='disabled' id='box"+i+num+"' value='"+i+num+"'>"+json_arr[key]+" ";
+        }
+        html_str += "</td>"+"<td>"+"<input type='button' value='修改' class='xg_tj' onclick='xg_tj(this)'>"+
+            "<input type='button' value='删除' class='rm_tr' onclick='rm_tr(this)'>"+"</td>";
+        creat_trr.innerHTML = html_str;
+        document.getElementById(obj).appendChild(creat_trr);
+        for(var key in json_arr){
+            for(var k in arr_week){
+                if(key == '0'){
+                    num = 7;
+                }else{
+                    num = key;
+                }
+                if(json_arr[key] == arr_week[k]){
+                    $("#box"+i+num).attr("checked","checked");
+                }
+            }
+        }
+
+    }
+};
+
+
+
+//制定员工休息日  删除按钮
+var rm_tr=function(obj){
+    var obj_pare=obj.parentNode.parentNode;
+    obj_pare.parentNode.removeChild(obj_pare);
+};
+//制定员工休息日   修改 提交按钮
 var xg_tj=function(obj){
     var xginput_01=obj.parentNode.parentNode.childNodes[0].childNodes[0];
     var xginput_02=obj.parentNode.parentNode.childNodes[1].childNodes[0];
+    var xgcheck_01=obj.parentNode.parentNode.childNodes[2].childNodes[0];
+    var xgcheck_02=obj.parentNode.parentNode.childNodes[2].childNodes[2];
+    var xgcheck_03=obj.parentNode.parentNode.childNodes[2].childNodes[4];
+    var xgcheck_04=obj.parentNode.parentNode.childNodes[2].childNodes[6];
+    var xgcheck_05=obj.parentNode.parentNode.childNodes[2].childNodes[8];
+    var xgcheck_06=obj.parentNode.parentNode.childNodes[2].childNodes[10];
+    var xgcheck_07=obj.parentNode.parentNode.childNodes[2].childNodes[12];
     if(obj.value=="修改"){
         obj.value="提交";
         xginput_01.readOnly = false;
         xginput_02.readOnly = false;
+        xgcheck_01.removeAttribute("disabled");
+        xgcheck_02.disabled = false;
+        xgcheck_03.disabled = false;
+        xgcheck_04.disabled = false;
+        xgcheck_05.disabled = false;
+        xgcheck_06.disabled = false;
+        xgcheck_07.disabled = false;
     }else if(obj.value == "提交"){
-        tj_restTime_(obj);
+        if(xginput_01.value==""){
+            alert("请填写名称");
+            return;
+        }
+        if(xginput_02=="选择职务"){
+            alert("请选择职务");
+            return;
+        }
+        if( xgcheck_01.checked == false&&
+            xgcheck_02.checked == false&&
+            xgcheck_03.checked == false&&
+            xgcheck_04.checked == false&&
+            xgcheck_05.checked == false&&
+            xgcheck_06.checked == false&&
+            xgcheck_07.checked == false){
+            alert("至少制定一个休息日");
+            return;
+        }
         $.ajax({
             url: "",
             data:{},
@@ -276,6 +334,7 @@ var xg_tj=function(obj){
 
             }
         });
+        formulate_time(obj);
         obj.value = "修改";
         xginput_01.readOnly = false;
         xginput_02.readOnly = false;
@@ -341,10 +400,6 @@ function rule_ajax() {
     $(".append_staff_rules").css("display", "block");
     document.getElementById("staff_rules_out").style.display = "block";
     rule_save();
-}
-function rest_time(){
-    document.getElementById("restTime_rules").style.display="block";
-    document.getElementById("staff_rules_out").style.display = "block";
 }
 
 
@@ -431,14 +486,14 @@ $(".rest_tianjia").click(function () {
             }
             var tr_html = "<tr class='tr_content_min'>"+
                 "<td>"+"<input type='text' placeholder='输入名称' class='append_mc' id='append_mc'>"+"</td>" +
-                "<td>"+"<select class='append_sel' id='append_sel'>"+"<option>"+"请选择"+"</option>"+option_text+"</select>"+"</td>" +
-                "<td>"+ "<input type='checkbox' name='' class='checked_input' value='7'>" +"星期日、"+
-                "<input type='checkbox' name='' class='checked_input' value='1'>" +"星期一、"+
-                "<input type='checkbox' name='' class='checked_input' value='2'>" +"星期二、"+
-                "<input type='checkbox' name='' class='checked_input' value='3'>" +"星期三、"+
-                "<input type='checkbox' name='' class='checked_input' value='4'>" +"星期四、"+
-                "<input type='checkbox' name='' class='checked_input' value='5'>" +"星期五、"+
-                "<input type='checkbox' name='' class='checked_input' value='6'>" +"星期六、"+
+                "<td>"+"<select class='append_sel' id='append_sel'>"+"<option>"+"选择职务"+"</option>"+option_text+"</select>"+"</td>" +
+                "<td>"+ "<input type='checkbox' name='' class='checked_input' value='7'>" +"星期日"+" "+
+                "<input type='checkbox' name='' class='checked_input' value='1'>" +"星期一"+" "+
+                "<input type='checkbox' name='' class='checked_input' value='2'>" +"星期二"+" "+
+                "<input type='checkbox' name='' class='checked_input' value='3'>" +"星期三"+" "+
+                "<input type='checkbox' name='' class='checked_input' value='4'>" +"星期四"+" "+
+                "<input type='checkbox' name='' class='checked_input' value='5'>" +"星期五"+" "+
+                "<input type='checkbox' name='' class='checked_input' value='6'>" +"星期六"+" "+
                 "</td>" +"<input type='button' class=''>"+
                 "<td>"+"<input type='button' value='提交' class=' xiugai_time tj_restTime' onclick=tj_restTime_(this)  />" +
                 "<input type='button' onclick=rest_tr() value='取消' class='rule_reset remove_time' />"+"</td>"+"</tr>";
@@ -508,7 +563,7 @@ function tj_restTime_(obj){
             return;
         }
     var append_sel=obj.parentNode.parentNode.childNodes[1].childNodes[0].value;
-        if(append_sel=="请选择"){
+        if(append_sel=="选择职务"){
             alert("请选择职务");
             return;
         }
@@ -736,19 +791,6 @@ function blk(tabb) {
     }
 }
 
-//var tab = document.getElementById("tab_click");
-//tab.addEventListener("click", function (e) {
-//    var target = e.target;
-//    tabb1.style.background = "#bbbbbb";
-//    tabb2.style.background = "#bbbbbb";
-//    tabb3.style.background = "#bbbbbb";
-//    tabb1.style.color = "white";
-//    tabb2.style.color = "white";
-//    tabb3.style.color = "white";
-//
-//    target.style.background = "white";
-//    target.style.color = "black";
-//}, false);
 
 //鼠标拖拽时间添加规则，修改页面
 var mouseX, mouseY;
