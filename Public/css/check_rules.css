@@ -265,6 +265,7 @@
     outline: none;
 }
 .append_mc{
+    margin-left:25px;
     border:none;
     border-bottom:1px solid gray;
     border-radius: 10px;
@@ -299,6 +300,30 @@
     width:150px;
     text-align: center;
     float:left;
+}
+.read_input{
+    border:none;
+    text-align: center;
+    border-bottom:1px solid dimgray;
+    border-radius:10px;
+}
+
+.xg_tj,.rm_tr{
+    width:50px;
+    height:20px;
+    border:none;
+    color:white;
+    outline: none;
+    border-radius: 5px;
+    margin-bottom: 2px;
+
+}
+.xg_tj{
+    background-color: #e4393c;
+    margin-right:5px;
+}
+.rm_tr{
+    background-color: #00c8c8;
 }
 
 
