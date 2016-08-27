@@ -247,7 +247,6 @@
 .restTime_rules{
     background-color: white;
     width:1200px;
-    height:500px;
     position:fixed;
     left:50%;
     margin-left: -600px;
@@ -256,7 +255,7 @@
 }
 .append_time_rest{
     overflow-y: scroll;
-    height:380px;
+    max-height:380px;
 }
 .restTime_rules>.append_time_forrules>table{
     width:1170px !important;
@@ -266,6 +265,7 @@
 }
 .append_mc{
     margin-left:25px;
+    margin-right:25px;
     border:none;
     border-bottom:1px solid gray;
     border-radius: 10px;
@@ -276,6 +276,7 @@
     border-bottom:1px solid gray;
     border-radius: 10px;
     outline: none;
+    margin-right: 25px;
 }
 .restTime_rules{
     display:none;

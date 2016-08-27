@@ -190,6 +190,12 @@ function content_click(num, content) {
     }
 
 }
+
+
+
+
+
+
 function formulate_time(obj){
         //$("#t2 tr:not(:first)").css("display","none");
         document.getElementById("t2").innerHTML="";
@@ -309,6 +315,7 @@ var xg_tj=function(obj,num){
 
     if(obj.value=="修改"){
         obj.value="提交";
+        obj.style.backgroundColor="orange";
         xginput_01.readOnly = false;
         xginput_02.readOnly = false;
         for(var i=0;i<xgcheck_all.length;i++){
@@ -563,7 +570,7 @@ function rule_week_add(num) {
                 "<input type='checkbox' name='' class='checked_input' value='5'>" +"星期五"+" "+
                 "<input type='checkbox' name='' class='checked_input' value='6'>" +"星期六"+" "+
                 "</td>" +"<input type='button' class=''>"+
-                "<td>"+"<input type='button' value='提交' class=' xiugai_time tj_restTime' onclick=tj_restTime_(this,"+num+")  />" +
+                "<td>"+"<input type='button' value='提交' style='margin-left: 25px' class=' xiugai_time tj_restTime' onclick=tj_restTime_(this,"+num+")  />" +
                 "<input type='button' onclick=rest_tr() value='取消' class='rule_reset remove_time' />"+"</td>"+"</tr>";
             $(".rest_tr").before(tr_html);
             $(".rest_tianjia").css("display", "none");
@@ -783,54 +790,53 @@ function rule_up_click(e) {
                     s++;
                 }
             }
-        }
-
-    });
-
-    var week_check=document.querySelectorAll(".week_num");
-    $("#staff_rules_btt1").click(function () {
-        //所有信息无误走提交
-        if (confirm("是否保存员工信息")) {
-            var user_card = $("#id_card").val();
-            var data = [];
-            var arr = [];
-            for (var i = 0; i < 6; i++) {
-                if ($("#time_rule" + i).val() != "0" && i == 0) {
-                    arr = [$("#time_rule" + i).val(), '0'];
-                    data.push(arr);
-                } else if ($("#time_rule" + i).val() != "0" && i != 0 && $("#rules_disable" + i).text() == "启用") {
-                    arr = [$("#time_rule" + i).val(), '2'];
-                    data.push(arr);
-                } else if ($("#time_rule" + i).val() != "0" && i != 0 && $("#rules_disable" + i).text() == "禁用") {
-                    arr = [$("#time_rule" + i).val(), '1'];
-                    data.push(arr);
-                }
-            }
-            var week="";
-            for(var j=0;j<week_check.length;j++){
-                if(week_check[j].checked==true){
-                    week+=week_check[j].value+",";
-                }
-            }
-            var data_json = JSON.stringify(data);
-            $.ajax({
-                url: "/Checking/check_rule_pro",
-                data: {'data': data_json, 'user_id': user_card, 'week':week},
-                type: "post",
-                async: "false",
-                traditional: "true",
-                cache: "false",
-                success: function (msg) {
-                    if (msg == 1) {
-                        document.getElementById("staff_rules").style.display = "none";
-                        document.getElementById("staff_rules_out").style.display = "none";
-                    } else {
-                        alert("保存失败！");
+            var week_check=document.querySelectorAll(".week_num");
+            $("#staff_rules_btt1").click(function () {
+                //所有信息无误走提交
+                var user_card = $("#id_card").val();
+                var data = [];
+                var arr = [];
+                for (var i = 0; i < 6; i++) {
+                    if ($("#time_rule" + i).val() != "0" && i == 0) {
+                        arr = [$("#time_rule" + i).val(), '0'];
+                        data.push(arr);
+                    } else if ($("#time_rule" + i).val() != "0" && i != 0 && $("#rules_disable" + i).text() == "启用") {
+                        arr = [$("#time_rule" + i).val(), '2'];
+                        data.push(arr);
+                    } else if ($("#time_rule" + i).val() != "0" && i != 0 && $("#rules_disable" + i).text() == "禁用") {
+                        arr = [$("#time_rule" + i).val(), '1'];
+                        data.push(arr);
                     }
                 }
+                var week = "";
+                for (var j = 0; j < week_check.length; j++) {
+                    if (week_check[j].checked == true) {
+                        week += week_check[j].value + ",";
+                    }
+                }
+                var data_json = JSON.stringify(data);
+                $.ajax({
+                    url: "/Checking/check_rule_pro",
+                    data: {'data': data_json, 'user_id': user_card, 'week':week},
+                    type: "post",
+                    async: "false",
+                    traditional: "true",
+                    cache: "false",
+                    success: function (msg) {
+                        if (msg == 1) {
+                            document.getElementById("staff_rules").style.display = "none";
+                            document.getElementById("staff_rules_out").style.display = "none";
+                        } else {
+                            alert("保存失败！");
+                        }
+                    }
+                });
             });
         }
+
     });
+
+
 
 
 }
@@ -862,10 +868,10 @@ function staff_rules_close() {
     document.getElementById("staff_rules").style.display = "none";
     document.getElementById("staff_rules_out").style.display = "none";
 }
-function remove_rules_time(num) {
-    document.getElementById("min_time" + num).value = "";
-    document.getElementById("max_time" + num).value = "";
-}
+var remove_rules_time=function(num) {
+    document.getElementById("time_rule" + num).value = "";
+    document.getElementById("time_rule" + num).value = "";
+};
 //点击切换  禁用  启用按扭
 function disabled_rules_time(num) {
     if ($("#rules_disable" + num).text() == "禁用") {
@@ -887,11 +893,9 @@ function disabled_rules_time(num) {
 var click_checkbox=function(obj){
         if(obj.checked==false){
             obj.checked==true;
-            alert(obj.checked);
         }
         if(obj.checked==true){
             obj.checked==false;
-            alert(obj.checked);
         }
     };
 
