@@ -692,9 +692,15 @@ function tj_restTime_(obj,num){
 }
 
 
+
+
+
+
+
 //点击弹出时间制定规则
 
 function rule_up_click(e) {
+    document.getElementById("rest_show_date").innerHTML="";
     for (var i = 0; i < staff_name.length; i++) {
         if (e.innerHTML == staff_name[i] + "1") {
             document.getElementById("staff_rules").style.display = "block";
@@ -704,6 +710,39 @@ function rule_up_click(e) {
             $("#id_card").val(basic_id);
         }
     }
+    var e_prev = e.parentNode.previousSibling.innerHTML;
+    var arr_prev = e_prev.split(" ");
+    var creat_div = document.createElement("div");
+    var html_str = "";
+    var json_str = '{"0":"星期日","1":"星期一","2":"星期二","3":"星期三","4":"星期四","5":"星期五","6":"星期六"}';
+    var json_arr = JSON.parse(json_str);
+    var num = '';
+    var arr_week = arr_prev;
+    for (var key in json_arr) {
+        if (key == '0') {
+            num = 7;
+        } else {
+            num = key;
+        }
+        html_str += "<input type='checkbox' onclick='click_checkbox(this)' class='week_num' id='box" + i + num + "' value='" + num + "'>" + json_arr[key] + " ";
+    }
+    creat_div.innerHTML = html_str;
+    creat_div.setAttribute("class","myy");
+    document.getElementById("rest_show_date").appendChild(creat_div);
+    for (var key in json_arr) {
+        for (var k in arr_week) {
+            if (key == '0') {
+                num = 7;
+            } else {
+                num = key;
+            }
+            if (json_arr[key] == arr_week[k]) {
+                $("#box" + i + num).attr("checked", "checked");
+            }
+        }
+    }
+
+
 
     var content_arr = [];
     var rule = [];
@@ -746,6 +785,51 @@ function rule_up_click(e) {
             }
         }
 
+    });
+
+    var week_check=document.querySelectorAll(".week_num");
+    $("#staff_rules_btt1").click(function () {
+        //所有信息无误走提交
+        if (confirm("是否保存员工信息")) {
+            var user_card = $("#id_card").val();
+            var data = [];
+            var arr = [];
+            for (var i = 0; i < 6; i++) {
+                if ($("#time_rule" + i).val() != "0" && i == 0) {
+                    arr = [$("#time_rule" + i).val(), '0'];
+                    data.push(arr);
+                } else if ($("#time_rule" + i).val() != "0" && i != 0 && $("#rules_disable" + i).text() == "启用") {
+                    arr = [$("#time_rule" + i).val(), '2'];
+                    data.push(arr);
+                } else if ($("#time_rule" + i).val() != "0" && i != 0 && $("#rules_disable" + i).text() == "禁用") {
+                    arr = [$("#time_rule" + i).val(), '1'];
+                    data.push(arr);
+                }
+            }
+            var week="";
+            for(var j=0;j<week_check.length;j++){
+                if(week_check[j].checked==true){
+                    week+=week_check[j].value+",";
+                }
+            }
+            var data_json = JSON.stringify(data);
+            $.ajax({
+                url: "/Checking/check_rule_pro",
+                data: {'data': data_json, 'user_id': user_card, 'week':week},
+                type: "post",
+                async: "false",
+                traditional: "true",
+                cache: "false",
+                success: function (msg) {
+                    if (msg == 1) {
+                        document.getElementById("staff_rules").style.display = "none";
+                        document.getElementById("staff_rules_out").style.display = "none";
+                    } else {
+                        alert("保存失败！");
+                    }
+                }
+            });
+        }
     });
 
 
@@ -800,65 +884,17 @@ function disabled_rules_time(num) {
 
 
 
-var week_check=document.querySelectorAll(".week_num");
-for(var j=0;j<week_check.length;j++){
-    week_check[j].checked=false;
-    week_check[j].onclick=function(){
-        if(this.checked==false){
-            this.checked==true;
-            alert(this.checked);
+var click_checkbox=function(obj){
+        if(obj.checked==false){
+            obj.checked==true;
+            alert(obj.checked);
         }
-        if(this.checked==true){
-            this.checked==false;
-            alert(this.checked);
+        if(obj.checked==true){
+            obj.checked==false;
+            alert(obj.checked);
         }
-    }
-}
-$("#staff_rules_btt1").click(function () {
-    //所有信息无误走提交
-    if (confirm("是否保存员工信息")) {
-        var user_card = $("#id_card").val();
-        var data = [];
-        var arr = [];
-        for (var i = 0; i < 6; i++) {
-            if ($("#time_rule" + i).val() != "0" && i == 0) {
-                arr = [$("#time_rule" + i).val(), '0'];
-                data.push(arr);
-            } else if ($("#time_rule" + i).val() != "0" && i != 0 && $("#rules_disable" + i).text() == "启用") {
-                arr = [$("#time_rule" + i).val(), '2'];
-                data.push(arr);
-            } else if ($("#time_rule" + i).val() != "0" && i != 0 && $("#rules_disable" + i).text() == "禁用") {
-                arr = [$("#time_rule" + i).val(), '1'];
-                data.push(arr);
-            }
-        }
-        var week="";
-        for(var j=0;j<week_check.length;j++){
-            if(week_check[j].checked==true){
-                week+=week_check[j].value+",";
-            }
-        }
-        var data_json = JSON.stringify(data);
-        $.ajax({
-            url: "/Checking/check_rule_pro",
-            data: {'data': data_json, 'user_id': user_card, 'week':week},
-            type: "post",
-            async: "false",
-            traditional: "true",
-            cache: "false",
-            success: function (msg) {
-                if (msg == 1) {
-                    document.getElementById("staff_rules").style.display = "none";
-                    document.getElementById("staff_rules_out").style.display = "none";
-                } else {
-                    alert("保存失败！");
-                }
+    };
 
-            }
-
-        });
-    }
-});
 
 //*************************     布局分页     *************************
 function blk(tabb) {
