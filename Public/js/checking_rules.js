@@ -336,15 +336,22 @@ var xg_tj=function(obj,num){
                 var select_ = document.createElement("select");
                 select_.setAttribute("class","select_kuang");
                 for (var key in arr_post[2]) {
-                    option_text += "<option value='" + key + "'>" + arr_post[2][key] + "</option>";
+                    option_text += "<option class='opt_alal' value='" + key + "'>" + arr_post[2][key] + "</option>";
                 }
                 for (var key in arr_post[3]) {
-                    option_text += "<option value='" + key + "'>" + arr_post[3][key] + "</option>";
+                    option_text += "<option class='opt_alal' value='" + key + "'>" + arr_post[3][key] + "</option>";
                 }
                 select_.innerHTML=option_text;
                 var xg_select = obj.parentNode.parentNode.childNodes[1];
-                xg_select.removeChild(obj.parentNode.parentNode.childNodes[1].childNodes[0]);
                 xg_select.appendChild(select_);
+                var select_optal=obj.parentNode.parentNode.childNodes[1].childNodes[1].childNodes;
+                 obj.parentNode.parentNode.childNodes[1].childNodes[0].style.display="none";
+                for(var i=0;i<select_optal.length;i++){
+                    if(select_optal[i].innerText==obj.parentNode.parentNode.childNodes[1].childNodes[0].value){
+                        select_optal[i].setAttribute("selected","selected");
+                    }
+                }
+
             }
         }
 
@@ -383,13 +390,14 @@ var xg_tj=function(obj,num){
                 campus_id = $('#id_val').val();
             }
         }
-
+        var select_optal02=obj.parentNode.parentNode.childNodes[1].childNodes[1].value;
         $.ajax({
+
             url: "/Checking/rule_week_save",
             data: {
                 id: obj_pare.getAttribute("id"),
                 'name': xginput_01.value,
-                'post': xginput_02.value,
+                'post': select_optal02,
                 'week': xgcheck_val,
                 'campus_id':campus_id
             },
