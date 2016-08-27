@@ -235,7 +235,7 @@ function formulate_time_02(obj,num){
 }
 
 
-function ajax_rest(data,obj,num){
+function ajax_rest(data,obj,nums){
      var rest_day=[];
      var html_str = "";
      var json_str = '{"0":"星期日","1":"星期一","2":"星期二","3":"星期三","4":"星期四","5":"星期五","6":"星期六"}';
@@ -263,7 +263,7 @@ function ajax_rest(data,obj,num){
             }
             html_str += "<input type='checkbox' disabled='disabled' id='box"+i+num+"' value='"+num+"'>"+json_arr[key]+" ";
         }
-        html_str += "</td>"+"<td>"+"<input type='button' value='修改' class='xg_tj' onclick='xg_tj(this,"+num+")'>"+
+        html_str += "</td>"+"<td>"+"<input type='button' value='修改' class='xg_tj' onclick='xg_tj(this,"+nums+")'>"+
             "<input type='button' value='删除' class='rm_tr' onclick='rm_tr(this)'>"+"</td>";
         creat_trr.innerHTML = html_str;
         document.getElementById(obj).appendChild(creat_trr);

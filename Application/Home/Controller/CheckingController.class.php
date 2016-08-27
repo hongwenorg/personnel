@@ -209,9 +209,7 @@ class CheckingController extends CommonController {
 		foreach($data as &$val){
 			$val = rtrim($val,",");
 		}
-		if(!empty($_POST['week'])){
-			$data['week'] = $_POST['week'];
-		}
+		$data['week'] = $_POST['week'];
 		$user_basic->where(array("id"=>$_POST['user_id']))->save($data);
 		echo 1;exit;//状态码1：保存成功
 	}
