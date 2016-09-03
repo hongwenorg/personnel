@@ -129,6 +129,115 @@ class PersonalCountController extends Controller {
     }
 
 
+    //个人业绩统计
+    function personal_count_find(){
+        $achievement_where = array();
+        $data = array();
+        $personaltarget_where = array();
+        $oa_user_where = array();
+        $oa_position_where = array();
+        $campus_where = array("pid" => 15 , 'is_del' =>0);
+        $model1 = D('oa_achievement');
+        $model2 = D('oa_personaltarget');
+        $model3 = D('oa_user');
+        $model4 = D('oa_foo_info');
+        $model5 = D('oa_position');
+        if(!empty($_GET['date'])){
+            $date = $_GET['date'];
+        }else{
+            $date = date('Y-m',time());
+        }
+        $personaltarget_where['date'] = array("like","%".$date."%");
+        $achievement_where['achievement_date'] = array("like","%".$date."%");
+        if(!empty($_GET['school_id'])){
+            $campus_id = $_GET['school_id'];
+            $achievement_where['campus_id'] = $campus_id;
+            $campus_where['id'] = $campus_id;
+            $personaltarget_where['campus_id'] = $campus_id;
+        }
+        $school_array = $model4->where($campus_where)->order("id")->select();
+        $achievement_array = $model1->where($achievement_where)->select();
+        $personaltarget_array = $model2->where($personaltarget_where)->select();
+        $oa_user_array = $model3->where($oa_user_where)->select();
+        $oa_position_array = $model5->where($oa_position_where)->select();
+
+        foreach ($school_array as $keys => $values) {
+            foreach($personaltarget_array as $key => $val){
+                if($values['id'] == $val['campus_id']){
+                    foreach($oa_user_array as $k => $v){
+                        if($val['user_id'] == $v['id']){
+                            $data[$keys][$key]['user_id'] = $v['id'];
+                            $data[$keys][$key]['user_name'] = $v['name'];
+                        }
+                    }
+
+                    foreach($oa_position_array as $k => $v){
+                        if($val['post_id'] == $v['id']){
+                            $data[$keys][$key]['post_id'] = $v['id'];
+                            $data[$keys][$key]['post_name'] = $v['name'];
+                        }
+                    }
+                    $data[$keys][$key]['target'] = $val['target'];
+                    $data[$keys][$key]['upgrade'] = $val['upgrade'];
+                    $data[$keys][$key]['relegation'] = $val['relegation'];
+                    $data[$keys][$key]['school_id'] = $values['id'];
+                    $data[$keys][$key]['school_name'] = $values['name'];
+                    if($val['post_id'] == "18" || $val['post_id'] == "12"){
+                        $type = '续签';
+                        $types = 'old_target';
+                        $oa_achievement_num = $model1->where(array('achievement_date' => array('like' , "%".$date."%") , 'achievement_type' => $type , 'status' => 2 , 'not_curriculum_type' => "" , 'study_userid' => $val['user_id']))->sum('charge_money');
+                        $oa_achievement_num1 = $model1->where(array('achievement_date' => array('like' , "%".$date."%") , 'achievement_type' => '转介绍' , 'status' => 2 , 'not_curriculum_type' => "" , 'study_userid' => $val['user_id']))->sum('charge_money');
+                        $special_target = $model1->where(array('achievement_date' => array('like' , "%".$date."%") , 'status' => 2 , 'not_curriculum_type' => array("like","%特训营%") , 'study_userid' => $val['user_id']))->sum('charge_money');
+                        $cooperation_target = $model1->where(array('achievement_date' => array('like' , "%".$date."%") , 'status' => 2 , 'not_curriculum_type' => array("like","%合作项目%") , 'study_userid' => $val['user_id']))->sum('charge_money');
+                    }else{
+                        $type = '新签';
+                        $types = 'new_target';
+                        $oa_achievement_num = $model1->where(array('achievement_date' => array('like' , "%".$date."%") , 'achievement_type' => $type , 'status' => 2 , 'not_curriculum_type' => "" , 'teaching_userid' => $val['user_id']))->sum('charge_money');
+                        $oa_achievement_num1 = $model1->where(array('achievement_date' => array('like' , "%".$date."%") , 'achievement_type' => '转介绍' , 'status' => 2 , 'not_curriculum_type' => "" , 'teaching_userid' => $val['user_id']))->sum('charge_money');
+                        $special_target = $model1->where(array('achievement_date' => array('like' , "%".$date."%") , 'status' => 2 , 'not_curriculum_type' => array("like","%特训营%") , 'teaching_userid' => $val['user_id']))->sum('charge_money');
+                        $cooperation_target = $model1->where(array('achievement_date' => array('like' , "%".$date."%") , 'status' => 2 , 'not_curriculum_type' => array("like","%合作项目%") , 'teaching_userid' => $val['user_id']))->sum('charge_money');
+                    }
+                    $data[$keys][$key]['type'] = $type;
+                    $data[$keys][$key]['count_target'] = sprintf("%.2f", sprintf("%.2f", $oa_achievement_num)+sprintf("%.2f", ($oa_achievement_num1/2)));
+                    $data[$keys][$key]['special_target'] = $special_target;
+                    $data[$keys][$key]['cooperation_target'] = $cooperation_target;
+
+                    foreach($achievement_array as $k => $v){
+                        if(strstr($v['not_curriculum_type'],"合作项目") || strstr($v['not_curriculum_type'],"特训营")){
+                            if(( strstr($v['not_curriculum_type'],"特训营") || strstr($v['not_curriculum_type'],"合作项目") ) && ( $v['teaching_userid'] == $val['user_id'] || $v['study_userid'] == $val['user_id'] )){
+                                $data[$keys][$key]['content'][$k]['type'] = $v['not_curriculum_type'];
+                                $data[$keys][$key]['content'][$k]['date'] = $v['achievement_date'];
+                                $data[$keys][$key]['content'][$k]['money'] = $v['charge_money'];
+                            }
+                        }else{
+                            if(( $v['teaching_userid'] == $val['user_id'] || $v['study_userid'] == $val['user_id'] ) && $v['achievement_type'] == '转介绍'){
+                                $data[$keys][$key]['content'][$k]['type'] = $v['achievement_type'];
+                                $data[$keys][$key]['content'][$k]['date'] = $v['achievement_date'];
+                                $data[$keys][$key]['content'][$k]['money'] = $v['charge_money'];
+                            }
+                            if($v['teaching_userid'] == $val['user_id'] && $v['achievement_type'] == '新签'){
+                                $data[$keys][$key]['content'][$k]['type'] = $v['achievement_type'];
+                                $data[$keys][$key]['content'][$k]['date'] = $v['achievement_date'];
+                                $data[$keys][$key]['content'][$k]['money'] = $v['charge_money'];
+                            }
+                            if($v['study_userid'] == $val['user_id'] && $v['achievement_type'] == '续签'){
+                                $data[$keys][$key]['content'][$k]['type'] = $v['achievement_type'];
+                                $data[$keys][$key]['content'][$k]['date'] = $v['achievement_date'];
+                                $data[$keys][$key]['content'][$k]['money'] = $v['charge_money'];
+                            }
+                            
+                        }
+                    }
+                }
+            }
+        }
+        // echo "<pre>";
+        // print_r($data);
+        echo json_encode($data);
+
+
+    }
+
 
     //财务系统校区录入业绩目标删除
     function Campus_target_del(){
@@ -298,7 +407,7 @@ class PersonalCountController extends Controller {
                 $value['school_name'] = $campus_arrs['name'];
                 $value['upgrade_num'] = $value['upgrade']*$value['target'];
                 $value['relegation_num'] = $value['relegation']*$value['target'];
-                if($value['post_id'] == "18"){
+                if($value['post_id'] == "18" || $val['post_id'] == "12"){
                     $type = '续签';
                     $oa_achievement_num = $oa_achievement->where(array('checkout_date' => array('between' , $begin_date.'-01,'.$end_date."-$day_count") , 'achievement_type' => $type , 'status' => 2 , 'not_curriculum_type' => "" , 'study_userid' => $value['user_id']))->sum('charge_money');
                     $oa_achievement_num1 = $oa_achievement->where(array('checkout_date' => array('between' , $begin_date.','.$end_date) , 'achievement_type' => '转介绍' , 'status' => 2 , 'not_curriculum_type' => "" , 'study_userid' => $value['user_id']))->sum('charge_money');

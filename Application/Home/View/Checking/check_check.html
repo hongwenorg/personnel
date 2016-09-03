@@ -139,11 +139,28 @@
             border: 1px solid lightgray;
             position:relative;
             top:0;
-        }
+        } 
 
         #tb {
             border-left: none;
             border-right: none;
+        }
+        #sou_sou{
+            float:left;
+        }
+        .leave_ing{
+            float:right;
+            position:relative;
+            right:5%;
+            top:50px;
+            width:150px;
+            height:30px;
+            border:none;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #00c8c8;
+            color:white;
+            display:none;
         }
 
 
@@ -183,8 +200,10 @@
                 <select name="" id="city"></select>
                 <span id='prov_append'></span>
                 <button type="button" id="find_btt"><img src="/public/img/sousuo.png" class="sou_suo" alt=""></button>
-                <!--时间控件-->
+                <!--时间控件 class="copy_dayin" id="copy_dayin"-->
+
             </div>
+    <input type="button" onclick="leaveing_blank()" value="生成请假execl" class="leave_ing"/>
             <!--*********************************************存放后台员工信息*****************************************************-->
             <div style="width:100%" class="max_head">
                 <div class="float_top">

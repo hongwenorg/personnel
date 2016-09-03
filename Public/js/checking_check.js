@@ -369,6 +369,7 @@ find_btt.onclick = function () {
     xhr.send();
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
+                document.querySelector(".leave_ing").style.display="block";
             document.getElementById("sousuo_img_out").style.display = "none";
             var msg = JSON.parse(xhr.responseText);
             for (key in msg) {
@@ -398,6 +399,17 @@ function dayin_blank() {
 }
 //打印页面  end
 
+
+//导出请假记录   start
+function leaveing_blank() {
+
+    if ($("tr:first").text() != "") {
+        window.open("/Staff/leaveing_find");
+    } else {
+        alert("程序有误，请联系管理员！");
+    }
+}
+//导出请假记录  end
 
 //excel操作  start
 function excel_blank() {

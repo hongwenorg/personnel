@@ -87,14 +87,15 @@ class PublicController extends Controller {
 
 
 
+
 	//定时小程序，每到月一号计算上个月考勤数据导入,顺序执行  1
 	function checksecpro(){
 		die;
 		// 创建一个新cURL资源
 		$ch = curl_init();
 		$time = time();
-		$start = '2016-08-01';//date("Y-m-d",strtotime("-1 day"));
-		$end = '2016-08-01';//date("Y-m-d",strtotime("-1 day"));
+		$start = date("Y-m-d",strtotime("-1 day"));
+		$end = date("Y-m-d",strtotime("-1 day"));
 		//公共必传参数
 		$data = array(
 		'account'=>'21c4a357f585a1a50ea794fcf96fad73',//API帐号

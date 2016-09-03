@@ -172,6 +172,105 @@ class StaffController extends CommonController {
 	}
 
 
+	//导出请假信息
+	function leaveing_find(){
+		$leaveing = D('leaveing');
+		$leave_arr = array();
+		//下面是获取上一月的数据
+		$data = $this->year_month_day();
+		$check_content = $data['check_content'];//查询条件，格式：“2016-05-”
+
+		$leave_where = "state='审核通过' and time_date like '%".$check_content."%' or (time_begin like '%".$check_content."%' and class='加班')";
+		$leave_arr = $leaveing->where($leave_where)->order("class,property")->select();
+		if(empty($leave_arr)){
+			$this->error("生成页面错误，请联系管理员！");exit;
+		}
+		import("Vendor.PHPExcel");
+		//创建对象
+		$excel = new \PHPExcel();
+		//Excel表格式,这里简略写了8列
+		$letter = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N');
+		//表头数组
+		$tableheader = array('序号','考勤号','姓名','校区','部门','职务','申请类型','审核状态','请假类型','申请时间','开始时间','结束时间','申请天数','情况说明');
+		//填充表头信息
+		for($i = 0;$i < count($tableheader);$i++) {
+			$excel->getActiveSheet()->setCellValue("$letter[$i]1","$tableheader[$i]");
+		}
+		//表格数组
+		foreach($leave_arr as $key => $val){
+			$data[$key][0] = ($key+1);
+			$data[$key][1] = $val["atten_uid"];
+			$data[$key][2] = $val["name"];
+			$data[$key][3] = $val["campus"];
+			$data[$key][4] = $val["part"];
+			$data[$key][5] = $val["post"];
+			$data[$key][6] = $val["class"];
+			$data[$key][7] = $val["state"];
+			$data[$key][8] = $val["property"];
+			$data[$key][9] = $val["time_date"];
+			$data[$key][10] = $val["time_begin"];
+			$data[$key][11] = $val["time_stop"];
+			$data[$key][12] = $val["count_day1"];
+			$data[$key][13] = $val["info"];
+		}
+		//填充表格信息
+		for ($i = 2;$i <= count($data) + 1;$i++) {
+			$j = 0;
+			foreach ($data[$i - 2] as $key=>$value) {
+				$excel->getActiveSheet()->setCellValue("$letter[$j]$i","$value");
+				$j++;
+			}
+		}
+		//创建Excel输入对象
+		$write = new \PHPExcel_Writer_Excel5($excel);
+		header("Pragma: public");
+		header("Expires: 0");
+		header("Cache-Control:must-revalidate, post-check=0, pre-check=0");
+		header("Content-Type:application/force-download");
+		header("Content-Type:application/vnd.ms-execl");
+		header("Content-Type:application/octet-stream");
+		header("Content-Type:application/download");;
+		header('Content-Disposition:attachment;filename="'.$check_content.'鸿文请假记录.xls"');
+		header("Content-Transfer-Encoding:binary");
+		$write->save('php://output');
+		
+	}
+
+
+
+	//每到月一号计算上个月年，月，日，总共多少天
+	function year_month_day(){
+		//下面是获取上一月的数据
+		//获取月份当前
+		$data = array();
+		$now_time = Intval(date("m",time()));
+		//如果当前月份不等于一月并且小于等于十月则当前月份-1前加0
+		if($now_time !=1 && $now_time<=10){
+			$year_day = date("Y",time());
+			$month_day = "0".($now_time-1);
+			$check_content = $year_day."-".$month_day."-";
+		//如果当前月份不等于一月并且大于十月则当前月份-1不加0
+		}elseif($now_time !=1 && $now_time>10){
+			$year_day = date("Y",time());
+			$month_day = $now_time-1;
+			$check_content = $year_day."-".$month_day."-";
+		//如果当前月份等于一月则当前年份-1当前月份定位12月
+		}elseif($now_time ==1){
+			$year_day = Intval(date("Y",time()))-1;
+			$month_day = 12;
+			$check_content = $year_day."-12-";
+		}
+		$data['now_time'] = $now_time;
+		$data['year_day'] = $year_day;
+		$data['month_day'] = $month_day;
+		$data['check_content'] = $check_content;
+		//计算每月一共有多少天
+		$data['day_count']=date('j',mktime(0,0,1,($month_day==12?1:$month_day+1),1,($month_day==12?$year_day+1:$year_day))-24*3600);
+		//var_dump($data);
+		return $data;
+	}
+
+
     //地区动态获取
 	function area_school(){
         $area = M("area_school");
